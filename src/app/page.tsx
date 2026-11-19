@@ -128,9 +128,10 @@ export default function HomePage() {
             <li>
               <strong>Keep searchable notes with you</strong>
               <span>
-                The Knowledge Vault is your on-device notebook — import text and
-                find it later (see <Link href="/about">About</Link> for the
-                word list).
+                The Knowledge Vault is your on-device notebook. It ships with a
+                small starter pack (guide, glossary, how-tos) — not a full wiki —
+                and you can add your own text for Chat to search later (see{" "}
+                <Link href="/about">About</Link>).
               </span>
             </li>
           </ul>

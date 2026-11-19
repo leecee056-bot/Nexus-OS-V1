@@ -43,6 +43,12 @@ export const FAQ_ITEMS: FaqItem[] = [
       "The stick/card ships with a small local text model (SmolLM2) so low-spec machines can run Chat. You can add other open GGUF models later under the data partition. Image Lab / Pixel Art uses a lightweight procedural pixel generator — not a heavy cloud image model — so it stays usable on modest RAM.",
   },
   {
+    id: "vault",
+    question: "Is there an offline wiki or knowledge base?",
+    answer:
+      "Yes — the Knowledge Vault is a searchable notebook on the stick/card. It ships with a small starter pack (NEXUS guide, glossary, and short how-tos for flash/boot, Chat, models, and Pi/cyberdecks). It is not a full Wikipedia dump. Add your own .txt/.md files and rebuild the index from the Vault menu; Chat can optionally use matching notes as context.",
+  },
+  {
     id: "cyberdeck",
     question: "Is it good for cyberdecks?",
     answer:

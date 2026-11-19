@@ -96,8 +96,11 @@ export default function AboutPage() {
           <li>
             <strong>Keep notes and search them</strong>
             <span>
-              Drop text files into the Knowledge Vault and find them later; Chat
-              can optionally use those notes as context.
+              The Knowledge Vault ships with a small starter pack (NEXUS guide,
+              glossary, flash/boot and Chat how-tos). Drop in more{" "}
+              <span className="mono">.txt</span> / <span className="mono">.md</span>{" "}
+              files and rebuild the index; Chat can optionally use those notes as
+              context. This is a personal offline notebook — not a full Wikipedia.
             </span>
           </li>
           <li>
@@ -166,8 +169,9 @@ export default function AboutPage() {
           <li>
             <strong>Knowledge Vault</strong>
             <span>
-              Your searchable notebook on the device — import .txt/.md files and
-              look them up.
+              Your searchable notebook on the device. Comes with a short starter
+              pack (guide + glossary + how-tos); import more .txt/.md and look
+              them up. Not a full offline wiki dump.
             </span>
           </li>
           <li>

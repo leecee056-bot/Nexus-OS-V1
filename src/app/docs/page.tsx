@@ -61,6 +61,14 @@ export default function DocsPage() {
                 <small>Honest list of apps vs Network coming soon</small>
               </Link>
             </li>
+            <li>
+              <Link href="/faq#vault">
+                Knowledge Vault starter pack
+                <small>
+                  On-device guide, glossary, and how-tos — not a full wiki
+                </small>
+              </Link>
+            </li>
           </ul>
         </div>
 
