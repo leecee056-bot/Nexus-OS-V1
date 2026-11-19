@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,7 +28,15 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="shell nav">
         <Link href="/" className="brand">
-          NEXUS OS
+          <Image
+            className="brand-mark"
+            src="/brand/logo-mark.png"
+            alt=""
+            width={40}
+            height={40}
+            priority
+          />
+          <span>NEXUS OS</span>
         </Link>
         <nav
           id="primary-nav"
