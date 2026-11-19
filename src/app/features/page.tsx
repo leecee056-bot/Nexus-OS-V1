@@ -7,9 +7,9 @@ export default function FeaturesPage() {
   return (
     <section className="section">
       <div className="shell">
-        <h2>What&apos;s on the stick</h2>
+        <h2>What&apos;s included</h2>
         <p className="lede">
-          Plain list of what works today on the USB system. For “what is a
+          Plain list of what works today on the USB or Pi system. For “what is a
           Vault?” and similar words, see <Link href="/about">About</Link>.
         </p>
 
@@ -24,10 +24,11 @@ export default function FeaturesPage() {
 
         <ul className="feature-list">
           <li>
-            <strong>Boots from USB on low-spec PCs</strong>
+            <strong>Boots on low-spec PCs and Raspberry Pi 4</strong>
             <span>
-              32-bit and 64-bit Intel/AMD images. Aimed at older spare machines
-              as well as newer ones. Raspberry Pi images are not in this release.
+              32-bit and 64-bit Intel/AMD USB images, plus a 64-bit aarch64
+              microSD image for Pi 4 (Pi 5 best-effort). Aimed at older spare
+              machines as well as newer ones.
             </span>
           </li>
           <li>

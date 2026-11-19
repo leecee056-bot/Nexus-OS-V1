@@ -1,18 +1,26 @@
-const RELEASE =
+const USB_RELEASE =
   "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-usb";
+
+const PI_RELEASE =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-pi";
 
 export const RELEASE_PAGE =
   "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.0-usb";
 
-export const RELEASE_SHA256SUMS = `${RELEASE}/SHA256SUMS`;
+export const PI_RELEASE_PAGE =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.0-pi";
 
+export const RELEASE_SHA256SUMS = `${USB_RELEASE}/SHA256SUMS`;
+export const PI_RELEASE_SHA256SUMS = `${PI_RELEASE}/SHA256SUMS`;
+
+/** @deprecated Prefer ARTIFACTS (PC USB) + PI_ARTIFACTS */
 export const ARTIFACTS = [
   {
     arch: "x86_64",
     label: "64-bit PC (x86_64)",
     filename: "portable-ai-os-x86_64.img",
     downloadName: "portable-ai-os-x86_64.img.xz",
-    downloadUrl: `${RELEASE}/portable-ai-os-x86_64.img.xz`,
+    downloadUrl: `${USB_RELEASE}/portable-ai-os-x86_64.img.xz`,
     sizeBytes: 479461624,
     sizeLabel: "~458 MB download → about 3 GB after unpacking",
     sha256xz:
@@ -27,7 +35,7 @@ export const ARTIFACTS = [
     label: "32-bit / older PC (i686)",
     filename: "portable-ai-os-i686.img",
     downloadName: "portable-ai-os-i686.img.xz",
-    downloadUrl: `${RELEASE}/portable-ai-os-i686.img.xz`,
+    downloadUrl: `${USB_RELEASE}/portable-ai-os-i686.img.xz`,
     sizeBytes: 735020108,
     sizeLabel: "~701 MB download → about 3 GB after unpacking",
     sha256xz:
@@ -39,5 +47,23 @@ export const ARTIFACTS = [
   },
 ] as const;
 
+export const PI_ARTIFACTS = [
+  {
+    arch: "aarch64",
+    label: "Raspberry Pi 4 (64-bit) — primary",
+    filename: "portable-ai-os-aarch64.img",
+    downloadName: "portable-ai-os-aarch64.img.xz",
+    downloadUrl: `${PI_RELEASE}/portable-ai-os-aarch64.img.xz`,
+    sizeBytes: 923230452,
+    sizeLabel: "~881 MB download → about 4 GB after unpacking",
+    sha256xz:
+      "ab55937df18bc05f9a00c29b26098b874c50ecad6e31c003b4cf5f08f29c40a7",
+    sha256:
+      "7aa7341853a9f290f2637363b14f8cc2d21a90a3fb19d3697891c213e6b7f72d",
+    guidance:
+      "Flash this to a microSD card for Raspberry Pi 4 (2 GB+ RAM; 4 GB+ preferred). Same file may work on Pi 5, but Pi 5 is best-effort — some boards need a firmware/dtb follow-up if they will not boot.",
+  },
+] as const;
+
 export const BUILD_NOTE =
-  "Download a compressed USB image, unpack it, then write it to a stick with Etcher. Full walkthrough on the Setup page.";
+  "Pick a PC USB image or the Raspberry Pi microSD image, unpack the .xz, then flash the .img with Etcher. Full walkthrough on the Setup page.";

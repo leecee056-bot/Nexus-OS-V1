@@ -9,18 +9,18 @@ export default function SetupPage() {
       <div className="shell">
         <h2>How to set up NEXUS OS</h2>
         <p className="lede">
-          NEXUS OS turns a USB stick into its own small computer with offline AI
-          — aimed at everyday and older Intel/AMD PCs. It does{" "}
-          <strong>not</strong> install inside Windows or Mac: you start the PC
-          from the stick, and the NEXUS menu appears instead. New to the words
-          we use? See <Link href="/about">About</Link>.
+          NEXUS OS turns a USB stick (PC) or microSD card (Raspberry Pi) into
+          its own small computer with offline AI. It does{" "}
+          <strong>not</strong> install inside Windows or Mac: you boot from that
+          media and the NEXUS menu appears. New to the words we use? See{" "}
+          <Link href="/about">About</Link>.
         </p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          You will need: a spare USB stick (<strong>8 GB or larger</strong> is
-          safest; 4 GB minimum), about 30–60 minutes the first time, and a PC you
-          can restart. Flashing <strong>erases everything</strong> already on
-          that USB stick.
+          You will need: a spare USB stick <strong>or</strong> microSD card (
+          <strong>8 GB or larger</strong> is safest), about 30–60 minutes the
+          first time, and a PC or Raspberry Pi you can restart. Flashing{" "}
+          <strong>erases everything</strong> already on that stick or card.
         </div>
 
         <ol className="steps">
@@ -31,7 +31,7 @@ export default function SetupPage() {
             </p>
             <ul className="feature-list" style={{ marginTop: "0.75rem" }}>
               <li>
-                <strong>i686 (32-bit)</strong>
+                <strong>i686 (32-bit) — PC USB</strong>
                 <span>
                   Best for older “XP-era” PCs that only run 32-bit software. If
                   you are not sure, and the computer is from the mid-2000s or
@@ -39,15 +39,23 @@ export default function SetupPage() {
                 </span>
               </li>
               <li>
-                <strong>x86_64 (64-bit)</strong>
+                <strong>x86_64 (64-bit) — PC USB</strong>
                 <span>
                   For most newer PCs that already run 64-bit Windows or Linux.
+                </span>
+              </li>
+              <li>
+                <strong>aarch64 — Raspberry Pi microSD</strong>
+                <span>
+                  <strong>Pi 4 primary.</strong> Same file may work on Pi 5
+                  (best-effort). Flash to a microSD card, not a USB stick.
                 </span>
               </li>
             </ul>
             <p style={{ marginTop: "0.75rem" }}>
               You will download a file ending in <code className="mono">.img.xz</code>
               . That means it is compressed (zipped) to fit GitHub’s size limit.
+              Unpack the same way for PC and Pi.
             </p>
           </li>
 
@@ -56,7 +64,8 @@ export default function SetupPage() {
             <p>
               Do <strong>not</strong> flash the <code className="mono">.xz</code>{" "}
               file. Unpack it first so you get a larger{" "}
-              <code className="mono">.img</code> file (~3 GB).
+              <code className="mono">.img</code> file (~3 GB for PC, ~4 GB for
+              Pi).
             </p>
             <div className="panel" style={{ marginTop: "0.85rem" }}>
               <h3>On Windows</h3>
@@ -96,29 +105,32 @@ export default function SetupPage() {
             <strong>Optional: check the download (checksum)</strong>
             <p>
               A checksum is a fingerprint of the file. Matching it means your
-              download was not cut off or corrupted. Grab{" "}
+              download was not cut off or corrupted. Grab SHA256SUMS from the
+              same Release (
               <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-usb/SHA256SUMS">
-                SHA256SUMS
-              </a>{" "}
-              from the same Release, then compare.
+                PC
+              </a>
+              {" · "}
+              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-pi/SHA256SUMS">
+                Pi
+              </a>
+              ), then compare.
             </p>
             <div className="panel" style={{ marginTop: "0.85rem" }}>
               <h3>Windows (PowerShell) — one command</h3>
               <p>
-                After unpacking, open PowerShell in your Downloads folder (or
-                put the full path in). Replace the filename if you chose 64-bit:
+                After unpacking, open PowerShell in your Downloads folder. Use
+                the filename you downloaded:
               </p>
               <pre className="panel mono" style={{ overflow: "auto" }}>
-{`Get-FileHash .\\portable-ai-os-i686.img -Algorithm SHA256`}
+{`Get-FileHash .\\portable-ai-os-i686.img -Algorithm SHA256
+# or: portable-ai-os-x86_64.img / portable-ai-os-aarch64.img`}
               </pre>
               <p>
-                Compare the hash to the{" "}
-                <code className="mono">portable-ai-os-i686.img</code> line in
-                SHA256SUMS (should match{" "}
-                <code className="mono">b9a3820e…5104465</code> for i686, or{" "}
-                <code className="mono">0d490700…6e8877</code> for x86_64). You
-                can also hash the <code className="mono">.xz</code> before
-                unpacking the same way.
+                Compare the hash to the matching{" "}
+                <code className="mono">.img</code> line in SHA256SUMS. You can
+                also hash the <code className="mono">.xz</code> before unpacking
+                the same way.
               </p>
             </div>
             <div className="panel" style={{ marginTop: "0.85rem" }}>
@@ -135,7 +147,7 @@ export default function SetupPage() {
           </li>
 
           <li>
-            <strong>Write the image onto the USB stick (flash)</strong>
+            <strong>Write the image (flash)</strong>
             <p>
               Easiest path for most people: free{" "}
               <strong>balenaEtcher</strong> from{" "}
@@ -144,19 +156,30 @@ export default function SetupPage() {
               </a>
               .
             </p>
+            <ul className="feature-list" style={{ marginTop: "0.75rem" }}>
+              <li>
+                <strong>PC builds</strong>
+                <span>Flash to a USB stick you are willing to erase.</span>
+              </li>
+              <li>
+                <strong>Raspberry Pi build</strong>
+                <span>
+                  Flash to a <strong>microSD card</strong> (not a USB stick).
+                  Raspberry Pi Imager also works: pick “Use custom” and select
+                  the <code className="mono">.img</code>.
+                </span>
+              </li>
+            </ul>
             <ol className="steps" style={{ marginTop: "0.75rem" }}>
-              <li>Plug in the USB stick you are willing to erase.</li>
-              <li>Open Etcher → Flash from file → choose the{" "}
+              <li>Insert the USB stick or microSD (via a reader) to erase.</li>
+              <li>
+                Open Etcher → Flash from file → choose the{" "}
                 <code className="mono">.img</code> (not the{" "}
                 <code className="mono">.xz</code>).
               </li>
-              <li>Select your USB stick carefully (check the size/name).</li>
+              <li>Select that stick or card carefully (check size/name).</li>
               <li>Click Flash and wait until it finishes successfully.</li>
             </ol>
-            <p style={{ marginTop: "0.75rem" }}>
-              Raspberry Pi Imager also works if you pick “Use custom” and select
-              the same <code className="mono">.img</code>.
-            </p>
             <div className="panel" style={{ marginTop: "0.85rem" }}>
               <h3>Advanced: Linux/macOS command line</h3>
               <p>
@@ -176,11 +199,16 @@ sync`}
           </li>
 
           <li>
-            <strong>Prepare the PC to boot from USB</strong>
+            <strong>Boot the machine</strong>
             <p>
-              Put the stick in the computer you want to try, then restart it.
-              You usually need to open a one-time boot menu or change BIOS
-              settings:
+              <strong>Raspberry Pi:</strong> insert the microSD, connect power
+              (and display/keyboard). You should reach the same hub menu after a
+              short load. Prefer <strong>Pi 4</strong>; Pi 5 is best-effort for
+              this release.
+            </p>
+            <p style={{ marginTop: "0.75rem" }}>
+              <strong>PC:</strong> put the stick in, then restart. You usually
+              need a one-time boot menu or BIOS change:
             </p>
             <ul className="feature-list" style={{ marginTop: "0.75rem" }}>
               <li>
@@ -283,10 +311,18 @@ sync`}
               </span>
             </li>
             <li>
-              <strong>Stick not large enough</strong>
+              <strong>Stick / card not large enough</strong>
               <span>
-                Use 8 GB+ after unpacking. The raw image is about 3 GB; the
-                stick also needs room for your files and settings.
+                Use 8 GB+. Raw images are about 3 GB (PC) or 4 GB (Pi); you also
+                need room for files and settings.
+              </span>
+            </li>
+            <li>
+              <strong>Pi 5 will not boot</strong>
+              <span>
+                This release targets Pi 4 first. Pi 5 may need a firmware /
+                device-tree follow-up — try Pi 4 if you have one, or wait for an
+                updated image.
               </span>
             </li>
             <li>

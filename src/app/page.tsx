@@ -7,12 +7,13 @@ export default function HomePage() {
         <div className="shell hero-inner">
           <p className="brand-hero cursor-blink">NEXUS OS</p>
           <h1>
-            Offline AI on a USB stick — for old PCs and other low‑spec machines.
+            Offline AI on a USB stick or Raspberry Pi — for old PCs and other
+            low‑spec machines.
           </h1>
           <p>
-            Download the system, write it to a stick, boot, and chat with a local
-            AI from the on‑screen menu. No cloud account and no install onto your
-            hard drive.
+            Download the system, write it to a USB stick or microSD card, boot,
+            and chat with a local AI from the on‑screen menu. No cloud account
+            and no install onto your hard drive.
           </p>
           <div className="cta-row">
             <Link className="btn" href="/download">
@@ -54,10 +55,11 @@ export default function HomePage() {
               </span>
             </li>
             <li>
-              <strong>Give an old PC a second life</strong>
+              <strong>Give an old PC or a Pi a second life</strong>
               <span>
-                Many XP-era and early 64-bit boxes can boot the stick. Great for
-                a workshop, classroom spare, or home “AI terminal.”
+                Many XP-era and early 64-bit boxes can boot the stick; Raspberry
+                Pi 4 boots from microSD. Great for a workshop, classroom spare,
+                or home “AI terminal.”
               </span>
             </li>
             <li>
@@ -87,21 +89,23 @@ export default function HomePage() {
               </p>
             </div>
             <div className="panel">
-              <h3>USB stick</h3>
-              <p>8 GB or larger recommended (4 GB minimum). Flashing erases the stick.</p>
+              <h3>Raspberry Pi</h3>
+              <p>
+                <strong>Pi 4 primary</strong> (2 GB+ RAM). Same image may work on
+                Pi 5 (best-effort). Flash to a microSD card (8 GB+).
+              </p>
+            </div>
+            <div className="panel">
+              <h3>USB stick / microSD</h3>
+              <p>
+                8 GB or larger recommended. Flashing erases the stick or card.
+              </p>
             </div>
             <div className="panel">
               <h3>Memory</h3>
               <p>
                 About 1–2 GB RAM free for the small bundled model; more helps if
                 you add bigger models later.
-              </p>
-            </div>
-            <div className="panel">
-              <h3>Coming next</h3>
-              <p>
-                Raspberry Pi 4/5 images are being built now. Live Network chat
-                and older Pi boards come later. PC USB downloads work today.
               </p>
             </div>
           </div>

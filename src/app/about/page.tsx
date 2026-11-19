@@ -9,10 +9,10 @@ export default function AboutPage() {
       <div className="shell">
         <h2>About NEXUS OS</h2>
         <p className="lede">
-          NEXUS OS is a ready-made system you put on a USB stick. Plug the stick
-          into a computer, start from the USB, and you get a simple on-screen
-          menu with offline AI chat and helpful tools — without installing
-          anything onto the hard drive.
+          NEXUS OS is a ready-made system you put on a USB stick (PC) or a
+          microSD card (Raspberry Pi). Boot from that media and you get a simple
+          on-screen menu with offline AI chat and helpful tools — without
+          installing anything onto the hard drive.
         </p>
 
         <figure className="shot">
@@ -40,9 +40,10 @@ export default function AboutPage() {
             <strong>Built for low-spec machines</strong>
             <span>
               Aimed at older Intel/AMD PCs (including many XP-era 32-bit boxes)
-              as well as newer ones. <strong>Raspberry Pi 4/5 images are being
-              built next</strong> (not downloadable yet). Today&apos;s public
-              downloads are PC USB (32-bit and 64-bit).
+              as well as newer ones — and now <strong>Raspberry Pi 4</strong>{" "}
+              (64-bit microSD image). Pi 5 uses the same file but is best-effort
+              for this release. Public downloads: PC USB (32-bit and 64-bit) +
+              Pi aarch64.
             </span>
           </li>
           <li>
@@ -104,17 +105,18 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>USB image / .img</strong>
+            <strong>USB / SD image / .img</strong>
             <span>
-              A disk picture of the whole system. You write it to a stick with a
-              tool like balenaEtcher (after unpacking the download).
+              A disk picture of the whole system. You write it to a USB stick
+              (PC) or microSD card (Pi) with a tool like balenaEtcher (after
+              unpacking the download).
             </span>
           </li>
           <li>
             <strong>Flash / Etcher</strong>
             <span>
-              “Flashing” means copying that image onto the stick. Etcher is a
-              free app that does it with a few clicks.
+              “Flashing” means copying that image onto the stick or card. Etcher
+              is a free app that does it with a few clicks.
             </span>
           </li>
           <li>
@@ -154,10 +156,12 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>i686 vs x86_64</strong>
+            <strong>i686 vs x86_64 vs aarch64</strong>
             <span>
-              Two PC flavours: <strong>i686</strong> = 32-bit / older XP-era;{" "}
-              <strong>x86_64</strong> = typical 64-bit PC. Pick on Download.
+              <strong>i686</strong> = 32-bit / older XP-era PC;{" "}
+              <strong>x86_64</strong> = typical 64-bit PC;{" "}
+              <strong>aarch64</strong> = 64-bit Raspberry Pi image. Pick on
+              Download.
             </span>
           </li>
           <li>
@@ -172,15 +176,19 @@ export default function AboutPage() {
         <h3 className="subhead">Minimum requirements (this release)</h3>
         <ul className="feature-list">
           <li>
-            <strong>Computer</strong>
+            <strong>PC</strong>
             <span>
-              Intel or AMD PC that can boot from USB. 32-bit (i686) or 64-bit
-              (x86_64) image available.
+              Intel or AMD that can boot from USB. 32-bit (i686) or 64-bit
+              (x86_64) image available. USB stick 8 GB+ recommended.
             </span>
           </li>
           <li>
-            <strong>USB stick</strong>
-            <span>8 GB or larger recommended (4 GB absolute minimum).</span>
+            <strong>Raspberry Pi</strong>
+            <span>
+              <strong>Pi 4 primary</strong> (2 GB+ RAM; 4 GB+ preferred). Same
+              aarch64 image may work on Pi 5 (best-effort). microSD 8 GB+
+              recommended. Older Pi / 32-bit boards not in this release.
+            </span>
           </li>
           <li>
             <strong>Memory (RAM)</strong>
@@ -190,16 +198,16 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>BIOS</strong>
+            <strong>PC BIOS</strong>
             <span>
               Ability to boot from USB; Secure Boot off (v1 images are unsigned).
             </span>
           </li>
           <li>
-            <strong>Coming next / not included yet</strong>
+            <strong>Coming later</strong>
             <span>
-              Raspberry Pi 4/5 (64-bit) images are in progress. Older Pi /
-              armv7, Apple Silicon as a target, and live Network chat are later.
+              Stronger Pi 5 firmware support, older Pi / armv7, Apple Silicon as
+              a target, and live Network chat.
             </span>
           </li>
         </ul>
