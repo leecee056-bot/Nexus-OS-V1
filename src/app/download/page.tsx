@@ -54,10 +54,16 @@ export default function DownloadPage() {
         <div className="panel" style={{ marginTop: "1.5rem" }}>
           <h3>After you download</h3>
           <ol className="steps">
-            <li>Unpack the <code className="mono">.xz</code> → get a{" "}
-              <code className="mono">.img</code>.</li>
             <li>
-              Optional: verify with the checksums file (see{" "}
+              Unpack the <code className="mono">.xz</code> → get a{" "}
+              <code className="mono">.img</code> (7-Zip on Windows).
+            </li>
+            <li>
+              Optional Windows check — PowerShell:
+              <pre className="panel mono" style={{ overflow: "auto", marginTop: "0.5rem" }}>
+{`Get-FileHash .\\portable-ai-os-i686.img -Algorithm SHA256`}
+              </pre>
+              Match the result to SHA256SUMS (full steps in{" "}
               <Link href="/setup">Setup</Link>).
             </li>
             <li>

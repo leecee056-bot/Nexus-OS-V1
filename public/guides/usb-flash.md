@@ -34,8 +34,16 @@ Do **not** flash the `.xz` file.
 
 ## Optional check
 
+**Windows PowerShell** (after unpacking):
+
+```powershell
+Get-FileHash .\portable-ai-os-i686.img -Algorithm SHA256
+```
+
+Compare to the matching line in SHA256SUMS from the Release.
+
+**Linux/macOS:**
+
 ```bash
 sha256sum -c SHA256SUMS
 ```
-
-Use the SHA256SUMS file from the same Release, after unpacking.

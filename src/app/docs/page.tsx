@@ -14,11 +14,20 @@ export default function DocsPage() {
         </p>
         <ul className="docs-list">
           <li>
+            <Link href="/about">
+              About NEXUS OS
+              <small>
+                What it is, what you can use it for, minimum requirements, jargon
+                explained
+              </small>
+            </Link>
+          </li>
+          <li>
             <Link href="/setup">
               Setup guide (recommended)
               <small>
-                Plain-English steps: download, unpack, flash, BIOS, first boot,
-                troubleshooting
+                Download, unpack, Windows PowerShell checksum, Etcher, BIOS,
+                first boot, troubleshooting
               </small>
             </Link>
           </li>

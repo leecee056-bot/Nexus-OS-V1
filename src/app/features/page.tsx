@@ -7,53 +7,63 @@ export default function FeaturesPage() {
   return (
     <section className="section">
       <div className="shell">
-        <h2>What NEXUS OS does</h2>
+        <h2>What&apos;s on the stick</h2>
         <p className="lede">
-          Honest list of what works on the USB stick today. Optional online
-          Network chat is called out separately — it is not required for offline
-          AI.
+          Plain list of what works today on the USB system. For “what is a
+          Vault?” and similar words, see <Link href="/about">About</Link>.
         </p>
+
+        <figure className="shot">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/nexus-os-hub-screen.jpg"
+            alt="NEXUS OS hub menu on a computer screen"
+          />
+          <figcaption>Main menu after booting from USB.</figcaption>
+        </figure>
+
         <ul className="feature-list">
           <li>
-            <strong>Boots from USB</strong>
+            <strong>Boots from USB on low-spec PCs</strong>
             <span>
-              Turns a flash drive into a small Linux system you start instead of
-              (or alongside) Windows. Works offline after you flash it.
+              32-bit and 64-bit Intel/AMD images. Aimed at older spare machines
+              as well as newer ones. Raspberry Pi images are not in this release.
             </span>
           </li>
           <li>
             <strong>Local AI Chat</strong>
             <span>
-              Talk to an AI that runs on the PC itself (llama.cpp). A small
-              starter model is included; you can add others later on the stick.
+              Talk to an AI that runs on the PC itself. A small starter model is
+              included so Chat works offline out of the box.
             </span>
           </li>
           <li>
-            <strong>Main menu hub</strong>
+            <strong>Main menu (hub)</strong>
             <span>
-              Keyboard-friendly full-screen menu. Open one app at a time. Themes:
-              Matrix green or plain high-contrast.
+              Full-screen keyboard menu. Themes: Matrix green or plain
+              high-contrast. One app open at a time.
             </span>
           </li>
           <li>
             <strong>Files</strong>
             <span>
-              Browse and manage files on the stick’s data area — docs, images,
-              and extra models.
+              Browse folders on the stick — documents, images, and extra AI
+              models you add later.
             </span>
           </li>
           <li>
             <strong>Knowledge Vault</strong>
             <span>
-              Import text/markdown notes, search them, and optionally use them
-              as context in Chat.
+              Your searchable notes: import text/markdown, search, optionally use
+              them in Chat.
             </span>
           </li>
           <li>
             <strong>Agents &amp; tools</strong>
             <span>
               Small helpers with a fixed allow-list (calculator, vault, files,
-              notes, system info, models, pixel art) — not open shell access.
+              notes, system info, models, pixel art) — not open access to
+              everything on the PC.
             </span>
           </li>
           <li>
@@ -62,14 +72,11 @@ export default function FeaturesPage() {
           </li>
           <li>
             <strong>Pixel art lab</strong>
-            <span>
-              Optional tiny pixel-style image toys. Not a full cloud image
-              generator.
-            </span>
+            <span>Optional tiny pixel-style toys — not a cloud image generator.</span>
           </li>
           <li>
             <strong>Settings &amp; monitor</strong>
-            <span>Theme, model choice, storage prefs, and basic hardware info.</span>
+            <span>Theme, model choice, storage prefs, basic hardware info.</span>
           </li>
           <li>
             <strong>
@@ -77,34 +84,24 @@ export default function FeaturesPage() {
               <span className="badge badge-coming">coming</span>
             </strong>
             <span>
-              Future optional community chat. On the stick it is only a stub for
-              now. You can{" "}
-              <Link href="/network">reserve a name</Link> on this website; online
-              rooms are not live yet.
+              Future optional online community. Stub on the stick for now. You may{" "}
+              <Link href="/network">reserve a username</Link> on this site; rooms
+              are not live yet.
             </span>
           </li>
         </ul>
 
         <div className="cta-row" style={{ marginTop: "1.5rem" }}>
-          <Link className="btn" href="/setup">
-            Read the setup guide
-          </Link>
-          <Link className="btn btn-ghost" href="/download">
+          <Link className="btn" href="/download">
             Download
           </Link>
+          <Link className="btn btn-ghost" href="/setup">
+            Setup guide
+          </Link>
+          <Link className="btn btn-ghost" href="/about">
+            About &amp; glossary
+          </Link>
         </div>
-
-        <figure className="shot">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/nexus-os-mockup-offline.png"
-            alt="NEXUS OS offline hub design mockup"
-          />
-          <figcaption>
-            Design mockup of the offline hub. The live stick uses a text menu
-            with the same job: pick an app and go.
-          </figcaption>
-        </figure>
       </div>
     </section>
   );

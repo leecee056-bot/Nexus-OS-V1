@@ -9,9 +9,11 @@ export default function SetupPage() {
       <div className="shell">
         <h2>How to set up NEXUS OS</h2>
         <p className="lede">
-          NEXUS OS turns a USB stick into its own small computer with offline AI.
-          It does <strong>not</strong> install inside Windows or Mac — you start
-          the PC from the stick, and the NEXUS menu appears instead.
+          NEXUS OS turns a USB stick into its own small computer with offline AI
+          — aimed at everyday and older Intel/AMD PCs. It does{" "}
+          <strong>not</strong> install inside Windows or Mac: you start the PC
+          from the stick, and the NEXUS menu appears instead. New to the words
+          we use? See <Link href="/about">About</Link>.
         </p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
@@ -91,19 +93,44 @@ export default function SetupPage() {
           </li>
 
           <li>
-            <strong>Optional: check the file is genuine</strong>
+            <strong>Optional: check the download (checksum)</strong>
             <p>
-              Download <Link href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-usb/SHA256SUMS">SHA256SUMS</Link>{" "}
-              from the same Release. After unpacking, on Linux/macOS:
+              A checksum is a fingerprint of the file. Matching it means your
+              download was not cut off or corrupted. Grab{" "}
+              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-usb/SHA256SUMS">
+                SHA256SUMS
+              </a>{" "}
+              from the same Release, then compare.
             </p>
-            <pre className="panel mono" style={{ overflow: "auto" }}>
+            <div className="panel" style={{ marginTop: "0.85rem" }}>
+              <h3>Windows (PowerShell) — one command</h3>
+              <p>
+                After unpacking, open PowerShell in your Downloads folder (or
+                put the full path in). Replace the filename if you chose 64-bit:
+              </p>
+              <pre className="panel mono" style={{ overflow: "auto" }}>
+{`Get-FileHash .\\portable-ai-os-i686.img -Algorithm SHA256`}
+              </pre>
+              <p>
+                Compare the hash to the{" "}
+                <code className="mono">portable-ai-os-i686.img</code> line in
+                SHA256SUMS (should match{" "}
+                <code className="mono">b9a3820e…5104465</code> for i686, or{" "}
+                <code className="mono">0d490700…6e8877</code> for x86_64). You
+                can also hash the <code className="mono">.xz</code> before
+                unpacking the same way.
+              </p>
+            </div>
+            <div className="panel" style={{ marginTop: "0.85rem" }}>
+              <h3>Linux / macOS</h3>
+              <pre className="panel mono" style={{ overflow: "auto" }}>
 {`sha256sum -c SHA256SUMS
-# You want a line ending in “OK” for your .img file`}
-            </pre>
+# Look for “OK” on your .img line after unpacking`}
+              </pre>
+            </div>
             <p>
-              On Windows you can skip this the first time, or use a checksum app
-              if you prefer. Skipping does not stop the stick from working; it
-              only skips the safety check.
+              Skipping the check does not stop the stick from working — it only
+              skips the safety double-check.
             </p>
           </li>
 
@@ -275,12 +302,11 @@ sync`}
         <figure className="shot">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/nexus-os-mockup-offline.png"
-            alt="Design mockup of the NEXUS OS offline hub"
+            src="/images/nexus-os-hub-screen.jpg"
+            alt="NEXUS OS hub menu on a computer screen"
           />
           <figcaption>
-            Design mockup of the hub. On the real stick you get a full-screen
-            text menu after first boot — same idea, keyboard-first.
+            Example of the hub menu after a successful USB boot.
           </figcaption>
         </figure>
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s · NEXUS OS",
   },
   description:
-    "NEXUS OS puts offline AI on a USB stick. Download, flash with Etcher, boot a spare PC — Chat, files, vault, and tools with no cloud required.",
+    "NEXUS OS: offline AI on a USB stick for old and low-spec PCs. Download, flash with Etcher, boot — local Chat, notes, and tools with no cloud account.",
 };
 
 export default function RootLayout({

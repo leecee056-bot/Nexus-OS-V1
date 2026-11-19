@@ -18,9 +18,11 @@ export function SiteFooter() {
           {" · "}
           <Link href="/setup">Setup</Link>
           {" · "}
-          <Link href="/network">Create Network account</Link>
+          <Link href="/about">About</Link>
           {" · "}
           <Link href="/docs">Docs</Link>
+          {" · "}
+          <Link href="/network">Reserve Network name</Link>
         </p>
       </div>
     </footer>
