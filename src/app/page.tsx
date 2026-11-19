@@ -6,7 +6,7 @@ export default function HomePage() {
     <>
       <section className="hero">
         <div className="shell hero-inner">
-          <p className="brand-hero cursor-blink">
+          <p className="brand-hero">
             <Image
               className="brand-hero-mark"
               src="/brand/logo.png"
@@ -15,7 +15,7 @@ export default function HomePage() {
               height={140}
               priority
             />
-            <span>NEXUS OS</span>
+            <span className="cursor-blink">NEXUS OS</span>
           </p>
           <h1>
             Offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks,
