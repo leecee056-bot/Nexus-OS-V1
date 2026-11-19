@@ -1,0 +1,6 @@
+artifact=/agent/portable-ai-os-images/portable-ai-os-i686.img
+arch=i686
+size_bytes=3221225472
+sha256=b9a3820ebed6025d81a3670897573b02ca958ac2a5b18b624b24ce0825104465
+built=2026-11-19T05:47:49Z
+note=hub payload refresh (N0-N5 TUI) without full debootstrap
