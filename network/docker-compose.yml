@@ -1,0 +1,28 @@
+# NEXUS Network — Prosody lab / VPS bring-up
+# Usage: cd network && cp .env.example .env && docker compose up -d --build
+services:
+  prosody:
+    build: .
+    container_name: nexus-prosody
+    restart: unless-stopped
+    ports:
+      - "5222:5222"   # client connections
+      - "5269:5269"   # server federation (optional)
+      - "5280:5280"   # HTTP (BOSH/upload later)
+    environment:
+      NEXUS_XMPP_DOMAIN: ${NEXUS_XMPP_DOMAIN:-nexus.network}
+      NEXUS_ADMIN_PASSWORD: ${NEXUS_ADMIN_PASSWORD:-}
+      NEXUS_ALICE_PASSWORD: ${NEXUS_ALICE_PASSWORD:-}
+      NEXUS_BOB_PASSWORD: ${NEXUS_BOB_PASSWORD:-}
+    volumes:
+      - prosody-data:/var/lib/prosody
+      - ./prosody/prosody.cfg.lua:/etc/prosody/prosody.cfg.lua:ro
+    healthcheck:
+      test: ["CMD", "prosodyctl", "status"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  prosody-data:

@@ -11,6 +11,7 @@ import {
   validateUsername,
 } from "@/lib/auth";
 import { isUsingSampleDb, sql } from "@/lib/db";
+import { provisionProsodyAccount } from "@/lib/prosody";
 import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
@@ -58,15 +59,25 @@ export async function POST(req: NextRequest) {
     if (accountId == null) {
       return NextResponse.json({ error: "Could not create account." }, { status: 500 });
     }
+
+    const provision = await provisionProsodyAccount({ username, password });
+    if (!provision.ok) {
+      // Keep the reserved website account; chat server can be retried later.
+      console.error("signup: prosody provision skipped/failed");
+    }
+
     const sessionId = await createSession(accountId);
     const token = signSessionToken(sessionId);
+    const liveChat = provision.ok && provision.provisioned;
     const res = NextResponse.json({
       ok: true,
-      message:
-        "Network servers coming — your account is reserved. Welcome @" +
-        displayJid,
+      message: liveChat
+        ? "Welcome @" + displayJid + " — Network chat account created."
+        : "Network servers coming — your account is reserved. Welcome @" +
+          displayJid,
       displayJid: `@${displayJid}`,
       sampleDb: isUsingSampleDb(),
+      chatProvisioned: liveChat,
     });
     res.cookies.set(
       SESSION_COOKIE,
