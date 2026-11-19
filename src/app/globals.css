@@ -99,12 +99,29 @@ img {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 0.08em;
   font-size: 1.15rem;
   color: var(--accent);
   text-shadow: var(--glow);
+}
+
+.brand-mark {
+  width: 2.35rem;
+  height: 2.35rem;
+  object-fit: contain;
+  image-rendering: auto;
+  flex-shrink: 0;
+  /* Transparent PNG — works on matrix (dark) and basic (light) themes */
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 35%, transparent));
+}
+
+[data-theme="basic"] .brand-mark {
+  filter: none;
 }
 
 .nav-toolbar {
@@ -251,6 +268,9 @@ img {
 }
 
 .brand-hero {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1rem;
   font-family: var(--font-display);
   font-size: clamp(3rem, 9vw, 5.5rem);
   line-height: 0.95;
@@ -258,6 +278,18 @@ img {
   color: var(--accent);
   text-shadow: var(--glow);
   margin: 0 0 1rem;
+}
+
+.brand-hero-mark {
+  width: clamp(3.25rem, 10vw, 5rem);
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 40%, transparent));
+}
+
+[data-theme="basic"] .brand-hero-mark {
+  filter: none;
 }
 
 .hero h1 {

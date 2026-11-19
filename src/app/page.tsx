@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -5,7 +6,17 @@ export default function HomePage() {
     <>
       <section className="hero">
         <div className="shell hero-inner">
-          <p className="brand-hero cursor-blink">NEXUS OS</p>
+          <p className="brand-hero cursor-blink">
+            <Image
+              className="brand-hero-mark"
+              src="/brand/logo.png"
+              alt=""
+              width={72}
+              height={140}
+              priority
+            />
+            <span>NEXUS OS</span>
+          </p>
           <h1>
             Offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks,
             and other low‑spec machines.
