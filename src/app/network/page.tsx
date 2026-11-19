@@ -18,10 +18,11 @@ export default function NetworkPage() {
         </p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          Chat rooms are not online yet. Creating an account only{" "}
-          <strong>reserves</strong> a name like{" "}
-          <span className="mono">@you@nexus.network</span> for when servers
-          launch. You can still download and use the USB OS today.
+          Chat rooms are not online yet. Creating an account{" "}
+          <strong>reserves your username</strong> (like{" "}
+          <span className="mono">@you@nexus.network</span>). Email is contact
+          only and not verified yet. You can still download and use the USB OS
+          today.
         </div>
 
         {sample ? (

@@ -28,6 +28,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
         body: JSON.stringify(body),
       });
       const data = (await res.json()) as {
@@ -84,6 +85,10 @@ export function AuthForm({ mode }: { mode: Mode }) {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+            <span className="hint">
+              Contact only for now — not verified, and does not lock the address
+              for others. Your username is what gets reserved.
+            </span>
           </label>
         </>
       ) : (
@@ -132,7 +137,10 @@ export function SignOutButton() {
 
   async function signOut() {
     setPending(true);
-    await fetch("/api/auth/signout", { method: "POST" });
+    await fetch("/api/auth/signout", {
+      method: "POST",
+      credentials: "same-origin",
+    });
     router.push("/");
     router.refresh();
   }

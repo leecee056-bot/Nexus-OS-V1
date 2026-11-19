@@ -1,9 +1,10 @@
 CREATE TABLE IF NOT EXISTS accounts (
   id BIGSERIAL PRIMARY KEY,
   username TEXT NOT NULL UNIQUE,
-  email TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL,
   password_hash TEXT NOT NULL,
   display_jid TEXT NOT NULL,
+  email_verified BOOLEAN NOT NULL DEFAULT FALSE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   last_login_at TIMESTAMPTZ
 );

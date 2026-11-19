@@ -9,12 +9,16 @@ import {
 } from "@/lib/auth";
 import { isUsingSampleDb, sql } from "@/lib/db";
 import { rateLimit } from "@/lib/rate-limit";
+import {
+  assertSameOrigin,
+  clientIpKey,
+  csrfRejected,
+} from "@/lib/request-guard";
 
 export async function POST(req: NextRequest) {
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    req.headers.get("x-real-ip") ||
-    "local";
+  if (!assertSameOrigin(req)) return csrfRejected();
+
+  const ip = clientIpKey(req);
   const limited = rateLimit(`signin:${ip}`, 20, 15 * 60 * 1000);
   if (!limited.ok) {
     return NextResponse.json(
@@ -39,17 +43,28 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const rows = await sql<{
+  // Prefer exact username match; email login only when a single row matches.
+  const byUser = await sql<{
     id: string | number;
     password_hash: string;
     display_jid: string;
   }>(
-    `SELECT id, password_hash, display_jid FROM accounts
-     WHERE username = $1 OR email = $1
-     LIMIT 1`,
+    `SELECT id, password_hash, display_jid FROM accounts WHERE username = $1 LIMIT 1`,
     [login],
   );
-  const account = rows[0];
+  let account = byUser[0];
+  if (!account) {
+    const byEmail = await sql<{
+      id: string | number;
+      password_hash: string;
+      display_jid: string;
+    }>(
+      `SELECT id, password_hash, display_jid FROM accounts WHERE email = $1 LIMIT 2`,
+      [login],
+    );
+    if (byEmail.length === 1) account = byEmail[0];
+  }
+
   if (!account || !(await verifyPassword(password, account.password_hash))) {
     return NextResponse.json(
       { error: "Invalid credentials." },
@@ -64,7 +79,7 @@ export async function POST(req: NextRequest) {
   const token = signSessionToken(sessionId);
   const res = NextResponse.json({
     ok: true,
-    message: "Signed in. Network servers coming — account reserved.",
+    message: "Signed in. Network servers coming — username reserved.",
     displayJid: `@${account.display_jid}`,
     sampleDb: isUsingSampleDb(),
   });

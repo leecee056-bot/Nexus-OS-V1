@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import {
   SESSION_COOKIE,
@@ -6,8 +6,11 @@ import {
   parseSessionToken,
   sessionCookieOptions,
 } from "@/lib/auth";
+import { assertSameOrigin, csrfRejected } from "@/lib/request-guard";
 
-export async function POST() {
+export async function POST(req: NextRequest) {
+  if (!assertSameOrigin(req)) return csrfRejected();
+
   const jar = await cookies();
   const raw = jar.get(SESSION_COOKIE)?.value;
   if (raw) {

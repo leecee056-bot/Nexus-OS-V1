@@ -3,6 +3,7 @@ import { PGlite } from "@electric-sql/pglite";
 import pg from "pg";
 
 const databaseUrl = process.env.DATABASE_URL?.trim() ?? "";
+const isProd = process.env.NODE_ENV === "production";
 let pool: pg.Pool | undefined;
 
 type GlobalDb = {
@@ -11,8 +12,16 @@ type GlobalDb = {
 
 const g = globalThis as typeof globalThis & GlobalDb;
 
+/**
+ * Sample/PGlite is for local `next dev` only.
+ * Production never falls back to an in-memory DB — DATABASE_URL is required
+ * (Cursor sets it when cursor-app.json requests Postgres).
+ */
 export function isUsingSampleDb(): boolean {
-  return databaseUrl === "";
+  if (databaseUrl !== "") return false;
+  // Never advertise sampleDb in production, even if misconfigured.
+  if (isProd) return false;
+  return true;
 }
 
 export async function sql<T = Record<string, unknown>>(
@@ -23,6 +32,13 @@ export async function sql<T = Record<string, unknown>>(
     pool ??= new pg.Pool({ connectionString: databaseUrl, max: 5 });
     return (await pool.query(text, params)).rows as T[];
   }
+
+  if (isProd) {
+    throw new Error(
+      "DATABASE_URL is required in production. Refusing ephemeral sample database.",
+    );
+  }
+
   g.nexusPglite ??= startLocal().catch((error: unknown) => {
     g.nexusPglite = undefined;
     throw error;

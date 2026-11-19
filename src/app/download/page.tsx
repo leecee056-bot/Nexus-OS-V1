@@ -76,6 +76,9 @@ export default function DownloadPage() {
             <a className="btn btn-ghost" href="/guides/usb-flash.md">
               Short flash notes
             </a>
+            <Link className="btn btn-ghost" href="/setup">
+              Full setup guide
+            </Link>
           </div>
         </div>
       </div>

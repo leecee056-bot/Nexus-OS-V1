@@ -13,12 +13,16 @@ import {
 import { isUsingSampleDb, sql } from "@/lib/db";
 import { provisionProsodyAccount } from "@/lib/prosody";
 import { rateLimit } from "@/lib/rate-limit";
+import {
+  assertSameOrigin,
+  clientIpKey,
+  csrfRejected,
+} from "@/lib/request-guard";
 
 export async function POST(req: NextRequest) {
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    req.headers.get("x-real-ip") ||
-    "local";
+  if (!assertSameOrigin(req)) return csrfRejected();
+
+  const ip = clientIpKey(req);
   const limited = rateLimit(`signup:${ip}`, 8, 15 * 60 * 1000);
   if (!limited.ok) {
     return NextResponse.json(
@@ -50,8 +54,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const rows = await sql<{ id: string | number }>(
-      `INSERT INTO accounts (username, email, password_hash, display_jid)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO accounts (username, email, password_hash, display_jid, email_verified)
+       VALUES ($1, $2, $3, $4, FALSE)
        RETURNING id`,
       [username, email, passwordHash, displayJid],
     );
@@ -62,7 +66,6 @@ export async function POST(req: NextRequest) {
 
     const provision = await provisionProsodyAccount({ username, password });
     if (!provision.ok) {
-      // Keep the reserved website account; chat server can be retried later.
       console.error("signup: prosody provision skipped/failed");
     }
 
@@ -73,11 +76,13 @@ export async function POST(req: NextRequest) {
       ok: true,
       message: liveChat
         ? "Welcome @" + displayJid + " — Network chat account created."
-        : "Network servers coming — your account is reserved. Welcome @" +
-          displayJid,
+        : "Username reserved for @" +
+          displayJid +
+          ". Email is stored unverified (not exclusive) until Network launch.",
       displayJid: `@${displayJid}`,
       sampleDb: isUsingSampleDb(),
       chatProvisioned: liveChat,
+      emailVerified: false,
     });
     res.cookies.set(
       SESSION_COOKIE,
@@ -89,7 +94,7 @@ export async function POST(req: NextRequest) {
     const msg = err instanceof Error ? err.message : String(err);
     if (/unique|duplicate/i.test(msg)) {
       return NextResponse.json(
-        { error: "Username or email already reserved." },
+        { error: "That username is already reserved." },
         { status: 409 },
       );
     }
