@@ -55,8 +55,9 @@ export default function FeaturesPage() {
           <li>
             <strong>Knowledge Vault</strong>
             <span>
-              Your searchable notes: import text/markdown, search, optionally use
-              them in Chat.
+              Searchable notes with a small bundled starter pack (guide,
+              glossary, how-tos). Import more text/markdown, rebuild the index,
+              optionally use hits in Chat. Not a full Wikipedia dump.
             </span>
           </li>
           <li>

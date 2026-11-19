@@ -271,6 +271,14 @@ sync`}
               (or arrows + Enter, depending on the screen) to open Chat, Files,
               Vault, Agents, Games, Settings, and Pixel Art.
             </p>
+            <p style={{ marginTop: "0.75rem" }}>
+              <strong>Knowledge Vault</strong> already includes a small starter
+              pack (guide, glossary, flash/boot and Chat how-tos) — not a full
+              wiki. Open Vault to read them, or add your own{" "}
+              <span className="mono">.txt</span> / <span className="mono">.md</span>{" "}
+              files and rebuild the index. See the{" "}
+              <Link href="/faq#vault">FAQ</Link>.
+            </p>
           </li>
 
           <li>
