@@ -747,14 +747,15 @@ img {
 .brand-wordmark.is-basic::after {
   content: "";
   display: inline-block;
-  width: 0.12em;
-  height: 0.78em;
-  margin-left: 0.22rem;
-  margin-bottom: 0.06em;
-  vertical-align: -0.05em;
+  width: 2px;
+  height: 0.72em;
+  margin-left: 0.28rem;
+  margin-bottom: 0.04em;
+  vertical-align: baseline;
   background: var(--accent);
-  opacity: 0.45;
+  opacity: 0.4;
   animation: none;
+  border-radius: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
