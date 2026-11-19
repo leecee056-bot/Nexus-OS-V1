@@ -1,30 +1,115 @@
+import Image from "next/image";
 import Link from "next/link";
+
+const PRODUCT = [
+  { href: "/about", label: "About" },
+  { href: "/features", label: "Features" },
+  { href: "/download", label: "Download" },
+  { href: "/setup", label: "Setup" },
+];
+
+const RESOURCES = [
+  { href: "/docs", label: "Docs" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/network", label: "Network" },
+];
+
+const ACCOUNT = [
+  { href: "/signin", label: "Sign in" },
+  { href: "/network", label: "Reserve a username" },
+  { href: "/account", label: "Account" },
+];
+
+const LEGAL = [
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms of use" },
+];
 
 export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="shell">
-        <p className="disclaimer">
-          NEXUS OS boots from a USB stick (PC) or microSD card (Raspberry Pi). AI
-          Chat and the other apps run on that machine with no cloud required.
-          Online Network chat is optional and not live yet — signing up here only
-          reserves a future username.
-        </p>
-        <p className="disclaimer" style={{ marginTop: "0.85rem" }}>
-          Not affiliated with unrelated products or companies that use the name
-          “Nexus.” This site is the product home for the NEXUS OS project.
-        </p>
-        <p style={{ marginTop: "1.25rem" }}>
-          <Link href="/download">Download</Link>
-          {" · "}
-          <Link href="/setup">Setup</Link>
-          {" · "}
-          <Link href="/about">About</Link>
-          {" · "}
-          <Link href="/docs">Docs</Link>
-          {" · "}
-          <Link href="/network">Optional username (later)</Link>
-        </p>
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <Link href="/" className="footer-brand-link">
+              <Image
+                className="footer-mark"
+                src="/brand/logo-mark.png"
+                alt=""
+                width={36}
+                height={36}
+              />
+              <span>NEXUS OS</span>
+            </Link>
+            <p>
+              Offline AI on a USB stick or Raspberry Pi — for old PCs,
+              cyberdecks, and other low‑spec machines.
+            </p>
+          </div>
+
+          <nav className="footer-col" aria-label="Product">
+            <h3>Product</h3>
+            <ul>
+              {PRODUCT.map((link) => (
+                <li key={link.href + link.label}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav className="footer-col" aria-label="Resources">
+            <h3>Resources</h3>
+            <ul>
+              {RESOURCES.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav className="footer-col" aria-label="Account">
+            <h3>Account</h3>
+            <ul>
+              {ACCOUNT.map((link) => (
+                <li key={link.href + link.label}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav className="footer-col" aria-label="Legal">
+            <h3>Legal</h3>
+            <ul>
+              {LEGAL.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        <div className="footer-bottom">
+          <p className="disclaimer">
+            NEXUS OS boots from a USB stick (PC) or microSD card (Raspberry Pi).
+            AI Chat and the other apps run on that machine with no cloud
+            required. Online Network chat is optional and not live yet — signing
+            up here only reserves a future username.
+          </p>
+          <p className="disclaimer">
+            Not affiliated with unrelated products or companies that use the name
+            “Nexus.” This site is the product home for the NEXUS OS project.
+          </p>
+          <p className="footer-copy">
+            © {new Date().getFullYear()} NEXUS OS ·{" "}
+            <Link href="/privacy">Privacy</Link>
+            {" · "}
+            <Link href="/terms">Terms</Link>
+          </p>
+        </div>
       </div>
     </footer>
   );
