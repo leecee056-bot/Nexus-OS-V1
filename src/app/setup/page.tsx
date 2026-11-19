@@ -17,23 +17,34 @@ export default function SetupPage() {
           <li>
             <strong>Pick an architecture</strong>
             <p>
-              <strong>i686</strong> for true 32-bit XP-era boxes;{" "}
-              <strong>x86_64</strong> for 64-bit capable CPUs (SSE4.2+). See{" "}
+              Prefer <strong>i686</strong> for true 32-bit XP-era boxes;{" "}
+              <strong>x86_64</strong> for 64-bit capable CPUs (SSE4.2+). Get the{" "}
+              <code className="mono">.img.xz</code> from{" "}
               <Link href="/download">Download</Link>.
             </p>
+          </li>
+          <li>
+            <strong>Decompress</strong>
+            <p>
+              GitHub serves compressed images. Unpack before flashing:
+            </p>
+            <pre className="panel mono" style={{ overflow: "auto" }}>
+{`xz -d portable-ai-os-i686.img.xz
+# Windows: extract with 7-Zip → portable-ai-os-i686.img`}
+            </pre>
           </li>
           <li>
             <strong>Verify the image</strong>
             <pre className="panel mono" style={{ overflow: "auto" }}>
 {`sha256sum -c SHA256SUMS
-# expect: portable-ai-os-*.img: OK`}
+# expect: portable-ai-os-*.img: OK (after xz -d)`}
             </pre>
           </li>
           <li>
-            <strong>Flash with dd</strong>
+            <strong>Flash with dd or Etcher</strong>
             <p>
               Identify the stick carefully (<code className="mono">lsblk</code>
-              ). Whole disk, not a partition:
+              ). Whole disk, not a partition — this erases the USB:
             </p>
             <pre className="panel mono" style={{ overflow: "auto" }}>
 {`sudo dd if=portable-ai-os-i686.img \\
@@ -41,8 +52,9 @@ export default function SetupPage() {
 sync`}
             </pre>
             <p>
-              Or use <strong>balenaEtcher</strong> / Raspberry Pi Imager (custom
-              .img).
+              Or use <strong>balenaEtcher</strong> / Raspberry Pi Imager and
+              select the decompressed <code className="mono">.img</code> (not
+              the <code className="mono">.xz</code>).
             </p>
           </li>
           <li>

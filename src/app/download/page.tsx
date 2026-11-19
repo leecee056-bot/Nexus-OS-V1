@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ARTIFACTS, BUILD_NOTE } from "@/lib/artifacts";
+import {
+  ARTIFACTS,
+  BUILD_NOTE,
+  RELEASE_PAGE,
+  RELEASE_SHA256SUMS,
+} from "@/lib/artifacts";
 
 export const metadata: Metadata = { title: "Download" };
 
@@ -12,10 +17,12 @@ export default function DownloadPage() {
         <p className="lede">{BUILD_NOTE}</p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          Full USB images (~3 GiB each) live on the image-builder host at{" "}
-          <code className="mono">/agent/portable-ai-os-images/</code>. This site
-          hosts checksums, artifact metadata, flash docs, and a small demo
-          package you can download now.
+          Files are <strong>.xz compressed</strong>. After download: decompress
+          with <code className="mono">xz -d</code> (Linux/macOS) or 7-Zip
+          (Windows), then flash the resulting <code className="mono">.img</code>{" "}
+          with balenaEtcher or <code className="mono">dd</code>. Prefer{" "}
+          <strong>i686</strong> for XP-era 32-bit PCs. Full steps:{" "}
+          <Link href="/setup">Setup tutorial</Link>.
         </div>
 
         {ARTIFACTS.map((a) => (
@@ -23,22 +30,22 @@ export default function DownloadPage() {
             <h3>{a.label}</h3>
             <p>{a.guidance}</p>
             <p>
-              <strong>File:</strong> <span className="mono">{a.filename}</span>
+              <strong>Download:</strong>{" "}
+              <span className="mono">{a.downloadName}</span>
               <br />
-              <strong>Size:</strong> {a.sizeLabel} ({a.sizeBytes.toLocaleString()}{" "}
-              bytes)
+              <strong>Size:</strong> {a.sizeLabel}
               <br />
-              <strong>SHA256:</strong>{" "}
+              <strong>SHA256 (.xz):</strong>{" "}
+              <span className="mono hash">{a.sha256xz}</span>
+              <br />
+              <strong>SHA256 (.img after decompress):</strong>{" "}
               <span className="mono hash">{a.sha256}</span>
             </p>
-            <p className="hint" style={{ color: "var(--fg-dim)" }}>
-              Builder path: <span className="mono">{a.builderPath}</span>
-            </p>
             <div className="cta-row" style={{ marginTop: "0.85rem" }}>
-              <a className="btn btn-ghost" href={`/downloads/ARTIFACT-${a.arch}.txt`}>
-                Artifact metadata
+              <a className="btn" href={a.downloadUrl}>
+                Download {a.arch}
               </a>
-              <a className="btn btn-ghost" href="/downloads/SHA256SUMS">
+              <a className="btn btn-ghost" href={RELEASE_SHA256SUMS}>
                 SHA256SUMS
               </a>
             </div>
@@ -46,40 +53,37 @@ export default function DownloadPage() {
         ))}
 
         <div className="panel" style={{ marginTop: "1.5rem" }}>
-          <h3>Get the image from the builder</h3>
+          <h3>Flash checklist</h3>
           <ol className="steps">
             <li>
-              Ask the NEXUS image builder / release channel for{" "}
-              <code className="mono">portable-ai-os-x86_64.img</code> or{" "}
-              <code className="mono">portable-ai-os-i686.img</code>.
+              Download the <code className="mono">.img.xz</code> for your PC
+              (i686 for XP-era 32-bit).
+            </li>
+            <li>
+              Decompress:{" "}
+              <code className="mono">xz -d portable-ai-os-*.img.xz</code> or
+              extract with 7-Zip.
             </li>
             <li>
               Verify:{" "}
-              <code className="mono">
-                sha256sum -c SHA256SUMS
-              </code>{" "}
-              using the sums from this page.
+              <code className="mono">sha256sum -c SHA256SUMS</code> (raw{" "}
+              <code className="mono">.img</code> lines after decompress).
             </li>
             <li>
-              Flash with dd or balenaEtcher — see the{" "}
-              <Link href="/setup">Setup tutorial</Link>.
+              Flash with Etcher or{" "}
+              <code className="mono">dd</code> — see{" "}
+              <Link href="/setup">Setup</Link>.
             </li>
           </ol>
-        </div>
-
-        <div className="panel" style={{ marginTop: "1.5rem" }}>
-          <h3>Demo package (available now)</h3>
-          <p>
-            Small sample bundle: checksums, flash guide, hub smoke frame text, and
-            PXG sample art. Not a bootable image — use it to verify your download
-            pipeline and learn the flash steps.
-          </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
-            <a className="btn" href="/downloads/nexus-os-demo-package.tar.gz">
-              Download demo package
+            <a className="btn btn-ghost" href={RELEASE_PAGE}>
+              GitHub Release page
             </a>
             <a className="btn btn-ghost" href="/guides/usb-flash.md">
               Flash guide (markdown)
+            </a>
+            <a className="btn btn-ghost" href="/downloads/nexus-os-demo-package.tar.gz">
+              Demo package (not bootable)
             </a>
           </div>
         </div>
