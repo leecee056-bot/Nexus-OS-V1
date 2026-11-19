@@ -14,6 +14,10 @@ env -u DATABASE_URL npm run dev
 
 Without `DATABASE_URL`, accounts use in-memory PGlite (sample data). Published Cursor apps get Postgres via `cursor-app.json`.
 
+## Network chat server (separate)
+
+Prosody lab/VPS pack lives in [`network/`](network/). The website reserves `@user@nexus.network` accounts; real chat needs that Prosody box on a small VPS with DNS. See `network/README.md`.
+
 ## Stack
 
 Next.js 15 · Postgres/PGlite · bcrypt password hashing · httpOnly sessions
