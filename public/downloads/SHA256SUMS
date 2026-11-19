@@ -1,8 +1,8 @@
-# NEXUS OS USB — verify after download / decompress
-# Compressed release assets:
-96a164b8e94b3dc9d12614805d6e4777d5ec7751e8337e79c6c04569f9a0b1ca  portable-ai-os-x86_64.img.xz
-ac3afb547bd223a121068ea73e9f3c46e1f2ce078553001171b8455b15d7aef4  portable-ai-os-i686.img.xz
+# NEXUS OS USB v1.0.1 — Knowledge Vault starter pack
+# Compressed:
+3a12751be42dcc31d8118424de2cddd00bf2c4f4e65293e4cdf152f219e77814  portable-ai-os-x86_64.img.xz
+8c4db63a35dd718968f8890503f82e83e7aec325e57af79404dd478de1a7b2d8  portable-ai-os-i686.img.xz
 
-# Raw .img after: xz -d <file>.img.xz
-0d490700300b91b7f4d1d983ee1d39f75d6f27248200a2aeffc1d0e1276e8877  portable-ai-os-x86_64.img
-b9a3820ebed6025d81a3670897573b02ca958ac2a5b18b624b24ce0825104465  portable-ai-os-i686.img
+# Raw .img after xz -d:
+a397f4cf303c35d9add60651dc562823662f5bd9d03b3c0ad1380e5dddfd06c5  portable-ai-os-x86_64.img
+fb2b39abeb025a1040178dd1eb327206538df2c31ba1cc2a05089bb7ba661e43  portable-ai-os-i686.img
