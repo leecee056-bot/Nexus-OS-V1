@@ -5,20 +5,20 @@ export default function HomePage() {
     <section className="hero">
       <div className="shell hero-inner">
         <p className="brand-hero cursor-blink">NEXUS OS</p>
-        <h1>Your AI computer. Anywhere.</h1>
+        <h1>Your AI computer on a USB stick.</h1>
         <p>
-          Bootable offline-first Linux on a USB stick — Matrix TUI hub, local
-          llama.cpp, vault, agents, and games. No cloud required.
+          Download, put it on a stick, boot any spare PC — chat with a local AI,
+          manage files, and use built-in tools with no cloud account required.
         </p>
         <div className="cta-row">
           <Link className="btn" href="/download">
             Download
           </Link>
           <Link className="btn btn-ghost" href="/setup">
-            Get started
+            Setup guide
           </Link>
           <Link className="btn btn-ghost" href="/network">
-            Create Network account
+            Reserve Network name
           </Link>
         </div>
       </div>

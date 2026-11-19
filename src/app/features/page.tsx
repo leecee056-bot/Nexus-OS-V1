@@ -7,59 +7,69 @@ export default function FeaturesPage() {
   return (
     <section className="section">
       <div className="shell">
-        <h2>What ships today</h2>
+        <h2>What NEXUS OS does</h2>
         <p className="lede">
-          Honest inventory from hub smoke tests. Mockups are design targets —
-          claims below match the working USB hub TUI.
+          Honest list of what works on the USB stick today. Optional online
+          Network chat is called out separately — it is not required for offline
+          AI.
         </p>
         <ul className="feature-list">
           <li>
-            <strong>USB boot + offline AI</strong>
+            <strong>Boots from USB</strong>
             <span>
-              Flashable Linux images (x86_64 / i686). llama.cpp on loopback;
-              bundled SmolLM2 135M. Works without internet.
+              Turns a flash drive into a small Linux system you start instead of
+              (or alongside) Windows. Works offline after you flash it.
             </span>
           </li>
           <li>
-            <strong>NEXUS hub TUI</strong>
+            <strong>Local AI Chat</strong>
             <span>
-              Main menu, one maximised app at a time, Matrix + basic themes,
-              letter shortcuts. Host smoke: SMOKE_HUB_OK.
+              Talk to an AI that runs on the PC itself (llama.cpp). A small
+              starter model is included; you can add others later on the stick.
             </span>
           </li>
           <li>
-            <strong>AI Chat</strong>
-            <span>Local chat against llama-server; optional vault RAG cites.</span>
+            <strong>Main menu hub</strong>
+            <span>
+              Keyboard-friendly full-screen menu. Open one app at a time. Themes:
+              Matrix green or plain high-contrast.
+            </span>
           </li>
           <li>
-            <strong>File Manager</strong>
-            <span>AI_DATA-scoped browse, preview, import paths for models/docs.</span>
+            <strong>Files</strong>
+            <span>
+              Browse and manage files on the stick’s data area — docs, images,
+              and extra models.
+            </span>
           </li>
           <li>
             <strong>Knowledge Vault</strong>
-            <span>SQLite FTS5; import txt/md; rebuild index; search UI.</span>
+            <span>
+              Import text/markdown notes, search them, and optionally use them
+              as context in Chat.
+            </span>
           </li>
           <li>
-            <strong>Agents &amp; Tools</strong>
+            <strong>Agents &amp; tools</strong>
             <span>
-              Allowlisted tools only (calc, vault, files, notes, sysinfo, models,
-              PXG) — no arbitrary shell.
+              Small helpers with a fixed allow-list (calculator, vault, files,
+              notes, system info, models, pixel art) — not open shell access.
             </span>
           </li>
           <li>
             <strong>Games</strong>
-            <span>Snake + Minesweeper; Esc unloads; no AI when idle.</span>
+            <span>Simple built-ins (Snake, Minesweeper) that unload when you leave.</span>
           </li>
           <li>
-            <strong>Pixel Art / Image Lab</strong>
+            <strong>Pixel art lab</strong>
             <span>
-              PXG pixel generation + prompt surface. Not neural Image Lab
-              generation.
+              Optional tiny pixel-style image toys. Not a full cloud image
+              generator.
             </span>
           </li>
           <li>
-            <strong>Settings &amp; System Monitor</strong>
-            <span>Theme, model, storage prefs; hardware probe views.</span>
+            <strong>Settings &amp; monitor</strong>
+            <span>Theme, model choice, storage prefs, and basic hardware info.</span>
           </li>
           <li>
             <strong>
@@ -67,12 +77,22 @@ export default function FeaturesPage() {
               <span className="badge badge-coming">coming</span>
             </strong>
             <span>
-              Menu stub + Settings toggle only. Real XMPP client is not shipped.
-              Reserve an identity on the{" "}
-              <Link href="/network">Network page</Link> — servers launch later.
+              Future optional community chat. On the stick it is only a stub for
+              now. You can{" "}
+              <Link href="/network">reserve a name</Link> on this website; online
+              rooms are not live yet.
             </span>
           </li>
         </ul>
+
+        <div className="cta-row" style={{ marginTop: "1.5rem" }}>
+          <Link className="btn" href="/setup">
+            Read the setup guide
+          </Link>
+          <Link className="btn btn-ghost" href="/download">
+            Download
+          </Link>
+        </div>
 
         <figure className="shot">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -81,8 +101,8 @@ export default function FeaturesPage() {
             alt="NEXUS OS offline hub design mockup"
           />
           <figcaption>
-            Design mockup — offline hub vision. Live UI is the curses TUI on the
-            USB image.
+            Design mockup of the offline hub. The live stick uses a text menu
+            with the same job: pick an app and go.
           </figcaption>
         </figure>
       </div>

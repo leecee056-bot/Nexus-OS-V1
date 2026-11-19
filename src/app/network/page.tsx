@@ -13,15 +13,15 @@ export default function NetworkPage() {
       <div className="shell">
         <h2>NEXUS Network</h2>
         <p className="lede">
-          Optional community layer for the USB OS — XMPP + Prosody off-stick,
-          thin client on the stick later. Offline AI never depends on it.
+          Optional online community for NEXUS OS users. The USB stick works fully
+          offline without this — Network is extra, for later.
         </p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          Network servers coming — your account is reserved. There are no live
-          chatrooms or presence yet. Creating an account stores identity for
-          future <span className="mono">@user@nexus.network</span> login when
-          servers launch.
+          Chat rooms are not online yet. Creating an account only{" "}
+          <strong>reserves</strong> a name like{" "}
+          <span className="mono">@you@nexus.network</span> for when servers
+          launch. You can still download and use the USB OS today.
         </div>
 
         {sample ? (

@@ -5,10 +5,9 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="shell">
         <p className="disclaimer">
-          NEXUS OS is an offline-first portable AI Linux USB OS. AI runs locally
-          on your machine — no cloud required for Chat, Vault, Agents, or Games.
-          NEXUS Network is optional and off by default; chat servers are not live
-          yet. Account signup on this site reserves future Network identity only.
+          NEXUS OS is a USB stick you boot into — AI Chat and the other apps run
+          on your PC with no cloud required. Online Network chat is optional and
+          not live yet; signing up here only reserves a future name.
         </p>
         <p className="disclaimer" style={{ marginTop: "0.85rem" }}>
           Not affiliated with unrelated products or companies that use the name

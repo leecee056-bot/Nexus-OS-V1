@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s · NEXUS OS",
   },
   description:
-    "NEXUS OS is a portable offline-first AI Linux USB OS with a Matrix TUI hub, llama.cpp, and hub apps. Optional Network accounts reserved for future servers.",
+    "NEXUS OS puts offline AI on a USB stick. Download, flash with Etcher, boot a spare PC — Chat, files, vault, and tools with no cloud required.",
 };
 
 export default function RootLayout({

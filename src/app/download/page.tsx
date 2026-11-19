@@ -17,12 +17,12 @@ export default function DownloadPage() {
         <p className="lede">{BUILD_NOTE}</p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          Files are <strong>.xz compressed</strong>. After download: decompress
-          with <code className="mono">xz -d</code> (Linux/macOS) or 7-Zip
-          (Windows), then flash the resulting <code className="mono">.img</code>{" "}
-          with balenaEtcher or <code className="mono">dd</code>. Prefer{" "}
-          <strong>i686</strong> for XP-era 32-bit PCs. Full steps:{" "}
-          <Link href="/setup">Setup tutorial</Link>.
+          These files are <strong>compressed</strong> (
+          <code className="mono">.img.xz</code>). Unpack them first (7-Zip on
+          Windows, or <code className="mono">xz -d</code>), then flash the{" "}
+          <code className="mono">.img</code> with balenaEtcher. Prefer the{" "}
+          <strong>32-bit / older PC</strong> build for XP-era machines. Step-by-step:{" "}
+          <Link href="/setup">Setup guide</Link>.
         </div>
 
         {ARTIFACTS.map((a) => (
@@ -30,60 +30,51 @@ export default function DownloadPage() {
             <h3>{a.label}</h3>
             <p>{a.guidance}</p>
             <p>
-              <strong>Download:</strong>{" "}
-              <span className="mono">{a.downloadName}</span>
+              <strong>File:</strong> <span className="mono">{a.downloadName}</span>
               <br />
               <strong>Size:</strong> {a.sizeLabel}
               <br />
-              <strong>SHA256 (.xz):</strong>{" "}
+              <strong>Checksum (.xz):</strong>{" "}
               <span className="mono hash">{a.sha256xz}</span>
               <br />
-              <strong>SHA256 (.img after decompress):</strong>{" "}
+              <strong>Checksum (.img after unpack):</strong>{" "}
               <span className="mono hash">{a.sha256}</span>
             </p>
             <div className="cta-row" style={{ marginTop: "0.85rem" }}>
               <a className="btn" href={a.downloadUrl}>
-                Download {a.arch}
+                Download {a.label}
               </a>
               <a className="btn btn-ghost" href={RELEASE_SHA256SUMS}>
-                SHA256SUMS
+                Checksums file
               </a>
             </div>
           </div>
         ))}
 
         <div className="panel" style={{ marginTop: "1.5rem" }}>
-          <h3>Flash checklist</h3>
+          <h3>After you download</h3>
           <ol className="steps">
+            <li>Unpack the <code className="mono">.xz</code> → get a{" "}
+              <code className="mono">.img</code>.</li>
             <li>
-              Download the <code className="mono">.img.xz</code> for your PC
-              (i686 for XP-era 32-bit).
+              Optional: verify with the checksums file (see{" "}
+              <Link href="/setup">Setup</Link>).
             </li>
             <li>
-              Decompress:{" "}
-              <code className="mono">xz -d portable-ai-os-*.img.xz</code> or
-              extract with 7-Zip.
+              Flash the <code className="mono">.img</code> to a USB stick with
+              Etcher (erases the stick).
             </li>
-            <li>
-              Verify:{" "}
-              <code className="mono">sha256sum -c SHA256SUMS</code> (raw{" "}
-              <code className="mono">.img</code> lines after decompress).
-            </li>
-            <li>
-              Flash with Etcher or{" "}
-              <code className="mono">dd</code> — see{" "}
-              <Link href="/setup">Setup</Link>.
-            </li>
+            <li>Restart the PC from USB — details in Setup.</li>
           </ol>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
+            <Link className="btn" href="/setup">
+              Open Setup guide
+            </Link>
             <a className="btn btn-ghost" href={RELEASE_PAGE}>
-              GitHub Release page
+              All files on GitHub
             </a>
             <a className="btn btn-ghost" href="/guides/usb-flash.md">
-              Flash guide (markdown)
-            </a>
-            <a className="btn btn-ghost" href="/downloads/nexus-os-demo-package.tar.gz">
-              Demo package (not bootable)
+              Short flash notes
             </a>
           </div>
         </div>
