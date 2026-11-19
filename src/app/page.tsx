@@ -98,10 +98,10 @@ export default function HomePage() {
               </p>
             </div>
             <div className="panel">
-              <h3>Not yet</h3>
+              <h3>Coming next</h3>
               <p>
-                Raspberry Pi / ARM images and live online Network chat are not in
-                this release. Focus is PC USB boot.
+                Raspberry Pi 4/5 images are being built now. Live Network chat
+                and older Pi boards come later. PC USB downloads work today.
               </p>
             </div>
           </div>

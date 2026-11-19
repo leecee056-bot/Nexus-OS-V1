@@ -40,9 +40,9 @@ export default function AboutPage() {
             <strong>Built for low-spec machines</strong>
             <span>
               Aimed at older Intel/AMD PCs (including many XP-era 32-bit boxes)
-              as well as newer ones. Images for Raspberry Pi and other ARM boards
-              are <em>not</em> in this release yet — today&apos;s downloads are
-              for regular PC USB boot (32-bit and 64-bit).
+              as well as newer ones. <strong>Raspberry Pi 4/5 images are being
+              built next</strong> (not downloadable yet). Today&apos;s public
+              downloads are PC USB (32-bit and 64-bit).
             </span>
           </li>
           <li>
@@ -196,10 +196,10 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>Not included yet</strong>
+            <strong>Coming next / not included yet</strong>
             <span>
-              Raspberry Pi / ARM images, Apple Silicon Macs as the host OS for
-              the stick, and live Network chat servers.
+              Raspberry Pi 4/5 (64-bit) images are in progress. Older Pi /
+              armv7, Apple Silicon as a target, and live Network chat are later.
             </span>
           </li>
         </ul>
