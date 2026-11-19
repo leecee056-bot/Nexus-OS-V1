@@ -58,12 +58,23 @@ export async function verifyPassword(
   return bcrypt.compare(password, hash);
 }
 
+/** Ephemeral only for local/dev sample runs — never shipped as a fixed value. */
+let ephemeralDevSecret: string | null = null;
+
 function sessionSecret(): string {
-  return (
-    process.env.SESSION_SECRET?.trim() ||
-    process.env.DATABASE_URL?.trim() ||
-    "nexus-local-dev-only-secret"
-  );
+  const fromEnv = process.env.SESSION_SECRET?.trim();
+  if (fromEnv) return fromEnv;
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "SESSION_SECRET must be set. Add it in Cursor app secrets before serving auth.",
+    );
+  }
+
+  if (!ephemeralDevSecret) {
+    ephemeralDevSecret = randomBytes(32).toString("hex");
+  }
+  return ephemeralDevSecret;
 }
 
 export function signSessionToken(sessionId: string): string {
