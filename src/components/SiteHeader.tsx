@@ -12,6 +12,7 @@ const LINKS = [
   { href: "/download", label: "Download" },
   { href: "/setup", label: "Setup" },
   { href: "/docs", label: "Docs" },
+  { href: "/faq", label: "FAQ" },
   { href: "/network", label: "Network" },
   { href: "/signin", label: "Sign in" },
 ];

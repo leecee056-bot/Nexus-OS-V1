@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FAQ_ITEMS, FAQ_TEASER_IDS } from "@/lib/faq";
 
 export default function HomePage() {
+  const teaser = FAQ_ITEMS.filter((item) =>
+    (FAQ_TEASER_IDS as readonly string[]).includes(item.id),
+  );
+
   return (
     <>
       <section className="hero">
@@ -160,6 +165,25 @@ export default function HomePage() {
                 you add bigger models later.
               </p>
             </div>
+          </div>
+
+          <h2>FAQ</h2>
+          <p className="lede">
+            Common questions before you flash a stick or card.{" "}
+            <Link href="/faq">See all FAQ answers</Link>.
+          </p>
+          <div className="faq-list faq-teaser">
+            {teaser.map((item) => (
+              <details key={item.id} className="faq-item">
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
+          <div className="cta-row" style={{ marginBottom: "2.5rem" }}>
+            <Link className="btn btn-ghost" href="/faq">
+              Full FAQ
+            </Link>
           </div>
 
           <p className="lede" style={{ marginBottom: "1rem" }}>
