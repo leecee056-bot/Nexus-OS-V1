@@ -108,11 +108,11 @@ export default function SetupPage() {
               A checksum is a fingerprint of the file. Matching it means your
               download was not cut off or corrupted. Grab SHA256SUMS from the
               same Release (
-              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-usb/SHA256SUMS">
+              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.1-usb/SHA256SUMS">
                 PC
               </a>
               {" · "}
-              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-pi/SHA256SUMS">
+              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.1-pi/SHA256SUMS">
                 Pi
               </a>
               ), then compare.

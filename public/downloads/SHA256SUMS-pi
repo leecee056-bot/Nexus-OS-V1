@@ -1,0 +1,6 @@
+# NEXUS OS Raspberry Pi aarch64 v1.0.1 — Knowledge Vault starter pack
+# Compressed:
+199967b3e95cb5f274a2842996121d7c59de7d758e427777519371417a52b839  portable-ai-os-aarch64.img.xz
+
+# Raw .img after xz -d:
+777419a193379d37f3d7f26c69af8410800dca1651a9f6237c2cba17139abc8b  portable-ai-os-aarch64.img

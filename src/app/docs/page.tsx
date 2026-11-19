@@ -91,14 +91,18 @@ export default function DocsPage() {
           <ul className="docs-list">
             <li>
               <a href={RELEASE_PAGE}>
-                PC USB — v1.0.0-usb
-                <small>x86_64 and i686 compressed images</small>
+                PC USB — v1.0.1-usb
+                <small>
+                  x86_64 and i686 compressed images (Vault starter pack)
+                </small>
               </a>
             </li>
             <li>
               <a href={PI_RELEASE_PAGE}>
-                Raspberry Pi — v1.0.0-pi
-                <small>aarch64 microSD image (Pi 4 primary)</small>
+                Raspberry Pi — v1.0.1-pi
+                <small>
+                  aarch64 microSD image (Pi 4 primary; Vault starter pack)
+                </small>
               </a>
             </li>
           </ul>

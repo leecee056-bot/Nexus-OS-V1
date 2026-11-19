@@ -1,7 +1,5 @@
-artifact=https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-usb/portable-ai-os-x86_64.img.xz
-arch=x86_64
-download=portable-ai-os-x86_64.img.xz
-sha256_xz=96a164b8e94b3dc9d12614805d6e4777d5ec7751e8337e79c6c04569f9a0b1ca
-sha256_img=0d490700300b91b7f4d1d983ee1d39f75d6f27248200a2aeffc1d0e1276e8877
-release=v1.0.0-usb
-note=decompress with xz -d then flash .img
+artifact=https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.1-usb/portable-ai-os-x86_64.img.xz
+sha256xz=3a12751be42dcc31d8118424de2cddd00bf2c4f4e65293e4cdf152f219e77814
+sha256img=a397f4cf303c35d9add60651dc562823662f5bd9d03b3c0ad1380e5dddfd06c5
+size_xz_bytes=479475712
+release=v1.0.1-usb

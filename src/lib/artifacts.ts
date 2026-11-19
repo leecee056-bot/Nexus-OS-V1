@@ -1,14 +1,14 @@
 const USB_RELEASE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-usb";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.1-usb";
 
 const PI_RELEASE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-pi";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.1-pi";
 
 export const RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.0-usb";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.1-usb";
 
 export const PI_RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.0-pi";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.1-pi";
 
 export const RELEASE_SHA256SUMS = `${USB_RELEASE}/SHA256SUMS`;
 export const PI_RELEASE_SHA256SUMS = `${PI_RELEASE}/SHA256SUMS`;
@@ -21,14 +21,14 @@ export const ARTIFACTS = [
     filename: "portable-ai-os-x86_64.img",
     downloadName: "portable-ai-os-x86_64.img.xz",
     downloadUrl: `${USB_RELEASE}/portable-ai-os-x86_64.img.xz`,
-    sizeBytes: 479461624,
-    sizeLabel: "~458 MB download → about 3 GB after unpacking",
+    sizeBytes: 479475712,
+    sizeLabel: "~457 MB download → about 3 GB after unpacking",
     sha256xz:
-      "96a164b8e94b3dc9d12614805d6e4777d5ec7751e8337e79c6c04569f9a0b1ca",
+      "3a12751be42dcc31d8118424de2cddd00bf2c4f4e65293e4cdf152f219e77814",
     sha256:
-      "0d490700300b91b7f4d1d983ee1d39f75d6f27248200a2aeffc1d0e1276e8877",
+      "a397f4cf303c35d9add60651dc562823662f5bd9d03b3c0ad1380e5dddfd06c5",
     guidance:
-      "For most modern and mid-2000s+ PCs that already run 64-bit Windows or Linux.",
+      "For most modern and mid-2000s+ PCs that already run 64-bit Windows or Linux. Includes the Knowledge Vault starter pack.",
   },
   {
     arch: "i686",
@@ -36,14 +36,14 @@ export const ARTIFACTS = [
     filename: "portable-ai-os-i686.img",
     downloadName: "portable-ai-os-i686.img.xz",
     downloadUrl: `${USB_RELEASE}/portable-ai-os-i686.img.xz`,
-    sizeBytes: 735020108,
+    sizeBytes: 735022940,
     sizeLabel: "~701 MB download → about 3 GB after unpacking",
     sha256xz:
-      "ac3afb547bd223a121068ea73e9f3c46e1f2ce078553001171b8455b15d7aef4",
+      "8c4db63a35dd718968f8890503f82e83e7aec325e57af79404dd478de1a7b2d8",
     sha256:
-      "b9a3820ebed6025d81a3670897573b02ca958ac2a5b18b624b24ce0825104465",
+      "fb2b39abeb025a1040178dd1eb327206538df2c31ba1cc2a05089bb7ba661e43",
     guidance:
-      "Prefer this for XP-era or true 32-bit machines. If the PC is very old and you are unsure, start here.",
+      "Prefer this for XP-era or true 32-bit machines. If the PC is very old and you are unsure, start here. Includes the Knowledge Vault starter pack.",
   },
 ] as const;
 
@@ -54,16 +54,16 @@ export const PI_ARTIFACTS = [
     filename: "portable-ai-os-aarch64.img",
     downloadName: "portable-ai-os-aarch64.img.xz",
     downloadUrl: `${PI_RELEASE}/portable-ai-os-aarch64.img.xz`,
-    sizeBytes: 923230452,
-    sizeLabel: "~881 MB download → about 4 GB after unpacking",
+    sizeBytes: 923217144,
+    sizeLabel: "~880 MB download → about 4 GB after unpacking",
     sha256xz:
-      "ab55937df18bc05f9a00c29b26098b874c50ecad6e31c003b4cf5f08f29c40a7",
+      "199967b3e95cb5f274a2842996121d7c59de7d758e427777519371417a52b839",
     sha256:
-      "7aa7341853a9f290f2637363b14f8cc2d21a90a3fb19d3697891c213e6b7f72d",
+      "777419a193379d37f3d7f26c69af8410800dca1651a9f6237c2cba17139abc8b",
     guidance:
-      "Flash this to a microSD card for Raspberry Pi 4 (2 GB+ RAM; 4 GB+ preferred) — a good base for cyberdecks and portable Pi kits. Same file may work on Pi 5, but Pi 5 is best-effort; some boards may need a software update later if they will not boot.",
+      "Flash this to a microSD card for Raspberry Pi 4 (2 GB+ RAM; 4 GB+ preferred) — a good base for cyberdecks and portable Pi kits. Same file may work on Pi 5, but Pi 5 is best-effort; some boards may need a software update later if they will not boot. Includes the Knowledge Vault starter pack.",
   },
 ] as const;
 
 export const BUILD_NOTE =
-  "Pick a PC USB image or the Raspberry Pi microSD image, unpack the .xz, then flash the .img with Etcher. Full walkthrough on the Setup page.";
+  "Pick a PC USB image or the Raspberry Pi microSD image (v1.0.1 — Knowledge Vault starter pack), unpack the .xz, then flash the .img with Etcher. Full walkthrough on the Setup page.";
