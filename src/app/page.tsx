@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BrandWordmark } from "@/components/BrandWordmark";
 import { FAQ_ITEMS, FAQ_TEASER_IDS } from "@/lib/faq";
 
 export default function HomePage() {
@@ -20,7 +21,7 @@ export default function HomePage() {
               height={140}
               priority
             />
-            <span className="cursor-blink">NEXUS OS</span>
+            <BrandWordmark>NEXUS OS</BrandWordmark>
           </p>
           <h1>
             Offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks,
