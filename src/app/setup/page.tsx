@@ -45,10 +45,11 @@ export default function SetupPage() {
                 </span>
               </li>
               <li>
-                <strong>aarch64 — Raspberry Pi microSD</strong>
+                <strong>aarch64 — Raspberry Pi / cyberdeck microSD</strong>
                 <span>
-                  <strong>Pi 4 primary.</strong> Same file may work on Pi 5
-                  (best-effort). Flash to a microSD card, not a USB stick.
+                  <strong>Pi 4 primary</strong> (also great for DIY cyberdecks).
+                  Same file may work on Pi 5 (best-effort). Flash to a microSD
+                  card, not a USB stick.
                 </span>
               </li>
             </ul>
@@ -201,10 +202,10 @@ sync`}
           <li>
             <strong>Boot the machine</strong>
             <p>
-              <strong>Raspberry Pi:</strong> insert the microSD, connect power
-              (and display/keyboard). You should reach the same hub menu after a
-              short load. Prefer <strong>Pi 4</strong>; Pi 5 is best-effort for
-              this release.
+              <strong>Raspberry Pi / cyberdeck:</strong> insert the microSD,
+              connect power (and display/keyboard). You should reach the same hub
+              menu after a short load. Prefer <strong>Pi 4</strong>; Pi 5 is
+              best-effort for this release.
             </p>
             <p style={{ marginTop: "0.75rem" }}>
               <strong>PC:</strong> put the stick in, then restart. You usually
@@ -320,9 +321,9 @@ sync`}
             <li>
               <strong>Pi 5 will not boot</strong>
               <span>
-                This release targets Pi 4 first. Pi 5 may need a firmware /
-                device-tree follow-up — try Pi 4 if you have one, or wait for an
-                updated image.
+                This release targets Pi 4 first (including most cyberdeck builds).
+                Pi 5 may need a software update later — try Pi 4 if you have one,
+                or wait for an updated image.
               </span>
             </li>
             <li>

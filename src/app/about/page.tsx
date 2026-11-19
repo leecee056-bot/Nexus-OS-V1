@@ -22,7 +22,7 @@ export default function AboutPage() {
             alt="NEXUS OS hub menu shown on a computer screen"
           />
           <figcaption>
-            The main menu on screen after you boot from the USB stick.
+            The main menu after you boot from a USB stick or Pi microSD card.
           </figcaption>
         </figure>
 
@@ -31,19 +31,18 @@ export default function AboutPage() {
           <li>
             <strong>A portable AI computer</strong>
             <span>
-              The stick carries a small operating system and an AI model. Chat
-              runs on the PC in front of you — not in a cloud account — so it
-              works without internet once set up.
+              The stick or card carries a small operating system and an AI model.
+              Chat runs on the machine in front of you — not in a cloud account —
+              so it works without internet once set up.
             </span>
           </li>
           <li>
             <strong>Built for low-spec machines</strong>
             <span>
-              Aimed at older Intel/AMD PCs (including many XP-era 32-bit boxes)
-              as well as newer ones — and now <strong>Raspberry Pi 4</strong>{" "}
-              (64-bit microSD image). Pi 5 uses the same file but is best-effort
-              for this release. Public downloads: PC USB (32-bit and 64-bit) +
-              Pi aarch64.
+              Aimed at older Intel/AMD PCs (including many XP-era 32-bit boxes),
+              newer PCs, and <strong>Raspberry Pi 4</strong> (great for
+              cyberdecks and portable kits). Pi 5 uses the same file but is
+              best-effort for this release.
             </span>
           </li>
           <li>
@@ -65,10 +64,33 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
+            <strong>Cyberdecks and portable Pi builds</strong>
+            <span>
+              Popular DIY “cyberdeck” projects need a small OS that boots fast
+              and stays offline. The Pi image is made for that — flash a card,
+              drop it in a Pi 4 deck or handheld case, and you have a local AI
+              terminal you can take anywhere.
+            </span>
+          </li>
+          <li>
             <strong>Revive an old spare PC</strong>
             <span>
               Turn a dusty tower into something useful again without wiping
               Windows permanently — just boot from the stick when you want NEXUS.
+            </span>
+          </li>
+          <li>
+            <strong>Classroom, club, or makerspace kits</strong>
+            <span>
+              Prepare sticks or Pi cards once, hand them out, and everyone gets
+              the same menu — no student cloud accounts required for basic Chat.
+            </span>
+          </li>
+          <li>
+            <strong>Travel / field / low-connectivity work</strong>
+            <span>
+              Keep notes and chat available on trains, camps, or workshops where
+              the network is unreliable.
             </span>
           </li>
           <li>
@@ -88,8 +110,8 @@ export default function AboutPage() {
           <li>
             <strong>Learning / tinkering</strong>
             <span>
-              A friendly way to try a Linux-based AI USB without buying new
-              hardware.
+              A friendly way to try a Linux-based AI USB or Pi card without buying
+              a new laptop.
             </span>
           </li>
         </ul>
@@ -120,6 +142,14 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
+            <strong>Cyberdeck</strong>
+            <span>
+              A homemade portable computer — often a Raspberry Pi in a custom
+              case with a small screen and keyboard. NEXUS OS on microSD is aimed
+              at that kind of build as well as plain Pi boards.
+            </span>
+          </li>
+          <li>
             <strong>TUI / hub</strong>
             <span>
               Text user interface — the full-screen keyboard menu you see after
@@ -130,13 +160,13 @@ export default function AboutPage() {
             <strong>AI model / llama.cpp</strong>
             <span>
               The “brain” files that answer in Chat. They run locally via a
-              small engine (llama.cpp). A starter model ships on the stick.
+              small engine (llama.cpp). A starter model ships on the stick/card.
             </span>
           </li>
           <li>
             <strong>Knowledge Vault</strong>
             <span>
-              Your searchable notebook on the stick — import .txt/.md files and
+              Your searchable notebook on the device — import .txt/.md files and
               look them up.
             </span>
           </li>
@@ -151,8 +181,8 @@ export default function AboutPage() {
             <strong>NEXUS Network</strong>
             <span>
               Optional future online community. Not required for offline AI. You
-              can reserve a username on this website; chat rooms are not live
-              yet.
+              can <Link href="/network">reserve a username</Link> on this website;
+              chat rooms are not live yet.
             </span>
           </li>
           <li>
@@ -160,8 +190,8 @@ export default function AboutPage() {
             <span>
               <strong>i686</strong> = 32-bit / older XP-era PC;{" "}
               <strong>x86_64</strong> = typical 64-bit PC;{" "}
-              <strong>aarch64</strong> = 64-bit Raspberry Pi image. Pick on
-              Download.
+              <strong>aarch64</strong> = 64-bit Raspberry Pi / cyberdeck image.
+              Pick on Download.
             </span>
           </li>
           <li>
@@ -183,11 +213,11 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>Raspberry Pi</strong>
+            <strong>Raspberry Pi / cyberdeck</strong>
             <span>
               <strong>Pi 4 primary</strong> (2 GB+ RAM; 4 GB+ preferred). Same
-              aarch64 image may work on Pi 5 (best-effort). microSD 8 GB+
-              recommended. Older Pi / 32-bit boards not in this release.
+              image may work on Pi 5 (best-effort). microSD 8 GB+ recommended.
+              Older Pi / 32-bit boards not in this release.
             </span>
           </li>
           <li>
@@ -206,8 +236,8 @@ export default function AboutPage() {
           <li>
             <strong>Coming later</strong>
             <span>
-              Stronger Pi 5 firmware support, older Pi / armv7, Apple Silicon as
-              a target, and live Network chat.
+              Stronger Pi 5 support, older Pi boards, Apple Silicon as a target,
+              and live Network chat.
             </span>
           </li>
         </ul>

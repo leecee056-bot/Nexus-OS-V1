@@ -5,11 +5,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "NEXUS OS — Portable Offline AI Linux USB",
+    default: "NEXUS OS — Offline AI for PCs, Pi & cyberdecks",
     template: "%s · NEXUS OS",
   },
   description:
-    "NEXUS OS: offline AI on a USB stick for old and low-spec PCs. Download, flash with Etcher, boot — local Chat, notes, and tools with no cloud account.",
+    "NEXUS OS: offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks, and low-spec machines. Download, flash with Etcher, boot — local Chat, notes, and tools with no cloud account.",
 };
 
 export default function RootLayout({

@@ -19,16 +19,16 @@ export default function FeaturesPage() {
             src="/images/nexus-os-hub-screen.jpg"
             alt="NEXUS OS hub menu on a computer screen"
           />
-          <figcaption>Main menu after booting from USB.</figcaption>
+          <figcaption>Main menu after booting from USB or Pi microSD.</figcaption>
         </figure>
 
         <ul className="feature-list">
           <li>
-            <strong>Boots on low-spec PCs and Raspberry Pi 4</strong>
+            <strong>Boots on low-spec PCs, Pi 4, and cyberdeck builds</strong>
             <span>
-              32-bit and 64-bit Intel/AMD USB images, plus a 64-bit aarch64
-              microSD image for Pi 4 (Pi 5 best-effort). Aimed at older spare
-              machines as well as newer ones.
+              32-bit and 64-bit Intel/AMD USB images, plus a 64-bit Raspberry Pi
+              microSD image (Pi 4 primary; Pi 5 best-effort). Aimed at spare PCs,
+              portable Pi kits, and DIY cyberdecks.
             </span>
           </li>
           <li>

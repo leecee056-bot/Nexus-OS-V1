@@ -20,15 +20,18 @@ export default function DownloadPage() {
         <p className="lede">{BUILD_NOTE}</p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          These files are <strong>compressed</strong> (
-          <code className="mono">.img.xz</code>). Unpack them first (7-Zip on
-          Windows, or <code className="mono">xz -d</code>), then flash the{" "}
-          <code className="mono">.img</code> with balenaEtcher.{" "}
-          <strong>PC builds</strong> go on a USB stick; the{" "}
-          <strong>Pi build</strong> goes on a <strong>microSD card</strong>.
-          Prefer the <strong>32-bit / older PC</strong> build for XP-era
-          machines. Step-by-step: <Link href="/setup">Setup guide</Link>.
+          Files end in <code className="mono">.img.xz</code> (compressed). Unpack
+          first (7-Zip on Windows, or <code className="mono">xz -d</code>), then
+          flash the <code className="mono">.img</code> with balenaEtcher.{" "}
+          <strong>PC</strong> → USB stick. <strong>Pi</strong> → microSD card.
+          Full steps: <Link href="/setup">Setup guide</Link>.
         </div>
+
+        <h3 className="subhead">1. Choose your machine</h3>
+        <p className="lede" style={{ marginBottom: "1rem" }}>
+          Not sure? Old XP-era PC → 32-bit. Normal modern PC → 64-bit. Raspberry
+          Pi / cyberdeck → Pi image (Pi 4 first).
+        </p>
 
         <h3 className="subhead">PC (USB stick)</h3>
         {ARTIFACTS.map((a) => (
@@ -39,31 +42,42 @@ export default function DownloadPage() {
               <strong>File:</strong> <span className="mono">{a.downloadName}</span>
               <br />
               <strong>Size:</strong> {a.sizeLabel}
-              <br />
-              <strong>Checksum (.xz):</strong>{" "}
-              <span className="mono hash">{a.sha256xz}</span>
-              <br />
-              <strong>Checksum (.img after unpack):</strong>{" "}
-              <span className="mono hash">{a.sha256}</span>
             </p>
             <div className="cta-row" style={{ marginTop: "0.85rem" }}>
               <a className="btn" href={a.downloadUrl}>
                 Download {a.label}
               </a>
               <a className="btn btn-ghost" href={RELEASE_SHA256SUMS}>
-                PC checksums
+                View SHA256 checksums
               </a>
             </div>
+            <details className="verify-block">
+              <summary>Verify this download (optional)</summary>
+              <p>
+                <strong>Checksum (.xz):</strong>{" "}
+                <span className="mono hash">{a.sha256xz}</span>
+                <br />
+                <strong>Checksum (.img after unpack):</strong>{" "}
+                <span className="mono hash">{a.sha256}</span>
+              </p>
+              <p style={{ marginTop: "0.5rem" }}>
+                Windows PowerShell after unpack:{" "}
+                <code className="mono">
+                  Get-FileHash .\\{a.filename} -Algorithm SHA256
+                </code>
+              </p>
+            </details>
           </div>
         ))}
 
         <h3 className="subhead" style={{ marginTop: "2rem" }}>
-          Raspberry Pi (microSD)
+          Raspberry Pi / cyberdeck (microSD)
         </h3>
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          <strong>Pi 4 is the primary target.</strong> The same image may boot
-          on Pi 5, but that is best-effort for now (firmware / device-tree
-          caveat). Use a microSD card — not a USB stick — for Raspberry Pi.
+          <strong>Pi 4 is the primary target</strong> — including DIY cyberdecks
+          and portable Pi kits. The same image may boot on Pi 5, but that is
+          best-effort for now (some boards may need a software update later). Use
+          a <strong>microSD card</strong>, not a USB stick.
         </div>
         {PI_ARTIFACTS.map((a) => (
           <div className="panel" key={a.arch}>
@@ -73,21 +87,31 @@ export default function DownloadPage() {
               <strong>File:</strong> <span className="mono">{a.downloadName}</span>
               <br />
               <strong>Size:</strong> {a.sizeLabel}
-              <br />
-              <strong>Checksum (.xz):</strong>{" "}
-              <span className="mono hash">{a.sha256xz}</span>
-              <br />
-              <strong>Checksum (.img after unpack):</strong>{" "}
-              <span className="mono hash">{a.sha256}</span>
             </p>
             <div className="cta-row" style={{ marginTop: "0.85rem" }}>
               <a className="btn" href={a.downloadUrl}>
                 Download Raspberry Pi image
               </a>
               <a className="btn btn-ghost" href={PI_RELEASE_SHA256SUMS}>
-                Pi checksums
+                View SHA256 checksums
               </a>
             </div>
+            <details className="verify-block">
+              <summary>Verify this download (optional)</summary>
+              <p>
+                <strong>Checksum (.xz):</strong>{" "}
+                <span className="mono hash">{a.sha256xz}</span>
+                <br />
+                <strong>Checksum (.img after unpack):</strong>{" "}
+                <span className="mono hash">{a.sha256}</span>
+              </p>
+              <p style={{ marginTop: "0.5rem" }}>
+                Windows PowerShell after unpack:{" "}
+                <code className="mono">
+                  Get-FileHash .\\{a.filename} -Algorithm SHA256
+                </code>
+              </p>
+            </details>
           </div>
         ))}
 
@@ -99,23 +123,13 @@ export default function DownloadPage() {
               <code className="mono">.img</code> (7-Zip on Windows).
             </li>
             <li>
-              Optional Windows check — PowerShell (PC example):
-              <pre className="panel mono" style={{ overflow: "auto", marginTop: "0.5rem" }}>
-{`Get-FileHash .\\portable-ai-os-i686.img -Algorithm SHA256`}
-              </pre>
-              For Pi, hash{" "}
-              <code className="mono">portable-ai-os-aarch64.img</code> the same
-              way. Match against SHA256SUMS (full steps in{" "}
-              <Link href="/setup">Setup</Link>).
-            </li>
-            <li>
-              Flash the <code className="mono">.img</code> with Etcher:{" "}
-              <strong>USB stick</strong> for PC builds,{" "}
-              <strong>microSD card</strong> for Pi (erases the media).
+              Flash with Etcher: <strong>USB stick</strong> for PC,{" "}
+              <strong>microSD</strong> for Pi / cyberdeck.
             </li>
             <li>
               Boot the PC from USB, or insert the card and power the Pi — details
-              in Setup.
+              in Setup. You should land on the hub menu (Chat, Files, notes, and
+              more).
             </li>
           </ol>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
@@ -127,9 +141,6 @@ export default function DownloadPage() {
             </a>
             <a className="btn btn-ghost" href={PI_RELEASE_PAGE}>
               Pi files on GitHub
-            </a>
-            <a className="btn btn-ghost" href="/guides/usb-flash.md">
-              Short flash notes
             </a>
           </div>
         </div>

@@ -13,22 +13,24 @@ export default function NetworkPage() {
       <div className="shell">
         <h2>NEXUS Network</h2>
         <p className="lede">
-          Optional online community for NEXUS OS users. The USB stick works fully
-          offline without this — Network is extra, for later.
+          An optional online community for people using NEXUS OS. You do{" "}
+          <strong>not</strong> need this to download or run the USB / Pi system —
+          offline AI works without it.
         </p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          Chat rooms are not online yet. Creating an account{" "}
-          <strong>reserves your username</strong> (like{" "}
-          <span className="mono">@you@nexus.network</span>). Email is contact
-          only and not verified yet. You can still download and use the USB OS
+          Chat rooms are <strong>not online yet</strong>. You can still reserve a
+          username now (free) for when the community launches — like{" "}
+          <span className="mono">@you@nexus.network</span>. Email is contact only
+          and not verified yet. Prefer to skip this?{" "}
+          <Link href="/download">Download NEXUS OS</Link> and use it offline
           today.
         </div>
 
         {sample ? (
           <div className="alert" style={{ marginBottom: "1.5rem" }}>
-            Local preview uses in-memory sample database (PGlite). Published app
-            uses Postgres. Data here is for demo only.
+            Local preview uses sample data only. The published site keeps
+            reservations in its real database.
           </div>
         ) : null}
 
@@ -41,28 +43,39 @@ export default function NetworkPage() {
         >
           <div>
             <h3 style={{ fontFamily: "var(--font-display)", color: "var(--accent)" }}>
-              Community vision
+              Why reserve a name?
             </h3>
             <ul className="feature-list">
               <li>
-                <strong>Internet / LAN / offline-queue</strong>
+                <strong>Claim your handle early</strong>
                 <span>
-                  Modes map to hosted Prosody, LAN Prosody, and client outbox —
-                  architecture approved; client not shipped.
+                  Pick a username you like before rooms open. It is saved for the
+                  future community, not required for Chat on the stick or Pi.
                 </span>
               </li>
               <li>
-                <strong>Identity</strong>
+                <strong>How it will look</strong>
                 <span>
-                  Real JID style <code className="mono">user@nexus.network</code>
-                  , shown as <code className="mono">@user@nexus.network</code>.
+                  Names will look like{" "}
+                  <code className="mono">@you@nexus.network</code> — a simple
+                  online identity for NEXUS users.
                 </span>
               </li>
               <li>
-                <strong>Privacy</strong>
+                <strong>Privacy first</strong>
                 <span>
-                  Network off by default. Local AI never reads PMs without
-                  explicit permission. No invented E2EE claims here.
+                  Network stays off by default on the device. Local AI does not
+                  read your private messages unless you allow it. We do not claim
+                  fancy “unbreakable encryption” features that are not built yet.
+                </span>
+              </li>
+              <li>
+                <strong>Online, home network, or catch-up later</strong>
+                <span>
+                  The plan is: chat over the internet when available, talk on a
+                  local network at home or a makerspace, and queue messages when
+                  you are offline. The phone/desktop chat app for that is still
+                  being built.
                 </span>
               </li>
             </ul>
@@ -72,10 +85,11 @@ export default function NetworkPage() {
           </div>
 
           <div className="panel">
-            <h3>Create account</h3>
+            <h3>Create Network account</h3>
             <p className="hint" style={{ marginBottom: "1rem" }}>
-              Username, email, password. Passwords are hashed (bcrypt). This is
-              app-native auth — not Cursor login.
+              Choose a username, email, and password (at least 10 characters).
+              Passwords are stored hashed. This signup is for NEXUS Network only —
+              it is separate from any other account you may have.
             </p>
             <AuthForm mode="signup" />
           </div>

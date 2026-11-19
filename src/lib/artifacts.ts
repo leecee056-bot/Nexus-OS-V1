@@ -61,7 +61,7 @@ export const PI_ARTIFACTS = [
     sha256:
       "7aa7341853a9f290f2637363b14f8cc2d21a90a3fb19d3697891c213e6b7f72d",
     guidance:
-      "Flash this to a microSD card for Raspberry Pi 4 (2 GB+ RAM; 4 GB+ preferred). Same file may work on Pi 5, but Pi 5 is best-effort — some boards need a firmware/dtb follow-up if they will not boot.",
+      "Flash this to a microSD card for Raspberry Pi 4 (2 GB+ RAM; 4 GB+ preferred) — a good base for cyberdecks and portable Pi kits. Same file may work on Pi 5, but Pi 5 is best-effort; some boards may need a software update later if they will not boot.",
   },
 ] as const;
 

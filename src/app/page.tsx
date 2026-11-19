@@ -7,8 +7,8 @@ export default function HomePage() {
         <div className="shell hero-inner">
           <p className="brand-hero cursor-blink">NEXUS OS</p>
           <h1>
-            Offline AI on a USB stick or Raspberry Pi — for old PCs and other
-            low‑spec machines.
+            Offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks,
+            and other low‑spec machines.
           </h1>
           <p>
             Download the system, write it to a USB stick or microSD card, boot,
@@ -23,7 +23,7 @@ export default function HomePage() {
               Setup guide
             </Link>
             <Link className="btn btn-quiet" href="/network">
-              Reserve Network name
+              Optional: reserve a username for later
             </Link>
           </div>
         </div>
@@ -31,10 +31,35 @@ export default function HomePage() {
 
       <section className="section">
         <div className="shell">
+          <h2>Quick start</h2>
+          <ol className="quick-steps">
+            <li>
+              <strong>1. Download</strong>
+              Pick a PC USB image or the Raspberry Pi microSD image.
+            </li>
+            <li>
+              <strong>2. Flash</strong>
+              Unpack the file, then write it with Etcher (erases the stick or
+              card).
+            </li>
+            <li>
+              <strong>3. Boot</strong>
+              Start from USB on a PC, or power a Pi 4 with the card inserted.
+            </li>
+          </ol>
+          <div className="cta-row" style={{ marginBottom: "2rem" }}>
+            <Link className="btn" href="/download">
+              Go to Download
+            </Link>
+            <Link className="btn btn-ghost" href="/setup">
+              Full setup steps
+            </Link>
+          </div>
+
           <h2>See it on a computer</h2>
           <p className="lede">
-            After you boot from the stick, this is the kind of menu you get —
-            keyboard-friendly, full screen, works offline.
+            After you boot, this is the kind of menu you get — keyboard-friendly,
+            full screen, works offline.
           </p>
           <figure className="shot">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -51,29 +76,44 @@ export default function HomePage() {
               <strong>Private AI chat without the internet</strong>
               <span>
                 Draft text, ask questions, or explore ideas on a spare machine —
-                the answers stay on that PC.
+                the answers stay on that device.
               </span>
             </li>
             <li>
-              <strong>Give an old PC or a Pi a second life</strong>
+              <strong>Cyberdecks and Pi handhelds</strong>
               <span>
-                Many XP-era and early 64-bit boxes can boot the stick; Raspberry
-                Pi 4 boots from microSD. Great for a workshop, classroom spare,
-                or home “AI terminal.”
+                The Raspberry Pi image is a natural fit for DIY cyberdecks,
+                portable terminals, and small field kits — offline AI in a
+                compact case you can carry.
               </span>
             </li>
             <li>
-              <strong>Keep searchable notes on the stick</strong>
+              <strong>Give an old PC a second life</strong>
               <span>
-                The Knowledge Vault is your on-stick notebook — import text and
-                find it later.
+                Many XP-era and early 64-bit boxes can boot the stick. Great for
+                a workshop, classroom spare, or home “AI terminal.”
               </span>
             </li>
             <li>
-              <strong>Carry tools with you</strong>
+              <strong>Classroom / makerspace kits</strong>
               <span>
-                Files, small helpers (“Agents”), settings, and simple games live
-                on the USB so your setup travels.
+                Hand someone a stick or a Pi card and they get the same menu —
+                no accounts to set up first.
+              </span>
+            </li>
+            <li>
+              <strong>Travel or low-connectivity work</strong>
+              <span>
+                Keep a notebook and chat available when Wi‑Fi is bad or you would
+                rather not send text to a website.
+              </span>
+            </li>
+            <li>
+              <strong>Keep searchable notes with you</strong>
+              <span>
+                The Knowledge Vault is your on-device notebook — import text and
+                find it later (see <Link href="/about">About</Link> for the
+                word list).
               </span>
             </li>
           </ul>
@@ -92,7 +132,8 @@ export default function HomePage() {
               <h3>Raspberry Pi</h3>
               <p>
                 <strong>Pi 4 primary</strong> (2 GB+ RAM). Same image may work on
-                Pi 5 (best-effort). Flash to a microSD card (8 GB+).
+                Pi 5 (best-effort). Flash to a microSD card (8 GB+). Ideal for
+                cyberdeck builds.
               </p>
             </div>
             <div className="panel">
@@ -112,8 +153,7 @@ export default function HomePage() {
 
           <p className="lede" style={{ marginBottom: "1rem" }}>
             New here? Read <Link href="/about">About</Link> for plain-English
-            explanations of words like Linux, Vault, and Agents — then{" "}
-            <Link href="/download">Download</Link> and follow{" "}
+            explanations — then <Link href="/download">Download</Link> and follow{" "}
             <Link href="/setup">Setup</Link>.
           </p>
 
