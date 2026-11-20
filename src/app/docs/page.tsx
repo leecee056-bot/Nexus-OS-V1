@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PI_RELEASE_PAGE, RELEASE_PAGE } from "@/lib/artifacts";
+import {
+  PI_RELEASE_PAGE,
+  POCKET_README,
+  POCKET_REPO,
+  RELEASE_PAGE,
+} from "@/lib/artifacts";
 
 export const metadata: Metadata = { title: "Docs" };
 
@@ -10,8 +15,8 @@ export default function DocsPage() {
       <div className="shell">
         <h2>Docs</h2>
         <p className="lede">
-          Start with Setup if you are putting NEXUS OS on a stick or microSD for
-          the first time. Everything else is extra detail.
+          Start with Setup if you are putting NEXUS OS on a stick, microSD, or
+          ESP32 Pocket for the first time. Everything else is extra detail.
         </p>
 
         <div className="docs-group">
@@ -30,8 +35,8 @@ export default function DocsPage() {
               <Link href="/setup">
                 Setup guide (recommended)
                 <small>
-                  Download, unpack, checksum, Etcher, PC BIOS or Pi boot,
-                  troubleshooting
+                  Download, unpack, checksum, Etcher, PC BIOS or Pi boot, Pocket
+                  PlatformIO flash, troubleshooting
                 </small>
               </Link>
             </li>
@@ -39,7 +44,7 @@ export default function DocsPage() {
               <Link href="/download">
                 Download
                 <small>
-                  PC USB images (32-bit and 64-bit) and Raspberry Pi microSD image
+                  PC USB, Raspberry Pi microSD, and NEXUS Pocket (ESP32-S3)
                 </small>
               </Link>
             </li>
@@ -51,9 +56,21 @@ export default function DocsPage() {
           <ul className="docs-list">
             <li>
               <a href="/guides/usb-flash.md">
-                Short flash notes
+                Short flash notes (USB / Pi)
                 <small>Compact checklist for Etcher / dd</small>
               </a>
+            </li>
+            <li>
+              <a href="/guides/pocket-flash.md">
+                Pocket flash checklist
+                <small>PlatformIO upload + SPIFFS model for ESP32-S3</small>
+              </a>
+            </li>
+            <li>
+              <Link href="/faq#pocket">
+                FAQ — NEXUS Pocket
+                <small>What Pocket is vs the full USB/Pi hub</small>
+              </Link>
             </li>
             <li>
               <Link href="/features">
@@ -103,6 +120,18 @@ export default function DocsPage() {
                 <small>
                   aarch64 microSD image (Pi 4 primary; Vault starter pack)
                 </small>
+              </a>
+            </li>
+            <li>
+              <a href={POCKET_REPO}>
+                NEXUS Pocket — ESP32-S3 (v0.1.0)
+                <small>Firmware source in nexus-esp32/ (PlatformIO)</small>
+              </a>
+            </li>
+            <li>
+              <a href={POCKET_README}>
+                Pocket README
+                <small>Hardware notes, fetch_model, Serial hub commands</small>
               </a>
             </li>
           </ul>

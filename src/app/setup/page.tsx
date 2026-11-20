@@ -10,17 +10,20 @@ export default function SetupPage() {
         <h2>How to set up NEXUS OS</h2>
         <p className="lede">
           NEXUS OS turns a USB stick (PC) or microSD card (Raspberry Pi) into
-          its own small computer with offline AI. It does{" "}
-          <strong>not</strong> install inside Windows or Mac: you boot from that
-          media and the NEXUS menu appears. New to the words we use? See{" "}
+          its own small computer with offline AI.{" "}
+          <strong>NEXUS Pocket</strong> is the ESP32-S3 path: a USB-Serial
+          companion with a tiny on-device model. Disk images do{" "}
+          <strong>not</strong> install inside Windows or Mac — you boot from
+          that media and the NEXUS menu appears. New to the words we use? See{" "}
           <Link href="/about">About</Link>.
         </p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          You will need: a spare USB stick <strong>or</strong> microSD card (
-          <strong>8 GB or larger</strong> is safest), about 30–60 minutes the
-          first time, and a PC or Raspberry Pi you can restart. Flashing{" "}
-          <strong>erases everything</strong> already on that stick or card.
+          <strong>PC / Pi:</strong> spare USB stick or microSD (
+          <strong>8 GB+</strong>), ~30–60 minutes, machine you can restart.
+          Flashing <strong>erases</strong> that stick or card.{" "}
+          <strong>Pocket:</strong> ESP32-S3 with PSRAM, PlatformIO, and a data
+          USB cable — jumps to <Link href="#pocket">Pocket setup</Link>.
         </div>
 
         <ol className="steps">
@@ -52,11 +55,19 @@ export default function SetupPage() {
                   card, not a USB stick.
                 </span>
               </li>
+              <li>
+                <strong>NEXUS Pocket — ESP32-S3</strong>
+                <span>
+                  Tiny USB-Serial companion (not a disk image). Open the firmware
+                  on Download, then follow{" "}
+                  <Link href="#pocket">Pocket setup</Link> below.
+                </span>
+              </li>
             </ul>
             <p style={{ marginTop: "0.75rem" }}>
-              You will download a file ending in <code className="mono">.img.xz</code>
-              . That means it is compressed (zipped) to fit GitHub’s size limit.
-              Unpack the same way for PC and Pi.
+              PC / Pi downloads end in <code className="mono">.img.xz</code>{" "}
+              (compressed for GitHub). Unpack the same way for PC and Pi. Pocket
+              uses source + PlatformIO instead.
             </p>
           </li>
 
@@ -295,6 +306,69 @@ sync`}
           </li>
         </ol>
 
+        <div className="panel" id="pocket" style={{ marginTop: "2rem" }}>
+          <h3>NEXUS Pocket (ESP32-S3) setup</h3>
+          <p>
+            Pocket is a separate build from the USB/Pi images: firmware in{" "}
+            <code className="mono">nexus-esp32/</code>, flashed with PlatformIO.
+            Default model is TinyStories <strong>stories260K</strong> on SPIFFS.
+            Prefer an <strong>ESP32-S3 with 8 MB PSRAM</strong> (N16R8 / 16 MB
+            flash). Boards with 8 MB flash use the{" "}
+            <code className="mono">nexus-pocket-s3-8mb</code> env.
+          </p>
+          <ol className="steps" style={{ marginTop: "0.85rem" }}>
+            <li>
+              <strong>Install PlatformIO</strong>
+              <span>
+                {" "}
+                (VS Code extension or CLI) and connect the board with a data USB
+                cable.
+              </span>
+            </li>
+            <li>
+              <strong>Get the firmware</strong>
+              <pre className="panel mono" style={{ overflow: "auto", marginTop: "0.5rem" }}>
+{`git clone https://github.com/leecee056-bot/Nexus-OS-V1.git
+cd Nexus-OS-V1/nexus-esp32
+chmod +x scripts/fetch_model.sh
+./scripts/fetch_model.sh`}
+              </pre>
+            </li>
+            <li>
+              <strong>Flash app + filesystem</strong>
+              <pre className="panel mono" style={{ overflow: "auto", marginTop: "0.5rem" }}>
+{`pio run -e nexus-pocket-s3 -t upload
+pio run -e nexus-pocket-s3 -t uploadfs
+pio device monitor`}
+              </pre>
+              <p style={{ marginTop: "0.5rem" }}>
+                Use <code className="mono">nexus-pocket-s3-8mb</code> instead if
+                your board has 8 MB flash. Serial is <strong>115200</strong> baud.
+              </p>
+            </li>
+            <li>
+              <strong>Try the hub</strong>
+              <p style={{ marginTop: "0.5rem" }}>
+                Type <code className="mono">help</code>,{" "}
+                <code className="mono">status</code>, then{" "}
+                <code className="mono">chat Once upon a time</code>. Tools:{" "}
+                <code className="mono">tool mem</code>,{" "}
+                <code className="mono">tool note …</code>,{" "}
+                <code className="mono">tool calc 12*7</code>. If the model is
+                missing, chat still runs in demo mode.
+              </p>
+            </li>
+          </ol>
+          <p style={{ marginTop: "0.85rem" }}>
+            Short checklist:{" "}
+            <a href="/guides/pocket-flash.md">pocket-flash.md</a>
+            {" · "}
+            <Link href="/faq#pocket">FAQ</Link>
+            {" · "}
+            <Link href="/download">Download → Pocket</Link>
+          </p>
+        </div>
+
         <div className="panel" style={{ marginTop: "1.5rem" }}>
           <h3>If something goes wrong</h3>
           <ul className="feature-list">
@@ -335,10 +409,22 @@ sync`}
               </span>
             </li>
             <li>
+              <strong>Pocket Serial is empty / chat says demo</strong>
+              <span>
+                Confirm 115200 baud and the right COM/tty port. Run{" "}
+                <code className="mono">uploadfs</code> after{" "}
+                <code className="mono">fetch_model.sh</code> so{" "}
+                <code className="mono">model.bin</code> lands on SPIFFS. Boards
+                without PSRAM may stay in demo for chat.
+              </span>
+            </li>
+            <li>
               <strong>Want a second opinion on steps</strong>
               <span>
-                See the shorter <Link href="/guides/usb-flash.md">flash guide</Link>{" "}
-                or <Link href="/docs">Docs</Link>.
+                See the shorter{" "}
+                <a href="/guides/usb-flash.md">USB/Pi flash guide</a>,{" "}
+                <a href="/guides/pocket-flash.md">Pocket checklist</a>, or{" "}
+                <Link href="/docs">Docs</Link>.
               </span>
             </li>
           </ul>

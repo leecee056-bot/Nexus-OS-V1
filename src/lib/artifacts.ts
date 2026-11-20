@@ -65,5 +65,25 @@ export const PI_ARTIFACTS = [
   },
 ] as const;
 
+/** NEXUS Pocket — ESP32-S3 firmware (source + flash guide; not a disk image). */
+export const POCKET_REPO =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/tree/main/nexus-esp32";
+
+export const POCKET_README =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/blob/main/nexus-esp32/README.md";
+
+export const POCKET_VERSION = "0.1.0";
+
+export const POCKET_ARTIFACTS = [
+  {
+    arch: "esp32-s3",
+    label: "NEXUS Pocket (ESP32-S3)",
+    filename: "nexus-esp32",
+    sizeLabel: "Firmware source + ~1 MB TinyStories model (stories260K)",
+    guidance:
+      "USB-Serial offline companion for ESP32-S3 boards with PSRAM (N16R8 / 16 MB flash preferred; 8 MB env available). Flash with PlatformIO, then upload the model to SPIFFS. Serial hub: chat, status, and small tools — no Wi‑Fi required at runtime.",
+  },
+] as const;
+
 export const BUILD_NOTE =
-  "Pick a PC USB image or the Raspberry Pi microSD image (v1.0.1 — Knowledge Vault starter pack), unpack the .xz, then flash the .img with Etcher. Full walkthrough on the Setup page.";
+  "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), or NEXUS Pocket for ESP32-S3. Disk images unpack from .xz and flash with Etcher; Pocket uses PlatformIO. Full walkthrough on the Setup page.";
