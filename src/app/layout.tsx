@@ -66,8 +66,11 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
         <SiteHeader />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <SiteFooter />
       </body>
     </html>

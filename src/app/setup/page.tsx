@@ -25,8 +25,14 @@ export default function SetupPage() {
           <strong>Pocket:</strong> ESP32-S3 with PSRAM, PlatformIO, and a data
           USB cable — jumps to <Link href="#pocket">Pocket setup</Link>.
         </div>
+        <nav className="jump-chips" aria-label="Jump in this guide">
+          <a href="#pc-pi-steps">PC / Pi steps</a>
+          <a href="#pocket">Pocket ESP32</a>
+          <a href="#troubleshoot">Troubleshooting</a>
+          <Link href="/download#pocket">Pocket download</Link>
+        </nav>
 
-        <ol className="steps">
+        <ol className="steps" id="pc-pi-steps">
           <li>
             <strong>Choose which file to download</strong>
             <p>
@@ -182,7 +188,7 @@ export default function SetupPage() {
                 </span>
               </li>
             </ul>
-            <ol className="steps" style={{ marginTop: "0.75rem" }}>
+            <ol className="substeps">
               <li>Insert the USB stick or microSD (via a reader) to erase.</li>
               <li>
                 Open Etcher → Flash from file → choose the{" "}
@@ -316,7 +322,7 @@ sync`}
             flash). Boards with 8 MB flash use the{" "}
             <code className="mono">nexus-pocket-s3-8mb</code> env.
           </p>
-          <ol className="steps" style={{ marginTop: "0.85rem" }}>
+          <ol className="steps">
             <li>
               <strong>Install PlatformIO</strong>
               <span>
@@ -327,7 +333,7 @@ sync`}
             </li>
             <li>
               <strong>Get the firmware</strong>
-              <pre className="panel mono" style={{ overflow: "auto", marginTop: "0.5rem" }}>
+              <pre className="panel mono">
 {`git clone https://github.com/leecee056-bot/Nexus-OS-V1.git
 cd Nexus-OS-V1/nexus-esp32
 chmod +x scripts/fetch_model.sh
@@ -336,7 +342,7 @@ chmod +x scripts/fetch_model.sh
             </li>
             <li>
               <strong>Flash app + filesystem</strong>
-              <pre className="panel mono" style={{ overflow: "auto", marginTop: "0.5rem" }}>
+              <pre className="panel mono">
 {`pio run -e nexus-pocket-s3 -t upload
 pio run -e nexus-pocket-s3 -t uploadfs
 pio device monitor`}
@@ -369,7 +375,7 @@ pio device monitor`}
           </p>
         </div>
 
-        <div className="panel" style={{ marginTop: "1.5rem" }}>
+        <div className="panel" id="troubleshoot" style={{ marginTop: "1.5rem" }}>
           <h3>If something goes wrong</h3>
           <ul className="feature-list">
             <li>
