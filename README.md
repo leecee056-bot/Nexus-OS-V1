@@ -21,3 +21,7 @@ Prosody lab/VPS pack lives in [`network/`](network/). The website reserves `@use
 ## Stack
 
 Next.js 15 · Postgres/PGlite · bcrypt password hashing · httpOnly sessions
+
+## License
+
+NEXUS OS code is licensed under the MIT License — see [`LICENSE`](LICENSE).
