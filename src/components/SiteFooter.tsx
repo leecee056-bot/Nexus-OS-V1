@@ -42,8 +42,8 @@ export function SiteFooter() {
               <span>NEXUS OS</span>
             </Link>
             <p>
-              Offline AI on a USB stick or Raspberry Pi — for old PCs,
-              cyberdecks, and other low‑spec machines.
+              Offline AI on a USB stick, Raspberry Pi, or ESP32 Pocket — for old
+              PCs, cyberdecks, and tiny boards.
             </p>
           </div>
 
@@ -94,10 +94,11 @@ export function SiteFooter() {
 
         <div className="footer-bottom">
           <p className="disclaimer">
-            NEXUS OS boots from a USB stick (PC) or microSD card (Raspberry Pi).
-            AI Chat and the other apps run on that machine with no cloud
-            required. Online Network chat is optional and not live yet — signing
-            up here only reserves a future username.
+            NEXUS OS boots from a USB stick (PC) or microSD card (Raspberry Pi),
+            or runs as NEXUS Pocket on ESP32-S3 over USB Serial. AI Chat and the
+            other apps run on that device with no cloud required. Online Network
+            chat is optional and not live yet — signing up here only reserves a
+            future username.
           </p>
           <p className="disclaimer">
             Not affiliated with unrelated products or companies that use the name

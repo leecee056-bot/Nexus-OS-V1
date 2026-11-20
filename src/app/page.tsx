@@ -24,13 +24,13 @@ export default function HomePage() {
             <BrandWordmark>NEXUS OS</BrandWordmark>
           </p>
           <h1>
-            Offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks,
-            and other low‑spec machines.
+            Offline AI on a USB stick, Raspberry Pi, or ESP32 Pocket — for old
+            PCs, cyberdecks, and tiny boards.
           </h1>
           <p>
-            Download the system, write it to a USB stick or microSD card, boot,
-            and chat with a local AI from the on‑screen menu. No cloud account
-            and no install onto your hard drive.
+            Download a PC or Pi image and boot the on‑screen hub, or flash NEXUS
+            Pocket on an ESP32-S3 for USB-Serial chat. No cloud account and no
+            install onto your hard drive.
           </p>
           <div className="cta-row">
             <Link className="btn" href="/download">
@@ -52,16 +52,18 @@ export default function HomePage() {
           <ol className="quick-steps">
             <li>
               <strong>1. Download</strong>
-              Pick a PC USB image or the Raspberry Pi microSD image.
+              Pick a PC USB image, the Raspberry Pi microSD image, or Pocket
+              (ESP32-S3 firmware).
             </li>
             <li>
               <strong>2. Flash</strong>
-              Unpack the file, then write it with Etcher (erases the stick or
-              card).
+              PC/Pi: unpack, then write with Etcher. Pocket: PlatformIO upload +
+              SPIFFS model.
             </li>
             <li>
-              <strong>3. Boot</strong>
-              Start from USB on a PC, or power a Pi 4 with the card inserted.
+              <strong>3. Boot / connect</strong>
+              Start from USB or power a Pi 4 — or open a Serial monitor for
+              Pocket.
             </li>
           </ol>
           <div className="cta-row" style={{ marginBottom: "2rem" }}>
@@ -101,7 +103,16 @@ export default function HomePage() {
               <span>
                 The Raspberry Pi image is a natural fit for DIY cyberdecks,
                 portable terminals, and small field kits — offline AI in a
-                compact case you can carry.
+                compact case you can carry. Add Pocket as a tiny Serial board in
+                the same kit.
+              </span>
+            </li>
+            <li>
+              <strong>ESP32 Pocket companion</strong>
+              <span>
+                Flash NEXUS Pocket on an ESP32-S3 with PSRAM for offline
+                TinyStories chat and tools over USB Serial — no full Linux image
+                required.
               </span>
             </li>
             <li>
@@ -155,13 +166,21 @@ export default function HomePage() {
               </p>
             </div>
             <div className="panel">
-              <h3>USB stick / microSD</h3>
+              <h3>NEXUS Pocket</h3>
               <p>
-                8 GB or larger recommended. Flashing erases the stick or card.
+                ESP32-S3 with PSRAM (16 MB flash preferred). PlatformIO + Serial
+                at 115200. TinyStories stories260K by default.
               </p>
             </div>
             <div className="panel">
-              <h3>Memory</h3>
+              <h3>USB stick / microSD</h3>
+              <p>
+                8 GB or larger recommended for PC/Pi. Flashing erases the stick
+                or card.
+              </p>
+            </div>
+            <div className="panel">
+              <h3>Memory (PC / Pi)</h3>
               <p>
                 About 1–2 GB RAM free for the small bundled model; more helps if
                 you add bigger models later.

@@ -9,10 +9,11 @@ export default function AboutPage() {
       <div className="shell">
         <h2>About NEXUS OS</h2>
         <p className="lede">
-          NEXUS OS is a ready-made system you put on a USB stick (PC) or a
-          microSD card (Raspberry Pi). Boot from that media and you get a simple
-          on-screen menu with offline AI chat and helpful tools — without
-          installing anything onto the hard drive.
+          NEXUS OS is a ready-made offline AI system for a USB stick (PC), a
+          microSD card (Raspberry Pi), or <strong>NEXUS Pocket</strong> on an
+          ESP32-S3. Boot the stick/card for the full on-screen hub, or flash
+          Pocket for USB-Serial chat on a tiny board — without installing onto
+          your hard drive.
         </p>
 
         <figure className="shot">
@@ -40,9 +41,9 @@ export default function AboutPage() {
             <strong>Built for low-spec machines</strong>
             <span>
               Aimed at older Intel/AMD PCs (including many XP-era 32-bit boxes),
-              newer PCs, and <strong>Raspberry Pi 4</strong> (great for
-              cyberdecks and portable kits). Pi 5 uses the same file but is
-              best-effort for this release.
+              newer PCs, <strong>Raspberry Pi 4</strong> (cyberdecks and portable
+              kits; Pi 5 best-effort), and <strong>ESP32-S3 Pocket</strong> for a
+              Serial companion board.
             </span>
           </li>
           <li>
@@ -190,12 +191,21 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>i686 vs x86_64 vs aarch64</strong>
+            <strong>i686 vs x86_64 vs aarch64 vs Pocket</strong>
             <span>
               <strong>i686</strong> = 32-bit / older XP-era PC;{" "}
               <strong>x86_64</strong> = typical 64-bit PC;{" "}
-              <strong>aarch64</strong> = 64-bit Raspberry Pi / cyberdeck image.
-              Pick on Download.
+              <strong>aarch64</strong> = 64-bit Raspberry Pi / cyberdeck image;{" "}
+              <strong>Pocket</strong> = ESP32-S3 Serial firmware. Pick on
+              Download.
+            </span>
+          </li>
+          <li>
+            <strong>NEXUS Pocket</strong>
+            <span>
+              ESP32-S3 firmware with a USB-Serial hub, TinyStories stories260K
+              chat, and small tools. Flash with PlatformIO — see{" "}
+              <Link href="/setup#pocket">Setup</Link>.
             </span>
           </li>
           <li>
@@ -225,7 +235,15 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>Memory (RAM)</strong>
+            <strong>NEXUS Pocket (ESP32-S3)</strong>
+            <span>
+              Board with PSRAM (8 MB preferred). 16 MB flash for the default
+              PlatformIO env; 8 MB flash boards use the alternate env. USB data
+              cable + PlatformIO.
+            </span>
+          </li>
+          <li>
+            <strong>Memory (RAM) — PC / Pi</strong>
             <span>
               About 1–2 GB free is the practical floor for the small bundled
               model; more RAM helps with larger models later.
@@ -241,7 +259,7 @@ export default function AboutPage() {
             <strong>Coming later</strong>
             <span>
               Stronger Pi 5 support, older Pi boards, Apple Silicon as a target,
-              and live Network chat.
+              larger Pocket models / BLE mirror, and live Network chat.
             </span>
           </li>
         </ul>

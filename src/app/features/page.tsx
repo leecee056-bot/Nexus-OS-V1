@@ -9,8 +9,9 @@ export default function FeaturesPage() {
       <div className="shell">
         <h2>What&apos;s included</h2>
         <p className="lede">
-          Plain list of what works today on the USB or Pi system. For “what is a
-          Vault?” and similar words, see <Link href="/about">About</Link>.
+          Plain list of what works today on the USB / Pi hub and on NEXUS Pocket
+          (ESP32). For “what is a Vault?” and similar words, see{" "}
+          <Link href="/about">About</Link>.
         </p>
 
         <figure className="shot">
@@ -32,10 +33,20 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
+            <strong>NEXUS Pocket (ESP32-S3)</strong>
+            <span>
+              USB-Serial companion firmware: offline TinyStories chat, status,
+              and tools (mem, notes, calc). Flash with PlatformIO; default model
+              stories260K on SPIFFS. See{" "}
+              <Link href="/setup#pocket">Pocket setup</Link>.
+            </span>
+          </li>
+          <li>
             <strong>Local AI Chat</strong>
             <span>
-              Talk to an AI that runs on the PC itself. A small starter model is
-              included so Chat works offline out of the box.
+              On PC/Pi: talk to an AI on the machine itself (SmolLM2 starter). On
+              Pocket: Serial <code className="mono">chat</code> with TinyStories.
+              Both stay offline once flashed.
             </span>
           </li>
           <li>
