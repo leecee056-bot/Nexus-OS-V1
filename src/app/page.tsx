@@ -39,10 +39,11 @@ export default function HomePage() {
             <Link className="btn btn-ghost" href="/setup">
               Setup guide
             </Link>
-            <Link className="btn btn-quiet" href="/network">
-              Optional: reserve a username for later
-            </Link>
           </div>
+          <p className="hero-note">
+            Optional later:{" "}
+            <Link href="/network">reserve a Network username</Link>.
+          </p>
         </div>
       </section>
 
@@ -66,6 +67,12 @@ export default function HomePage() {
               Pocket.
             </li>
           </ol>
+          <nav className="jump-chips" aria-label="Jump to a build on Download">
+            <Link href="/download#pc">PC USB</Link>
+            <Link href="/download#pi">Raspberry Pi</Link>
+            <Link href="/download#pocket">Pocket ESP32</Link>
+            <Link href="/setup#pocket">Pocket setup</Link>
+          </nav>
           <div className="cta-row" style={{ marginBottom: "2rem" }}>
             <Link className="btn" href="/download">
               Go to Download

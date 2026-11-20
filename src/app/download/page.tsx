@@ -39,8 +39,15 @@ export default function DownloadPage() {
           Pi / cyberdeck → Pi image (Pi 4 first). Tiny board companion → NEXUS
           Pocket (ESP32-S3).
         </p>
+        <nav className="jump-chips" aria-label="Jump to a build">
+          <a href="#pc">PC USB</a>
+          <a href="#pi">Raspberry Pi</a>
+          <a href="#pocket">Pocket ESP32</a>
+        </nav>
 
-        <h3 className="subhead">PC (USB stick)</h3>
+        <h3 className="subhead" id="pc">
+          PC (USB stick)
+        </h3>
         {ARTIFACTS.map((a) => (
           <div className="panel" key={a.arch}>
             <h3>{a.label}</h3>
@@ -77,7 +84,7 @@ export default function DownloadPage() {
           </div>
         ))}
 
-        <h3 className="subhead" style={{ marginTop: "2rem" }}>
+        <h3 className="subhead" id="pi" style={{ marginTop: "2rem" }}>
           Raspberry Pi / cyberdeck (microSD)
         </h3>
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
@@ -122,7 +129,7 @@ export default function DownloadPage() {
           </div>
         ))}
 
-        <h3 className="subhead" style={{ marginTop: "2rem" }}>
+        <h3 className="subhead" id="pocket" style={{ marginTop: "2rem" }}>
           NEXUS Pocket (ESP32-S3)
         </h3>
         <div className="alert" style={{ marginBottom: "1.5rem" }}>

@@ -26,9 +26,11 @@ export function ThemeToggle() {
       type="button"
       className="theme-toggle"
       onClick={toggle}
-      aria-label="Toggle theme"
+      aria-label={
+        theme === "matrix" ? "Switch to basic theme" : "Switch to matrix theme"
+      }
     >
-      theme:{theme}
+      {theme === "matrix" ? "Matrix" : "Basic"}
     </button>
   );
 }
