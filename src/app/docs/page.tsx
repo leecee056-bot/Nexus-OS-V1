@@ -32,6 +32,15 @@ export default function DocsPage() {
               </Link>
             </li>
             <li>
+              <a href="/demo/">
+                Interactive hub demo
+                <small>
+                  Browser tutorial of the terminal menu — Chat, Vault, Files,
+                  and more (no download)
+                </small>
+              </a>
+            </li>
+            <li>
               <Link href="/setup">
                 Setup guide (recommended)
                 <small>

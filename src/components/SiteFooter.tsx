@@ -4,6 +4,7 @@ import Link from "next/link";
 const PRODUCT = [
   { href: "/about", label: "About" },
   { href: "/features", label: "Features" },
+  { href: "/demo/", label: "Interactive demo" },
   { href: "/download", label: "Download" },
   { href: "/setup", label: "Setup" },
 ];
@@ -52,7 +53,11 @@ export function SiteFooter() {
             <ul>
               {PRODUCT.map((link) => (
                 <li key={link.href + link.label}>
-                  <Link href={link.href}>{link.label}</Link>
+                  {link.href.includes("/demo") ? (
+                    <a href={link.href}>{link.label}</a>
+                  ) : (
+                    <Link href={link.href}>{link.label}</Link>
+                  )}
                 </li>
               ))}
             </ul>

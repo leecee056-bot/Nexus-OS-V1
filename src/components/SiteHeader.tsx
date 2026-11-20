@@ -9,6 +9,7 @@ import { ThemeToggle } from "./ThemeToggle";
 const LINKS = [
   { href: "/about", label: "About" },
   { href: "/features", label: "Features" },
+  { href: "/demo/", label: "Demo" },
   { href: "/download", label: "Download" },
   { href: "/setup", label: "Setup" },
   { href: "/docs", label: "Docs" },
@@ -44,15 +45,25 @@ export function SiteHeader() {
           className={`nav-links${open ? " is-open" : ""}`}
           aria-label="Primary"
         >
-          {LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={pathname === link.href ? "page" : undefined}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {LINKS.map((link) =>
+            link.href.endsWith("/demo/") || link.href.startsWith("/demo") ? (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={pathname.startsWith("/demo") ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={pathname === link.href ? "page" : undefined}
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
         </nav>
         <div className="nav-toolbar">
           <ThemeToggle />
