@@ -6,6 +6,7 @@ import { monoStyle } from "../theme/fonts";
 export function ThemePicker({ compact = false }: { compact?: boolean }) {
   const { themeId, setThemeId, colors, scanlines, setScanlines } = useTheme();
   const mono = colors.mono;
+  const spatial = colors.spatialShell;
 
   return (
     <View style={styles.wrap}>
@@ -38,6 +39,7 @@ export function ThemePicker({ compact = false }: { compact?: boolean }) {
                     : on
                       ? colors.accentSoft
                       : "transparent",
+                  borderRadius: spatial || t.spatialShell ? 14 : mono ? 0 : 8,
                 },
               ]}
             >
@@ -47,7 +49,7 @@ export function ThemePicker({ compact = false }: { compact?: boolean }) {
                   {
                     backgroundColor: t.accent,
                     borderColor: t.bg,
-                    borderRadius: mono ? 0 : 6,
+                    borderRadius: mono ? 0 : t.spatialShell ? 6 : 6,
                   },
                 ]}
               />
@@ -72,7 +74,7 @@ export function ThemePicker({ compact = false }: { compact?: boolean }) {
           {THEMES[themeId].blurb}
         </Text>
       ) : null}
-      {themeId !== "basic" ? (
+      {themeId !== "basic" && themeId !== "spatial" ? (
         <Pressable
           onPress={() => setScanlines(!scanlines)}
           style={[
@@ -80,6 +82,7 @@ export function ThemePicker({ compact = false }: { compact?: boolean }) {
             {
               borderColor: scanlines ? colors.accent : colors.border,
               backgroundColor: scanlines ? colors.accentSoft : "transparent",
+              borderRadius: spatial ? 12 : 0,
             },
           ]}
         >

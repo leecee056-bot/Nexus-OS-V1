@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MatrixRain } from "./MatrixRain";
 import { ScanlineOverlay } from "./ScanlineOverlay";
+import { SpatialAtmosphere } from "./SpatialAtmosphere";
 import { useCompanionLayout } from "../layout";
 import { useTheme } from "../theme";
 
@@ -22,15 +23,17 @@ export function ScreenShell({
 }: Props) {
   const { contentMax, gutter } = useCompanionLayout();
   const { colors } = useTheme();
-  const showRain = rain && colors.rain;
+  const showRain = rain && colors.rain && !colors.spatialShell;
+  const spatial = colors.spatialShell;
 
   const pad = {
-    paddingHorizontal: gutter,
-    paddingTop: gutter,
+    paddingHorizontal: spatial ? gutter + 4 : gutter,
+    paddingTop: spatial ? gutter + 8 : gutter,
     paddingBottom: gutter * 2,
-    maxWidth: contentMax,
+    maxWidth: spatial ? Math.min(contentMax || 1100, 1100) : contentMax,
     width: "100%" as const,
     alignSelf: "center" as const,
+    gap: spatial ? 4 : 0,
   };
 
   const fade =
@@ -44,6 +47,7 @@ export function ScreenShell({
 
   return (
     <View style={[styles.root, { backgroundColor: colors.bg }]}>
+      {spatial ? <SpatialAtmosphere /> : null}
       {showRain ? (
         <>
           <MatrixRain dimmed />
@@ -64,7 +68,7 @@ export function ScreenShell({
       ) : (
         <View style={[styles.fill, pad, contentStyle]}>{children}</View>
       )}
-      <ScanlineOverlay />
+      {!spatial ? <ScanlineOverlay /> : null}
     </View>
   );
 }

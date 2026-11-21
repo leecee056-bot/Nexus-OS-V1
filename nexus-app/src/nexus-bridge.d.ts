@@ -41,6 +41,31 @@ declare global {
       openPath?: (args: {
         path: string;
       }) => Promise<{ ok: boolean; error?: string }>;
+      listBrowsers?: () => Promise<{
+        ok: boolean;
+        browsers: {
+          id: string;
+          name: string;
+          path: string;
+          appMode?: boolean;
+        }[];
+        prefs: {
+          mode?: "window" | "external" | "app";
+          browserId?: string | null;
+          lastThemeId?: string;
+        };
+      }>;
+      setBrowsePrefs?: (args: {
+        mode?: "window" | "external" | "app";
+        browserId?: string | null;
+        lastThemeId?: string;
+      }) => Promise<{ ok: boolean; prefs?: object }>;
+      openBrowse?: (args: {
+        url: string;
+        themeId?: string;
+        mode?: "window" | "external" | "app";
+        browserId?: string;
+      }) => Promise<{ ok: boolean; mode?: string; error?: string }>;
       platform?: string;
     };
   }

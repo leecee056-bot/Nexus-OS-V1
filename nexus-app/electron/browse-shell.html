@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'"
+    />
+    <title>NEXUS Browse</title>
+    <style>
+      :root {
+        --bg: #07080e;
+        --bar: rgba(16, 18, 28, 0.82);
+        --fg: #eef2ff;
+        --dim: #9aa3c7;
+        --accent: #9ec5ff;
+        --border: rgba(255, 255, 255, 0.14);
+        --glass: rgba(255, 255, 255, 0.07);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: var(--bg);
+        color: var(--fg);
+        font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        overflow: hidden;
+        user-select: none;
+      }
+      body.spatial {
+        background: radial-gradient(
+            900px 500px at 10% -10%,
+            rgba(120, 160, 255, 0.18),
+            transparent 55%
+          ),
+          radial-gradient(
+            700px 420px at 95% 110%,
+            rgba(180, 140, 255, 0.12),
+            transparent 50%
+          ),
+          #07080e;
+      }
+      body.matrix {
+        --bg: #010401;
+        --bar: #0a160a;
+        --fg: #c8ffc8;
+        --dim: #4e8a4e;
+        --accent: #2dff12;
+        --border: rgba(45, 255, 18, 0.32);
+        --glass: rgba(6, 16, 6, 0.9);
+        background: #010401;
+      }
+      body.lumen {
+        --bg: #050a0c;
+        --bar: #091214;
+        --fg: #e2f7f4;
+        --dim: #6f9a96;
+        --accent: #5eead4;
+        --border: rgba(94, 234, 212, 0.2);
+        --glass: rgba(14, 36, 40, 0.5);
+        background: #050a0c;
+      }
+      body.terminal {
+        --bg: #000;
+        --bar: #001200;
+        --fg: #3dff70;
+        --dim: #178a3a;
+        --accent: #00ff41;
+        --border: rgba(0, 255, 65, 0.5);
+        --glass: rgba(0, 18, 0, 0.94);
+        background: #000;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+      }
+      body.basic {
+        --bg: #f7f5f0;
+        --bar: #ebe6dc;
+        --fg: #1c241c;
+        --dim: #5a6558;
+        --accent: #2f6b3a;
+        --border: rgba(28, 36, 28, 0.12);
+        --glass: rgba(255, 255, 255, 0.92);
+        background: #f7f5f0;
+      }
+      #chrome {
+        height: 56px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        background: var(--bar);
+        backdrop-filter: blur(24px) saturate(140%);
+        -webkit-backdrop-filter: blur(24px) saturate(140%);
+        border-bottom: 1px solid var(--border);
+        -webkit-app-region: drag;
+        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+      }
+      .btn {
+        -webkit-app-region: no-drag;
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--fg);
+        border-radius: 12px;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .btn:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+      #url {
+        -webkit-app-region: no-drag;
+        flex: 1;
+        min-width: 0;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.2);
+        color: var(--fg);
+        border-radius: 14px;
+        padding: 8px 12px;
+        outline: none;
+      }
+      body.basic #url {
+        background: rgba(255, 255, 255, 0.85);
+      }
+      #url:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+      }
+      #brand {
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        font-size: 11px;
+        margin-right: 4px;
+        white-space: nowrap;
+      }
+      #hint {
+        -webkit-app-region: no-drag;
+        color: var(--dim);
+        font-size: 11px;
+        white-space: nowrap;
+      }
+      #winbtns {
+        -webkit-app-region: no-drag;
+        display: flex;
+        gap: 6px;
+        margin-left: 4px;
+      }
+      .win {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+      }
+      .win.min {
+        background: #f5c542;
+      }
+      .win.max {
+        background: #3ddc84;
+      }
+      .win.close {
+        background: #ff6058;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chrome">
+      <span id="brand">NEXUS</span>
+      <button class="btn" id="back" title="Back">←</button>
+      <button class="btn" id="fwd" title="Forward">→</button>
+      <button class="btn" id="reload" title="Reload">↻</button>
+      <input id="url" spellcheck="false" />
+      <button class="btn" id="go">Go</button>
+      <button class="btn" id="external" title="Open in system browser">
+        Browser
+      </button>
+      <span id="hint">Browse window</span>
+      <div id="winbtns">
+        <button class="win min" id="min" title="Minimize"></button>
+        <button class="win max" id="max" title="Maximize"></button>
+        <button class="win close" id="close" title="Close"></button>
+      </div>
+    </div>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const theme = params.get("theme") || "spatial";
+      document.body.classList.add(theme);
+      const api = window.nexusBrowse;
+
+      const urlEl = document.getElementById("url");
+      const back = document.getElementById("back");
+      const fwd = document.getElementById("fwd");
+      const reload = document.getElementById("reload");
+      const go = document.getElementById("go");
+      const external = document.getElementById("external");
+
+      function normalize(u) {
+        const t = (u || "").trim();
+        if (!t) return "";
+        if (/^https?:\/\//i.test(t)) return t;
+        if (/^[\w.-]+\.[\w.-]+/.test(t)) return "https://" + t;
+        return "https://duckduckgo.com/?q=" + encodeURIComponent(t);
+      }
+
+      function syncNav(state) {
+        back.disabled = !state.canGoBack;
+        fwd.disabled = !state.canGoForward;
+        if (state.url) urlEl.value = state.url;
+      }
+
+      api.onNav(syncNav);
+
+      back.onclick = () => api.back();
+      fwd.onclick = () => api.forward();
+      reload.onclick = () => api.reload();
+      go.onclick = () => {
+        const u = normalize(urlEl.value);
+        if (u) api.navigate(u);
+      };
+      urlEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") go.click();
+      });
+      external.onclick = () => api.external();
+      document.getElementById("min").onclick = () => api.window("min");
+      document.getElementById("max").onclick = () => api.window("max");
+      document.getElementById("close").onclick = () => api.window("close");
+
+      const initial = params.get("url") || "https://duckduckgo.com";
+      urlEl.value = initial;
+      api.ready({ url: initial, theme });
+    </script>
+  </body>
+</html>

@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { BrowsePanel } from "../components/BrowsePanel";
 import { GetStartedPanel } from "../components/GetStartedPanel";
 import { GlowPanel } from "../components/GlowPanel";
 import { OfflineGuidesPanel } from "../components/OfflineGuidesPanel";
@@ -21,6 +22,7 @@ import { loadShellMode, type ShellMode } from "../layout/shellMode";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
 import { OS_UPDATE_URL } from "../updates/links";
+import { openBrowse, isDesktopBrowseAvailable } from "../browse/api";
 
 export function HomeScreen() {
   const { isTablet, heroMascot } = useCompanionLayout();
@@ -43,6 +45,7 @@ export function HomeScreen() {
       <ScreenShell rain contentStyle={styles.terminalPad}>
         <ShellModePicker onChange={setShell} />
         <TerminalDashboard />
+        <BrowsePanel />
         <GetStartedPanel />
         <OfflineGuidesPanel />
       </ScreenShell>
@@ -87,6 +90,7 @@ export function HomeScreen() {
             {
               backgroundColor: colors.accentSoft,
               borderColor: colors.accent,
+              borderRadius: colors.radius || 0,
             },
           ]}
           onPress={() => navigation.navigate("Chat")}
@@ -101,6 +105,7 @@ export function HomeScreen() {
             {
               borderColor: colors.purple,
               backgroundColor: colors.purpleSoft,
+              borderRadius: colors.radius || 0,
             },
           ]}
           onPress={() => navigation.navigate("Files")}
@@ -109,10 +114,32 @@ export function HomeScreen() {
             Files
           </Text>
         </Pressable>
+        {Platform.OS === "web" ? (
+          <Pressable
+            style={[
+              styles.btnGhost,
+              {
+                borderColor: colors.border,
+                backgroundColor: colors.accentSoft,
+                borderRadius: colors.radius || 0,
+              },
+            ]}
+            onPress={() => {
+              if (isDesktopBrowseAvailable()) {
+                void openBrowse("https://duckduckgo.com", { themeId });
+              }
+            }}
+          >
+            <Text style={[styles.btnGhostText, { color: colors.accent }]}>
+              Browse
+            </Text>
+          </Pressable>
+        ) : null}
       </View>
 
       <GetStartedPanel />
       <OfflineGuidesPanel />
+      <BrowsePanel />
 
       {Platform.OS === "web" ? (
         <GlowPanel title="Layout" accent="purple">

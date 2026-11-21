@@ -10,8 +10,10 @@ rabbit-wizard branding throughout.
 | `nexus-esp32/` / `nexus-cardputer/` | Hardware firmware |
 | **`nexus-app/` (this folder)** | Windows · Mac · Android · iOS companion |
 
-## Features (v0.11.1)
+## Features (v0.12)
 
+- **Spatial / Open theme** — optional floating liquid-glass canvas (desktop)
+- **Browse (desktop)** — themed NEXUS window + detect installed browsers
 - **Offline-first** — no NEXUS cloud account; website links are optional downloads only
 - **Desk layout (desktop)** — multi-window NEXUS OS home (or Classic chat chrome)
 - **Games (desktop / USB)** — Chess first, plus Snake, Pong, Breakout, Tetris, 2048

@@ -1,11 +1,21 @@
 /**
  * Desktop shell for NEXUS Companion (Windows · macOS).
  * Portable USB mode: settings / Vault / chats live under the kit Data/ folder.
+ * Browse: themed in-app window + detect installed system browsers.
  */
-const { app, BrowserWindow, ipcMain, shell, nativeImage, dialog } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  BrowserView,
+  ipcMain,
+  shell,
+  nativeImage,
+  dialog,
+} = require("electron");
 const path = require("path");
 const fs = require("fs");
 const { applyPortablePaths, ensureDir } = require("./portable");
+const { detectBrowsers, openInBrowser } = require("./browsers");
 
 /** Must run before ready — redirects userData onto the USB kit. */
 const portableInfo = applyPortablePaths(app);
@@ -185,6 +195,219 @@ ipcMain.handle("nexus:save-image", async (_event, args) => {
   }
 });
 
+const BROWSE_CHROME = 56;
+const browsePrefsPath = () =>
+  path.join(app.getPath("userData"), "browse-prefs.json");
+
+function readBrowsePrefs() {
+  try {
+    const raw = fs.readFileSync(browsePrefsPath(), "utf8");
+    return JSON.parse(raw);
+  } catch {
+    return { mode: "window", browserId: null };
+  }
+}
+
+function writeBrowsePrefs(prefs) {
+  try {
+    ensureDir(path.dirname(browsePrefsPath()));
+    fs.writeFileSync(browsePrefsPath(), JSON.stringify(prefs, null, 2), "utf8");
+  } catch {
+    /* ignore */
+  }
+}
+
+ipcMain.handle("nexus:list-browsers", async () => {
+  const browsers = detectBrowsers();
+  const prefs = readBrowsePrefs();
+  return { ok: true, browsers, prefs };
+});
+
+ipcMain.handle("nexus:set-browse-prefs", async (_event, args) => {
+  const next = {
+    ...readBrowsePrefs(),
+    ...(args && typeof args === "object" ? args : {}),
+  };
+  writeBrowsePrefs(next);
+  return { ok: true, prefs: next };
+});
+
+/** @type {Map<number, { win: Electron.BrowserWindow, view: Electron.BrowserView, url: string }>} */
+const browseSessions = new Map();
+
+function themeBackground(themeId) {
+  if (themeId === "spatial") return "#07080e";
+  if (themeId === "basic") return "#f7f5f0";
+  if (themeId === "lumen") return "#050a0c";
+  if (themeId === "terminal") return "#000000";
+  return "#040804";
+}
+
+function layoutBrowseView(win, view) {
+  const [w, h] = win.getContentSize();
+  view.setBounds({
+    x: 0,
+    y: BROWSE_CHROME,
+    width: w,
+    height: Math.max(100, h - BROWSE_CHROME),
+  });
+  view.setAutoResize({ width: true, height: true });
+}
+
+function emitNav(win, view) {
+  const wc = view.webContents;
+  win.webContents.send("browse:nav", {
+    url: wc.getURL(),
+    canGoBack: wc.canGoBack(),
+    canGoForward: wc.canGoForward(),
+    title: wc.getTitle(),
+  });
+}
+
+function createBrowseWindow(rawUrl, themeId = "spatial") {
+  const url = String(rawUrl || "https://duckduckgo.com").trim();
+  const icon = resolveIcon();
+  const win = new BrowserWindow({
+    width: 1120,
+    height: 780,
+    minWidth: 640,
+    minHeight: 480,
+    backgroundColor: themeBackground(themeId),
+    title: "NEXUS Browse",
+    frame: false,
+    show: false,
+    icon,
+    webPreferences: {
+      preload: path.join(__dirname, "browse-preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false,
+      sandbox: false,
+    },
+  });
+
+  const view = new BrowserView({
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
+      sandbox: true,
+    },
+  });
+  win.setBrowserView(view);
+  layoutBrowseView(win, view);
+
+  const session = { win, view, url };
+  browseSessions.set(win.id, session);
+
+  const shellFile = path.join(__dirname, "browse-shell.html");
+  void win
+    .loadFile(shellFile, {
+      query: { theme: String(themeId), url: String(url) },
+    })
+    .catch((err) => console.error("browse shell", err));
+
+  win.once("ready-to-show", () => win.show());
+  win.on("resize", () => layoutBrowseView(win, view));
+  win.on("closed", () => browseSessions.delete(win.id));
+
+  view.webContents.on("did-navigate", () => emitNav(win, view));
+  view.webContents.on("did-navigate-in-page", () => emitNav(win, view));
+  view.webContents.on("page-title-updated", () => emitNav(win, view));
+  view.webContents.setWindowOpenHandler(({ url: openUrl }) => {
+    void view.webContents.loadURL(openUrl);
+    return { action: "deny" };
+  });
+
+  return win;
+}
+
+ipcMain.on("browse:ready", (event, payload) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (!win) return;
+  const session = browseSessions.get(win.id);
+  if (!session) return;
+  const target = String(payload?.url || session.url || "https://duckduckgo.com");
+  void session.view.webContents.loadURL(target).then(() => {
+    emitNav(win, session.view);
+  });
+});
+
+ipcMain.on("browse:back", (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  const session = win && browseSessions.get(win.id);
+  if (session?.view.webContents.canGoBack()) session.view.webContents.goBack();
+});
+
+ipcMain.on("browse:forward", (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  const session = win && browseSessions.get(win.id);
+  if (session?.view.webContents.canGoForward())
+    session.view.webContents.goForward();
+});
+
+ipcMain.on("browse:reload", (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  const session = win && browseSessions.get(win.id);
+  session?.view.webContents.reload();
+});
+
+ipcMain.on("browse:navigate", (event, nextUrl) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  const session = win && browseSessions.get(win.id);
+  if (!session) return;
+  const u = String(nextUrl || "").trim();
+  if (!u) return;
+  void session.view.webContents.loadURL(u);
+});
+
+ipcMain.on("browse:external", (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  const session = win && browseSessions.get(win.id);
+  const url = session?.view.webContents.getURL() || session?.url;
+  if (!url) return;
+  const prefs = readBrowsePrefs();
+  const browsers = detectBrowsers();
+  const browser =
+    browsers.find((b) => b.id === prefs.browserId) || browsers[0] || null;
+  openInBrowser(browser, url, { appWindow: false });
+});
+
+ipcMain.on("browse:window", (event, action) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (!win) return;
+  if (action === "min") win.minimize();
+  else if (action === "max") {
+    if (win.isMaximized()) win.unmaximize();
+    else win.maximize();
+  } else if (action === "close") win.close();
+});
+
+ipcMain.handle("nexus:open-browse", async (_event, args) => {
+  const url = String(args?.url || "https://duckduckgo.com").trim();
+  const prefs = readBrowsePrefs();
+  const themeId = String(
+    args?.themeId || prefs.lastThemeId || "spatial",
+  );
+  if (args?.themeId) {
+    writeBrowsePrefs({ ...prefs, lastThemeId: String(args.themeId) });
+  }
+  const mode = String(args?.mode || prefs.mode || "window");
+
+  if (mode === "external" || mode === "app") {
+    const browsers = detectBrowsers();
+    const browser =
+      browsers.find((b) => b.id === (args?.browserId || prefs.browserId)) ||
+      browsers[0] ||
+      null;
+    const result = openInBrowser(browser, url, {
+      appWindow: mode === "app",
+    });
+    return { ok: true, ...result, browser: browser?.id || null };
+  }
+
+  createBrowseWindow(url, themeId);
+  return { ok: true, mode: "window" };
+});
+
 function createWindow() {
   const icon = resolveIcon();
   const win = new BrowserWindow({
@@ -210,7 +433,12 @@ function createWindow() {
   win.once("ready-to-show", () => win.show());
 
   win.webContents.setWindowOpenHandler(({ url }) => {
-    void shell.openExternal(url);
+    if (/^https?:\/\//i.test(url)) {
+      const themeId = String(readBrowsePrefs().lastThemeId || "spatial");
+      createBrowseWindow(url, themeId);
+    } else {
+      void shell.openExternal(url);
+    }
     return { action: "deny" };
   });
 

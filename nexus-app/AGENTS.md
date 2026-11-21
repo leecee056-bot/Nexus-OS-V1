@@ -3,8 +3,10 @@
 - Expo app for Windows / Mac / Android / iOS. Product positioning for users: a
   real companion app with local AI Chat — do **not** call it “secondary” or a
   “demo” in UI copy.
-- Themes: `src/theme/palettes.ts` — `basic` | `matrix` | `lumen` | `terminal`
-  (default lumen). Terminal enables CRT multi-panel Home + scanlines.
+- Themes: `src/theme/palettes.ts` — `basic` | `matrix` | `lumen` | `terminal` |
+  `spatial` (default lumen). Terminal enables CRT multi-panel Home + scanlines.
+  Spatial / Open: floating liquid glass (`spatialShell`), `SpatialAtmosphere`,
+  `FloatIn` entrances — desktop-first premium canvas.
 - Agent: `src/agent/` (schema + tools + runner). Plugins: `src/plugins/`.
   Do **not** call the app “secondary” in UI copy.
 - Chat neural path: `src/chat/ollama.ts`. Fallback: `src/chat/tinychat.ts`.
@@ -27,6 +29,8 @@
   kit template in `usb-kit/`; pack with `npm run pack:usb`. Guide:
   companion-usb.md. Chat history persists via `src/chat/history.ts`.
 - Desktop: Electron proxies Ollama; icons in `assets/brand/icon.{png,ico,icns}`.
+- Browse (desktop): `electron/browsers.js` + `browse-shell.html` + BrowserView;
+  UI `BrowsePanel` / `src/browse/api.ts`. Guide: companion-browse.md.
 - Site: `/download#companion`, `/download#companion-usb`,
   `public/guides/companion-agent.md`, `companion-image.md`,
-  `companion-updates.md`, `companion-usb.md`.
+  `companion-updates.md`, `companion-usb.md`, `companion-browse.md`.
