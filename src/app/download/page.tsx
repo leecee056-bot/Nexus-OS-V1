@@ -8,6 +8,7 @@ import {
   CARDPUTER_REPO,
   CARDPUTER_VERSION,
   COMPANION_ANDROID_NOTES,
+  COMPANION_ANDROID_URL,
   COMPANION_MAC_URL,
   COMPANION_RELEASE_PAGE,
   COMPANION_USB_URL,
@@ -232,21 +233,19 @@ export default function DownloadPage() {
             <a href="https://ollama.com/download">Ollama</a>, then chat offline.
             Current release builds (v{COMPANION_VERSION}) include a{" "}
             <strong>USB portable kit</strong>, rabbit <strong>grafting</strong>{" "}
-            wait animation, desktop <strong>Image Lab</strong>,{" "}
+            wait animation, desktop <strong>Image Lab</strong> + low-memory{" "}
+            <strong>Games</strong> (Chess first),{" "}
             <strong>Check for updates</strong>, Terminal CRT dashboard, Agent
             mode, and <strong>Basic / Matrix / Lumen / Terminal</strong> themes.
-            Desktop / web source also has a low-memory <strong>Games</strong>{" "}
-            tab (Chess first) — ships in the next Companion build. Vault, Packs,
-            Plugins, Files, and the NEXUS icon on phone + tablet Android.
+            Vault, Packs, Plugins, Files, and the NEXUS icon on phone + tablet
+            Android (Games / Image Lab stay desktop / web).
           </p>
           <p style={{ marginTop: "0.75rem" }}>
             <strong>Windows:</strong> one-click portable{" "}
             <code className="mono">.exe</code>. <strong>Mac:</strong>{" "}
             <code className="mono">.dmg</code> from the companion Release.{" "}
-            <strong>Web:</strong> open instantly. <strong>Android:</strong> APK
-            not attached yet (EAS build pending) — use the release page when it
-            lands, or see sideload notes. Point Chat at Ollama on your PC if
-            needed.
+            <strong>Web:</strong> open instantly. <strong>Android:</strong>{" "}
+            one-click sideload APK — point Chat at Ollama on your PC if needed.
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
             <a className="btn" href={COMPANION_WINDOWS_URL}>
@@ -258,11 +257,14 @@ export default function DownloadPage() {
             <a className="btn" href={COMPANION_USB_URL}>
               Download USB kit (.zip)
             </a>
+            <a className="btn" href={COMPANION_ANDROID_URL}>
+              Download Android (.apk)
+            </a>
             <a className="btn" href={COMPANION_WEB_URL}>
               Open web companion
             </a>
             <a className="btn btn-ghost" href={COMPANION_RELEASE_PAGE}>
-              Companion releases (Android APK when ready)
+              All companion releases
             </a>
             <a className="btn btn-quiet" href={COMPANION_ANDROID_NOTES}>
               Android sideload notes
