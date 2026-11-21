@@ -113,14 +113,21 @@ function SideRail({
   const { colors } = useTheme();
   const isDesktop = Platform.OS === "web";
   const terminal = colors.terminalShell;
+  const spatial = colors.spatialShell;
 
   return (
     <View
       style={[
         styles.rail,
         {
-          backgroundColor: colors.bgBar,
+          backgroundColor: spatial ? colors.bgGlass : colors.bgBar,
           borderRightColor: colors.border,
+          ...(spatial
+            ? ({
+                borderRightWidth: StyleSheet.hairlineWidth,
+                backdropFilter: "blur(24px)",
+              } as object)
+            : null),
         },
       ]}
     >
@@ -177,6 +184,7 @@ function SideRail({
                   : "transparent",
                 shadowColor: colors.accent,
                 shadowOpacity: focused && !terminal ? 0.35 : 0,
+                borderRadius: spatial ? 14 : 0,
               },
             ]}
           >
@@ -243,6 +251,7 @@ function AppShell() {
   }, [colors, themeId]);
 
   const terminal = colors.terminalShell;
+  const spatial = colors.spatialShell;
 
   return (
     <View style={[styles.root, { backgroundColor: colors.bg }]}>
@@ -337,7 +346,7 @@ function AppShell() {
             </Tab.Navigator>
           </View>
         </View>
-        <ScanlineOverlay />
+        {!spatial ? <ScanlineOverlay /> : null}
       </NavigationContainer>
       {booting ? <BootSplash onDone={finishBoot} /> : null}
     </View>

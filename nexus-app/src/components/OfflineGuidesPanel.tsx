@@ -16,6 +16,8 @@ export function OfflineGuidesPanel() {
         {
           borderColor: colors.border,
           backgroundColor: colors.glass ? colors.bgGlass : colors.bgElev,
+          borderRadius: colors.radius || 0,
+          overflow: "hidden",
         },
       ]}
     >

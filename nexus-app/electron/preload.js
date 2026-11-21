@@ -8,5 +8,8 @@ contextBridge.exposeInMainWorld("nexus", {
   importToUsb: () => ipcRenderer.invoke("nexus:import-to-usb"),
   exportChat: (args) => ipcRenderer.invoke("nexus:export-chat", args),
   openPath: (args) => ipcRenderer.invoke("nexus:open-path", args),
+  listBrowsers: () => ipcRenderer.invoke("nexus:list-browsers"),
+  setBrowsePrefs: (args) => ipcRenderer.invoke("nexus:set-browse-prefs", args),
+  openBrowse: (args) => ipcRenderer.invoke("nexus:open-browse", args),
   platform: process.platform,
 });

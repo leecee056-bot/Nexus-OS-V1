@@ -1,4 +1,9 @@
-export type ThemeId = "basic" | "matrix" | "lumen" | "terminal";
+export type ThemeId =
+  | "basic"
+  | "matrix"
+  | "lumen"
+  | "terminal"
+  | "spatial";
 
 export type ThemeColors = {
   id: ThemeId;
@@ -24,7 +29,11 @@ export type ThemeColors = {
   glass: boolean;
   /** Multi-panel CRT shell inspired by classic NEXUS OS mockups */
   terminalShell: boolean;
+  /** Open canvas — floating glass, depth, soft light (desktop-first) */
+  spatialShell: boolean;
   mono: boolean;
+  /** Corner radius hint for panels (web/desktop) */
+  radius: number;
 };
 
 /** Clean paper / ink — deliberately not neon. */
@@ -51,7 +60,9 @@ export const BASIC: ThemeColors = {
   rain: false,
   glass: false,
   terminalShell: false,
+  spatialShell: false,
   mono: false,
+  radius: 8,
 };
 
 /** Classic hard neon rain — denser green, sharper contrast. */
@@ -78,7 +89,9 @@ export const MATRIX: ThemeColors = {
   rain: true,
   glass: false,
   terminalShell: false,
+  spatialShell: false,
   mono: false,
+  radius: 4,
 };
 
 /** Soft teal glass — premium, less “matrix clone”. */
@@ -105,7 +118,9 @@ export const LUMEN: ThemeColors = {
   rain: true,
   glass: true,
   terminalShell: false,
+  spatialShell: false,
   mono: false,
+  radius: 12,
 };
 
 /**
@@ -136,7 +151,42 @@ export const TERMINAL: ThemeColors = {
   rain: true,
   glass: false,
   terminalShell: true,
+  spatialShell: false,
   mono: true,
+  radius: 0,
+};
+
+/**
+ * Spatial / Open — optional premium desktop theme.
+ * Calm dark open canvas, floating liquid-glass panels, soft depth lighting.
+ */
+export const SPATIAL: ThemeColors = {
+  id: "spatial",
+  label: "Spatial / Open",
+  blurb:
+    "Open canvas with floating liquid glass — depth, soft light, spatial feel (desktop).",
+  bg: "#07080e",
+  bgElev: "rgba(22, 26, 38, 0.72)",
+  bgBar: "rgba(12, 14, 22, 0.78)",
+  bgGlass: "rgba(255, 255, 255, 0.07)",
+  fg: "#eef2ff",
+  fgDim: "#9aa3c7",
+  accent: "#9ec5ff",
+  accentSoft: "rgba(158, 197, 255, 0.16)",
+  purple: "#c4b5fd",
+  purpleSoft: "rgba(196, 181, 253, 0.14)",
+  danger: "#fb7185",
+  border: "rgba(255, 255, 255, 0.14)",
+  edgeGlow: "rgba(158, 197, 255, 0.45)",
+  phosphor: "#c7d7ff",
+  scanline: "rgba(255,255,255,0.02)",
+  statusBar: "rgba(8, 10, 18, 0.88)",
+  rain: false,
+  glass: true,
+  terminalShell: false,
+  spatialShell: true,
+  mono: false,
+  radius: 22,
 };
 
 export const THEMES: Record<ThemeId, ThemeColors> = {
@@ -144,7 +194,14 @@ export const THEMES: Record<ThemeId, ThemeColors> = {
   matrix: MATRIX,
   lumen: LUMEN,
   terminal: TERMINAL,
+  spatial: SPATIAL,
 };
 
-export const THEME_ORDER: ThemeId[] = ["basic", "matrix", "lumen", "terminal"];
+export const THEME_ORDER: ThemeId[] = [
+  "basic",
+  "matrix",
+  "lumen",
+  "terminal",
+  "spatial",
+];
 export const DEFAULT_THEME: ThemeId = "lumen";

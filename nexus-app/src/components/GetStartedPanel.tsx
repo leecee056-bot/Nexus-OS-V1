@@ -20,7 +20,11 @@ const SECTIONS: Section[] = [
   },
   {
     title: "Themes",
-    body: "Basic = clean light. Matrix = neon rain. Lumen = frosted glass. Terminal = sharp CRT panels. Pair Terminal or Desk for the full OS vibe.",
+    body: "Basic = clean light. Matrix = neon rain. Lumen = frosted glass. Terminal = sharp CRT panels. Spatial / Open = floating liquid glass on an open canvas (premium desktop look). Pair Terminal or Desk for the CRT vibe; pick Spatial when you want depth and soft light.",
+  },
+  {
+    title: "Browse (desktop)",
+    body: "Windows / Mac can open links in a NEXUS Browse window styled like your theme. Companion detects Chrome, Edge, Firefox, Safari, Brave, and more so you can also hand off to an installed browser. We do not rebuild a browser — we provide the window chrome and integration.",
   },
   {
     title: "Files & websites",
@@ -48,6 +52,8 @@ export function GetStartedPanel() {
         {
           borderColor: colors.border,
           backgroundColor: colors.glass ? colors.bgGlass : colors.bgElev,
+          borderRadius: colors.radius || 0,
+          overflow: "hidden",
         },
       ]}
     >

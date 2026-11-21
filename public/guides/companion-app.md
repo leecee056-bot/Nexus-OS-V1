@@ -38,7 +38,7 @@ fallback). The website is only for downloads / releases — every
 Home and About include built-in **Works offline** help so guides stay available
 without the network.
 
-## Themes (v0.11)
+## Themes (v0.12)
 
 Home / About (every platform) and the desktop side rail can switch looks:
 
@@ -48,6 +48,13 @@ Home / About (every platform) and the desktop side rail can switch looks:
 | **Matrix** | Classic neon-green terminal NEXUS |
 | **Lumen** | Frosted glass panels, soft edge light, premium phosphor glow (default) |
 | **Terminal** | CRT multi-panel “NEXUS OS” dashboard — mono type, scanlines, real logo mark |
+| **Spatial / Open** | Open canvas, floating liquid glass, soft depth lighting (desktop-first) |
+
+## Browse (desktop)
+
+Windows / Mac: open links in a themed **NEXUS Browse** window, or hand off to an
+installed browser (Chrome, Edge, Firefox, Safari, …). See
+[companion-browse.md](./companion-browse.md).
 
 Optional **scanlines** toggle (Matrix / Lumen / Terminal) — CRT overlay. Terminal turns scanlines on by default.
 

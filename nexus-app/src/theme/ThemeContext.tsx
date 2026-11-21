@@ -45,7 +45,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
           t === "basic" ||
           t === "matrix" ||
           t === "lumen" ||
-          t === "terminal"
+          t === "terminal" ||
+          t === "spatial"
         ) {
           setThemeIdState(t);
         }

@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { BrowsePanel } from "../components/BrowsePanel";
 import { ScreenShell } from "../components/ScreenShell";
 import { GlowPanel } from "../components/GlowPanel";
 import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
@@ -58,6 +59,8 @@ export function AboutScreen() {
 
       <PortableUsbPanel />
 
+      <BrowsePanel />
+
       <GlowPanel title="Look & feel" accent="purple">
         <ThemePicker />
       </GlowPanel>
@@ -93,7 +96,8 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.11.1 · Offline-first · Desk layout · fun facts · Games · Agent{"\n"}
+        0.12.0 · Spatial / Open theme · Browse window · Offline-first · Desk ·
+        Agent{"\n"}
         Running on {Platform.OS}
       </GlowPanel>
 
