@@ -12,6 +12,7 @@ const PRODUCT = [
 const RESOURCES = [
   { href: "/docs", label: "Docs" },
   { href: "/knowledge-packs", label: "Knowledge packs" },
+  { href: "/download#companion", label: "Companion app" },
   { href: "/faq", label: "FAQ" },
   { href: "/network", label: "Network" },
 ];

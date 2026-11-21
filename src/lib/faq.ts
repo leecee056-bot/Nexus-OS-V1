@@ -67,6 +67,12 @@ export const FAQ_ITEMS: FaqItem[] = [
       "Free public offline knowledge you can copy onto a spare USB stick or microSD (32 GB+ is plenty for lots of text). Examples: Kiwix Wikipedia/Wiktionary ZIM archives and Project Gutenberg plain-text books. They are completely optional — NEXUS works without them. Prefer .txt/.md for Vault and Cardputer; open large .zim files with Kiwix or extract text first. See the Knowledge Packs page for links and copy paths.",
   },
   {
+    id: "companion",
+    question: "Is there a Windows or iOS app?",
+    answer:
+      "Yes — a secondary companion app lives in nexus-app/ (Expo). It offers Chat (lightweight offline stub in v0.1), Knowledge Vault notes, and simple document browsing in a normal windowed UI for Windows and iPhone/iPad. It is not a replacement for the bootable USB/Pi images or Cardputer firmware. See Download → Companion app or the companion-app guide.",
+  },
+  {
     id: "cyberdeck",
     question: "Is it good for cyberdecks?",
     answer:

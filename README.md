@@ -26,6 +26,13 @@ users at free public offline sources (Kiwix, Project Gutenberg, etc.) so they
 can expand the Knowledge Vault on a USB stick or microSD without us hosting
 large dumps. Completely optional.
 
+## Companion app (Windows + iOS)
+
+Secondary installable app in [`nexus-app/`](nexus-app/) — Chat, Vault, and
+Files in a normal windowed UI without flashing USB/Pi media. See
+[`nexus-app/README.md`](nexus-app/README.md) and
+[`public/guides/companion-app.md`](public/guides/companion-app.md).
+
 ## Stack
 
 Next.js 15 · Postgres/PGlite · bcrypt password hashing · httpOnly sessions
