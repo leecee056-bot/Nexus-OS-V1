@@ -49,9 +49,10 @@ export function HomeScreen() {
         </View>
       </View>
 
-      <GlowPanel title="Local AI Chat">
-        Open Chat → pick a lightweight model → Get once via Ollama → talk
-        offline. Watch the phosphor replies and status orb as NEXUS thinks.
+      <GlowPanel title="Local AI + Agent">
+        Open Chat → pick a model → switch Agent on. It can search your Vault /
+        packs, use Add-ons, and create files (even a website/ folder) while you
+        watch short status lines.
       </GlowPanel>
 
       {showThemes ? (
@@ -63,7 +64,8 @@ export function HomeScreen() {
       <GlowPanel title="What’s inside" accent={showThemes ? "green" : "purple"}>
         <Text style={[styles.body, { color: colors.fg }]}>
           • NEXUS logo + rabbit-wizard presence{"\n"}
-          • Chat — real local models, typed glow replies{"\n"}
+          • Chat / Agent — local models + Vault / Plugins / Files{"\n"}
+          • Add-ons library — toggle the tools Agent may use{"\n"}
           • Themes — Basic, Matrix, Lumen (desktop){"\n"}
           • Vault · Packs · Files — offline-first{"\n"}
           • Phone tabs · tablet rail · desktop icon

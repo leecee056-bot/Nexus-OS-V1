@@ -8,10 +8,10 @@ bottom tabs; tablets use a side rail.
 
 | Platform | Action |
 |----------|--------|
-| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.5.0/NEXUS-Companion-Windows-0.5.0-portable.exe) — double-click, NEXUS icon |
-| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.5.0) — grab the `.dmg` when attached |
+| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.6.0/NEXUS-Companion-Windows-0.6.0-portable.exe) — double-click, NEXUS icon |
+| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.6.0) — grab the `.dmg` when attached |
 | **Web** | [Open /companion/](/companion/) in your browser |
-| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.5.0) when attached — see [android-apk.md](./android-apk.md) |
+| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.6.0) when attached — see [android-apk.md](./android-apk.md) |
 
 Site Download section: [/download#companion](/download#companion)
 
@@ -59,10 +59,16 @@ npm run build:mac
 npm run android:apk
 ```
 
-## What v0.5 includes
+## Agent (v0.6)
 
+See [companion-agent.md](./companion-agent.md) — Agent mode uses Vault, Add-ons,
+and Files with live status while answering.
+
+## What v0.6 includes
+
+- Agent mode + Add-ons / Plugin library
 - Lumen UI polish + Basic / Matrix / Lumen themes
 - Real local models via Ollama + model selector
 - Windows / Mac desktop packaging with NEXUS logo icon
-- Vault + optional Packs import
+- Vault + optional Packs import + Files folders/text
 - Phone + tablet responsive chrome

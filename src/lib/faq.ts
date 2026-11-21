@@ -70,7 +70,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "companion",
     question: "Is there a Windows, Mac, iPhone, or Android app?",
     answer:
-      "Yes — NEXUS Companion (nexus-app/) for Windows, Mac, iPhone/iPad, and Android. Chat uses real local models through Ollama: pick a lightweight model, download once, then chat offline. Also includes Knowledge Vault, optional knowledge packs, and Files. Desktop builds use the NEXUS logo icon. Android is a sideload APK via GitHub Releases for now (not Play Store yet).",
+      "Yes — NEXUS Companion (nexus-app/) for Windows, Mac, iPhone/iPad, and Android. Chat uses real local models through Ollama. Agent mode can search your Knowledge Vault / packs, use the Add-ons library, and create files in Files. Desktop builds use the NEXUS logo icon. Android is a sideload APK via GitHub Releases for now (not Play Store yet).",
   },
   {
     id: "cyberdeck",
