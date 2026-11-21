@@ -77,7 +77,9 @@ export default function FeaturesPage() {
             <span>
               Searchable notes with a small bundled starter pack (guide,
               glossary, how-tos). Import more text/markdown, rebuild the index,
-              optionally use hits in Chat. Not a full Wikipedia dump.
+              optionally use hits in Chat. Want a larger offline library? See{" "}
+              <Link href="/knowledge-packs">Optional Knowledge Packs</Link>{" "}
+              (Kiwix, Gutenberg, your own notes — optional).
             </span>
           </li>
           <li>

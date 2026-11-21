@@ -109,6 +109,21 @@ export default function DocsPage() {
                 </small>
               </Link>
             </li>
+            <li>
+              <Link href="/knowledge-packs">
+                Optional Knowledge Packs
+                <small>
+                  Free public offline sources (Kiwix, Gutenberg) for USB / SD —
+                  we do not host the large files
+                </small>
+              </Link>
+            </li>
+            <li>
+              <a href="/guides/knowledge-packs.md">
+                Knowledge packs short guide
+                <small>Paths for PC/Pi Vault and Cardputer /nexus-vault</small>
+              </a>
+            </li>
           </ul>
         </div>
 

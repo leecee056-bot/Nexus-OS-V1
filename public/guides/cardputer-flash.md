@@ -43,6 +43,9 @@ Copy `sd-example/nexus-vault/` to the card, insert it, then Hub → **Vault**.
 Enter opens a file; type a word + Enter to search. Without a card, Vault shows
 a short hint and everything else still works.
 
+Want larger free offline libraries (Gutenberg books, Kiwix Wikipedia text)?
+See [/knowledge-packs](/knowledge-packs) — optional; we do not host the dumps.
+
 ## First hub items
 
 1. Chat — TinyChat offline replies  

@@ -32,6 +32,13 @@ Do **not** flash the `.xz` file.
 3. Turn **Secure Boot Off** in BIOS if it will not start.
 4. Finish the first-boot questions → use the main menu.
 
+## Optional: more offline knowledge
+
+After you boot and try the built-in Vault starter notes, you can add free
+public plain-text packs (Gutenberg books, extracted wiki articles, your own
+notes) onto the stick. Completely optional — see
+[/knowledge-packs](/knowledge-packs).
+
 ## Optional check
 
 **Windows PowerShell** (after unpacking):

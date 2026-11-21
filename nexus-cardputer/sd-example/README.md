@@ -25,3 +25,11 @@ microSD (root)
 
 Hub → **Vault** → `;`/`'` select file → **Enter** to open.  
 Type a word then **Enter** to search (line-by-line, low RAM).
+
+## Larger packs
+
+Add more `.txt` / `.md` into `nexus-vault/` the same way. Free public sources
+(Gutenberg plain text, Kiwix Wikipedia dumps — extract text for this device)
+are listed on the site: **Optional Knowledge Packs**
+(`/knowledge-packs` or `public/guides/knowledge-packs.md`). Keep individual
+files short for the Cardputer screen.

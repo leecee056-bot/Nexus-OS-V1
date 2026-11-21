@@ -153,9 +153,12 @@ export default function HomePage() {
               <strong>Keep searchable notes with you</strong>
               <span>
                 The Knowledge Vault is your on-device notebook. It ships with a
-                small starter pack (guide, glossary, how-tos) — not a full wiki —
-                and you can add your own text for Chat to search later (see{" "}
-                <Link href="/about">About</Link>).
+                small starter pack (guide, glossary, how-tos) — not a full wiki.
+                Want more? See{" "}
+                <Link href="/knowledge-packs">Optional Knowledge Packs</Link>{" "}
+                for free public sources on a spare stick, or add your own text
+                for Chat to search later (see <Link href="/about">About</Link>
+                ).
               </span>
             </li>
           </ul>

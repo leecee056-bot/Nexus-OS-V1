@@ -48,6 +48,7 @@ export default function DownloadPage() {
           <a href="#pi">Raspberry Pi</a>
           <a href="#pocket">Pocket ESP32</a>
           <a href="#cardputer">Cardputer ADV</a>
+          <a href="#knowledge-packs">Knowledge packs</a>
         </nav>
 
         <h3 className="subhead" id="pc">
@@ -210,6 +211,30 @@ export default function DownloadPage() {
             </div>
           </div>
         ))}
+
+        <div className="panel" id="knowledge-packs" style={{ marginTop: "1.5rem" }}>
+          <h3>Optional Knowledge Packs</h3>
+          <p>
+            The images already include a small Vault starter pack. If you have
+            spare space on a USB stick or microSD (32 GB+ is ideal), you can add
+            free public offline knowledge — Wikipedia-style dumps, Gutenberg
+            books, and your own notes — so the AI can look things up locally. We
+            do not host those large files; you download them from public
+            archives. <strong>Completely optional</strong> — everything still
+            works without them.
+          </p>
+          <div className="cta-row" style={{ marginTop: "0.85rem" }}>
+            <Link className="btn" href="/knowledge-packs">
+              Optional Knowledge Packs
+            </Link>
+            <a className="btn btn-ghost" href="/guides/knowledge-packs.md">
+              Short markdown guide
+            </a>
+            <Link className="btn btn-quiet" href="/faq#vault">
+              Vault FAQ
+            </Link>
+          </div>
+        </div>
 
         <div className="panel" style={{ marginTop: "1.5rem" }}>
           <h3>After you download</h3>

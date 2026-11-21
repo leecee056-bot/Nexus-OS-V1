@@ -28,4 +28,11 @@ Flash the `.img` (after `xz -d` if compressed) with:
 | Download today? | Yes — site / GitHub Release | Not until smoke + Release |
 | Boot | BIOS/USB | Pi firmware on the card |
 
+## Optional Knowledge Packs
+
+After flashing, you can add free public plain-text knowledge onto the card’s
+Vault (Gutenberg books, extracted wiki articles, your notes). Optional —
+see [`../public/guides/knowledge-packs.md`](../public/guides/knowledge-packs.md)
+or the site `/knowledge-packs` page.
+
 See also: [`../docs/nexus-os-raspberry-pi-plan.md`](../../docs/nexus-os-raspberry-pi-plan.md) in the Project docs store, or ask for status on the site About page.
