@@ -10,6 +10,8 @@
 - Chat neural path: `src/chat/ollama.ts`. Fallback: `src/chat/tinychat.ts`.
 - Image Lab (desktop/web): `src/image/` + `ImageScreen` — Ollama image models;
   Save PNG via Electron `nexus:save-image`. Guide: companion-image.md.
+- Games (desktop/web): `src/games/` + `GamesScreen` — Chess + tiny pure-JS 2D
+  extras; one mount at a time. Guide: companion-games.md.
 - Updates: `src/updates/links.ts` + `CheckUpdatesButton` — manual curated links.
 - Premium UI: TypewriterText, StatusOrb, GlassPanel, ProgressRing, AppStatusBar,
   TerminalDashboard / TerminalTitleBar for the Terminal theme.

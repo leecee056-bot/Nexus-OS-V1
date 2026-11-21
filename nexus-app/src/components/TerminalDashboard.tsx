@@ -29,6 +29,7 @@ type NavName =
   | "Home"
   | "Chat"
   | "Image"
+  | "Games"
   | "Vault"
   | "Packs"
   | "Plugins"
@@ -48,6 +49,7 @@ const MENU: { label: string; hint: string; route: NavName }[] = DESKTOP
   ? [
       MENU_CORE[0],
       { label: "Image Lab", hint: "I", route: "Image" },
+      { label: "Games", hint: "G", route: "Games" },
       ...MENU_CORE.slice(1),
     ]
   : MENU_CORE;
@@ -399,7 +401,7 @@ export function TerminalDashboard() {
         <TerminalPanel title="Welcome" style={pane(mid, 1)}>
           <Text style={monoStyle({ color: colors.fg, fontSize: 12 })}>
             Portable local intelligence — Chat
-            {DESKTOP ? ", Image Lab" : ""}, Vault, Packs, Files, Agent.
+            {DESKTOP ? ", Image Lab, Games" : ""}, Vault, Packs, Files, Agent.
           </Text>
           <Pressable
             onPress={() => go("Chat")}

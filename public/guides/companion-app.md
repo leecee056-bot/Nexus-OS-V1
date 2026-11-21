@@ -66,6 +66,11 @@ npm run android:apk
 See [companion-agent.md](./companion-agent.md) — Agent mode uses Vault, Add-ons,
 and Files with live status while answering.
 
+## Games (desktop / USB, v0.10)
+
+**Games** tab with Chess first, plus Snake, Pong, Breakout, Tetris, and 2048 —
+pure JS, one game mounted at a time. See [companion-games.md](./companion-games.md).
+
 ## USB portable kit (v0.9)
 
 Carry Companion on a USB stick with Vault, chats, and Knowledge on the drive.
@@ -87,8 +92,10 @@ Chat. See [companion-image.md](./companion-image.md).
 Manual **Check for updates** on models, add-ons, packs, and **Check for OS
 updates** in About / Chat / Plugins. See [companion-updates.md](./companion-updates.md).
 
-## What v0.8 includes
+## What v0.10 includes
 
+- **Games** (desktop / USB) — Chess + tiny 2D extras, low memory
+- **USB portable kit** — Vault, chats, Knowledge on the stick
 - **Image Lab** (desktop) — local image models via Ollama + Save PNG
 - **Check for updates** — curated links for models, add-ons, packs, OS
 - More Chat model options (Phi-3, DeepSeek R1 1.5B, Llama/Qwen 3B, …)

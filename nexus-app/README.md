@@ -10,8 +10,10 @@ rabbit-wizard branding throughout.
 | `nexus-esp32/` / `nexus-cardputer/` | Hardware firmware |
 | **`nexus-app/` (this folder)** | Windows · Mac · Android · iOS companion |
 
-## Features (v0.9)
+## Features (v0.10)
 
+- **Games (desktop / USB)** — Chess first, plus Snake, Pong, Breakout, Tetris, 2048
+  (pure JS, one game mounted at a time — very low memory)
 - **USB portable kit** — unzip to a stick; Vault, chats, Knowledge travel with you
 - **Image Lab (desktop)** — optional local image models, Get-model + prompt
 - **Grafting wait** — rabbit GIF + `grafting… Ns` while Chat replies
