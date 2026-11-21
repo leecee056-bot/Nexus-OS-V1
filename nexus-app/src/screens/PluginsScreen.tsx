@@ -105,7 +105,7 @@ export function PluginsScreen() {
                   </Text>
                   <CheckUpdatesButton
                     url={p.updateUrl}
-                    label="Check for updates"
+                    label="Guide (optional)"
                     compact
                   />
                 </View>
@@ -124,13 +124,13 @@ export function PluginsScreen() {
         ))
       )}
 
-      <GlassPanel title="Agent & OS updates" accent="purple">
-        Manual links to official pages — no background scanning. Same pattern
-        can later cover USB / Pi images and Cardputer firmware.
-        <CheckUpdatesButton url={AGENT_GUIDE_URL} label="Agent guide updates" />
+      <GlassPanel title="Optional website links" accent="purple">
+        Tap only when you want docs or a newer build — Companion does not
+        phone home. Day-to-day Agent tools stay on-device.
+        <CheckUpdatesButton url={AGENT_GUIDE_URL} label="Agent guide (optional)" />
         <CheckUpdatesButton
           url={OS_UPDATE_URL}
-          label="Check for OS updates"
+          label="Website downloads (optional)"
         />
       </GlassPanel>
 

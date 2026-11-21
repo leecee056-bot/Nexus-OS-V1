@@ -10,14 +10,15 @@ rabbit-wizard branding throughout.
 | `nexus-esp32/` / `nexus-cardputer/` | Hardware firmware |
 | **`nexus-app/` (this folder)** | Windows · Mac · Android · iOS companion |
 
-## Features (v0.11)
+## Features (v0.11.1)
 
+- **Offline-first** — no NEXUS cloud account; website links are optional downloads only
 - **Desk layout (desktop)** — multi-window NEXUS OS home (or Classic chat chrome)
 - **Games (desktop / USB)** — Chess first, plus Snake, Pong, Breakout, Tetris, 2048
 - **USB portable kit** — unzip to a stick; Vault, chats, Knowledge travel with you
 - **Image Lab (desktop)** — optional local image models, Get-model + prompt
 - **Wait state** — small rabbit dig + rotating fun facts (toggle facts off)
-- **Check for updates** — curated links for models, add-ons, packs, OS downloads
+- **Optional website links** — tap only for downloads / docs; app never phones home
 - **Terminal theme** — CRT multi-panel “NEXUS OS” home dashboard with the real logo
 - **Agent** — one tap; Vault / Files / website scaffolds when you ask (not on “hi”)
 - **Local AI Chat** — pick a lightweight model via [Ollama](https://ollama.com)
@@ -43,7 +44,7 @@ and set e.g. `http://192.168.1.20:11434` (use your PC’s LAN IP).
 
 - Node.js 20+ (22 OK)
 - **Local AI:** [Ollama](https://ollama.com) running on the machine (or LAN host)
-- **Android:** device/emulator, or EAS cloud build for APK
+- **Android:** device/emulator, or local Gradle APK (`npm run android:apk`)
 - **iOS:** macOS + Xcode, or Expo Go
 - **Windows / Mac desktop:** Electron builds below
 

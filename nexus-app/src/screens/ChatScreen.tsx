@@ -365,19 +365,19 @@ export function ChatScreen() {
         <View style={styles.updateStrip}>
           <CheckUpdatesButton
             url={model.updateUrl}
-            label="Model updates"
+            label="Model library (optional)"
             compact
           />
           {mode === "agent" ? (
             <CheckUpdatesButton
               url={AGENT_GUIDE_URL}
-              label="Agent updates"
+              label="Agent guide (optional)"
               compact
             />
           ) : null}
           <CheckUpdatesButton
             url={OS_UPDATE_URL}
-            label="OS updates"
+            label="Website downloads (optional)"
             compact
           />
           <Pressable

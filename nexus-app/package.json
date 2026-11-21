@@ -1,7 +1,7 @@
 {
   "name": "nexus-companion",
-  "version": "0.11.0",
-  "description": "NEXUS Companion — local AI Chat, Desk layout, Agent, Games, USB kit",
+  "version": "0.11.1",
+  "description": "NEXUS Companion — offline-first local AI, Desk layout, Agent, Games, USB kit",
   "author": "NEXUS OS",
   "main": "index.ts",
   "dependencies": {

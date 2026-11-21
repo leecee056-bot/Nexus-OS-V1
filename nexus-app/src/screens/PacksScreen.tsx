@@ -134,7 +134,7 @@ export function PacksScreen() {
         </Text>
         <CheckUpdatesButton
           url={OS_UPDATE_URL}
-          label="Check for OS updates"
+          label="Website downloads (optional)"
         />
 
         <FlatList
@@ -186,7 +186,7 @@ export function PacksScreen() {
               </Text>
               <CheckUpdatesButton
                 url={item.url}
-                label="Check for updates"
+                label="Source site (optional)"
                 compact
               />
             </Pressable>

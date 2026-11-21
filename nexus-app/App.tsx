@@ -210,9 +210,18 @@ function SideRail({
   );
 }
 
+function initialWebRoute(): ScreenName {
+  if (Platform.OS !== "web" || typeof window === "undefined") return "Home";
+  const raw = (window.location.hash || "").replace(/^#\/?/, "");
+  const name = raw.split("?")[0] as ScreenName;
+  return SCREENS.some((s) => s.name === name) ? name : "Home";
+}
+
 function AppShell() {
   const [booting, setBooting] = useState(true);
-  const [routeName, setRouteName] = useState("Home");
+  const [routeName, setRouteName] = useState<ScreenName>(() =>
+    initialWebRoute(),
+  );
   const { width, height } = useWindowDimensions();
   const isTablet = Math.min(width, height) >= 600 || width >= 768;
   const finishBoot = useCallback(() => setBooting(false), []);
@@ -240,9 +249,28 @@ function AppShell() {
       <NavigationContainer
         ref={navRef}
         theme={navTheme}
+        initialState={
+          routeName === "Home"
+            ? undefined
+            : {
+                index: Math.max(
+                  0,
+                  SCREENS.findIndex((s) => s.name === routeName),
+                ),
+                routes: SCREENS.map((s) => ({ name: s.name })),
+              }
+        }
         onStateChange={() => {
-          const name = navRef.getCurrentRoute()?.name;
-          if (name) setRouteName(name);
+          const name = navRef.getCurrentRoute()?.name as ScreenName | undefined;
+          if (name) {
+            setRouteName(name);
+            if (Platform.OS === "web" && typeof window !== "undefined") {
+              const next = `#${name}`;
+              if (window.location.hash !== next) {
+                window.history.replaceState(null, "", next);
+              }
+            }
+          }
         }}
       >
         <StatusBar style={themeId === "basic" ? "dark" : "light"} />

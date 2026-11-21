@@ -1,0 +1,23 @@
+NEXUS Companion — Offline independence
+======================================
+
+This kit runs without a NEXUS cloud account.
+
+What stays local
+----------------
+- Chat (Ollama on the host PC, or the tiny phrase fallback)
+- Agent tools (Vault, Files, website scaffold)
+- Vault notes in Data/ and Knowledge/
+- Themes, Desk/Classic layout, Games, Image Lab
+
+What the website is for
+-----------------------
+Optional downloads and release notes only:
+  https://nexus-os.apps.grok.bot/download
+
+You can ignore every “Website downloads” button after install.
+
+First-time models
+-----------------
+Install Ollama once on the host PC, pull a small model from Chat → Model.
+After weights are on disk, chat stays offline.

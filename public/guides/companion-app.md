@@ -28,7 +28,17 @@ Site Download section: [/download#companion](/download#companion)
 **Android:** run Ollama on a PC on the same Wi‑Fi, then Chat → **Ollama host** →
 set `http://YOUR_PC_LAN_IP:11434`.
 
-## Themes (v0.7)
+## Offline independence
+
+Companion does **not** need a NEXUS cloud account. Chat, Agent, Vault, Files,
+Games, Image Lab, and themes run on-device with local Ollama (or a tiny phrase
+fallback). The website is only for downloads / releases — every
+“Website downloads (optional)” button can be ignored after install.
+
+Home and About include built-in **Works offline** help so guides stay available
+without the network.
+
+## Themes (v0.11)
 
 Home / About (every platform) and the desktop side rail can switch looks:
 

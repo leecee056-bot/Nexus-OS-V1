@@ -20,6 +20,9 @@
 - Chat wait state: `WaitIndicator` + `assets/brand/rabbit-dig.gif` (small side
   rabbit + rotating fun facts; Facts off = GIF only). Layout: Classic vs Desk
   (`ShellModePicker` / `layout/shellMode.ts`).
+- Offline-first: no NEXUS cloud API at runtime. Website links are optional
+  downloads only (`updates/links.ts`, `OfflineGuidesPanel`, `offline/guides.ts`).
+- Web deep links: `#Chat`, `#About`, … set the initial tab (`App.tsx`).
 - USB portable: `electron/portable.js` redirects userData to kit `Data/`;
   kit template in `usb-kit/`; pack with `npm run pack:usb`. Guide:
   companion-usb.md. Chat history persists via `src/chat/history.ts`.

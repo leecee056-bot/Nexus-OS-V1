@@ -11,6 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { GetStartedPanel } from "../components/GetStartedPanel";
 import { GlowPanel } from "../components/GlowPanel";
+import { OfflineGuidesPanel } from "../components/OfflineGuidesPanel";
 import { PortableUsbPanel } from "../components/PortableUsbPanel";
 import { ShellModePicker } from "../components/ShellModePicker";
 import { ScreenShell } from "../components/ScreenShell";
@@ -19,6 +20,7 @@ import { ThemePicker } from "../components/ThemePicker";
 import { loadShellMode, type ShellMode } from "../layout/shellMode";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
+import { OS_UPDATE_URL } from "../updates/links";
 
 export function HomeScreen() {
   const { isTablet, heroMascot } = useCompanionLayout();
@@ -42,6 +44,7 @@ export function HomeScreen() {
         <ShellModePicker onChange={setShell} />
         <TerminalDashboard />
         <GetStartedPanel />
+        <OfflineGuidesPanel />
       </ScreenShell>
     );
   }
@@ -109,6 +112,7 @@ export function HomeScreen() {
       </View>
 
       <GetStartedPanel />
+      <OfflineGuidesPanel />
 
       {Platform.OS === "web" ? (
         <GlowPanel title="Layout" accent="purple">
@@ -126,9 +130,9 @@ export function HomeScreen() {
 
       <GlowPanel title="At a glance" accent={showThemes ? "purple" : "green"}>
         <Text style={[styles.body, { color: colors.fg }]}>
-          Chat with a local model · Agent writes files when you ask · Vault &
-          Packs for offline notes · Image Lab & Games on desktop · USB kit to
-          take Companion with you
+          Fully local once installed · Chat / Agent / Vault / Files need no
+          cloud · Image Lab & Games on desktop · USB kit carries your data ·
+          Website is optional (downloads only)
         </Text>
       </GlowPanel>
 
@@ -141,12 +145,10 @@ export function HomeScreen() {
               borderColor: colors.accent,
             },
           ]}
-          onPress={() =>
-            Linking.openURL("https://nexus-os.apps.grok.bot/download#companion")
-          }
+          onPress={() => Linking.openURL(`${OS_UPDATE_URL}#companion`)}
         >
           <Text style={[styles.btnText, { color: colors.accent }]}>
-            Downloads
+            Website downloads (optional)
           </Text>
         </Pressable>
       </View>

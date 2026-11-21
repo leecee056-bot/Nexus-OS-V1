@@ -47,7 +47,11 @@ export function ScreenShell({
       {showRain ? (
         <>
           <MatrixRain dimmed />
-          <LinearGradient colors={[...fade]} style={StyleSheet.absoluteFill} />
+          <LinearGradient
+            colors={[...fade]}
+            pointerEvents="none"
+            style={StyleSheet.absoluteFill}
+          />
         </>
       ) : null}
       {scroll ? (
