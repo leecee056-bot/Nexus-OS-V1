@@ -19,6 +19,7 @@ import {
 import { HomeScreen } from "./src/screens/HomeScreen";
 import { ChatScreen } from "./src/screens/ChatScreen";
 import { ImageScreen } from "./src/screens/ImageScreen";
+import { GamesScreen } from "./src/screens/GamesScreen";
 import { VaultScreen } from "./src/screens/VaultScreen";
 import { FilesScreen } from "./src/screens/FilesScreen";
 import { PacksScreen } from "./src/screens/PacksScreen";
@@ -36,6 +37,7 @@ type RootTabParamList = {
   Home: undefined;
   Chat: undefined;
   Image: undefined;
+  Games: undefined;
   Vault: undefined;
   Packs: undefined;
   Plugins: undefined;
@@ -48,8 +50,8 @@ type ScreenName = keyof RootTabParamList;
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const navRef = createNavigationContainerRef<RootTabParamList>();
 
-/** Image Lab is desktop-first (Windows / Mac / web companion). */
-const SHOW_IMAGE_LAB = Platform.OS === "web";
+/** Image Lab + Games are desktop-first (Windows / Mac / web / USB). */
+const SHOW_DESKTOP_EXTRAS = Platform.OS === "web";
 
 const BASE_SCREENS: {
   name: ScreenName;
@@ -69,11 +71,12 @@ const SCREENS: {
   name: ScreenName;
   component: ComponentType;
   title: string;
-}[] = SHOW_IMAGE_LAB
+}[] = SHOW_DESKTOP_EXTRAS
   ? [
       BASE_SCREENS[0],
       BASE_SCREENS[1],
       { name: "Image", component: ImageScreen, title: "Image" },
+      { name: "Games", component: GamesScreen, title: "Games" },
       ...BASE_SCREENS.slice(2),
     ]
   : BASE_SCREENS;

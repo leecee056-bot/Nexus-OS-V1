@@ -80,6 +80,7 @@ export function HomeScreen() {
           • Add-ons library — toggle the tools Agent may use{"\n"}
           • Themes — Basic, Matrix, Lumen, Terminal{"\n"}
           • Image Lab (desktop) · Check for updates{"\n"}
+          • Games (desktop) — Chess + tiny 2D extras{"\n"}
           • USB portable kit — vault, chats, files on the stick{"\n"}
           • Vault · Packs · Files — offline-first{"\n"}
           • Phone tabs · tablet rail · desktop icon

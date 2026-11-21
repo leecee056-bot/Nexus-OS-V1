@@ -5,6 +5,7 @@ const GLYPH: Record<string, string> = {
   Home: "⌂",
   Chat: "⌘",
   Image: "▦",
+  Games: "♟",
   Vault: "▣",
   Packs: "⧉",
   Plugins: "⬡",

@@ -29,7 +29,8 @@ your personal setup comes along.
 ## Features (same as desktop Companion)
 
 Local Chat + grafting wait animation, Agent / Add-ons, Vault & Packs, Files,
-Image Lab, themes (Basic / Matrix / Lumen / Terminal), Check for updates.
+Image Lab, Games (Chess + tiny 2D extras), themes (Basic / Matrix / Lumen /
+Terminal), Check for updates.
 
 **Ollama** still runs on the host PC (install once). Optional advanced: point
 `OLLAMA_MODELS` at a folder on the USB if you want the weights on the stick

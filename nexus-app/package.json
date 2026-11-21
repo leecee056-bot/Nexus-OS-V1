@@ -1,7 +1,7 @@
 {
   "name": "nexus-companion",
-  "version": "0.9.0",
-  "description": "NEXUS Companion — local AI Chat, USB portable kit, Image Lab, Vault, Packs",
+  "version": "0.10.0",
+  "description": "NEXUS Companion — local AI Chat, USB portable kit, Image Lab, Games, Vault, Packs",
   "author": "NEXUS OS",
   "main": "index.ts",
   "dependencies": {
