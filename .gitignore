@@ -8,3 +8,4 @@ out
 
 network/.env
 network/data/
+tsconfig.tsbuildinfo
