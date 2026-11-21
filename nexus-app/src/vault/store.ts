@@ -16,7 +16,18 @@ const STARTER: VaultNote[] = [
     body:
       "This app mirrors the Knowledge Vault idea from the bootable OS.\n\n" +
       "Add short notes here. Search from the Vault screen.\n" +
-      "For larger libraries, see Optional Knowledge Packs on the website.",
+      "Everything in Vault stays on this device — no cloud account.\n" +
+      "Optional: import plain text from Kiwix / Gutenberg via Packs when you want a bigger library.",
+    updatedAt: Date.now(),
+  },
+  {
+    id: "starter-offline",
+    title: "Offline independence",
+    body:
+      "Chat and Agent use local Ollama (or a tiny phrase fallback). " +
+      "No NEXUS Network signup is required.\n\n" +
+      "The website is only for downloading Companion builds and OS images. " +
+      "Once installed, this app runs without it.",
     updatedAt: Date.now(),
   },
   {

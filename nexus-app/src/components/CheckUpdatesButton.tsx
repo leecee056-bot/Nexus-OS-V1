@@ -2,10 +2,13 @@ import { Linking, Pressable, StyleSheet, Text } from "react-native";
 import { spacing, useTheme } from "../theme";
 import { monoStyle } from "../theme/fonts";
 
-/** Manual “Check for updates” — opens the official page; no background scan. */
+/**
+ * Optional external link (website / GitHub / Ollama library).
+ * Never runs in the background — Companion stays offline unless you tap.
+ */
 export function CheckUpdatesButton({
   url,
-  label = "Check for updates",
+  label = "Open website (optional)",
   compact = false,
 }: {
   url: string;

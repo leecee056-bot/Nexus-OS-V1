@@ -426,7 +426,7 @@ export function TerminalDashboard() {
           </Pressable>
           <CheckUpdatesButton
             url={OS_UPDATE_URL}
-            label="Check for OS updates"
+            label="Website (optional)"
             compact
           />
         </TerminalPanel>

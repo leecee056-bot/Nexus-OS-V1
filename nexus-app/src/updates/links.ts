@@ -1,7 +1,8 @@
 /**
- * Official update / download pages. We do not host the large files —
- * “Check for updates” just opens the right curated link.
- * Same pattern can later cover USB/Pi images and Cardputer firmware.
+ * Optional website / GitHub / Ollama library links.
+ * Companion never phones these home — only opens when the user taps.
+ * Day-to-day Chat / Agent / Vault / Files work fully offline once a model
+ * is installed. The site is for downloads and docs only.
  */
 
 export const OS_UPDATE_URL = "https://nexus-os.apps.grok.bot/download";

@@ -27,8 +27,12 @@ const SECTIONS: Section[] = [
     body: "Say “make me a website about …” with Agent on. Companion writes website/index.html + CSS in Files. Open the folder anytime to edit.",
   },
   {
+    title: "Offline vs website",
+    body: "Companion does not need a NEXUS cloud account. Chat, Agent, Vault, Files, Games, and themes run on this machine with local Ollama.\n\nThe website link is only for downloads / releases. “Check for updates” and “Downloads” buttons are optional — skip them and keep working offline.\n\nFirst model pull uses Ollama’s library once; after that, AI stays local.",
+  },
+  {
     title: "FAQ",
-    body: "Q: Why is the rabbit digging?\nA: It’s waiting on your local model — with rotating fun facts (toggle Facts off for GIF only).\n\nQ: Android missing Games?\nA: Games and Image Lab stay on desktop/web to keep phones light.\n\nQ: USB kit?\nA: Unzip the kit to a stick; Vault and chats travel with the drive.",
+    body: "Q: Why is the rabbit digging?\nA: It’s waiting on your local model — with rotating fun facts (toggle Facts off for GIF only).\n\nQ: Android missing Games?\nA: Games and Image Lab stay on desktop/web to keep phones light.\n\nQ: USB kit?\nA: Unzip the kit to a stick; Vault and chats travel with the drive.\n\nQ: Do I need the website while chatting?\nA: No — only if you want a fresh download.",
   },
 ];
 

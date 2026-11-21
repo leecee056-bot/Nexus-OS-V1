@@ -9,6 +9,7 @@ import {
 import { ScreenShell } from "../components/ScreenShell";
 import { GlowPanel } from "../components/GlowPanel";
 import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
+import { OfflineGuidesPanel } from "../components/OfflineGuidesPanel";
 import { PortableUsbPanel } from "../components/PortableUsbPanel";
 import { ThemePicker } from "../components/ThemePicker";
 import {
@@ -48,10 +49,12 @@ export function AboutScreen() {
           <Text style={[styles.body, { color: colors.fg }]}>
             NEXUS Companion — Windows, Mac, iOS, and Android for the NEXUS OS /
             Tri-Cass family. Offline-first Chat with local models, plus Vault,
-            Packs, and Files.
+            Packs, and Files. No NEXUS cloud account required to use the app.
           </Text>
         </View>
       </View>
+
+      <OfflineGuidesPanel />
 
       <PortableUsbPanel />
 
@@ -65,12 +68,13 @@ export function AboutScreen() {
         Desktop also includes Image Lab and a low-memory Games tab.
       </GlowPanel>
 
-      <GlowPanel title="Check for updates" accent="purple">
-        Manual links to official pages — we do not host the large files. Same
-        pattern can later cover USB / Pi images and Cardputer firmware.
+      <GlowPanel title="Optional website links" accent="purple">
+        These open the public download site or GitHub when you want a newer
+        build. Skip them entirely for day-to-day offline use — Companion does
+        not phone home.
         <CheckUpdatesButton
           url={OS_UPDATE_URL}
-          label="Check for OS updates"
+          label="Website downloads (optional)"
         />
         <CheckUpdatesButton url={OS_RELEASES_URL} label="GitHub releases" />
         <CheckUpdatesButton
@@ -89,8 +93,8 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.11.0 · Desk layout · fun facts · Games · Agent{"\n"}Running on{" "}
-        {Platform.OS}
+        0.11.1 · Offline-first · Desk layout · fun facts · Games · Agent{"\n"}
+        Running on {Platform.OS}
       </GlowPanel>
 
       <Text
@@ -104,12 +108,10 @@ export function AboutScreen() {
         Source on GitHub →
       </Text>
       <Text
-        style={[styles.link, { color: colors.accent }]}
-        onPress={() =>
-          Linking.openURL("https://nexus-os.apps.grok.bot/download#companion")
-        }
+        style={[styles.link, { color: colors.fgDim }]}
+        onPress={() => Linking.openURL(`${OS_UPDATE_URL}#companion`)}
       >
-        Companion downloads →
+        Website downloads (optional) →
       </Text>
     </ScreenShell>
   );

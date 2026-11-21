@@ -39,8 +39,9 @@ export const PACK_SOURCES: PackSource[] = [
   },
   {
     id: "site-packs",
-    title: "NEXUS Knowledge Packs guide",
-    blurb: "How packs fit USB/Pi, Cardputer, and this companion app.",
+    title: "NEXUS Knowledge Packs guide (website)",
+    blurb:
+      "Optional website page — how packs fit USB/Pi, Cardputer, and Companion. Not required for Vault notes you already imported.",
     url: "https://nexus-os.apps.grok.bot/knowledge-packs",
     kind: "browse",
   },
