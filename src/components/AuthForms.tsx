@@ -76,18 +76,17 @@ export function AuthForm({ mode }: { mode: Mode }) {
             </span>
           </label>
           <label>
-            Email
+            Email (optional)
             <input
               name="email"
               type="email"
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
             <span className="hint">
-              Contact only for now — not verified, and does not lock the address
-              for others. Your username is what gets reserved.
+              Optional contact — unique when set. Username is the Network
+              reservation; email verification comes later.
             </span>
           </label>
         </>

@@ -230,22 +230,23 @@ export default function DownloadPage() {
             <strong>local AI Chat</strong>: pick a lightweight model (Qwen,
             TinyLlama, and more), download it once via{" "}
             <a href="https://ollama.com/download">Ollama</a>, then chat offline.
-            v0.9 adds a <strong>USB portable kit</strong> (carry Companion +
-            Vault/chats on a stick), the rabbit <strong>grafting</strong> wait
-            animation, desktop <strong>Image Lab</strong>,{" "}
-            <strong>Check for updates</strong>, more Chat models, Terminal CRT
-            dashboard, Agent mode, and{" "}
-            <strong>Basic / Matrix / Lumen / Terminal</strong> themes. Vault,
-            Packs, Plugins, Files, matrix boot splash, and the NEXUS logo as
-            the desktop / home-screen icon. Phone + tablet on Android.
+            Current release builds (v{COMPANION_VERSION}) include a{" "}
+            <strong>USB portable kit</strong>, rabbit <strong>grafting</strong>{" "}
+            wait animation, desktop <strong>Image Lab</strong>,{" "}
+            <strong>Check for updates</strong>, Terminal CRT dashboard, Agent
+            mode, and <strong>Basic / Matrix / Lumen / Terminal</strong> themes.
+            Desktop / web source also has a low-memory <strong>Games</strong>{" "}
+            tab (Chess first) — ships in the next Companion build. Vault, Packs,
+            Plugins, Files, and the NEXUS icon on phone + tablet Android.
           </p>
           <p style={{ marginTop: "0.75rem" }}>
             <strong>Windows:</strong> one-click portable{" "}
             <code className="mono">.exe</code>. <strong>Mac:</strong>{" "}
             <code className="mono">.dmg</code> from the companion Release.{" "}
-            <strong>Web:</strong> open instantly. <strong>Android:</strong>{" "}
-            sideload APK when attached (point Chat at Ollama on your PC if
-            needed).
+            <strong>Web:</strong> open instantly. <strong>Android:</strong> APK
+            not attached yet (EAS build pending) — use the release page when it
+            lands, or see sideload notes. Point Chat at Ollama on your PC if
+            needed.
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
             <a className="btn" href={COMPANION_WINDOWS_URL}>
@@ -261,7 +262,7 @@ export default function DownloadPage() {
               Open web companion
             </a>
             <a className="btn btn-ghost" href={COMPANION_RELEASE_PAGE}>
-              Android APK / all releases
+              Companion releases (Android APK when ready)
             </a>
             <a className="btn btn-quiet" href={COMPANION_ANDROID_NOTES}>
               Android sideload notes
