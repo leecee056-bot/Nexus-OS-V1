@@ -5,43 +5,49 @@ a Play Store listing (yet). Source: [`nexus-app/`](../../nexus-app/).
 
 ## Install an APK (users)
 
-1. Download the `.apk` from the
-   [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.9.0)
-   **when attached**. As of v0.9.0 that Release has Windows / Mac / USB assets
-   only — the Android APK still needs an EAS cloud build (repo `EXPO_TOKEN`).
-   Desktop users already get one-click builds there. For local AI Chat, run
-   Ollama on a PC on the same Wi‑Fi and set that host in Chat.
+1. One-click from the site
+   [Download → Companion](/download#companion) → **Download Android (.apk)**,
+   or grab
+   [NEXUS-Companion-Android-0.10.0.apk](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.10.0/NEXUS-Companion-Android-0.10.0.apk)
+   from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.10.0).
 2. On the phone: open the file → allow **Install unknown apps** for your
    browser/Files app if Android asks.
 3. Open NEXUS Companion → wait for the matrix boot splash → use Chat / Vault /
-   Packs / Files offline.
+   Packs / Files offline. For local AI Chat, run Ollama on a PC on the same
+   Wi‑Fi and set that host in Chat.
 
 Tip: keep “unknown sources” limited to the app you used to download the APK.
+
+**Note:** Image Lab and Games stay on desktop / web builds. Android gets Chat,
+Agent, themes, grafting wait, Vault, Packs, and Files.
 
 ## Where we host it
 
 | Place | Role |
 |-------|------|
-| **GitHub Releases** on `leecee056-bot/Nexus-OS-V1` | Canonical APK + checksum notes |
-| Site **Download → Companion / Android** | Link to the latest Release asset |
-| Play Store | Later — not required for v0.2 |
+| **GitHub Releases** on `leecee056-bot/Nexus-OS-V1` | Canonical APK |
+| Site **Download → Companion / Android** | One-click APK button |
+| Play Store | Later — not required for sideload |
 
 We do **not** host multi‑GB knowledge dumps; Packs opens public Kiwix/Gutenberg
 pages and imports plain `.txt`/`.md` into Vault.
 
 ## Build an APK (developers)
 
+CI builds the APK with local Gradle (no Expo cloud token required):
+
 ```bash
 cd nexus-app
 npm install
-# one-time: npm i -g eas-cli && eas login && eas build:configure
 npm run android:apk
-# or: npx eas-cli build -p android --profile preview
+# → release/NEXUS-Companion-Android-<version>.apk
 ```
 
-`eas.json` → profile **preview** sets `"android.buildType": "apk"` for
-sideloadable builds. Download the artifact from the Expo/EAS build page, then
-attach it to a GitHub Release.
+Optional Expo cloud path (needs `EXPO_TOKEN` / `eas login`):
+
+```bash
+npm run android:apk:eas
+```
 
 Local device/emulator (dev, needs Android SDK):
 
