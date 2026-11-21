@@ -56,6 +56,12 @@ Windows / Mac: open links in a themed **NEXUS Browse** window, or hand off to an
 installed browser (Chrome, Edge, Firefox, Safari, …). See
 [companion-browse.md](./companion-browse.md).
 
+## Add-ons marketplace
+
+**Add-ons** tab pages (Everyday, Coding, Media, Study) list ready-made mini apps
+with thumbnails — tap **Download** to drop them into Files. See
+[companion-addons.md](./companion-addons.md).
+
 Optional **scanlines** toggle (Matrix / Lumen / Terminal) — CRT overlay. Terminal turns scanlines on by default.
 
 ## Premium Chat UI

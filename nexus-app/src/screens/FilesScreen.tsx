@@ -3,6 +3,7 @@ import {
   FlatList,
   Linking,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -203,17 +204,36 @@ h1{color:#39ff14}`,
           <Text style={{ color: colors.accent, fontWeight: "800", fontSize: 16 }}>
             {preview?.name}
           </Text>
-          <ScrollView style={{ flex: 1, marginTop: spacing.md }}>
-            <Text
-              style={{
-                color: colors.fg,
-                fontFamily: "monospace",
-                lineHeight: 20,
-              }}
-            >
-              {preview?.content}
-            </Text>
-          </ScrollView>
+          {Platform.OS === "web" &&
+          preview?.content &&
+          (preview.mimeType === "text/html" ||
+            preview.name.toLowerCase().endsWith(".html")) ? (
+            <View style={{ flex: 1, marginTop: spacing.md, borderRadius: 12, overflow: "hidden" }}>
+              {/* Mini-apps from Add-ons open as live HTML */}
+              <iframe
+                title={preview.name}
+                srcDoc={preview.content}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  border: "none",
+                  background: "#0b0d12",
+                }}
+              />
+            </View>
+          ) : (
+            <ScrollView style={{ flex: 1, marginTop: spacing.md }}>
+              <Text
+                style={{
+                  color: colors.fg,
+                  fontFamily: "monospace",
+                  lineHeight: 20,
+                }}
+              >
+                {preview?.content}
+              </Text>
+            </ScrollView>
+          )}
           <Pressable
             style={[
               styles.btn,

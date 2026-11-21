@@ -96,7 +96,7 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.12.0 · Spatial / Open theme · Browse window · Offline-first · Desk ·
+        0.12.1 · Spatial · Browse · Add-ons marketplace · Offline-first · Desk ·
         Agent{"\n"}
         Running on {Platform.OS}
       </GlowPanel>
