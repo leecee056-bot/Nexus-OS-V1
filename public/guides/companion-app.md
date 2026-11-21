@@ -8,10 +8,10 @@ bottom tabs; tablets use a side rail.
 
 | Platform | Action |
 |----------|--------|
-| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.4.0/NEXUS-Companion-Windows-0.4.0-portable.exe) — double-click, NEXUS icon |
-| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.4.0) — grab the `.dmg` when attached |
+| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.5.0/NEXUS-Companion-Windows-0.5.0-portable.exe) — double-click, NEXUS icon |
+| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.5.0) — grab the `.dmg` when attached |
 | **Web** | [Open /companion/](/companion/) in your browser |
-| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.4.0) when attached — see [android-apk.md](./android-apk.md) |
+| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.5.0) when attached — see [android-apk.md](./android-apk.md) |
 
 Site Download section: [/download#companion](/download#companion)
 
@@ -27,23 +27,42 @@ Site Download section: [/download#companion](/download#companion)
 **Android:** run Ollama on a PC on the same Wi‑Fi, then Chat → **Ollama host** →
 set `http://YOUR_PC_LAN_IP:11434`.
 
+## Themes (v0.5)
+
+Desktop (and About on every platform) can switch looks:
+
+| Theme | Feel |
+|-------|------|
+| **Basic** | Clean light UI (same idea as the website Basic theme) |
+| **Matrix** | Classic neon-green terminal NEXUS |
+| **Lumen** | Frosted glass panels, soft edge light, premium phosphor glow (default) |
+
+Optional **scanlines** toggle (Matrix / Lumen only) — very light CRT overlay.
+
+## Premium Chat UI
+
+- Phosphor-style typewriter replies
+- Status orb (ready / thinking / offline)
+- Model cards with lift + edge light + download progress ring
+- Minimal status bar: model name, device hint, LOCAL / OFFLINE AI
+
 ## Dev run
 
 ```bash
 cd nexus-app
 npm install
-npm run android   # phone / tablet
+npm run android
 npm run ios
 npm run web
-npm run build:windows   # portable .exe with icon
-npm run build:mac       # .dmg (macOS)
-npm run android:apk     # EAS preview APK
+npm run build:windows
+npm run build:mac
+npm run android:apk
 ```
 
-## What v0.4 includes
+## What v0.5 includes
 
-- Real local models via Ollama + simple model selector
+- Lumen UI polish + Basic / Matrix / Lumen themes
+- Real local models via Ollama + model selector
 - Windows / Mac desktop packaging with NEXUS logo icon
-- Matrix boot splash + rabbit logo
 - Vault + optional Packs import
 - Phone + tablet responsive chrome

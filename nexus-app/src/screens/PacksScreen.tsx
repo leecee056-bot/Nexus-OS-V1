@@ -16,7 +16,7 @@ import { PACK_SOURCES } from "../packs/catalog";
 import { loadNotes, saveNotes, type VaultNote } from "../vault/store";
 import { ContentFrame } from "../components/ContentFrame";
 import { useCompanionLayout } from "../layout";
-import { colors, spacing } from "../theme";
+import { spacing, useTheme } from "../theme";
 
 async function readTextUri(uri: string): Promise<string> {
   try {
@@ -29,6 +29,7 @@ async function readTextUri(uri: string): Promise<string> {
 
 export function PacksScreen() {
   const { isTablet } = useCompanionLayout();
+  const { colors } = useTheme();
   const [imported, setImported] = useState(0);
 
   useFocusEffect(
@@ -78,29 +79,53 @@ export function PacksScreen() {
   }
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, { backgroundColor: colors.bg }]}>
       <ContentFrame>
-        <View style={styles.hero}>
-          <Text style={styles.kicker}>Optional</Text>
-          <Text style={[styles.title, isTablet && styles.titleLg]}>
+        <View style={[styles.hero, { borderBottomColor: colors.border }]}>
+          <Text style={[styles.kicker, { color: colors.purple }]}>
+            Optional
+          </Text>
+          <Text
+            style={[
+              styles.title,
+              isTablet && styles.titleLg,
+              { color: colors.accent },
+            ]}
+          >
             Knowledge Packs
           </Text>
-          <Text style={styles.lede}>
+          <Text style={{ color: colors.fgDim, marginTop: spacing.sm, lineHeight: 21 }}>
             Expand offline knowledge without us hosting huge dumps. Browse
             public sources, save plain text on this device, then Import into
             Vault. Completely optional — Chat and Vault work without packs.
           </Text>
-          <Text style={styles.badge}>
+          <Text
+            style={[
+              styles.badge,
+              { color: colors.accent, borderColor: colors.border },
+            ]}
+          >
             {Platform.OS === "android"
               ? "Phone + tablet · local storage friendly"
               : "Import works on Windows, iOS, and Android"}
           </Text>
         </View>
 
-        <Pressable style={styles.primary} onPress={() => void importPlainText()}>
-          <Text style={styles.primaryText}>Import .txt / .md into Vault</Text>
+        <Pressable
+          style={[
+            styles.primary,
+            {
+              backgroundColor: colors.accentSoft,
+              borderColor: colors.accent,
+            },
+          ]}
+          onPress={() => void importPlainText()}
+        >
+          <Text style={{ color: colors.accent, fontWeight: "700" }}>
+            Import .txt / .md into Vault
+          </Text>
         </Pressable>
-        <Text style={styles.meta}>
+        <Text style={{ color: colors.fgDim, fontSize: 12, marginTop: spacing.sm }}>
           {imported > 0
             ? `${imported} pack note(s) already in Vault`
             : "No pack files imported yet"}
@@ -115,16 +140,44 @@ export function PacksScreen() {
           key={isTablet ? "tab" : "phone"}
           columnWrapperStyle={isTablet ? styles.row : undefined}
           ListHeaderComponent={
-            <Text style={styles.section}>Public sources</Text>
+            <Text
+              style={{
+                color: colors.fg,
+                fontWeight: "700",
+                marginBottom: spacing.sm,
+                width: "100%",
+              }}
+            >
+              Public sources
+            </Text>
           }
           renderItem={({ item }) => (
             <Pressable
-              style={[styles.card, isTablet && styles.cardHalf]}
+              style={[
+                styles.card,
+                isTablet && styles.cardHalf,
+                {
+                  borderColor: colors.border,
+                  backgroundColor: colors.bgElev,
+                },
+              ]}
               onPress={() => void Linking.openURL(item.url)}
             >
-              <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text style={styles.cardBody}>{item.blurb}</Text>
-              <Text style={styles.open}>Open →</Text>
+              <Text style={{ color: colors.accent, fontWeight: "700" }}>
+                {item.title}
+              </Text>
+              <Text style={{ color: colors.fg, marginTop: 6, lineHeight: 20 }}>
+                {item.blurb}
+              </Text>
+              <Text
+                style={{
+                  color: colors.purple,
+                  marginTop: spacing.sm,
+                  fontSize: 12,
+                }}
+              >
+                Open →
+              </Text>
             </Pressable>
           )}
         />
@@ -134,32 +187,26 @@ export function PacksScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
+  root: { flex: 1 },
   hero: {
     paddingTop: spacing.md,
     paddingBottom: spacing.sm,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
   },
   kicker: {
-    color: colors.purple,
     fontSize: 12,
     letterSpacing: 2,
     textTransform: "uppercase",
   },
   title: {
-    color: colors.accent,
     fontSize: 24,
     fontWeight: "800",
     marginTop: 4,
   },
   titleLg: { fontSize: 30 },
-  lede: { color: colors.fgDim, marginTop: spacing.sm, lineHeight: 21 },
   badge: {
     alignSelf: "flex-start",
     marginTop: spacing.sm,
-    color: colors.accent,
-    borderColor: colors.border,
     borderWidth: 1,
     paddingHorizontal: spacing.sm,
     paddingVertical: 4,
@@ -167,36 +214,17 @@ const styles = StyleSheet.create({
   },
   primary: {
     marginTop: spacing.md,
-    backgroundColor: colors.accentSoft,
-    borderColor: colors.accent,
     borderWidth: 1,
     paddingVertical: spacing.md,
     alignItems: "center",
   },
-  primaryText: { color: colors.accent, fontWeight: "700" },
-  meta: {
-    color: colors.fgDim,
-    fontSize: 12,
-    marginTop: spacing.sm,
-  },
   list: { paddingVertical: spacing.lg, paddingBottom: spacing.xl * 2 },
-  section: {
-    color: colors.fg,
-    fontWeight: "700",
-    marginBottom: spacing.sm,
-    width: "100%",
-  },
   row: { gap: spacing.sm },
   card: {
     borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.bgElev,
     padding: spacing.md,
     marginBottom: spacing.sm,
     flex: 1,
   },
   cardHalf: { minWidth: "48%" },
-  cardTitle: { color: colors.accent, fontWeight: "700" },
-  cardBody: { color: colors.fg, marginTop: 6, lineHeight: 20 },
-  open: { color: colors.purple, marginTop: spacing.sm, fontSize: 12 },
 });

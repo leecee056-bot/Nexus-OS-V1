@@ -2,8 +2,9 @@ import { ReactNode } from "react";
 import { ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MatrixRain } from "./MatrixRain";
+import { ScanlineOverlay } from "./ScanlineOverlay";
 import { useCompanionLayout } from "../layout";
-import { colors } from "../theme";
+import { useTheme } from "../theme";
 
 type Props = {
   children: ReactNode;
@@ -20,6 +21,9 @@ export function ScreenShell({
   contentStyle,
 }: Props) {
   const { contentMax, gutter } = useCompanionLayout();
+  const { colors } = useTheme();
+  const showRain = rain && colors.rain;
+
   const pad = {
     paddingHorizontal: gutter,
     paddingTop: gutter,
@@ -29,15 +33,19 @@ export function ScreenShell({
     alignSelf: "center" as const,
   };
 
+  const fade =
+    colors.id === "basic"
+      ? (["rgba(244,247,244,0.2)", "rgba(244,247,244,0.85)", colors.bg] as const)
+      : colors.id === "lumen"
+        ? (["rgba(3,6,5,0.35)", "rgba(3,6,5,0.82)", colors.bg] as const)
+        : (["rgba(4,8,4,0.5)", "rgba(4,8,4,0.9)", colors.bg] as const);
+
   return (
-    <View style={styles.root}>
-      {rain ? (
+    <View style={[styles.root, { backgroundColor: colors.bg }]}>
+      {showRain ? (
         <>
           <MatrixRain dimmed />
-          <LinearGradient
-            colors={["rgba(4,8,4,0.5)", "rgba(4,8,4,0.9)", "#040804"]}
-            style={StyleSheet.absoluteFill}
-          />
+          <LinearGradient colors={[...fade]} style={StyleSheet.absoluteFill} />
         </>
       ) : null}
       {scroll ? (
@@ -50,11 +58,12 @@ export function ScreenShell({
       ) : (
         <View style={[styles.fill, pad, contentStyle]}>{children}</View>
       )}
+      <ScanlineOverlay />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
+  root: { flex: 1 },
   fill: { flex: 1 },
 });
