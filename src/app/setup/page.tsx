@@ -29,6 +29,7 @@ export default function SetupPage() {
           <a href="#pc-pi-steps">PC / Pi steps</a>
           <a href="#pocket">Pocket ESP32</a>
           <a href="#cardputer">Cardputer ADV</a>
+          <a href="#knowledge-packs">Knowledge packs</a>
           <a href="#troubleshoot">Troubleshooting</a>
           <Link href="/download#cardputer">Cardputer download</Link>
         </nav>
@@ -302,8 +303,10 @@ sync`}
               pack (guide, glossary, flash/boot and Chat how-tos) — not a full
               wiki. Open Vault to read them, or add your own{" "}
               <span className="mono">.txt</span> / <span className="mono">.md</span>{" "}
-              files and rebuild the index. See the{" "}
-              <Link href="/faq#vault">FAQ</Link>.
+              files and rebuild the index. Want Wikipedia-style dumps or free
+              books on a larger stick? See{" "}
+              <Link href="/knowledge-packs">Optional Knowledge Packs</Link> or
+              the <Link href="/faq#vault">FAQ</Link>.
             </p>
           </li>
 
@@ -320,6 +323,49 @@ sync`}
             </p>
           </li>
         </ol>
+
+        <div className="panel" id="knowledge-packs" style={{ marginTop: "2rem" }}>
+          <h3>Optional Knowledge Packs</h3>
+          <p>
+            You do <strong>not</strong> need these. If your USB stick or microSD
+            has spare room (32 GB+ works well), you can download free public
+            offline knowledge — Kiwix Wikipedia snapshots, Project Gutenberg
+            plain-text books, and similar — then copy{" "}
+            <code className="mono">.txt</code> / <code className="mono">.md</code>{" "}
+            into the Vault folder (PC/Pi) or{" "}
+            <code className="mono">/nexus-vault/</code> (Cardputer ADV). We
+            point at public archives; we do not host the large files.
+          </p>
+          <ol className="steps" style={{ marginTop: "0.75rem" }}>
+            <li>
+              <strong>Download</strong>
+              <span> a pack or a few plain-text books from the sources list.</span>
+            </li>
+            <li>
+              <strong>Copy</strong>
+              <span>
+                {" "}
+                onto the stick/card vault path (see the Knowledge Packs page).
+              </span>
+            </li>
+            <li>
+              <strong>Boot → Vault</strong>
+              <span>
+                {" "}
+                — rebuild the index on PC/Pi if prompted; on Cardputer, browse
+                or search from the hub.
+              </span>
+            </li>
+          </ol>
+          <div className="cta-row" style={{ marginTop: "0.85rem" }}>
+            <Link className="btn" href="/knowledge-packs">
+              Optional Knowledge Packs
+            </Link>
+            <a className="btn btn-ghost" href="/guides/knowledge-packs.md">
+              Markdown guide
+            </a>
+          </div>
+        </div>
 
         <div className="panel" id="pocket" style={{ marginTop: "2rem" }}>
           <h3>NEXUS Pocket (ESP32-S3) setup</h3>
@@ -424,7 +470,9 @@ pio run -e cardputer-adv -t upload`}
                 Copy <code className="mono">sd-example/nexus-vault/</code> to the
                 root of a FAT microSD card, insert it, then open{" "}
                 <strong>Vault</strong>. Enter opens a file; type a word + Enter
-                to search. Without a card, Vault just shows a hint.
+                to search. Without a card, Vault just shows a hint. Larger free
+                packs (Gutenberg, Kiwix text):{" "}
+                <Link href="/knowledge-packs">Optional Knowledge Packs</Link>.
               </p>
             </li>
           </ol>

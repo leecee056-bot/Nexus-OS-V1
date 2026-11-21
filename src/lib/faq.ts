@@ -58,7 +58,13 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "vault",
     question: "Is there an offline wiki or knowledge base?",
     answer:
-      "On PC/Pi: yes — the Knowledge Vault is a searchable notebook on the stick/card. It ships with a small starter pack (NEXUS guide, glossary, and short how-tos for flash/boot, Chat, models, and Pi/cyberdecks). It is not a full Wikipedia dump. Add your own .txt/.md files and rebuild the index from the Vault menu; Chat can optionally use matching notes as context. Cardputer ADV can optionally mount the same idea on microSD (/nexus-vault plain .txt/.md — streamed, no card required). Pocket has a simple on-device notes tool over Serial, not the full Vault UI.",
+      "On PC/Pi: yes — the Knowledge Vault is a searchable notebook on the stick/card. It ships with a small starter pack (NEXUS guide, glossary, and short how-tos for flash/boot, Chat, models, and Pi/cyberdecks). It is not a full Wikipedia dump. Add your own .txt/.md files and rebuild the index from the Vault menu; Chat can optionally use matching notes as context. Cardputer ADV can optionally mount the same idea on microSD (/nexus-vault plain .txt/.md — streamed, no card required). Pocket has a simple on-device notes tool over Serial, not the full Vault UI. For larger free packs (Kiwix Wikipedia snapshots, Project Gutenberg books), see Optional Knowledge Packs — we point at public archives; we do not host the large files.",
+  },
+  {
+    id: "knowledge-packs",
+    question: "What are Optional Knowledge Packs?",
+    answer:
+      "Free public offline knowledge you can copy onto a spare USB stick or microSD (32 GB+ is plenty for lots of text). Examples: Kiwix Wikipedia/Wiktionary ZIM archives and Project Gutenberg plain-text books. They are completely optional — NEXUS works without them. Prefer .txt/.md for Vault and Cardputer; open large .zim files with Kiwix or extract text first. See the Knowledge Packs page for links and copy paths.",
   },
   {
     id: "cyberdeck",

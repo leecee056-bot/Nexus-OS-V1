@@ -62,6 +62,17 @@ Supported layouts (first match wins):
 **Search:** type a word · Enter (scans files line-by-line).  
 Scratch **Notes** still append to `/nexus-notes.txt` on SD (or SPIFFS fallback).
 
+### Larger offline packs (optional)
+
+Want more than the tiny example notes? Copy free public plain-text books or
+extracted wiki articles onto the same `/nexus-vault/` folder. Good starting
+points: [Project Gutenberg](https://www.gutenberg.org/) (Plain Text UTF-8) and
+[Kiwix](https://library.kiwix.org/) (offline Wikipedia ZIM — extract or convert
+to `.txt`/`.md` for this firmware; keep files short for the 240×135 screen).
+Site guide: [/knowledge-packs](https://nexus-os.apps.grok.bot/knowledge-packs)
+and [`public/guides/knowledge-packs.md`](../public/guides/knowledge-packs.md).
+A 32 GB+ card can hold plenty of text; no card is still fine.
+
 ## Hub controls
 
 | Key | Action |
