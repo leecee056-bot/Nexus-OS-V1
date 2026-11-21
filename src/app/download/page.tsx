@@ -247,7 +247,7 @@ export default function DownloadPage() {
           </p>
           <p style={{ marginTop: "0.75rem" }}>
             <strong>Windows:</strong> download the{" "}
-            <code className="mono">0.12.3-setup.exe</code> installer (Desktop +
+            <code className="mono">0.12.2-setup.exe</code> installer (Desktop +
             Start Menu shortcuts with icon). Delete any older{" "}
             <code className="mono">0.12.0</code>/<code className="mono">0.12.1</code>{" "}
             portable files first — those crash with a missing{" "}
