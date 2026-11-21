@@ -233,11 +233,11 @@ export default function DownloadPage() {
             <a href="https://ollama.com/download">Ollama</a>, then chat offline.
             Current release builds (v{COMPANION_VERSION}) include{" "}
             <strong>Spatial / Open</strong> theme, desktop <strong>Browse</strong>{" "}
-            window, offline-first Chat (website optional), a{" "}
-            <strong>USB portable kit</strong>, rabbit <strong>grafting</strong>{" "}
-            wait animation, desktop <strong>Image Lab</strong> + low-memory{" "}
-            <strong>Games</strong> (Chess first), Terminal CRT / Desk layout,
-            Agent mode, and{" "}
+            window, one-click <strong>Add-ons marketplace</strong>, offline-first
+            Chat (website optional), a <strong>USB portable kit</strong>, rabbit{" "}
+            <strong>grafting</strong> wait animation, desktop{" "}
+            <strong>Image Lab</strong> + low-memory <strong>Games</strong> (Chess
+            first), Terminal CRT / Desk layout, Agent mode, and{" "}
             <strong>Basic / Matrix / Lumen / Terminal / Spatial</strong> themes.
             Vault, Packs, Plugins, Files, and the NEXUS icon on phone + tablet
             Android (Games / Image Lab / Browse stay desktop / web).

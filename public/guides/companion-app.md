@@ -8,11 +8,11 @@ bottom tabs; tablets use a side rail.
 
 | Platform | Action |
 |----------|--------|
-| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.0/NEXUS-Companion-Windows-0.12.0-portable.exe) — double-click, NEXUS icon |
-| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.0) — grab the `.dmg` when attached |
-| **USB kit** | [NEXUS-Companion-USB zip](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.0/NEXUS-Companion-USB-0.12.0.zip) — unzip to a stick, Start-NEXUS — see [companion-usb.md](./companion-usb.md) |
+| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.1/NEXUS-Companion-Windows-0.12.1-portable.exe) — double-click, NEXUS icon |
+| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.1) — grab the `.dmg` when attached |
+| **USB kit** | [NEXUS-Companion-USB zip](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.1/NEXUS-Companion-USB-0.12.1.zip) — unzip to a stick, Start-NEXUS — see [companion-usb.md](./companion-usb.md) |
 | **Web** | [Open /companion/](/companion/) in your browser |
-| **Android** | [Download APK](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.0/NEXUS-Companion-Android-0.12.0.apk) — see [android-apk.md](./android-apk.md) |
+| **Android** | [Download APK](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.1/NEXUS-Companion-Android-0.12.1.apk) — see [android-apk.md](./android-apk.md) |
 
 Site Download section: [/download#companion](/download#companion)
 
