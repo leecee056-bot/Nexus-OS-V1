@@ -1,17 +1,8 @@
-export const colors = {
-  bg: "#040804",
-  bgElev: "#0a120a",
-  bgBar: "#0d1a0d",
-  fg: "#b6ffb6",
-  fgDim: "#5f9a5f",
-  accent: "#39ff14",
-  accentSoft: "rgba(57, 255, 20, 0.18)",
-  /** Wizard-hat purple from the rabbit mascot */
-  purple: "#7b3fe4",
-  purpleSoft: "rgba(123, 63, 228, 0.22)",
-  danger: "#ff6b6b",
-  border: "rgba(57, 255, 20, 0.28)",
-} as const;
+/** Compat re-exports — prefer useTheme() for live palette. */
+export { MATRIX as colors } from "./theme/palettes";
+export type { ThemeId, ThemeColors } from "./theme/palettes";
+export { THEMES, THEME_ORDER, DEFAULT_THEME } from "./theme/palettes";
+export { ThemeProvider, useTheme } from "./theme/ThemeContext";
 
 export const spacing = {
   xs: 4,

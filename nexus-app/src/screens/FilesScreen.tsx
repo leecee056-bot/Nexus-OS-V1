@@ -11,7 +11,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as DocumentPicker from "expo-document-picker";
 import { loadDocs, saveDocs, type DocItem } from "../files/store";
 import { ContentFrame } from "../components/ContentFrame";
-import { colors, spacing } from "../theme";
+import { spacing, useTheme } from "../theme";
 
 function formatSize(n?: number | null): string {
   if (n == null || Number.isNaN(n)) return "";
@@ -21,6 +21,7 @@ function formatSize(n?: number | null): string {
 }
 
 export function FilesScreen() {
+  const { colors } = useTheme();
   const [docs, setDocs] = useState<DocItem[]>([]);
 
   const refresh = useCallback(() => {
@@ -59,15 +60,26 @@ export function FilesScreen() {
   }
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, { backgroundColor: colors.bg }]}>
       <ContentFrame>
-        <View style={styles.toolbar}>
-          <Text style={styles.hint}>
+        <View style={[styles.toolbar, { borderBottomColor: colors.border }]}>
+          <Text style={{ color: colors.fgDim, lineHeight: 20 }}>
             Import documents to browse offline. Keeps a local list (not a full
             OS file manager).
           </Text>
-          <Pressable style={styles.btn} onPress={() => void importDoc()}>
-            <Text style={styles.btnText}>Import</Text>
+          <Pressable
+            style={[
+              styles.btn,
+              {
+                borderColor: colors.accent,
+                backgroundColor: colors.accentSoft,
+              },
+            ]}
+            onPress={() => void importDoc()}
+          >
+            <Text style={{ color: colors.accent, fontWeight: "600" }}>
+              Import
+            </Text>
           </Pressable>
         </View>
         <FlatList
@@ -76,27 +88,39 @@ export function FilesScreen() {
           style={{ flex: 1 }}
           contentContainerStyle={styles.list}
           ListEmptyComponent={
-            <Text style={styles.empty}>
+            <Text style={{ color: colors.fgDim, padding: spacing.lg }}>
               No documents yet. Tap Import to pick files from this device.
             </Text>
           }
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <View
+              style={[
+                styles.card,
+                {
+                  borderColor: colors.border,
+                  backgroundColor: colors.bgElev,
+                },
+              ]}
+            >
               <Pressable
                 style={{ flex: 1 }}
                 onPress={() => {
                   void Linking.openURL(item.uri).catch(() => undefined);
                 }}
               >
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.meta}>
+                <Text style={{ color: colors.fg, fontWeight: "600" }}>
+                  {item.name}
+                </Text>
+                <Text style={{ color: colors.fgDim, marginTop: 4, fontSize: 12 }}>
                   {[item.mimeType, formatSize(item.size)]
                     .filter(Boolean)
                     .join(" · ") || "document"}
                 </Text>
               </Pressable>
               <Pressable onPress={() => void remove(item.id)}>
-                <Text style={styles.remove}>Remove</Text>
+                <Text style={{ color: colors.danger, fontSize: 12 }}>
+                  Remove
+                </Text>
               </Pressable>
             </View>
           )}
@@ -107,36 +131,25 @@ export function FilesScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
+  root: { flex: 1 },
   toolbar: {
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
     gap: spacing.sm,
   },
-  hint: { color: colors.fgDim, lineHeight: 20 },
   btn: {
     alignSelf: "flex-start",
     borderWidth: 1,
-    borderColor: colors.accent,
-    backgroundColor: colors.accentSoft,
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
-  btnText: { color: colors.accent, fontWeight: "600" },
   list: { padding: spacing.md },
-  empty: { color: colors.fgDim, padding: spacing.lg },
   card: {
     flexDirection: "row",
     alignItems: "center",
     gap: spacing.md,
     borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.bgElev,
     padding: spacing.md,
     marginBottom: spacing.sm,
   },
-  name: { color: colors.fg, fontWeight: "600" },
-  meta: { color: colors.fgDim, marginTop: 4, fontSize: 12 },
-  remove: { color: colors.danger, fontSize: 12 },
 });

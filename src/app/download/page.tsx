@@ -228,9 +228,10 @@ export default function DownloadPage() {
             <strong>local AI Chat</strong>: pick a lightweight model (Qwen,
             TinyLlama, and more), download it once via{" "}
             <a href="https://ollama.com/download">Ollama</a>, then chat offline.
-            Also includes Vault, Packs, Files, matrix boot splash, and the NEXUS
-            logo as the desktop / home-screen icon. Phone + tablet layouts on
-            Android.
+            v0.5 adds a premium Lumen UI (glass panels, phosphor replies, status
+            orb) plus <strong>Basic / Matrix / Lumen</strong> themes on desktop.
+            Vault, Packs, Files, matrix boot splash, and the NEXUS logo as the
+            desktop / home-screen icon. Phone + tablet layouts on Android.
           </p>
           <p style={{ marginTop: "0.75rem" }}>
             <strong>Windows:</strong> one-click portable{" "}

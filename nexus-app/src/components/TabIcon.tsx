@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import { colors } from "../theme";
+import { useTheme } from "../theme";
 
 const GLYPH: Record<string, string> = {
   Home: "⌂",
@@ -17,12 +17,15 @@ export function TabIcon({
   name: string;
   focused: boolean;
 }) {
+  const { colors } = useTheme();
   return (
     <Text
       style={{
         color: focused ? colors.accent : colors.fgDim,
         fontSize: 16,
         marginBottom: -2,
+        textShadowColor: focused ? colors.phosphor : "transparent",
+        textShadowRadius: focused ? 6 : 0,
       }}
     >
       {GLYPH[name] ?? "·"}

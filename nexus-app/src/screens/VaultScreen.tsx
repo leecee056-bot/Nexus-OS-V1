@@ -17,10 +17,11 @@ import {
 } from "../vault/store";
 import { ContentFrame } from "../components/ContentFrame";
 import { useCompanionLayout } from "../layout";
-import { colors, spacing } from "../theme";
+import { spacing, useTheme } from "../theme";
 
 export function VaultScreen() {
   const { isTablet } = useCompanionLayout();
+  const { colors } = useTheme();
   const [notes, setNotes] = useState<VaultNote[]>([]);
   const [query, setQuery] = useState("");
   const [editing, setEditing] = useState<VaultNote | null>(null);
@@ -80,18 +81,28 @@ export function VaultScreen() {
   }
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, { backgroundColor: colors.bg }]}>
       <ContentFrame>
-        <View style={styles.toolbar}>
+        <View style={[styles.toolbar, { borderBottomColor: colors.border }]}>
           <TextInput
-            style={styles.search}
+            style={[
+              styles.search,
+              {
+                color: colors.fg,
+                borderColor: colors.border,
+                backgroundColor: colors.bgElev,
+              },
+            ]}
             value={query}
             onChangeText={setQuery}
             placeholder="Search notes…"
             placeholderTextColor={colors.fgDim}
           />
-          <Pressable style={styles.btn} onPress={openNew}>
-            <Text style={styles.btnText}>New</Text>
+          <Pressable
+            style={[styles.btn, { borderColor: colors.border }]}
+            onPress={openNew}
+          >
+            <Text style={{ color: colors.fg }}>New</Text>
           </Pressable>
         </View>
         <FlatList
@@ -103,15 +114,32 @@ export function VaultScreen() {
           key={isTablet ? "vault-tab" : "vault-phone"}
           columnWrapperStyle={isTablet ? styles.row : undefined}
           ListEmptyComponent={
-            <Text style={styles.empty}>No notes match. Add one with New.</Text>
+            <Text style={{ color: colors.fgDim, padding: spacing.lg }}>
+              No notes match. Add one with New.
+            </Text>
           }
           renderItem={({ item }) => (
             <Pressable
-              style={[styles.card, isTablet && styles.cardHalf]}
+              style={[
+                styles.card,
+                isTablet && styles.cardHalf,
+                {
+                  borderColor: colors.border,
+                  backgroundColor: colors.bgElev,
+                },
+              ]}
               onPress={() => openEdit(item)}
             >
-              <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text style={styles.cardBody} numberOfLines={3}>
+              <Text
+                style={{
+                  color: colors.accent,
+                  fontWeight: "600",
+                  marginBottom: 4,
+                }}
+              >
+                {item.title}
+              </Text>
+              <Text style={{ color: colors.fg, lineHeight: 20 }} numberOfLines={3}>
                 {item.body}
               </Text>
             </Pressable>
@@ -120,17 +148,46 @@ export function VaultScreen() {
       </ContentFrame>
 
       <Modal visible={!!editing} animationType="slide">
-        <View style={[styles.modal, isTablet && styles.modalWide]}>
-          <Text style={styles.modalTitle}>Vault note</Text>
+        <View
+          style={[
+            styles.modal,
+            isTablet && styles.modalWide,
+            { backgroundColor: colors.bg },
+          ]}
+        >
+          <Text
+            style={{
+              color: colors.accent,
+              fontSize: 18,
+              marginBottom: spacing.md,
+            }}
+          >
+            Vault note
+          </Text>
           <TextInput
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                color: colors.fg,
+                borderColor: colors.border,
+                backgroundColor: colors.bgElev,
+              },
+            ]}
             value={title}
             onChangeText={setTitle}
             placeholder="Title"
             placeholderTextColor={colors.fgDim}
           />
           <TextInput
-            style={[styles.input, styles.bodyInput]}
+            style={[
+              styles.input,
+              styles.bodyInput,
+              {
+                color: colors.fg,
+                borderColor: colors.border,
+                backgroundColor: colors.bgElev,
+              },
+            ]}
             value={body}
             onChangeText={setBody}
             placeholder="Plain text body…"
@@ -139,14 +196,31 @@ export function VaultScreen() {
             textAlignVertical="top"
           />
           <View style={styles.modalRow}>
-            <Pressable style={styles.btn} onPress={() => setEditing(null)}>
-              <Text style={styles.btnText}>Cancel</Text>
+            <Pressable
+              style={[styles.btn, { borderColor: colors.border }]}
+              onPress={() => setEditing(null)}
+            >
+              <Text style={{ color: colors.fg }}>Cancel</Text>
             </Pressable>
-            <Pressable style={styles.btnDanger} onPress={() => void remove()}>
-              <Text style={styles.btnDangerText}>Delete</Text>
+            <Pressable
+              style={[styles.btn, { borderColor: colors.danger }]}
+              onPress={() => void remove()}
+            >
+              <Text style={{ color: colors.danger }}>Delete</Text>
             </Pressable>
-            <Pressable style={styles.btnPrimary} onPress={() => void persist()}>
-              <Text style={styles.btnPrimaryText}>Save</Text>
+            <Pressable
+              style={[
+                styles.btn,
+                {
+                  borderColor: colors.accent,
+                  backgroundColor: colors.accentSoft,
+                },
+              ]}
+              onPress={() => void persist()}
+            >
+              <Text style={{ color: colors.accent, fontWeight: "600" }}>
+                Save
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -156,61 +230,35 @@ export function VaultScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
+  root: { flex: 1 },
   toolbar: {
     flexDirection: "row",
     gap: spacing.sm,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
   },
   search: {
     flex: 1,
-    color: colors.fg,
     borderWidth: 1,
-    borderColor: colors.border,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
   },
   list: { padding: spacing.md },
   row: { gap: spacing.sm },
-  empty: { color: colors.fgDim, padding: spacing.lg },
   card: {
     borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.bgElev,
     padding: spacing.md,
     marginBottom: spacing.sm,
     flex: 1,
   },
   cardHalf: { minWidth: "48%" },
-  cardTitle: { color: colors.accent, fontWeight: "600", marginBottom: 4 },
-  cardBody: { color: colors.fg, lineHeight: 20 },
   btn: {
     borderWidth: 1,
-    borderColor: colors.border,
     paddingHorizontal: spacing.md,
     justifyContent: "center",
   },
-  btnText: { color: colors.fg },
-  btnPrimary: {
-    borderWidth: 1,
-    borderColor: colors.accent,
-    backgroundColor: colors.accentSoft,
-    paddingHorizontal: spacing.md,
-    justifyContent: "center",
-  },
-  btnPrimaryText: { color: colors.accent, fontWeight: "600" },
-  btnDanger: {
-    borderWidth: 1,
-    borderColor: colors.danger,
-    paddingHorizontal: spacing.md,
-    justifyContent: "center",
-  },
-  btnDangerText: { color: colors.danger },
   modal: {
     flex: 1,
-    backgroundColor: colors.bg,
     padding: spacing.lg,
     paddingTop: spacing.xl * 2,
   },
@@ -219,11 +267,8 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
   },
-  modalTitle: { color: colors.accent, fontSize: 18, marginBottom: spacing.md },
   input: {
-    color: colors.fg,
     borderWidth: 1,
-    borderColor: colors.border,
     padding: spacing.md,
     marginBottom: spacing.sm,
   },

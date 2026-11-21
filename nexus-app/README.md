@@ -10,11 +10,15 @@ rabbit-wizard branding throughout.
 | `nexus-esp32/` / `nexus-cardputer/` | Hardware firmware |
 | **`nexus-app/` (this folder)** | Windows · Mac · Android · iOS companion |
 
-## Features (v0.4)
+## Features (v0.5)
 
 - **Local AI Chat** — pick a lightweight model (Qwen 2.5 0.5B/1.5B, TinyLlama,
   Llama 3.2 1B, Gemma 2 2B), one-tap download via [Ollama](https://ollama.com),
   then chat offline
+- **Premium UI** — phosphor typewriter replies, status orb, glass panels,
+  model-card lift + progress ring, NEXUS status bar
+- **Themes** — Basic / Matrix / Lumen (desktop picker; About on all platforms),
+  optional light scanlines
 - **Desktop apps** — Windows portable `.exe` and Mac `.dmg` with NEXUS logo icon
 - **Matrix boot splash** + rabbit-wizard logo
 - **Vault / Packs / Files** — on-device notes and document import

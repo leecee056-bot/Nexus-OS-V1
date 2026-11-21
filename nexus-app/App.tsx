@@ -1,13 +1,15 @@
-import { useCallback, useState, type ComponentType } from "react";
+import { useCallback, useMemo, useState, type ComponentType } from "react";
 import {
   NavigationContainer,
   DarkTheme,
+  DefaultTheme,
   createNavigationContainerRef,
 } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import {
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -21,8 +23,10 @@ import { FilesScreen } from "./src/screens/FilesScreen";
 import { PacksScreen } from "./src/screens/PacksScreen";
 import { AboutScreen } from "./src/screens/AboutScreen";
 import { BootSplash } from "./src/components/BootSplash";
+import { ScanlineOverlay } from "./src/components/ScanlineOverlay";
 import { TabIcon } from "./src/components/TabIcon";
-import { colors, spacing } from "./src/theme";
+import { ThemePicker } from "./src/components/ThemePicker";
+import { ThemeProvider, spacing, useTheme } from "./src/theme";
 
 type RootTabParamList = {
   Home: undefined;
@@ -51,26 +55,15 @@ const SCREENS: {
   { name: "About", component: AboutScreen, title: "About" },
 ];
 
-const navTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    background: colors.bg,
-    card: colors.bgBar,
-    text: colors.fg,
-    border: colors.border,
-    primary: colors.accent,
-  },
-};
-
 function HeaderBrand() {
+  const { colors } = useTheme();
   return (
     <View style={styles.headerBrand}>
       <Image
         source={require("./assets/brand/logo-mark.png")}
         style={styles.headerMark}
       />
-      <Text style={styles.headerTitle}>NEXUS</Text>
+      <Text style={[styles.headerTitle, { color: colors.accent }]}>NEXUS</Text>
     </View>
   );
 }
@@ -82,16 +75,27 @@ function SideRail({
   routeName: string;
   onSelect: (name: ScreenName) => void;
 }) {
+  const { colors } = useTheme();
+  const isDesktop = Platform.OS === "web";
+
   return (
-    <View style={styles.rail}>
+    <View
+      style={[
+        styles.rail,
+        {
+          backgroundColor: colors.bgBar,
+          borderRightColor: colors.border,
+        },
+      ]}
+    >
       <View style={styles.railBrand}>
         <Image
           source={require("./assets/brand/nexus-rabbit-wizard.png")}
           style={styles.railMascot}
           resizeMode="contain"
         />
-        <Text style={styles.railTitle}>NEXUS</Text>
-        <Text style={styles.railSub}>Companion</Text>
+        <Text style={[styles.railTitle, { color: colors.accent }]}>NEXUS</Text>
+        <Text style={[styles.railSub, { color: colors.purple }]}>OS</Text>
       </View>
       {SCREENS.map((s) => {
         const focused = routeName === s.name;
@@ -99,30 +103,63 @@ function SideRail({
           <Pressable
             key={s.name}
             onPress={() => onSelect(s.name)}
-            style={[styles.railItem, focused && styles.railItemOn]}
+            style={[
+              styles.railItem,
+              {
+                borderColor: focused ? colors.accent : "transparent",
+                backgroundColor: focused ? colors.accentSoft : "transparent",
+                shadowColor: colors.accent,
+                shadowOpacity: focused ? 0.35 : 0,
+              },
+            ]}
           >
             <TabIcon name={s.name} focused={focused} />
             <Text
-              style={[styles.railLabel, focused && styles.railLabelOn]}
+              style={{
+                color: focused ? colors.accent : colors.fgDim,
+                fontWeight: focused ? "800" : "600",
+                textDecorationLine: focused ? "underline" : "none",
+              }}
             >
               {s.name}
             </Text>
           </Pressable>
         );
       })}
+      {isDesktop ? (
+        <View style={styles.railTheme}>
+          <ThemePicker compact />
+        </View>
+      ) : null}
     </View>
   );
 }
 
-export default function App() {
+function AppShell() {
   const [booting, setBooting] = useState(true);
   const [routeName, setRouteName] = useState("Home");
   const { width, height } = useWindowDimensions();
   const isTablet = Math.min(width, height) >= 600 || width >= 768;
   const finishBoot = useCallback(() => setBooting(false), []);
+  const { colors, themeId } = useTheme();
+
+  const navTheme = useMemo(() => {
+    const base = themeId === "basic" ? DefaultTheme : DarkTheme;
+    return {
+      ...base,
+      colors: {
+        ...base.colors,
+        background: colors.bg,
+        card: colors.bgBar,
+        text: colors.fg,
+        border: colors.border,
+        primary: colors.accent,
+      },
+    };
+  }, [colors, themeId]);
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, { backgroundColor: colors.bg }]}>
       <NavigationContainer
         ref={navRef}
         theme={navTheme}
@@ -131,7 +168,7 @@ export default function App() {
           if (name) setRouteName(name);
         }}
       >
-        <StatusBar style="light" />
+        <StatusBar style={themeId === "basic" ? "dark" : "light"} />
         <View style={styles.shell}>
           {isTablet ? (
             <SideRail
@@ -185,40 +222,45 @@ export default function App() {
             </Tab.Navigator>
           </View>
         </View>
+        <ScanlineOverlay />
       </NavigationContainer>
       {booting ? <BootSplash onDone={finishBoot} /> : null}
     </View>
   );
 }
 
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppShell />
+    </ThemeProvider>
+  );
+}
+
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
+  root: { flex: 1 },
   shell: { flex: 1, flexDirection: "row" },
   main: { flex: 1 },
   headerBrand: { flexDirection: "row", alignItems: "center", gap: 8 },
   headerMark: { width: 28, height: 28 },
   headerTitle: {
-    color: colors.accent,
     fontWeight: "800",
     letterSpacing: 3,
     fontSize: 16,
   },
   rail: {
-    width: 168,
-    backgroundColor: colors.bgBar,
+    width: 176,
     borderRightWidth: 1,
-    borderRightColor: colors.border,
     paddingTop: spacing.md,
     paddingHorizontal: spacing.sm,
   },
   railBrand: { alignItems: "center", marginBottom: spacing.lg },
   railMascot: { width: 72, height: 112, marginBottom: spacing.sm },
   railTitle: {
-    color: colors.accent,
     fontWeight: "800",
     letterSpacing: 3,
   },
-  railSub: { color: colors.purple, fontSize: 12, marginTop: 2 },
+  railSub: { fontSize: 12, marginTop: 2, fontWeight: "700", letterSpacing: 2 },
   railItem: {
     flexDirection: "row",
     alignItems: "center",
@@ -227,12 +269,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 4,
     borderWidth: 1,
-    borderColor: "transparent",
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 0 },
   },
-  railItemOn: {
-    borderColor: colors.border,
-    backgroundColor: colors.accentSoft,
+  railTheme: {
+    marginTop: "auto",
+    paddingTop: spacing.md,
+    paddingBottom: spacing.lg,
   },
-  railLabel: { color: colors.fgDim, fontWeight: "600" },
-  railLabelOn: { color: colors.accent },
 });

@@ -1,10 +1,11 @@
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import { useCompanionLayout } from "../layout";
-import { colors } from "../theme";
+import { useTheme } from "../theme";
 
 export function ContentFrame({ children }: { children: ReactNode }) {
   const { contentMax, gutter } = useCompanionLayout();
+  const { colors } = useTheme();
   return (
     <View
       style={[
@@ -14,6 +15,7 @@ export function ContentFrame({ children }: { children: ReactNode }) {
           maxWidth: contentMax ?? "100%",
           alignSelf: "center",
           width: "100%",
+          backgroundColor: colors.bg,
         },
       ]}
     >
@@ -23,5 +25,5 @@ export function ContentFrame({ children }: { children: ReactNode }) {
 }
 
 const styles = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: colors.bg },
+  wrap: { flex: 1 },
 });
