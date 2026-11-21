@@ -8,10 +8,10 @@ bottom tabs; tablets use a side rail.
 
 | Platform | Action |
 |----------|--------|
-| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.6.0/NEXUS-Companion-Windows-0.6.0-portable.exe) — double-click, NEXUS icon |
-| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.6.0) — grab the `.dmg` when attached |
+| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.7.0/NEXUS-Companion-Windows-0.7.0-portable.exe) — double-click, NEXUS icon |
+| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.7.0) — grab the `.dmg` when attached |
 | **Web** | [Open /companion/](/companion/) in your browser |
-| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.6.0) when attached — see [android-apk.md](./android-apk.md) |
+| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.7.0) when attached — see [android-apk.md](./android-apk.md) |
 
 Site Download section: [/download#companion](/download#companion)
 
@@ -27,17 +27,18 @@ Site Download section: [/download#companion](/download#companion)
 **Android:** run Ollama on a PC on the same Wi‑Fi, then Chat → **Ollama host** →
 set `http://YOUR_PC_LAN_IP:11434`.
 
-## Themes (v0.5)
+## Themes (v0.7)
 
-Desktop (and About on every platform) can switch looks:
+Home / About (every platform) and the desktop side rail can switch looks:
 
 | Theme | Feel |
 |-------|------|
 | **Basic** | Clean light UI (same idea as the website Basic theme) |
 | **Matrix** | Classic neon-green terminal NEXUS |
 | **Lumen** | Frosted glass panels, soft edge light, premium phosphor glow (default) |
+| **Terminal** | CRT multi-panel “NEXUS OS” dashboard — mono type, scanlines, real logo mark |
 
-Optional **scanlines** toggle (Matrix / Lumen only) — very light CRT overlay.
+Optional **scanlines** toggle (Matrix / Lumen / Terminal) — CRT overlay. Terminal turns scanlines on by default.
 
 ## Premium Chat UI
 
@@ -64,10 +65,11 @@ npm run android:apk
 See [companion-agent.md](./companion-agent.md) — Agent mode uses Vault, Add-ons,
 and Files with live status while answering.
 
-## What v0.6 includes
+## What v0.7 includes
 
+- **Terminal** theme — CRT multi-panel home dashboard with NEXUS logo
 - Agent mode + Add-ons / Plugin library
-- Lumen UI polish + Basic / Matrix / Lumen themes
+- Lumen UI polish + Basic / Matrix / Lumen / Terminal themes
 - Real local models via Ollama + model selector
 - Windows / Mac desktop packaging with NEXUS logo icon
 - Vault + optional Packs import + Files folders/text

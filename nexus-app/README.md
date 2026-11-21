@@ -10,13 +10,14 @@ rabbit-wizard branding throughout.
 | `nexus-esp32/` / `nexus-cardputer/` | Hardware firmware |
 | **`nexus-app/` (this folder)** | Windows · Mac · Android · iOS companion |
 
-## Features (v0.6)
+## Features (v0.7)
 
+- **Terminal theme** — CRT multi-panel “NEXUS OS” home dashboard with the real logo
 - **Agent mode** — uses Vault, knowledge packs, and the Add-ons / Plugin library
   while chatting; can browse/create Files (including a `website/` project)
 - **Local AI Chat** — pick a lightweight model via [Ollama](https://ollama.com)
 - **Add-ons library** — toggle which tools the agent may call
-- **Premium UI** — Lumen glass, phosphor replies, status orb, themes
+- **Premium UI** — Lumen glass, phosphor replies, status orb, Basic/Matrix/Lumen/Terminal
 - **Desktop apps** — Windows `.exe` / Mac `.dmg` with NEXUS logo icon
 - **Vault / Packs / Files** — on-device notes and document import
 - **Phone + tablet** — bottom tabs / side rail

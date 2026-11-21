@@ -1,4 +1,4 @@
-export type ThemeId = "basic" | "matrix" | "lumen";
+export type ThemeId = "basic" | "matrix" | "lumen" | "terminal";
 
 export type ThemeColors = {
   id: ThemeId;
@@ -22,6 +22,9 @@ export type ThemeColors = {
   statusBar: string;
   rain: boolean;
   glass: boolean;
+  /** Multi-panel CRT shell inspired by classic NEXUS OS mockups */
+  terminalShell: boolean;
+  mono: boolean;
 };
 
 /** Site-like clean light theme */
@@ -47,6 +50,8 @@ export const BASIC: ThemeColors = {
   statusBar: "#dfe8df",
   rain: false,
   glass: false,
+  terminalShell: false,
+  mono: false,
 };
 
 /** Classic NEXUS matrix (existing companion look) */
@@ -72,6 +77,8 @@ export const MATRIX: ThemeColors = {
   statusBar: "#071207",
   rain: true,
   glass: false,
+  terminalShell: false,
+  mono: false,
 };
 
 /** Premium frosted glass + soft phosphor (new upgraded look) */
@@ -97,13 +104,47 @@ export const LUMEN: ThemeColors = {
   statusBar: "rgba(6,14,10,0.92)",
   rain: true,
   glass: true,
+  terminalShell: false,
+  mono: false,
+};
+
+/**
+ * CRT “NEXUS OS” terminal — sharp panels, phosphor green, dashboard home.
+ * Inspired by the portable local-intelligence mockup; uses the real logo mark.
+ */
+export const TERMINAL: ThemeColors = {
+  id: "terminal",
+  label: "Terminal",
+  blurb:
+    "NEXUS OS CRT shell — multi-panel dashboard, mono type, scanlines, real logo.",
+  bg: "#000000",
+  bgElev: "#020802",
+  bgBar: "#001400",
+  bgGlass: "rgba(0,20,0,0.92)",
+  fg: "#33ff66",
+  fgDim: "#1a9940",
+  accent: "#00ff41",
+  accentSoft: "rgba(0,255,65,0.22)",
+  purple: "#66ff99",
+  purpleSoft: "rgba(102,255,153,0.14)",
+  danger: "#ff4444",
+  border: "rgba(0,255,65,0.55)",
+  edgeGlow: "rgba(0,255,65,0.75)",
+  phosphor: "#00ff41",
+  scanline: "rgba(0,255,65,0.09)",
+  statusBar: "#001000",
+  rain: true,
+  glass: false,
+  terminalShell: true,
+  mono: true,
 };
 
 export const THEMES: Record<ThemeId, ThemeColors> = {
   basic: BASIC,
   matrix: MATRIX,
   lumen: LUMEN,
+  terminal: TERMINAL,
 };
 
-export const THEME_ORDER: ThemeId[] = ["basic", "matrix", "lumen"];
+export const THEME_ORDER: ThemeId[] = ["basic", "matrix", "lumen", "terminal"];
 export const DEFAULT_THEME: ThemeId = "lumen";

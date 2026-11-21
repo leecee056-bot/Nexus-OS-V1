@@ -26,8 +26,10 @@ import { AboutScreen } from "./src/screens/AboutScreen";
 import { BootSplash } from "./src/components/BootSplash";
 import { ScanlineOverlay } from "./src/components/ScanlineOverlay";
 import { TabIcon } from "./src/components/TabIcon";
+import { TerminalTitleBar } from "./src/components/TerminalTitleBar";
 import { ThemePicker } from "./src/components/ThemePicker";
 import { ThemeProvider, spacing, useTheme } from "./src/theme";
+import { monoStyle } from "./src/theme/fonts";
 
 type RootTabParamList = {
   Home: undefined;
@@ -60,13 +62,22 @@ const SCREENS: {
 
 function HeaderBrand() {
   const { colors } = useTheme();
+  const terminal = colors.terminalShell;
   return (
     <View style={styles.headerBrand}>
       <Image
         source={require("./assets/brand/logo-mark.png")}
         style={styles.headerMark}
       />
-      <Text style={[styles.headerTitle, { color: colors.accent }]}>NEXUS</Text>
+      <Text
+        style={[
+          styles.headerTitle,
+          { color: colors.accent },
+          terminal ? monoStyle({ letterSpacing: 2 }) : null,
+        ]}
+      >
+        NEXUS
+      </Text>
     </View>
   );
 }
@@ -80,6 +91,7 @@ function SideRail({
 }) {
   const { colors } = useTheme();
   const isDesktop = Platform.OS === "web";
+  const terminal = colors.terminalShell;
 
   return (
     <View
@@ -92,13 +104,36 @@ function SideRail({
       ]}
     >
       <View style={styles.railBrand}>
-        <Image
-          source={require("./assets/brand/nexus-rabbit-wizard.png")}
-          style={styles.railMascot}
-          resizeMode="contain"
-        />
-        <Text style={[styles.railTitle, { color: colors.accent }]}>NEXUS</Text>
-        <Text style={[styles.railSub, { color: colors.purple }]}>OS</Text>
+        {terminal ? (
+          <Image
+            source={require("./assets/brand/logo-mark.png")}
+            style={styles.railLogo}
+          />
+        ) : (
+          <Image
+            source={require("./assets/brand/nexus-rabbit-wizard.png")}
+            style={styles.railMascot}
+            resizeMode="contain"
+          />
+        )}
+        <Text
+          style={[
+            styles.railTitle,
+            { color: colors.accent },
+            terminal ? monoStyle() : null,
+          ]}
+        >
+          NEXUS
+        </Text>
+        <Text
+          style={[
+            styles.railSub,
+            { color: colors.purple },
+            terminal ? monoStyle() : null,
+          ]}
+        >
+          OS
+        </Text>
       </View>
       {SCREENS.map((s) => {
         const focused = routeName === s.name;
@@ -109,20 +144,36 @@ function SideRail({
             style={[
               styles.railItem,
               {
-                borderColor: focused ? colors.accent : "transparent",
-                backgroundColor: focused ? colors.accentSoft : "transparent",
+                borderColor: focused
+                  ? colors.accent
+                  : terminal
+                    ? "transparent"
+                    : "transparent",
+                backgroundColor: focused
+                  ? terminal
+                    ? colors.accent
+                    : colors.accentSoft
+                  : "transparent",
                 shadowColor: colors.accent,
-                shadowOpacity: focused ? 0.35 : 0,
+                shadowOpacity: focused && !terminal ? 0.35 : 0,
               },
             ]}
           >
-            <TabIcon name={s.name} focused={focused} />
+            <TabIcon name={s.name} focused={focused && !terminal} />
             <Text
-              style={{
-                color: focused ? colors.accent : colors.fgDim,
-                fontWeight: focused ? "800" : "600",
-                textDecorationLine: focused ? "underline" : "none",
-              }}
+              style={[
+                {
+                  color: focused
+                    ? terminal
+                      ? colors.bg
+                      : colors.accent
+                    : colors.fgDim,
+                  fontWeight: focused ? "800" : "600",
+                  textDecorationLine:
+                    focused && !terminal ? "underline" : "none",
+                },
+                terminal ? monoStyle({ fontSize: 12 }) : null,
+              ]}
             >
               {s.name}
             </Text>
@@ -161,6 +212,8 @@ function AppShell() {
     };
   }, [colors, themeId]);
 
+  const terminal = colors.terminalShell;
+
   return (
     <View style={[styles.root, { backgroundColor: colors.bg }]}>
       <NavigationContainer
@@ -172,6 +225,7 @@ function AppShell() {
         }}
       >
         <StatusBar style={themeId === "basic" ? "dark" : "light"} />
+        {terminal ? <TerminalTitleBar /> : null}
         <View style={styles.shell}>
           {isTablet ? (
             <SideRail
@@ -192,7 +246,10 @@ function AppShell() {
                   borderBottomWidth: 1,
                 },
                 headerTintColor: colors.accent,
-                headerTitleStyle: { fontWeight: "700" },
+                headerTitleStyle: [
+                  { fontWeight: "700" },
+                  terminal ? monoStyle({ fontSize: 14 }) : null,
+                ],
                 tabBarStyle: isTablet
                   ? { display: "none", height: 0 }
                   : {
@@ -202,9 +259,15 @@ function AppShell() {
                       paddingBottom: 6,
                       paddingTop: 4,
                     },
-                tabBarActiveTintColor: colors.accent,
+                tabBarActiveTintColor: terminal ? colors.bg : colors.accent,
                 tabBarInactiveTintColor: colors.fgDim,
-                tabBarLabelStyle: { fontSize: 10, fontWeight: "600" },
+                tabBarActiveBackgroundColor: terminal
+                  ? colors.accent
+                  : undefined,
+                tabBarLabelStyle: [
+                  { fontSize: 10, fontWeight: "600" },
+                  terminal ? monoStyle({ fontSize: 9 }) : null,
+                ],
               }}
             >
               {SCREENS.map((s) => (
@@ -259,6 +322,7 @@ const styles = StyleSheet.create({
   },
   railBrand: { alignItems: "center", marginBottom: spacing.lg },
   railMascot: { width: 72, height: 112, marginBottom: spacing.sm },
+  railLogo: { width: 56, height: 56, marginBottom: spacing.sm },
   railTitle: {
     fontWeight: "800",
     letterSpacing: 3,

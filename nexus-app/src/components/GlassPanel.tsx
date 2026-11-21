@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { StyleSheet, Text, View, type ViewStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { monoStyle } from "../theme/fonts";
 import { spacing, useTheme } from "../theme";
 
 export function GlassPanel({
@@ -42,10 +43,26 @@ export function GlassPanel({
         />
       ) : null}
       {title ? (
-        <Text style={[styles.title, { color: titleColor }]}>{title}</Text>
+        <Text
+          style={[
+            styles.title,
+            { color: titleColor },
+            colors.mono ? monoStyle({ letterSpacing: 1 }) : null,
+          ]}
+        >
+          {title}
+        </Text>
       ) : null}
       {typeof children === "string" ? (
-        <Text style={[styles.body, { color: colors.fg }]}>{children}</Text>
+        <Text
+          style={[
+            styles.body,
+            { color: colors.fg },
+            colors.mono ? monoStyle() : null,
+          ]}
+        >
+          {children}
+        </Text>
       ) : (
         children
       )}

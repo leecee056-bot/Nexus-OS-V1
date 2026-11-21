@@ -110,16 +110,16 @@ export const BUILD_NOTE =
   "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), NEXUS Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, or the Companion apps (Windows / Mac one-click, Android APK, web — local AI Chat via Ollama). Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
 
 /** Companion app — Chat/Vault/Packs with local AI (not the bootable OS). */
-export const COMPANION_VERSION = "0.6.0";
+export const COMPANION_VERSION = "0.7.0";
 
 export const COMPANION_RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.6.0";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.7.0";
 
 export const COMPANION_WINDOWS_URL =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.6.0/NEXUS-Companion-Windows-0.6.0-portable.exe";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.7.0/NEXUS-Companion-Windows-0.7.0-portable.exe";
 
 export const COMPANION_MAC_URL =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.6.0";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.7.0";
 
 export const COMPANION_WEB_URL = "/companion/";
 
