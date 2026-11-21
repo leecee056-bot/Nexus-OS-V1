@@ -1,0 +1,6 @@
+NEXUS quick guide
+
+USB/Pi: flash a disk image, boot the full hub.
+Pocket: ESP32-S3 with PSRAM + Serial TinyStories.
+Cardputer ADV: this device — TinyChat + optional SD Vault.
+No PSRAM here — neural weights will not fit in RAM.

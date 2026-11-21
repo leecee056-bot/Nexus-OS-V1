@@ -45,9 +45,9 @@ export default function FeaturesPage() {
             <strong>NEXUS Cardputer ADV</strong>
             <span>
               On-device green hub for the M5Stack Cardputer ADV (no PSRAM):
-              TinyChat, Notes, Status on the 240×135 screen with keyboard nav.
-              Separate from Pocket — see{" "}
-              <Link href="/setup#cardputer">Cardputer setup</Link>.
+              TinyChat, Notes, Status, and an optional microSD Knowledge Vault
+              on the 240×135 screen with keyboard nav. Separate from Pocket —
+              see <Link href="/setup#cardputer">Cardputer setup</Link>.
             </span>
           </li>
           <li>

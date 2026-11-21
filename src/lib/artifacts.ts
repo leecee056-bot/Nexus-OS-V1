@@ -92,16 +92,17 @@ export const CARDPUTER_REPO =
 export const CARDPUTER_README =
   "https://github.com/leecee056-bot/Nexus-OS-V1/blob/main/nexus-cardputer/README.md";
 
-export const CARDPUTER_VERSION = "0.1.0";
+export const CARDPUTER_VERSION = "0.2.0";
 
 export const CARDPUTER_ARTIFACTS = [
   {
     arch: "cardputer-adv",
     label: "NEXUS Cardputer ADV",
     filename: "nexus-cardputer",
-    sizeLabel: "Firmware only — TinyChat corpus in flash (no neural weights)",
+    sizeLabel:
+      "Firmware + optional microSD Vault example (TinyChat in flash; no neural weights)",
     guidance:
-      "Dedicated M5Stack Cardputer ADV firmware (ESP32-S3FN8, 8 MB flash, no PSRAM, 240×135 + keyboard). Green terminal hub on the built-in screen. Cannot run USB/Pi images or Pocket’s stories260K — use TinyChat + Notes/Status instead.",
+      "Dedicated M5Stack Cardputer ADV firmware (ESP32-S3FN8, 8 MB flash, no PSRAM, 240×135 + keyboard). Green terminal hub on the built-in screen with TinyChat, Notes, and an optional Knowledge Vault on microSD (/nexus-vault). Cannot run USB/Pi images or Pocket’s stories260K.",
   },
 ] as const;
 

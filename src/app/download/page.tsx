@@ -178,8 +178,9 @@ export default function DownloadPage() {
           Dedicated firmware for the <strong>M5Stack Cardputer ADV</strong>{" "}
           (ESP32-S3FN8, 8 MB flash, <strong>no PSRAM</strong>, 240×135 +
           keyboard). It cannot run USB/Pi images or Pocket’s stories260K model —
-          Chat here is TinyChat (flash corpus). Green terminal hub on the
-          built-in screen.
+          Chat is TinyChat (flash corpus). Optional{" "}
+          <strong>Knowledge Vault</strong> on microSD (
+          <code className="mono">/nexus-vault</code>) — no card required.
         </div>
         {CARDPUTER_ARTIFACTS.map((a) => (
           <div className="panel" key={a.arch}>

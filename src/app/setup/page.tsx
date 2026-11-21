@@ -391,7 +391,9 @@ pio device monitor`}
             for the M5Stack Cardputer ADV (ESP32-S3FN8, 8 MB flash,{" "}
             <strong>no PSRAM</strong>, 240×135 display + 56-key keyboard). This
             is separate from Pocket: Chat is <strong>TinyChat</strong> (flash
-            phrase corpus), not stories260K.
+            phrase corpus), not stories260K. An optional{" "}
+            <strong>Knowledge Vault</strong> can live on microSD — the hub still
+            works with no card.
           </p>
           <ol className="steps">
             <li>
@@ -412,8 +414,17 @@ pio run -e cardputer-adv -t upload`}
                 <code className="mono">;</code> / <code className="mono">,</code>{" "}
                 up · <code className="mono">&apos;</code> /{" "}
                 <code className="mono">.</code> down · Enter opens ·{" "}
-                <code className="mono">`</code> back to hub. Optional microSD for
-                Notes.
+                <code className="mono">`</code> back to hub. Menu: Chat, Vault,
+                Notes, Status, About.
+              </p>
+            </li>
+            <li>
+              <strong>Optional: microSD Vault</strong>
+              <p style={{ marginTop: "0.5rem" }}>
+                Copy <code className="mono">sd-example/nexus-vault/</code> to the
+                root of a FAT microSD card, insert it, then open{" "}
+                <strong>Vault</strong>. Enter opens a file; type a word + Enter
+                to search. Without a card, Vault just shows a hint.
               </p>
             </li>
           </ol>
