@@ -6,6 +6,9 @@ export const colors = {
   fgDim: "#5f9a5f",
   accent: "#39ff14",
   accentSoft: "rgba(57, 255, 20, 0.18)",
+  /** Wizard-hat purple from the rabbit mascot */
+  purple: "#7b3fe4",
+  purpleSoft: "rgba(123, 63, 228, 0.22)",
   danger: "#ff6b6b",
   border: "rgba(57, 255, 20, 0.28)",
 } as const;

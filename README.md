@@ -26,12 +26,14 @@ users at free public offline sources (Kiwix, Project Gutenberg, etc.) so they
 can expand the Knowledge Vault on a USB stick or microSD without us hosting
 large dumps. Completely optional.
 
-## Companion app (Windows + iOS)
+## Companion app (Windows · iOS · Android)
 
-Secondary installable app in [`nexus-app/`](nexus-app/) — Chat, Vault, and
-Files in a normal windowed UI without flashing USB/Pi media. See
-[`nexus-app/README.md`](nexus-app/README.md) and
-[`public/guides/companion-app.md`](public/guides/companion-app.md).
+Secondary installable app in [`nexus-app/`](nexus-app/) — Chat, Vault, Packs,
+and Files in a normal UI without flashing USB/Pi media. Android ships as a
+sideload APK (EAS preview → GitHub Releases). See
+[`nexus-app/README.md`](nexus-app/README.md),
+[`public/guides/companion-app.md`](public/guides/companion-app.md), and
+[`public/guides/android-apk.md`](public/guides/android-apk.md).
 
 ## Stack
 

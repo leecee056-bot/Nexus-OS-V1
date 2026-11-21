@@ -51,11 +51,11 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
-            <strong>Windows + iOS companion</strong>
+            <strong>Windows · iOS · Android companion</strong>
             <span>
               Secondary Expo app (<code className="mono">nexus-app/</code>) with
-              Chat, Vault, and Files in a normal window — try the idea without
-              flashing. See{" "}
+              Chat, Vault, Packs, and Files — matrix boot splash and rabbit logo.
+              Android APK sideload via Releases. See{" "}
               <Link href="/download#companion">Download → Companion</Link>.
             </span>
           </li>

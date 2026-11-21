@@ -214,15 +214,23 @@ export default function DownloadPage() {
         ))}
 
         <div className="panel" id="companion" style={{ marginTop: "1.5rem" }}>
-          <h3>Windows + iOS companion app (secondary)</h3>
+          <h3>Companion apps (Windows · iOS · Android)</h3>
           <p>
-            Prefer a normal app window instead of flashing a stick?{" "}
+            Prefer a normal app instead of flashing a stick?{" "}
             <strong>NEXUS Companion</strong> in{" "}
-            <code className="mono">nexus-app/</code> is a Windows / iPhone /
-            iPad preview with Chat (lightweight offline stub), Knowledge Vault
-            notes, and simple document browsing. It is{" "}
-            <strong>not</strong> the bootable OS or Cardputer firmware — those
-            stay the main path.
+            <code className="mono">nexus-app/</code> covers Windows, iPhone/iPad,
+            and <strong>Android</strong> with Chat (lightweight offline stub),
+            Knowledge Vault, optional knowledge packs, and document browsing. It
+            is <strong>not</strong> the bootable OS or Cardputer firmware —
+            those stay the main path.
+          </p>
+          <p style={{ marginTop: "0.75rem" }}>
+            <strong>Android APK:</strong> not on the Play Store yet — we will
+            attach sideload builds to{" "}
+            <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases">
+              GitHub Releases
+            </a>{" "}
+            and link them here. See the APK guide for install steps.
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
             <a
@@ -230,6 +238,9 @@ export default function DownloadPage() {
               href="https://github.com/leecee056-bot/Nexus-OS-V1/tree/main/nexus-app"
             >
               Open companion source
+            </a>
+            <a className="btn btn-ghost" href="/guides/android-apk.md">
+              Android APK / sideload
             </a>
             <a className="btn btn-ghost" href="/guides/companion-app.md">
               Build / run notes

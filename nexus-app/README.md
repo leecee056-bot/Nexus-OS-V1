@@ -1,34 +1,35 @@
-# NEXUS Companion (Windows + iOS)
+# NEXUS Companion (Windows · iOS · Android)
 
 **Secondary** desktop / mobile app for the NEXUS OS / Tri-Cass family.
 
 This is **not** the bootable USB/Pi OS image, and **not** Cardputer / Pocket
-firmware. It is a normal windowed app so people can try the same offline-first
-idea (Chat, Knowledge Vault, simple document browsing) without flashing media.
+firmware. It is a normal app so people can try the offline-first idea (Chat,
+Knowledge Vault, Packs, Files) without flashing media.
 
 | Path | Role |
 |------|------|
 | USB / Pi images | Primary full hub |
 | `nexus-esp32/` / `nexus-cardputer/` | Hardware companions |
-| **`nexus-app/` (this folder)** | Windows + iOS companion app |
+| **`nexus-app/` (this folder)** | Windows + iOS + **Android** companion |
 
-## Features (v0.1)
+## Features (v0.2)
 
-- **Home** — what this app is (secondary target)
+- **Matrix boot splash** — falling glyphs + rabbit-wizard logo + “NEXUS OS”
+- **Home** — branded hero, secondary-target copy
 - **Chat** — lightweight offline phrase stub (honest stand-in until a local model is wired)
-- **Vault** — searchable on-device notes (starter pack included)
-- **Files** — import / list documents from the device
-- **About** — version + links back to the bootable downloads
+- **Vault** — searchable on-device notes
+- **Packs** — optional knowledge: open Kiwix / Gutenberg, import `.txt`/`.md` into Vault
+- **Files** — import / list documents
+- **About** — version + APK / source links
 
-Dark theme with green accents to match the project look. Full parity with every
-USB hub feature is **not** required in this first version. Network community
-hooks can be added later.
+Dark theme with neon green + wizard-hat purple accents.
 
 ## Requirements
 
 - Node.js 20+ (22 OK)
-- **iOS:** macOS with Xcode, or [Expo Go](https://expo.dev/go) on a physical iPhone/iPad
-- **Windows:** modern Windows 10/11; use web preview or the optional Electron shell
+- **Android:** device/emulator, or EAS cloud build for APK
+- **iOS:** macOS + Xcode, or Expo Go
+- **Windows:** `npm run web` or optional Electron shell
 
 ## Install
 
@@ -37,64 +38,67 @@ cd nexus-app
 npm install
 ```
 
+## Run — Android
+
+```bash
+npm run android
+# or
+npm start   # then press `a` / scan with Expo Go
+```
+
+### Sideload APK (no Play Store yet)
+
+Build a release APK with EAS **preview** profile (`eas.json`):
+
+```bash
+# npm i -g eas-cli && eas login && eas build:configure   # once
+npm run android:apk
+```
+
+Download the `.apk` from the EAS build page → attach to a **GitHub Release** →
+link it from the site Download page. Users enable “Install unknown apps” for
+their browser/Files app, then install.
+
+Full notes: [`../public/guides/android-apk.md`](../public/guides/android-apk.md)
+
 ## Run — iOS
 
 ```bash
-# Start Metro, then open in iOS Simulator (macOS) or scan QR with Expo Go
 npm run ios
-# or
-npm start
+# or npm start + Expo Go
 ```
-
-For a store-ready binary later: use [EAS Build](https://docs.expo.dev/build/introduction/)
-with the `ios.bundleIdentifier` in `app.json` (`bot.grok.nexus.companion`).
 
 ## Run — Windows
 
-**Option A — web window (simplest)**
-
 ```bash
 npm run web
+# optional desktop window:
+# npm install --no-save electron && npm run windows:electron
 ```
 
-Open the URL Expo prints (usually `http://localhost:8081`) in Edge/Chrome.
-This is a fine first try of the UI on a PC.
+## Optional Knowledge Packs
 
-**Option B — Electron desktop window**
+1. Open **Packs**
+2. Browse Kiwix / Gutenberg (we do not host the dumps)
+3. **Import .txt / .md into Vault** — searchable offline
 
-```bash
-# terminal 1
-npm run web
-
-# terminal 2 (after Metro is up)
-npm install --no-save electron
-npm run windows:electron
-```
-
-`electron/main.js` opens a native window pointed at the Expo web server.
-Packaging an `.exe` installer is a later step (electron-builder / similar).
+Site guide: https://nexus-os.apps.grok.bot/knowledge-packs
 
 ## Project layout
 
 ```
 nexus-app/
-  App.tsx                 # tab navigation
+  App.tsx
+  eas.json                 # Android APK preview profile
+  assets/brand/            # logo-mark + rabbit wizard
   src/
-    theme.ts
-    chat/tinychat.ts      # offline phrase replies
-    vault/store.ts        # AsyncStorage notes
-    files/store.ts
-    screens/              # Home, Chat, Vault, Files, About
-  electron/main.js        # optional Windows shell
+    components/            # MatrixRain, BootSplash
+    screens/               # Home, Chat, Vault, Packs, Files, About
+    packs/catalog.ts
+    chat/ tinychat.ts
   README.md
 ```
 
-## Relation to Knowledge Packs
-
-Optional large offline libraries (Kiwix, Gutenberg) are documented on the site
-under **Optional Knowledge Packs**. In v0.1 this app uses its own Vault notes
-and imported files; syncing packs from USB media can come later.
-
 ## License
 
-MIT — same family as the rest of NEXUS OS (see repo root `LICENSE`).
+MIT — see repo root `LICENSE`.

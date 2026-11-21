@@ -326,15 +326,19 @@ sync`}
         </ol>
 
         <div className="panel" id="companion" style={{ marginTop: "2rem" }}>
-          <h3>Windows + iOS companion app (optional)</h3>
+          <h3>Windows · iOS · Android companion (optional)</h3>
           <p>
             Secondary to the bootable images: clone{" "}
             <code className="mono">nexus-app/</code>, run{" "}
             <code className="mono">npm install</code>, then{" "}
-            <code className="mono">npm run ios</code> on a Mac or{" "}
-            <code className="mono">npm run web</code> on Windows. Same offline
-            idea (Chat stub, Vault, Files) in a normal app UI — see{" "}
-            <a href="/guides/companion-app.md">companion-app.md</a>.
+            <code className="mono">npm run android</code> /{" "}
+            <code className="mono">npm run ios</code> /{" "}
+            <code className="mono">npm run web</code>. Android can also build a
+            sideload <strong>APK</strong> (
+            <code className="mono">npm run android:apk</code> via EAS) for GitHub
+            Releases — see{" "}
+            <a href="/guides/android-apk.md">android-apk.md</a>. Packs tab opens
+            Kiwix/Gutenberg and imports plain text into Vault.
           </p>
         </div>
 
