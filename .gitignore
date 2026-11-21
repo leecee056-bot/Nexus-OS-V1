@@ -1,4 +1,7 @@
 node_modules
+# Expo web export embeds hashed assets under this path — keep them.
+!public/companion/assets/node_modules/
+!public/companion/assets/node_modules/**
 .next
 out
 .env

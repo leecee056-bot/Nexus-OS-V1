@@ -328,17 +328,16 @@ sync`}
         <div className="panel" id="companion" style={{ marginTop: "2rem" }}>
           <h3>Windows · iOS · Android companion (optional)</h3>
           <p>
-            Secondary to the bootable images: clone{" "}
-            <code className="mono">nexus-app/</code>, run{" "}
-            <code className="mono">npm install</code>, then{" "}
+            Easiest:{" "}
+            <Link href="/download#companion">Download → Companion</Link> —{" "}
+            <strong>Windows one-click .exe</strong>,{" "}
+            <a href="/companion/">web companion</a>, or Android APK sideload.
+            Developers: clone <code className="mono">nexus-app/</code>, then{" "}
             <code className="mono">npm run android</code> /{" "}
-            <code className="mono">npm run ios</code> /{" "}
-            <code className="mono">npm run web</code>. Android can also build a
-            sideload <strong>APK</strong> (
-            <code className="mono">npm run android:apk</code> via EAS) for GitHub
-            Releases — see{" "}
-            <a href="/guides/android-apk.md">android-apk.md</a>. Packs tab opens
-            Kiwix/Gutenberg and imports plain text into Vault.
+            <code className="mono">ios</code> /{" "}
+            <code className="mono">web</code>. Tablet uses a side rail; phones
+            use bottom tabs. See{" "}
+            <a href="/guides/android-apk.md">android-apk.md</a>.
           </p>
         </div>
 

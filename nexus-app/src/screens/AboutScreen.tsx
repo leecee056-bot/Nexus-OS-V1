@@ -2,52 +2,58 @@ import {
   Image,
   Linking,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import { ScreenShell } from "../components/ScreenShell";
+import { GlowPanel } from "../components/GlowPanel";
+import { useCompanionLayout } from "../layout";
 import { colors, spacing } from "../theme";
 
 export function AboutScreen() {
+  const { isTablet, heroMascot } = useCompanionLayout();
+
   return (
-    <ScrollView style={styles.root} contentContainerStyle={styles.content}>
-      <Image
-        source={require("../../assets/brand/nexus-rabbit-wizard.png")}
-        style={styles.mascot}
-        resizeMode="contain"
-      />
-      <Text style={styles.title}>About</Text>
-      <Text style={styles.body}>
-        NEXUS Companion — Windows, iOS, and Android app shell for the NEXUS OS /
-        Tri-Cass family. Offline-first core; Network hooks can come later.
-      </Text>
-
-      <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Not the bootable OS</Text>
-        <Text style={styles.body}>
-          Flashing a USB/Pi image or Cardputer firmware is still the primary
-          path. Install this app when you want Chat, Vault, Packs, and Files
-          without special boot media.
-        </Text>
+    <ScreenShell>
+      <View style={[styles.hero, isTablet && styles.heroTablet]}>
+        <Image
+          source={require("../../assets/brand/nexus-rabbit-wizard.png")}
+          style={{
+            width: heroMascot.w * 0.85,
+            height: heroMascot.h * 0.85,
+          }}
+          resizeMode="contain"
+        />
+        <View style={styles.heroText}>
+          <Text style={[styles.title, isTablet && styles.titleLg]}>About</Text>
+          <Text style={styles.body}>
+            NEXUS Companion — Windows, iOS, and Android shell for the NEXUS OS /
+            Tri-Cass family. Offline-first core; Network hooks can come later.
+          </Text>
+        </View>
       </View>
 
-      <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Android APK</Text>
-        <Text style={styles.body}>
-          We ship sideload APKs (not Play Store yet). Build with EAS preview
-          profile or assemble locally — see README / android-apk guide. Host on
-          GitHub Releases and link from the site Download page.
-        </Text>
-      </View>
+      <GlowPanel title="Not the bootable OS">
+        Flashing a USB/Pi image or Cardputer firmware is still the primary path.
+        Install this app when you want Chat, Vault, Packs, and Files without
+        special boot media.
+      </GlowPanel>
 
-      <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Version</Text>
-        <Text style={styles.body}>
-          0.2.0 companion · Expo · matrix boot · phrase-chat stub · Vault + Packs
-          {"\n"}Running on {Platform.OS}
-        </Text>
-      </View>
+      <GlowPanel title="Phone + tablet" accent="purple">
+        Phones keep bottom tabs. Tablets and wide Android devices switch to a
+        side rail so the matrix chrome stays usable in landscape.
+      </GlowPanel>
+
+      <GlowPanel title="Android APK">
+        Sideload APKs from the companion GitHub Release when attached (not Play
+        Store yet). Build with EAS preview if you need a fresh binary.
+      </GlowPanel>
+
+      <GlowPanel title="Version">
+        0.3.0 companion · Expo · matrix boot · Vault + Packs{"\n"}Running on{" "}
+        {Platform.OS}
+      </GlowPanel>
 
       <Text
         style={styles.link}
@@ -61,37 +67,33 @@ export function AboutScreen() {
       </Text>
       <Text
         style={styles.link}
-        onPress={() => Linking.openURL("https://nexus-os.apps.grok.bot/download")}
+        onPress={() =>
+          Linking.openURL("https://nexus-os.apps.grok.bot/download#companion")
+        }
       >
-        Download bootable images →
+        One-click companion downloads →
       </Text>
-    </ScrollView>
+    </ScreenShell>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: spacing.lg, alignItems: "stretch" },
-  mascot: {
-    width: 120,
-    height: 190,
-    alignSelf: "center",
-    marginBottom: spacing.md,
+  hero: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.md,
+    marginBottom: spacing.lg,
   },
-  title: { color: colors.accent, fontSize: 22, marginBottom: spacing.md },
-  body: { color: colors.fg, lineHeight: 22, marginBottom: spacing.md },
-  panel: {
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.bgElev,
-    padding: spacing.md,
-    marginBottom: spacing.md,
-  },
-  panelTitle: {
+  heroTablet: { gap: spacing.xl },
+  heroText: { flex: 1, minWidth: 160 },
+  title: {
     color: colors.accent,
-    fontWeight: "600",
+    fontSize: 22,
+    fontWeight: "800",
     marginBottom: spacing.sm,
   },
+  titleLg: { fontSize: 28 },
+  body: { color: colors.fg, lineHeight: 22 },
   link: {
     color: colors.accent,
     marginTop: spacing.sm,

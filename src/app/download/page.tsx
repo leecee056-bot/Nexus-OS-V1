@@ -7,6 +7,11 @@ import {
   CARDPUTER_README,
   CARDPUTER_REPO,
   CARDPUTER_VERSION,
+  COMPANION_ANDROID_NOTES,
+  COMPANION_RELEASE_PAGE,
+  COMPANION_VERSION,
+  COMPANION_WEB_URL,
+  COMPANION_WINDOWS_URL,
   PI_ARTIFACTS,
   PI_RELEASE_PAGE,
   PI_RELEASE_SHA256SUMS,
@@ -214,40 +219,37 @@ export default function DownloadPage() {
         ))}
 
         <div className="panel" id="companion" style={{ marginTop: "1.5rem" }}>
-          <h3>Companion apps (Windows · iOS · Android)</h3>
+          <h3>Companion apps (Windows · iOS · Android) — v{COMPANION_VERSION}</h3>
           <p>
             Prefer a normal app instead of flashing a stick?{" "}
-            <strong>NEXUS Companion</strong> in{" "}
-            <code className="mono">nexus-app/</code> covers Windows, iPhone/iPad,
-            and <strong>Android</strong> with Chat (lightweight offline stub),
-            Knowledge Vault, optional knowledge packs, and document browsing. It
-            is <strong>not</strong> the bootable OS or Cardputer firmware —
-            those stay the main path.
+            <strong>NEXUS Companion</strong> has Chat, Vault, Packs, and Files
+            with a matrix boot splash and rabbit logo. Phone + tablet layouts on
+            Android. It is <strong>not</strong> the bootable OS — that stays the
+            main path.
           </p>
           <p style={{ marginTop: "0.75rem" }}>
-            <strong>Android APK:</strong> not on the Play Store yet — we will
-            attach sideload builds to{" "}
-            <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases">
-              GitHub Releases
-            </a>{" "}
-            and link them here. See the APK guide for install steps.
+            <strong>Windows:</strong> one-click portable{" "}
+            <code className="mono">.exe</code> — download and double-click (no
+            installer). <strong>Web:</strong> open instantly in the browser.{" "}
+            <strong>Android:</strong> phone + tablet UI — one-click APK from the
+            companion Release when an APK asset is attached (EAS build otherwise).
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
-            <a
-              className="btn"
-              href="https://github.com/leecee056-bot/Nexus-OS-V1/tree/main/nexus-app"
-            >
-              Open companion source
+            <a className="btn" href={COMPANION_WINDOWS_URL}>
+              Download Windows (.exe)
             </a>
-            <a className="btn btn-ghost" href="/guides/android-apk.md">
-              Android APK / sideload
+            <a className="btn" href={COMPANION_WEB_URL}>
+              Open web companion
             </a>
-            <a className="btn btn-ghost" href="/guides/companion-app.md">
-              Build / run notes
+            <a className="btn btn-ghost" href={COMPANION_RELEASE_PAGE}>
+              Android APK / all releases
             </a>
-            <Link className="btn btn-quiet" href="/setup#companion">
-              Setup mention
-            </Link>
+            <a className="btn btn-quiet" href={COMPANION_ANDROID_NOTES}>
+              Android sideload notes
+            </a>
+            <a className="btn btn-quiet" href="/guides/companion-app.md">
+              Build notes
+            </a>
           </div>
         </div>
 

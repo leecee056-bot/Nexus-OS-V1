@@ -10,17 +10,20 @@ import {
   View,
 } from "react-native";
 import { companionReply } from "../chat/tinychat";
+import { ContentFrame } from "../components/ContentFrame";
+import { useCompanionLayout } from "../layout";
 import { colors, spacing } from "../theme";
 
 type Msg = { id: string; role: "you" | "nexus"; text: string };
 
 export function ChatScreen() {
+  const { isTablet } = useCompanionLayout();
   const [input, setInput] = useState("");
   const [msgs, setMsgs] = useState<Msg[]>([
     {
       id: "0",
       role: "nexus",
-      text: "Offline stub ready. Ask about vault, boot, pocket, or model.",
+      text: "Offline stub ready. Ask about vault, packs, android, or boot.",
     },
   ]);
 
@@ -41,43 +44,47 @@ export function ChatScreen() {
     <KeyboardAvoidingView
       style={styles.root}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={88}
+      keyboardVerticalOffset={isTablet ? 24 : 88}
     >
-      <Text style={styles.hint}>
-        Local phrase chat (stub) — not a neural model in v1
-      </Text>
-      <FlatList
-        data={msgs}
-        keyExtractor={(m) => m.id}
-        contentContainerStyle={styles.list}
-        renderItem={({ item }) => (
-          <View
-            style={[
-              styles.bubble,
-              item.role === "you" ? styles.you : styles.nexus,
-            ]}
-          >
-            <Text style={styles.role}>
-              {item.role === "you" ? "You" : "NEXUS"}
-            </Text>
-            <Text style={styles.text}>{item.text}</Text>
-          </View>
-        )}
-      />
-      <View style={styles.row}>
-        <TextInput
-          style={styles.input}
-          value={input}
-          onChangeText={setInput}
-          placeholder="Short question…"
-          placeholderTextColor={colors.fgDim}
-          onSubmitEditing={send}
-          returnKeyType="send"
+      <ContentFrame>
+        <Text style={styles.hint}>
+          Local phrase chat (stub) — not a neural model yet
+        </Text>
+        <FlatList
+          data={msgs}
+          keyExtractor={(m) => m.id}
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.list}
+          renderItem={({ item }) => (
+            <View
+              style={[
+                styles.bubble,
+                item.role === "you" ? styles.you : styles.nexus,
+                isTablet && styles.bubbleWide,
+              ]}
+            >
+              <Text style={styles.role}>
+                {item.role === "you" ? "You" : "NEXUS"}
+              </Text>
+              <Text style={styles.text}>{item.text}</Text>
+            </View>
+          )}
         />
-        <Pressable style={styles.btn} onPress={send}>
-          <Text style={styles.btnText}>Send</Text>
-        </Pressable>
-      </View>
+        <View style={styles.row}>
+          <TextInput
+            style={styles.input}
+            value={input}
+            onChangeText={setInput}
+            placeholder="Short question…"
+            placeholderTextColor={colors.fgDim}
+            onSubmitEditing={send}
+            returnKeyType="send"
+          />
+          <Pressable style={styles.btn} onPress={send}>
+            <Text style={styles.btnText}>Send</Text>
+          </Pressable>
+        </View>
+      </ContentFrame>
     </KeyboardAvoidingView>
   );
 }
@@ -87,10 +94,10 @@ const styles = StyleSheet.create({
   hint: {
     color: colors.fgDim,
     fontSize: 12,
-    paddingHorizontal: spacing.lg,
     paddingTop: spacing.sm,
+    marginBottom: spacing.sm,
   },
-  list: { padding: spacing.lg, paddingBottom: spacing.md },
+  list: { paddingBottom: spacing.md, flexGrow: 1 },
   bubble: {
     borderWidth: 1,
     borderColor: colors.border,
@@ -98,6 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
     maxWidth: "92%",
   },
+  bubbleWide: { maxWidth: "70%" },
   you: { alignSelf: "flex-end", backgroundColor: colors.accentSoft },
   nexus: { alignSelf: "flex-start", backgroundColor: colors.bgElev },
   role: { color: colors.accent, fontSize: 11, marginBottom: 4 },
@@ -105,10 +113,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     gap: spacing.sm,
-    padding: spacing.md,
+    paddingVertical: spacing.md,
     borderTopWidth: 1,
     borderTopColor: colors.border,
-    backgroundColor: colors.bgBar,
   },
   input: {
     flex: 1,

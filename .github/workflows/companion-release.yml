@@ -1,0 +1,63 @@
+name: Companion release builds
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "companion-v*"
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: nexus-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: nexus-app/package-lock.json
+      - run: npm ci
+      - run: npx expo export -p web --output-dir dist-web
+      - run: npm install --no-save electron electron-builder
+      - run: npx electron-builder --win portable --x64 --config electron-builder.yml
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: nexus-app/release/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nexus-companion-windows
+          path: nexus-app/release/*.exe
+
+  android-apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nexus-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: nexus-app/package-lock.json
+      - run: npm ci
+      - name: EAS build APK (optional)
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "Set repository secret EXPO_TOKEN to build Android APKs on CI."
+            echo "Locally: cd nexus-app && npm run android:apk"
+            exit 0
+          fi
+          npx eas-cli build -p android --profile preview --non-interactive --wait
+          echo "Download the APK from the Expo build page and attach to the GitHub Release."

@@ -1,0 +1,24 @@
+appId: bot.grok.nexus.companion
+productName: NEXUS Companion
+copyright: Copyright © 2026 NEXUS OS
+directories:
+  output: release
+  buildResources: assets/brand
+files:
+  - electron/main.js
+  - dist-web/**/*
+  - package.json
+extraMetadata:
+  main: electron/main.js
+win:
+  target:
+    - target: portable
+      arch:
+        - x64
+  artifactName: NEXUS-Companion-Windows-${version}-portable.exe
+linux:
+  target:
+    - AppImage
+mac:
+  target:
+    - dmg
