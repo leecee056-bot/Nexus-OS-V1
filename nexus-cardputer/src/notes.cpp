@@ -95,3 +95,5 @@ size_t notes_read_tail(char *out, size_t out_cap) {
 }
 
 const char *notes_backend(void) { return g_backend; }
+
+bool notes_sd_mounted(void) { return g_sd; }

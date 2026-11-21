@@ -159,14 +159,14 @@ export default function DocsPage() {
             </li>
             <li>
               <a href={CARDPUTER_REPO}>
-                NEXUS Cardputer ADV — v0.1.0
+                NEXUS Cardputer ADV — v0.2.0
                 <small>Firmware source in nexus-cardputer/ (PlatformIO)</small>
               </a>
             </li>
             <li>
               <a href={CARDPUTER_README}>
                 Cardputer ADV README
-                <small>No-PSRAM limits, TinyChat, keyboard hub</small>
+                <small>TinyChat, optional SD Vault, keyboard hub</small>
               </a>
             </li>
           </ul>

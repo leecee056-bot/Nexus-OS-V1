@@ -1,0 +1,7 @@
+Glossary
+
+Hub — main menu after boot.
+Vault — searchable notes (USB/Pi full Vault, or SD on Cardputer).
+TinyChat — flash phrase replies on Cardputer ADV.
+Pocket — Serial companion for PSRAM ESP32-S3 boards.
+Stick — USB media with the PC image.

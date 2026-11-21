@@ -84,7 +84,7 @@ nexus-esp32/
 M5Stack **Cardputer ADV** has **no PSRAM** — do not flash this Pocket firmware
 expecting stories260K. Use the dedicated project instead:
 
-→ [`../nexus-cardputer/`](../nexus-cardputer/) (on-screen TinyChat hub)
+→ [`../nexus-cardputer/`](../nexus-cardputer/) (on-screen TinyChat hub + optional microSD Vault)
 
 ## Roadmap (not in v0.1)
 

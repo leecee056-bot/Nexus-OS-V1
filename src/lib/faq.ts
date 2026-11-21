@@ -34,7 +34,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "cardputer",
     question: "What about the M5Stack Cardputer ADV?",
     answer:
-      "Use the dedicated NEXUS Cardputer ADV firmware in nexus-cardputer/. That device has 8 MB flash and no PSRAM, so it cannot run USB/Pi Linux images or Pocket’s stories260K weights. It boots a green terminal-style hub on the 240×135 screen with keyboard navigation, TinyChat (flash phrase corpus), Notes (microSD/SPIFFS), and Status. See Setup → Cardputer ADV.",
+      "Use the dedicated NEXUS Cardputer ADV firmware in nexus-cardputer/. That device has 8 MB flash and no PSRAM, so it cannot run USB/Pi Linux images or Pocket’s stories260K weights. It boots a green terminal-style hub on the 240×135 screen with keyboard navigation, TinyChat (flash phrase corpus), Notes, Status, and an optional Knowledge Vault on microSD (copy sd-example/nexus-vault/ to the card — no card required). See Setup → Cardputer ADV.",
   },
   {
     id: "wipe",
@@ -58,7 +58,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "vault",
     question: "Is there an offline wiki or knowledge base?",
     answer:
-      "On PC/Pi: yes — the Knowledge Vault is a searchable notebook on the stick/card. It ships with a small starter pack (NEXUS guide, glossary, and short how-tos for flash/boot, Chat, models, and Pi/cyberdecks). It is not a full Wikipedia dump. Add your own .txt/.md files and rebuild the index from the Vault menu; Chat can optionally use matching notes as context. Pocket has a simple on-device notes tool over Serial, not the full Vault UI.",
+      "On PC/Pi: yes — the Knowledge Vault is a searchable notebook on the stick/card. It ships with a small starter pack (NEXUS guide, glossary, and short how-tos for flash/boot, Chat, models, and Pi/cyberdecks). It is not a full Wikipedia dump. Add your own .txt/.md files and rebuild the index from the Vault menu; Chat can optionally use matching notes as context. Cardputer ADV can optionally mount the same idea on microSD (/nexus-vault plain .txt/.md — streamed, no card required). Pocket has a simple on-device notes tool over Serial, not the full Vault UI.",
   },
   {
     id: "cyberdeck",

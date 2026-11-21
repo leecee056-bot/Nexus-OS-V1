@@ -5,6 +5,7 @@
 #include "hub.h"
 #include "notes.h"
 #include "ui.h"
+#include "vault.h"
 
 void setup() {
   auto cfg = M5.config();
@@ -26,6 +27,13 @@ void setup() {
     Serial.println("notes: no SD/SPIFFS yet — Notes will warn in UI");
   } else {
     Serial.printf("notes backend: %s\n", notes_backend());
+  }
+
+  if (vault_refresh()) {
+    Serial.printf("vault: %s (%d files)\n", vault_root_hint(),
+                  vault_file_count());
+  } else {
+    Serial.printf("vault: optional — %s\n", vault_root_hint());
   }
 
   delay(400);
