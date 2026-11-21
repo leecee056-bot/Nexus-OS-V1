@@ -1,7 +1,7 @@
 {
   "name": "nexus-companion",
-  "version": "0.8.1",
-  "description": "NEXUS Companion — local AI Chat, Image Lab, Vault, Packs, and Files",
+  "version": "0.9.0",
+  "description": "NEXUS Companion — local AI Chat, USB portable kit, Image Lab, Vault, Packs",
   "author": "NEXUS OS",
   "main": "index.ts",
   "dependencies": {
@@ -37,8 +37,10 @@
     "windows:electron": "electron ./electron/main.js",
     "build:web": "expo export -p web --output-dir dist-web",
     "build:windows": "npm run build:web && electron-builder --win portable --x64 --config electron-builder.yml",
-    "build:mac": "npm run build:web && electron-builder --mac dmg --x64 --arm64 --config electron-builder.yml",
-    "build:desktop": "npm run build:web && electron-builder --win portable --mac dmg --x64 --arm64 --config electron-builder.yml",
+    "build:windows:dir": "npm run build:web && electron-builder --win dir --x64 --config electron-builder.yml",
+    "build:mac": "npm run build:web && electron-builder --mac dmg zip --x64 --arm64 --config electron-builder.yml",
+    "build:desktop": "npm run build:web && electron-builder --win portable dir --mac dmg zip --x64 --arm64 --config electron-builder.yml",
+    "pack:usb": "node scripts/pack-usb-kit.mjs",
     "android:apk": "eas build -p android --profile preview",
     "typecheck": "tsc --noEmit"
   },

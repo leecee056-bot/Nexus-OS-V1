@@ -37,6 +37,11 @@ import {
   saveOllamaHost,
   saveSelectedModelId,
 } from "../chat/settings";
+import {
+  chatToMarkdown,
+  loadChatHistory,
+  saveChatHistory,
+} from "../chat/history";
 import { runAgentTurn } from "../agent/runner";
 import type { AgentStep } from "../agent/schema";
 import { AppStatusBar } from "../components/AppStatusBar";
@@ -48,6 +53,7 @@ import { ProgressRing } from "../components/ProgressRing";
 import { ScanlineOverlay } from "../components/ScanlineOverlay";
 import { StatusOrb, type OrbState } from "../components/StatusOrb";
 import { TypewriterText } from "../components/TypewriterText";
+import { exportChatToUsb } from "../portable/info";
 import { AGENT_GUIDE_URL, OS_UPDATE_URL } from "../updates/links";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
@@ -77,14 +83,22 @@ export function ChatScreen() {
   const [pullNote, setPullNote] = useState<string | null>(null);
   const [statusNote, setStatusNote] = useState<string | null>(null);
   const [latestTypedId, setLatestTypedId] = useState<string | null>(null);
-  const [msgs, setMsgs] = useState<Msg[]>([
-    {
-      id: "0",
-      role: "nexus",
-      text: "Agent mode can search your Vault, use Add-ons, and write files. Pick a local model, then ask away.",
-    },
-  ]);
+  const [msgs, setMsgs] = useState<Msg[]>([]);
+  const [historyReady, setHistoryReady] = useState(false);
+  const [exportNote, setExportNote] = useState<string | null>(null);
   const listRef = useRef<FlatListType<Msg>>(null);
+
+  useEffect(() => {
+    void loadChatHistory().then((h) => {
+      setMsgs(h);
+      setHistoryReady(true);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!historyReady) return;
+    void saveChatHistory(msgs);
+  }, [msgs, historyReady]);
 
   const model = useMemo(() => findModel(modelId), [modelId]);
   const installed = isModelInstalled(tags, model.ollama);
@@ -355,7 +369,56 @@ export function ChatScreen() {
             label="OS updates"
             compact
           />
+          <Pressable
+            onPress={() =>
+              void (async () => {
+                const md = chatToMarkdown(msgs);
+                const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+                const r = await exportChatToUsb(
+                  md,
+                  `nexus-chat-${stamp}.md`,
+                );
+                setExportNote(
+                  r.ok
+                    ? r.path
+                      ? `Saved chat → ${r.path}`
+                      : "Chat saved on this drive"
+                    : r.error || "Could not save chat",
+                );
+              })()
+            }
+            style={[
+              styles.saveChatBtn,
+              {
+                borderColor: colors.border,
+                backgroundColor: colors.accentSoft,
+              },
+            ]}
+          >
+            <Text
+              style={{
+                color: colors.accent,
+                fontWeight: "700",
+                fontSize: 11,
+              }}
+            >
+              Save chat
+            </Text>
+          </Pressable>
         </View>
+        {exportNote ? (
+          <Text
+            style={{
+              color: colors.fgDim,
+              fontSize: 11,
+              paddingHorizontal: spacing.md,
+              marginBottom: 4,
+            }}
+            numberOfLines={2}
+          >
+            {exportNote}
+          </Text>
+        ) : null}
 
         <View style={styles.modeRow}>
           {(["agent", "chat"] as ChatMode[]).map((m) => {
@@ -793,6 +856,12 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     paddingHorizontal: spacing.md,
     paddingTop: spacing.sm,
+    alignItems: "center",
+  },
+  saveChatBtn: {
+    borderWidth: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
   modeRow: {
     flexDirection: "row",
