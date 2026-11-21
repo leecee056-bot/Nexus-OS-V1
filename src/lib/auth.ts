@@ -11,7 +11,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export type Account = {
   id: string;
   username: string;
-  email: string;
+  email: string | null;
   display_jid: string;
   created_at: string;
   last_login_at: string | null;
@@ -122,7 +122,7 @@ export async function getAccountFromSession(
   const rows = await sql<{
     id: string | number;
     username: string;
-    email: string;
+    email: string | null;
     display_jid: string;
     created_at: string;
     last_login_at: string | null;

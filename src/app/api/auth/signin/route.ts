@@ -7,7 +7,7 @@ import {
   signSessionToken,
   verifyPassword,
 } from "@/lib/auth";
-import { isUsingSampleDb, sql } from "@/lib/db";
+import { sql } from "@/lib/db";
 import { rateLimit } from "@/lib/rate-limit";
 import {
   assertSameOrigin,
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   if (!assertSameOrigin(req)) return csrfRejected();
 
   const ip = clientIpKey(req);
-  const limited = rateLimit(`signin:${ip}`, 20, 15 * 60 * 1000);
+  const limited = await rateLimit(`signin:${ip}`, 20, 15 * 60 * 1000);
   if (!limited.ok) {
     return NextResponse.json(
       { error: `Too many sign-in attempts. Retry in ${limited.retryAfterSec}s.` },
@@ -81,7 +81,6 @@ export async function POST(req: NextRequest) {
     ok: true,
     message: "Signed in. Network servers coming — username reserved.",
     displayJid: `@${account.display_jid}`,
-    sampleDb: isUsingSampleDb(),
   });
   res.cookies.set(
     SESSION_COOKIE,

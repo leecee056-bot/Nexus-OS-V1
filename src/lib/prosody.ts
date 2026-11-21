@@ -2,7 +2,8 @@
  * Optional Prosody account provisioning.
  * When PROSODY_PROVISION_URL + PROSODY_PROVISION_TOKEN are unset (default),
  * website signup only reserves the identity in Postgres — Network chat is not live yet.
- * When set (VPS companion), signup also creates the real XMPP account.
+ * When set (VPS companion), signup notifies the provisioner with username only —
+ * the website account password is never sent.
  */
 
 export type ProsodyProvisionResult =
@@ -11,7 +12,6 @@ export type ProsodyProvisionResult =
 
 export async function provisionProsodyAccount(input: {
   username: string;
-  password: string;
 }): Promise<ProsodyProvisionResult> {
   const url = process.env.PROSODY_PROVISION_URL?.trim();
   const token = process.env.PROSODY_PROVISION_TOKEN?.trim();
@@ -28,8 +28,9 @@ export async function provisionProsodyAccount(input: {
       },
       body: JSON.stringify({
         username: input.username,
-        password: input.password,
         domain: process.env.NEXUS_XMPP_DOMAIN?.trim() || "nexus.network",
+        // Intentionally no password — site credentials never leave this app.
+        reserveOnly: true,
       }),
       signal: AbortSignal.timeout(8_000),
     });
@@ -40,7 +41,10 @@ export async function provisionProsodyAccount(input: {
     }
     return { ok: true, provisioned: true };
   } catch (err) {
-    console.error("prosody provision error", err instanceof Error ? err.message : err);
+    console.error(
+      "prosody provision error",
+      err instanceof Error ? err.message : err,
+    );
     return { ok: false, error: "Network chat server unreachable." };
   }
 }
