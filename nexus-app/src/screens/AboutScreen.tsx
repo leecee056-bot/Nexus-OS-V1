@@ -87,7 +87,7 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.8.0 · Image Lab · Updates · Agent · Terminal · local AI{"\n"}Running on{" "}
+        0.8.1 · grafting rabbit · Image Lab · Updates · Agent{"\n"}Running on{" "}
         {Platform.OS}
       </GlowPanel>
 

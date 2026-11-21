@@ -13,6 +13,8 @@
 - Updates: `src/updates/links.ts` + `CheckUpdatesButton` — manual curated links.
 - Premium UI: TypewriterText, StatusOrb, GlassPanel, ProgressRing, AppStatusBar,
   TerminalDashboard / TerminalTitleBar for the Terminal theme.
+- Chat wait state: `GraftingIndicator` + `assets/brand/rabbit-grafting.gif`
+  (looping rabbit dig — label “grafting… Ns”, never “thinking”).
 - Desktop: Electron proxies Ollama; icons in `assets/brand/icon.{png,ico,icns}`.
 - Site: `/download#companion`, `public/guides/companion-agent.md`,
   `companion-image.md`, `companion-updates.md`.

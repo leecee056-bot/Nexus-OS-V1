@@ -8,10 +8,10 @@ bottom tabs; tablets use a side rail.
 
 | Platform | Action |
 |----------|--------|
-| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.8.0/NEXUS-Companion-Windows-0.8.0-portable.exe) — double-click, NEXUS icon |
-| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.8.0) — grab the `.dmg` when attached |
+| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.8.1/NEXUS-Companion-Windows-0.8.1-portable.exe) — double-click, NEXUS icon |
+| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.8.1) — grab the `.dmg` when attached |
 | **Web** | [Open /companion/](/companion/) in your browser |
-| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.8.0) when attached — see [android-apk.md](./android-apk.md) |
+| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.8.1) when attached — see [android-apk.md](./android-apk.md) |
 
 Site Download section: [/download#companion](/download#companion)
 
@@ -64,6 +64,12 @@ npm run android:apk
 
 See [companion-agent.md](./companion-agent.md) — Agent mode uses Vault, Add-ons,
 and Files with live status while answering.
+
+## Grafting indicator (v0.8.1)
+
+While Chat waits for a local model reply, the rabbit **grafting** GIF loops in
+the thread with a live `grafting… Ns` counter (no “thinking” spinner). Works on
+Windows, Mac, Android, and the web companion.
 
 ## Image Lab (desktop, v0.8)
 
