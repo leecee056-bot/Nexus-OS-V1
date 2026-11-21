@@ -2,7 +2,7 @@
   "expo": {
     "name": "NEXUS Companion",
     "slug": "nexus-companion",
-    "version": "0.12.0",
+    "version": "0.12.1",
     "orientation": "default",
     "icon": "./assets/brand/icon.png",
     "userInterfaceStyle": "dark",
@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "bot.grok.nexus.companion",
-      "versionCode": 14,
+      "versionCode": 15,
       "softwareKeyboardLayoutMode": "pan",
       "allowBackup": true,
       "usesCleartextTraffic": true,

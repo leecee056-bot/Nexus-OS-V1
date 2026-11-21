@@ -14,6 +14,7 @@ rabbit-wizard branding throughout.
 
 - **Spatial / Open theme** — optional floating liquid-glass canvas (desktop)
 - **Browse (desktop)** — themed NEXUS window + detect installed browsers
+- **Add-ons marketplace** — pages of one-click mini apps (clock, calc, coding…)
 - **Offline-first** — no NEXUS cloud account; website links are optional downloads only
 - **Desk layout (desktop)** — multi-window NEXUS OS home (or Classic chat chrome)
 - **Games (desktop / USB)** — Chess first, plus Snake, Pong, Breakout, Tetris, 2048
