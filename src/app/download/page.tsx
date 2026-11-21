@@ -228,10 +228,10 @@ export default function DownloadPage() {
             <strong>local AI Chat</strong>: pick a lightweight model (Qwen,
             TinyLlama, and more), download it once via{" "}
             <a href="https://ollama.com/download">Ollama</a>, then chat offline.
-            v0.8 adds desktop <strong>Image Lab</strong> (local image models +
-            Get-model flow), <strong>Check for updates</strong> links across
-            models / add-ons / OS downloads, more Chat model picks, plus the
-            Terminal CRT dashboard, Agent mode, and{" "}
+            v0.8.1 adds the rabbit <strong>grafting</strong> wait animation in
+            Chat, plus desktop <strong>Image Lab</strong>,{" "}
+            <strong>Check for updates</strong>, more Chat models, Terminal CRT
+            dashboard, Agent mode, and{" "}
             <strong>Basic / Matrix / Lumen / Terminal</strong> themes. Vault,
             Packs, Plugins, Files, matrix boot splash, and the NEXUS logo as
             the desktop / home-screen icon. Phone + tablet on Android.

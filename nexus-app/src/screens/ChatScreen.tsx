@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -11,6 +11,7 @@ import {
   Text,
   TextInput,
   View,
+  type FlatList as FlatListType,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { companionReply } from "../chat/tinychat";
@@ -41,6 +42,7 @@ import type { AgentStep } from "../agent/schema";
 import { AppStatusBar } from "../components/AppStatusBar";
 import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
 import { ContentFrame } from "../components/ContentFrame";
+import { GraftingIndicator } from "../components/GraftingIndicator";
 import { PressableCard } from "../components/PressableCard";
 import { ProgressRing } from "../components/ProgressRing";
 import { ScanlineOverlay } from "../components/ScanlineOverlay";
@@ -82,9 +84,21 @@ export function ChatScreen() {
       text: "Agent mode can search your Vault, use Add-ons, and write files. Pick a local model, then ask away.",
     },
   ]);
+  const listRef = useRef<FlatListType<Msg>>(null);
 
   const model = useMemo(() => findModel(modelId), [modelId]);
   const installed = isModelInstalled(tags, model.ollama);
+
+  /** Reply wait (not model download) — show grafting rabbit, not a spinner. */
+  const grafting = busy && pullPct == null && !pullNote;
+
+  useEffect(() => {
+    if (!grafting) return;
+    const t = setTimeout(() => {
+      listRef.current?.scrollToEnd({ animated: true });
+    }, 80);
+    return () => clearTimeout(t);
+  }, [grafting, msgs.length]);
 
   const orb: OrbState = busy
     ? "thinking"
@@ -458,10 +472,12 @@ export function ChatScreen() {
         ) : null}
 
         <FlatList
+          ref={listRef}
           data={msgs}
           keyExtractor={(m) => m.id}
           style={{ flex: 1 }}
           contentContainerStyle={styles.list}
+          ListFooterComponent={<GraftingIndicator active={grafting} />}
           renderItem={({ item }) => {
             const isYou = item.role === "you";
             return (
@@ -531,13 +547,9 @@ export function ChatScreen() {
             onPress={() => void send()}
             disabled={busy}
           >
-            {busy ? (
-              <ActivityIndicator color={colors.accent} />
-            ) : (
-              <Text style={[styles.btnText, { color: colors.accent }]}>
-                Send
-              </Text>
-            )}
+            <Text style={[styles.btnText, { color: colors.accent }]}>
+              {grafting ? "…" : "Send"}
+            </Text>
           </Pressable>
         </View>
       </ContentFrame>

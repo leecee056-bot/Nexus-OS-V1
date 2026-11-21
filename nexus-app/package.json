@@ -1,6 +1,6 @@
 {
   "name": "nexus-companion",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "NEXUS Companion — local AI Chat, Image Lab, Vault, Packs, and Files",
   "author": "NEXUS OS",
   "main": "index.ts",
