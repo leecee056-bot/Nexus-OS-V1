@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "NEXUS Companion",
+    "slug": "nexus-companion",
+    "version": "0.1.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "nexus-companion",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "bot.grok.nexus.companion",
+      "infoPlist": {
+        "CFBundleDisplayName": "NEXUS Companion"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#040804",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "package": "bot.grok.nexus.companion"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "name": "NEXUS Companion",
+      "shortName": "NEXUS",
+      "themeColor": "#39ff14",
+      "backgroundColor": "#040804"
+    },
+    "plugins": ["expo-document-picker"]
+  }
+}

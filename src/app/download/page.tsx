@@ -49,6 +49,7 @@ export default function DownloadPage() {
           <a href="#pocket">Pocket ESP32</a>
           <a href="#cardputer">Cardputer ADV</a>
           <a href="#knowledge-packs">Knowledge packs</a>
+          <a href="#companion">Companion app</a>
         </nav>
 
         <h3 className="subhead" id="pc">
@@ -211,6 +212,33 @@ export default function DownloadPage() {
             </div>
           </div>
         ))}
+
+        <div className="panel" id="companion" style={{ marginTop: "1.5rem" }}>
+          <h3>Windows + iOS companion app (secondary)</h3>
+          <p>
+            Prefer a normal app window instead of flashing a stick?{" "}
+            <strong>NEXUS Companion</strong> in{" "}
+            <code className="mono">nexus-app/</code> is a Windows / iPhone /
+            iPad preview with Chat (lightweight offline stub), Knowledge Vault
+            notes, and simple document browsing. It is{" "}
+            <strong>not</strong> the bootable OS or Cardputer firmware — those
+            stay the main path.
+          </p>
+          <div className="cta-row" style={{ marginTop: "0.85rem" }}>
+            <a
+              className="btn"
+              href="https://github.com/leecee056-bot/Nexus-OS-V1/tree/main/nexus-app"
+            >
+              Open companion source
+            </a>
+            <a className="btn btn-ghost" href="/guides/companion-app.md">
+              Build / run notes
+            </a>
+            <Link className="btn btn-quiet" href="/setup#companion">
+              Setup mention
+            </Link>
+          </div>
+        </div>
 
         <div className="panel" id="knowledge-packs" style={{ marginTop: "1.5rem" }}>
           <h3>Optional Knowledge Packs</h3>

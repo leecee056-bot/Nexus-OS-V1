@@ -30,6 +30,7 @@ export default function SetupPage() {
           <a href="#pocket">Pocket ESP32</a>
           <a href="#cardputer">Cardputer ADV</a>
           <a href="#knowledge-packs">Knowledge packs</a>
+          <a href="#companion">Companion app</a>
           <a href="#troubleshoot">Troubleshooting</a>
           <Link href="/download#cardputer">Cardputer download</Link>
         </nav>
@@ -323,6 +324,19 @@ sync`}
             </p>
           </li>
         </ol>
+
+        <div className="panel" id="companion" style={{ marginTop: "2rem" }}>
+          <h3>Windows + iOS companion app (optional)</h3>
+          <p>
+            Secondary to the bootable images: clone{" "}
+            <code className="mono">nexus-app/</code>, run{" "}
+            <code className="mono">npm install</code>, then{" "}
+            <code className="mono">npm run ios</code> on a Mac or{" "}
+            <code className="mono">npm run web</code> on Windows. Same offline
+            idea (Chat stub, Vault, Files) in a normal app UI — see{" "}
+            <a href="/guides/companion-app.md">companion-app.md</a>.
+          </p>
+        </div>
 
         <div className="panel" id="knowledge-packs" style={{ marginTop: "2rem" }}>
           <h3>Optional Knowledge Packs</h3>

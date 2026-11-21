@@ -51,6 +51,15 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
+            <strong>Windows + iOS companion</strong>
+            <span>
+              Secondary Expo app (<code className="mono">nexus-app/</code>) with
+              Chat, Vault, and Files in a normal window — try the idea without
+              flashing. See{" "}
+              <Link href="/download#companion">Download → Companion</Link>.
+            </span>
+          </li>
+          <li>
             <strong>Local AI Chat</strong>
             <span>
               On PC/Pi: talk to an AI on the machine itself (SmolLM2 starter). On

@@ -121,7 +121,8 @@ export default function HomePage() {
               </span>
             </li>
             <li>
-              <strong>ESP32 Pocket companion</strong>
+              <strong>ESP32 Pocket</strong> and a{" "}
+              <Link href="/download#companion">Windows / iOS companion app</Link>
               <span>
                 Flash NEXUS Pocket on an ESP32-S3 with PSRAM for offline
                 TinyStories chat and tools over USB Serial — no full Linux image

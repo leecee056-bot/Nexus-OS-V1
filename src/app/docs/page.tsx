@@ -124,6 +124,20 @@ export default function DocsPage() {
                 <small>Paths for PC/Pi Vault and Cardputer /nexus-vault</small>
               </a>
             </li>
+            <li>
+              <Link href="/download#companion">
+                Windows + iOS companion app
+                <small>
+                  Secondary Expo app — try Chat / Vault / Files without flashing
+                </small>
+              </Link>
+            </li>
+            <li>
+              <a href="/guides/companion-app.md">
+                Companion app short guide
+                <small>Build/run for Windows web/Electron and iOS Expo</small>
+              </a>
+            </li>
           </ul>
         </div>
 
