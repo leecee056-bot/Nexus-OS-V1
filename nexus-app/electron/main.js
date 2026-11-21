@@ -1,11 +1,14 @@
 /**
  * Desktop shell for NEXUS Companion (Windows · macOS).
- * Dev:  Expo web at http://127.0.0.1:8081
- * Prod: packaged static web from ../dist-web/index.html
+ * Portable USB mode: settings / Vault / chats live under the kit Data/ folder.
  */
-const { app, BrowserWindow, ipcMain, shell, nativeImage } = require("electron");
+const { app, BrowserWindow, ipcMain, shell, nativeImage, dialog } = require("electron");
 const path = require("path");
 const fs = require("fs");
+const { applyPortablePaths, ensureDir } = require("./portable");
+
+/** Must run before ready — redirects userData onto the USB kit. */
+const portableInfo = applyPortablePaths(app);
 
 const isDev = !app.isPackaged;
 const startUrl =
@@ -53,7 +56,109 @@ ipcMain.handle("ollama:request", async (_event, args) => {
   }
 });
 
-/** Save a generated PNG into the user’s Pictures (or home) folder. */
+ipcMain.handle("nexus:portable-info", async () => {
+  if (!portableInfo.portable) {
+    return { portable: false };
+  }
+  return {
+    portable: true,
+    kitRoot: portableInfo.kitRoot,
+    knowledgeDir: portableInfo.knowledgeDir,
+    filesDir: portableInfo.filesDir,
+    chatsDir: portableInfo.chatsDir,
+    userData: portableInfo.userData,
+  };
+});
+
+ipcMain.handle("nexus:list-knowledge", async () => {
+  const dir = portableInfo.knowledgeDir;
+  if (!dir || !fs.existsSync(dir)) return { ok: true, entries: [] };
+  try {
+    const entries = fs
+      .readdirSync(dir, { withFileTypes: true })
+      .filter((d) => !d.name.startsWith("."))
+      .map((d) => ({
+        name: d.name,
+        kind: d.isDirectory() ? "folder" : "file",
+      }));
+    return { ok: true, entries };
+  } catch (e) {
+    return {
+      ok: false,
+      entries: [],
+      error: e instanceof Error ? e.message : "list failed",
+    };
+  }
+});
+
+ipcMain.handle("nexus:import-to-usb", async (event) => {
+  const destRoot = portableInfo.knowledgeDir || portableInfo.filesDir;
+  if (!destRoot) {
+    return { ok: false, error: "Not running in portable USB mode." };
+  }
+  const win = BrowserWindow.fromWebContents(event.sender);
+  const result = await dialog.showOpenDialog(win || undefined, {
+    title: "Add folders or files to this USB",
+    properties: ["openFile", "openDirectory", "multiSelections"],
+  });
+  if (result.canceled || !result.filePaths.length) {
+    return { ok: false, canceled: true };
+  }
+
+  const copied = [];
+  for (const src of result.filePaths) {
+    try {
+      const base = path.basename(src);
+      const dest = path.join(destRoot, base);
+      const st = fs.statSync(src);
+      if (st.isDirectory()) {
+        fs.cpSync(src, dest, { recursive: true });
+      } else {
+        fs.copyFileSync(src, dest);
+      }
+      copied.push(base);
+    } catch (e) {
+      return {
+        ok: false,
+        error: e instanceof Error ? e.message : "copy failed",
+        copied,
+      };
+    }
+  }
+  return { ok: true, copied, dest: destRoot };
+});
+
+ipcMain.handle("nexus:export-chat", async (_event, args) => {
+  try {
+    const text = String(args?.text || "");
+    const filename = String(
+      args?.filename || `nexus-chat-${Date.now()}.md`,
+    ).replace(/[^\w.\-]+/g, "_");
+    if (!text) return { ok: false, error: "Empty chat." };
+
+    const dir =
+      portableInfo.chatsDir ||
+      path.join(app.getPath("documents"), "NEXUS-Chats");
+    ensureDir(dir);
+    const outPath = path.join(dir, filename);
+    fs.writeFileSync(outPath, text, "utf8");
+    return { ok: true, path: outPath };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "export failed",
+    };
+  }
+});
+
+ipcMain.handle("nexus:open-path", async (_event, args) => {
+  const target = String(args?.path || "");
+  if (!target) return { ok: false };
+  const err = await shell.openPath(target);
+  return { ok: !err, error: err || undefined };
+});
+
+/** Save a generated PNG — prefer USB Files/Images when portable. */
 ipcMain.handle("nexus:save-image", async (_event, args) => {
   try {
     const base64 = String(args?.base64 || "");
@@ -63,9 +168,13 @@ ipcMain.handle("nexus:save-image", async (_event, args) => {
     );
     if (!base64) return { ok: false, error: "Empty image." };
 
-    const pictures =
-      app.getPath("pictures") || app.getPath("downloads") || app.getPath("home");
-    const outPath = path.join(pictures, filename);
+    const dir =
+      portableInfo.imagesDir ||
+      app.getPath("pictures") ||
+      app.getPath("downloads") ||
+      app.getPath("home");
+    ensureDir(dir);
+    const outPath = path.join(dir, filename);
     fs.writeFileSync(outPath, Buffer.from(base64, "base64"));
     return { ok: true, path: outPath };
   } catch (e) {
@@ -84,7 +193,9 @@ function createWindow() {
     minWidth: 420,
     minHeight: 640,
     backgroundColor: "#040804",
-    title: "NEXUS Companion",
+    title: portableInfo.portable
+      ? "NEXUS Companion — USB"
+      : "NEXUS Companion",
     autoHideMenuBar: true,
     show: false,
     icon,

@@ -15,6 +15,10 @@
   TerminalDashboard / TerminalTitleBar for the Terminal theme.
 - Chat wait state: `GraftingIndicator` + `assets/brand/rabbit-grafting.gif`
   (looping rabbit dig — label “grafting… Ns”, never “thinking”).
+- USB portable: `electron/portable.js` redirects userData to kit `Data/`;
+  kit template in `usb-kit/`; pack with `npm run pack:usb`. Guide:
+  companion-usb.md. Chat history persists via `src/chat/history.ts`.
 - Desktop: Electron proxies Ollama; icons in `assets/brand/icon.{png,ico,icns}`.
-- Site: `/download#companion`, `public/guides/companion-agent.md`,
-  `companion-image.md`, `companion-updates.md`.
+- Site: `/download#companion`, `/download#companion-usb`,
+  `public/guides/companion-agent.md`, `companion-image.md`,
+  `companion-updates.md`, `companion-usb.md`.

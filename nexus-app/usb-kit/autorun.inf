@@ -1,0 +1,5 @@
+[AutoRun]
+label=NEXUS Companion
+icon=Assets\icon.ico
+action=Open NEXUS Companion USB kit
+shellexecute=Windows\Start-NEXUS.bat

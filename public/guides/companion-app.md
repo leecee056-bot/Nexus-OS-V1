@@ -8,10 +8,11 @@ bottom tabs; tablets use a side rail.
 
 | Platform | Action |
 |----------|--------|
-| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.8.1/NEXUS-Companion-Windows-0.8.1-portable.exe) — double-click, NEXUS icon |
-| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.8.1) — grab the `.dmg` when attached |
+| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.9.0/NEXUS-Companion-Windows-0.9.0-portable.exe) — double-click, NEXUS icon |
+| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.9.0) — grab the `.dmg` when attached |
+| **USB kit** | [NEXUS-Companion-USB zip](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.9.0/NEXUS-Companion-USB-0.9.0.zip) — unzip to a stick, Start-NEXUS — see [companion-usb.md](./companion-usb.md) |
 | **Web** | [Open /companion/](/companion/) in your browser |
-| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.8.1) when attached — see [android-apk.md](./android-apk.md) |
+| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.9.0) when attached — see [android-apk.md](./android-apk.md) |
 
 Site Download section: [/download#companion](/download#companion)
 
@@ -64,6 +65,11 @@ npm run android:apk
 
 See [companion-agent.md](./companion-agent.md) — Agent mode uses Vault, Add-ons,
 and Files with live status while answering.
+
+## USB portable kit (v0.9)
+
+Carry Companion on a USB stick with Vault, chats, and Knowledge on the drive.
+See [companion-usb.md](./companion-usb.md).
 
 ## Grafting indicator (v0.8.1)
 

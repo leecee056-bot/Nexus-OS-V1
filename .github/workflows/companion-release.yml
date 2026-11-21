@@ -25,7 +25,7 @@ jobs:
       - run: npm ci
       - run: npx expo export -p web --output-dir dist-web
       - run: npm install --no-save electron electron-builder
-      - run: npx electron-builder --win portable --x64 --config electron-builder.yml
+      - run: npx electron-builder --win portable dir --x64 --config electron-builder.yml
       - uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
@@ -35,7 +35,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: nexus-companion-windows
-          path: nexus-app/release/*.exe
+          path: |
+            nexus-app/release/*.exe
+            nexus-app/release/win-unpacked/**
 
   mac:
     runs-on: macos-latest
@@ -52,19 +54,62 @@ jobs:
       - run: npm ci
       - run: npx expo export -p web --output-dir dist-web
       - run: npm install --no-save electron electron-builder
-      - run: npx electron-builder --mac dmg --x64 --arm64 --config electron-builder.yml
+      - run: npx electron-builder --mac dmg zip --x64 --arm64 --config electron-builder.yml
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
       - uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: nexus-app/release/*.dmg
+          files: |
+            nexus-app/release/*.dmg
+            nexus-app/release/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
           name: nexus-companion-mac
-          path: nexus-app/release/*.dmg
+          path: |
+            nexus-app/release/*.dmg
+            nexus-app/release/*.zip
+
+  usb-kit:
+    needs: [windows, mac]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nexus-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/download-artifact@v4
+        with:
+          name: nexus-companion-windows
+          path: nexus-app/release
+      - uses: actions/download-artifact@v4
+        with:
+          name: nexus-companion-mac
+          path: nexus-app/release
+      - name: Pack USB kit zip
+        run: |
+          mkdir -p release
+          # Flatten if artifact nested win-unpacked
+          if [ ! -d release/win-unpacked ] && [ -d release/nexus-app/release/win-unpacked ]; then
+            mv release/nexus-app/release/* release/ 2>/dev/null || true
+          fi
+          ls -laR release | head -80
+          node scripts/pack-usb-kit.mjs
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: nexus-app/release/NEXUS-Companion-USB-*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nexus-companion-usb-kit
+          path: nexus-app/release/NEXUS-Companion-USB-*.zip
 
   android-apk:
     runs-on: ubuntu-latest

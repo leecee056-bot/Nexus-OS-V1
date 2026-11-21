@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { ScreenShell } from "../components/ScreenShell";
 import { GlowPanel } from "../components/GlowPanel";
+import { PortableUsbPanel } from "../components/PortableUsbPanel";
 import { TerminalDashboard } from "../components/TerminalDashboard";
 import { ThemePicker } from "../components/ThemePicker";
 import { useCompanionLayout } from "../layout";
@@ -58,6 +59,8 @@ export function HomeScreen() {
         </View>
       </View>
 
+      <PortableUsbPanel />
+
       <GlowPanel title="Local AI + Agent">
         Open Chat → pick a model → switch Agent on. It can search your Vault /
         packs, use Add-ons, and create files (even a website/ folder) while you
@@ -77,6 +80,7 @@ export function HomeScreen() {
           • Add-ons library — toggle the tools Agent may use{"\n"}
           • Themes — Basic, Matrix, Lumen, Terminal{"\n"}
           • Image Lab (desktop) · Check for updates{"\n"}
+          • USB portable kit — vault, chats, files on the stick{"\n"}
           • Vault · Packs · Files — offline-first{"\n"}
           • Phone tabs · tablet rail · desktop icon
         </Text>

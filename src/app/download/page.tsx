@@ -10,6 +10,7 @@ import {
   COMPANION_ANDROID_NOTES,
   COMPANION_MAC_URL,
   COMPANION_RELEASE_PAGE,
+  COMPANION_USB_URL,
   COMPANION_VERSION,
   COMPANION_WEB_URL,
   COMPANION_WINDOWS_URL,
@@ -56,6 +57,7 @@ export default function DownloadPage() {
           <a href="#cardputer">Cardputer ADV</a>
           <a href="#knowledge-packs">Knowledge packs</a>
           <a href="#companion">Companion app</a>
+          <a href="#companion-usb">Companion USB kit</a>
         </nav>
 
         <h3 className="subhead" id="pc">
@@ -228,8 +230,9 @@ export default function DownloadPage() {
             <strong>local AI Chat</strong>: pick a lightweight model (Qwen,
             TinyLlama, and more), download it once via{" "}
             <a href="https://ollama.com/download">Ollama</a>, then chat offline.
-            v0.8.1 adds the rabbit <strong>grafting</strong> wait animation in
-            Chat, plus desktop <strong>Image Lab</strong>,{" "}
+            v0.9 adds a <strong>USB portable kit</strong> (carry Companion +
+            Vault/chats on a stick), the rabbit <strong>grafting</strong> wait
+            animation, desktop <strong>Image Lab</strong>,{" "}
             <strong>Check for updates</strong>, more Chat models, Terminal CRT
             dashboard, Agent mode, and{" "}
             <strong>Basic / Matrix / Lumen / Terminal</strong> themes. Vault,
@@ -251,6 +254,9 @@ export default function DownloadPage() {
             <a className="btn" href={COMPANION_MAC_URL}>
               Download Mac (.dmg)
             </a>
+            <a className="btn" href={COMPANION_USB_URL}>
+              Download USB kit (.zip)
+            </a>
             <a className="btn" href={COMPANION_WEB_URL}>
               Open web companion
             </a>
@@ -263,8 +269,40 @@ export default function DownloadPage() {
             <a className="btn btn-quiet" href="/guides/companion-app.md">
               Local AI + build notes
             </a>
+            <a className="btn btn-quiet" href="/guides/companion-usb.md">
+              USB portable kit
+            </a>
             <a className="btn btn-quiet" href="/guides/companion-agent.md">
               Agent + Add-ons
+            </a>
+          </div>
+        </div>
+
+        <div
+          className="panel"
+          id="companion-usb"
+          style={{ marginTop: "1.5rem" }}
+        >
+          <h3>Companion USB kit — portable desktop (v{COMPANION_VERSION})</h3>
+          <p>
+            Unzip onto a USB stick or external drive, open{" "}
+            <strong>START-HERE</strong> (NEXUS logo), then{" "}
+            <code className="mono">Start-NEXUS</code> — a few clicks, no full
+            install. Settings, Vault, Knowledge/, chats, and Files stay on the
+            stick so you can unplug and move PCs. Same Companion features as the
+            desktop apps; heavier than the bootable OS images. Host PC still
+            needs <a href="https://ollama.com/download">Ollama</a> for local
+            models.
+          </p>
+          <div className="cta-row" style={{ marginTop: "0.85rem" }}>
+            <a className="btn" href={COMPANION_USB_URL}>
+              Download USB kit (.zip)
+            </a>
+            <a className="btn btn-ghost" href="/guides/companion-usb.md">
+              USB kit guide
+            </a>
+            <a className="btn btn-quiet" href={COMPANION_RELEASE_PAGE}>
+              Release page
             </a>
           </div>
         </div>

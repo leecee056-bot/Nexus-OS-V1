@@ -9,6 +9,7 @@ import {
 import { ScreenShell } from "../components/ScreenShell";
 import { GlowPanel } from "../components/GlowPanel";
 import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
+import { PortableUsbPanel } from "../components/PortableUsbPanel";
 import { ThemePicker } from "../components/ThemePicker";
 import {
   COMPANION_RELEASES_URL,
@@ -52,6 +53,8 @@ export function AboutScreen() {
         </View>
       </View>
 
+      <PortableUsbPanel />
+
       <GlowPanel title="Look & feel" accent="purple">
         <ThemePicker />
       </GlowPanel>
@@ -87,7 +90,7 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.8.1 · grafting rabbit · Image Lab · Updates · Agent{"\n"}Running on{" "}
+        0.9.0 · USB portable · grafting · Image Lab · Agent{"\n"}Running on{" "}
         {Platform.OS}
       </GlowPanel>
 

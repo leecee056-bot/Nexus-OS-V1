@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NEXUS Companion — USB kit</title>
+    <style>
+      :root {
+        --bg: #040804;
+        --fg: #b6ffb6;
+        --dim: #5f9a5f;
+        --accent: #39ff14;
+        --border: rgba(57, 255, 20, 0.35);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "IBM Plex Mono", "Cascadia Mono", Consolas, monospace;
+        background:
+          radial-gradient(ellipse at 20% 0%, rgba(57, 255, 20, 0.08), transparent 50%),
+          var(--bg);
+        color: var(--fg);
+        padding: 2rem 1.25rem 3rem;
+      }
+      .shell { max-width: 640px; margin: 0 auto; }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .brand img {
+        width: 72px;
+        height: 72px;
+        image-rendering: pixelated;
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.35rem;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+        text-shadow: 0 0 18px rgba(57, 255, 20, 0.45);
+      }
+      .sub { color: var(--dim); font-size: 0.85rem; margin-top: 0.35rem; }
+      .panel {
+        border: 1px solid var(--border);
+        background: rgba(10, 18, 10, 0.85);
+        padding: 1rem 1.1rem;
+        margin-bottom: 1rem;
+      }
+      .panel h2 {
+        margin: 0 0 0.65rem;
+        font-size: 0.95rem;
+        color: var(--accent);
+        letter-spacing: 0.06em;
+      }
+      ol { margin: 0; padding-left: 1.2rem; line-height: 1.55; }
+      li { margin-bottom: 0.45rem; }
+      code {
+        color: var(--accent);
+        background: rgba(57, 255, 20, 0.08);
+        padding: 0.05rem 0.3rem;
+      }
+      .cta {
+        display: inline-block;
+        margin-top: 0.75rem;
+        margin-right: 0.5rem;
+        border: 1px solid var(--accent);
+        background: rgba(57, 255, 20, 0.12);
+        color: var(--accent);
+        text-decoration: none;
+        padding: 0.55rem 0.9rem;
+        font-weight: 700;
+      }
+      .cta:hover { background: rgba(57, 255, 20, 0.22); }
+      .foot { color: var(--dim); font-size: 0.8rem; margin-top: 1.5rem; }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <div class="brand">
+        <img src="Assets/logo-mark.png" alt="NEXUS logo" />
+        <div>
+          <h1>NEXUS COMPANION</h1>
+          <div class="sub">USB / portable kit — your offline AI on a stick</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Three taps</h2>
+        <ol>
+          <li>This folder is already on your USB (or copy the whole unzipped kit).</li>
+          <li>
+            <strong>Windows:</strong> open <code>Windows\Start-NEXUS.bat</code><br />
+            <strong>Mac:</strong> open <code>Mac/Start-NEXUS.command</code>
+            (right‑click → Open the first time).
+          </li>
+          <li>Pick a local model in Chat (Ollama on the host PC) and go.</li>
+        </ol>
+        <a class="cta" href="Windows/Start-NEXUS.bat">Start on Windows</a>
+        <a class="cta" href="Mac/Start-NEXUS.command">Start on Mac</a>
+      </div>
+
+      <div class="panel">
+        <h2>Travels with the drive</h2>
+        <p style="margin:0;line-height:1.5;color:var(--fg)">
+          Settings, Vault, saved chats, Knowledge/, and Files/ stay on this USB.
+          Unplug, move PCs, plug in again — same personal setup. Heavier than the
+          bootable OS images, same Companion features.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h2>Add your own wiki / folders</h2>
+        <p style="margin:0;line-height:1.5">
+          Drop notes into <code>Knowledge/</code>, or in the app use
+          <strong>Add from this PC</strong> to copy folders from the host drive.
+          Chat → <strong>Save chat</strong> writes into <code>Chats/</code>.
+        </p>
+      </div>
+
+      <p class="foot">
+        Read <code>README.txt</code> · Site guide:
+        https://nexus-os.apps.grok.bot/guides/companion-usb.md
+      </p>
+    </div>
+  </body>
+</html>

@@ -7,6 +7,7 @@ directories:
 files:
   - electron/main.js
   - electron/preload.js
+  - electron/portable.js
   - dist-web/**/*
   - assets/brand/icon.png
   - assets/brand/icon.ico
@@ -22,12 +23,22 @@ win:
     - target: portable
       arch:
         - x64
+    - target: dir
+      arch:
+        - x64
   artifactName: NEXUS-Companion-Windows-${version}-portable.exe
+portable:
+  # Persist next to the .exe when used outside a full kit
+  requestExecutionLevel: user
 mac:
   icon: icon.icns
   category: public.app-category.productivity
   target:
     - target: dmg
+      arch:
+        - x64
+        - arm64
+    - target: zip
       arch:
         - x64
         - arm64
