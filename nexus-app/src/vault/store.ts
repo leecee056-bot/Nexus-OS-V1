@@ -24,8 +24,9 @@ const STARTER: VaultNote[] = [
     title: "Glossary",
     body:
       "Hub — main menu on the USB/Pi image.\n" +
-      "Vault — searchable notes.\n" +
-      "Companion — this Windows/iOS app (secondary to the bootable OS).\n" +
+      "Vault — searchable notes the Agent can read.\n" +
+      "Companion — this Windows/Mac/Android app with Chat + Agent.\n" +
+      "Add-ons — plugins the Agent may use (Files, Vault, …).\n" +
       "Pocket / Cardputer — ESP32 firmware paths.",
     updatedAt: Date.now(),
   },

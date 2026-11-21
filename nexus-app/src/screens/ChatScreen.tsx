@@ -36,6 +36,8 @@ import {
   saveOllamaHost,
   saveSelectedModelId,
 } from "../chat/settings";
+import { runAgentTurn } from "../agent/runner";
+import type { AgentStep } from "../agent/schema";
 import { AppStatusBar } from "../components/AppStatusBar";
 import { ContentFrame } from "../components/ContentFrame";
 import { PressableCard } from "../components/PressableCard";
@@ -47,6 +49,7 @@ import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
 
 type Msg = { id: string; role: "you" | "nexus"; text: string; typed?: boolean };
+type ChatMode = "chat" | "agent";
 
 const SYSTEM_PROMPT =
   "You are NEXUS, a helpful offline assistant in the NEXUS Companion app. Be concise and practical.";
@@ -54,6 +57,8 @@ const SYSTEM_PROMPT =
 export function ChatScreen() {
   const { isTablet } = useCompanionLayout();
   const { colors } = useTheme();
+  const [mode, setMode] = useState<ChatMode>("agent");
+  const [agentSteps, setAgentSteps] = useState<AgentStep[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -72,7 +77,7 @@ export function ChatScreen() {
     {
       id: "0",
       role: "nexus",
-      text: "Pick a local model above, download it once, then chat offline.",
+      text: "Agent mode can search your Vault, use Add-ons, and write files. Pick a local model, then ask away.",
     },
   ]);
 
@@ -180,6 +185,34 @@ export function ChatScreen() {
     setMsgs((m) => [...m, you]);
     setInput("");
     setBusy(true);
+    setAgentSteps([]);
+
+    const historyForAgent: ChatMessage[] = msgs
+      .filter((x) => x.id !== "0")
+      .slice(-12)
+      .map((x) => ({
+        role: (x.role === "you" ? "user" : "assistant") as "user" | "assistant",
+        content: x.text,
+      }));
+
+    if (mode === "agent") {
+      const result = await runAgentTurn({
+        host,
+        model: model.ollama,
+        userMessage: text,
+        history: historyForAgent,
+        modelReady: ollamaOk && installed,
+        onStep: (_s, all) => setAgentSteps(all),
+      });
+      const id = String(Date.now() + 1);
+      setLatestTypedId(id);
+      setMsgs((m) => [
+        ...m,
+        { id, role: "nexus", text: result.text, typed: true },
+      ]);
+      setBusy(false);
+      return;
+    }
 
     if (!ollamaOk || !installed) {
       const fallback = companionReply(text);
@@ -199,15 +232,7 @@ export function ChatScreen() {
 
     const history: ChatMessage[] = [
       { role: "system", content: SYSTEM_PROMPT },
-      ...msgs
-        .filter((x) => x.id !== "0")
-        .slice(-12)
-        .map((x) => ({
-          role: (x.role === "you" ? "user" : "assistant") as
-            | "user"
-            | "assistant",
-          content: x.text,
-        })),
+      ...historyForAgent,
       { role: "user", content: text },
     ];
 
@@ -295,6 +320,63 @@ export function ChatScreen() {
             </Pressable>
           ) : null}
         </View>
+
+        <View style={styles.modeRow}>
+          {(["agent", "chat"] as ChatMode[]).map((m) => {
+            const on = mode === m;
+            return (
+              <Pressable
+                key={m}
+                onPress={() => setMode(m)}
+                style={[
+                  styles.modeChip,
+                  {
+                    borderColor: on ? colors.accent : colors.border,
+                    backgroundColor: on ? colors.accentSoft : "transparent",
+                  },
+                ]}
+              >
+                <Text
+                  style={{
+                    color: on ? colors.accent : colors.fgDim,
+                    fontWeight: on ? "800" : "600",
+                    fontSize: 12,
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  {m === "agent" ? "Agent" : "Chat"}
+                </Text>
+              </Pressable>
+            );
+          })}
+          <Text style={[styles.modeHint, { color: colors.fgDim }]}>
+            {mode === "agent"
+              ? "Vault · Add-ons · Files"
+              : "Direct model reply"}
+          </Text>
+        </View>
+
+        {mode === "agent" && agentSteps.length > 0 ? (
+          <View
+            style={[
+              styles.agentStrip,
+              {
+                borderColor: colors.border,
+                backgroundColor: colors.glass ? colors.bgGlass : colors.bgElev,
+              },
+            ]}
+          >
+            {agentSteps.slice(-4).map((s) => (
+              <Text
+                key={s.id}
+                style={{ color: colors.fgDim, fontSize: 11, lineHeight: 16 }}
+              >
+                ▸ {s.phase}
+                {s.detail ? ` — ${s.detail}` : ""}
+              </Text>
+            ))}
+          </View>
+        ) : null}
 
         {pullNote ? (
           <View style={styles.banner}>
@@ -666,6 +748,25 @@ const styles = StyleSheet.create({
   },
   modelName: { fontWeight: "800", marginTop: 4 },
   modelMeta: { fontSize: 11, marginTop: 2 },
+  modeRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    paddingTop: spacing.sm,
+    flexWrap: "wrap",
+  },
+  modeChip: {
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  modeHint: { fontSize: 11, flexShrink: 1 },
+  agentStrip: {
+    borderWidth: 1,
+    padding: spacing.sm,
+    marginTop: spacing.sm,
+    gap: 2,
+  },
   getBtn: {
     justifyContent: "center",
     alignItems: "center",

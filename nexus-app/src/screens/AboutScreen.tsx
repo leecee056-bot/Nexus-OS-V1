@@ -49,9 +49,10 @@ export function AboutScreen() {
         <ThemePicker />
       </GlowPanel>
 
-      <GlowPanel title="Local models">
-        Chat uses Ollama on this machine (or a host you set). Pick a lightweight
-        model, download once, then keep chatting without the cloud.
+      <GlowPanel title="Local models + Agent">
+        Chat uses Ollama on this machine (or a host you set). Agent mode draws
+        on your Vault, Add-ons library, and Files so answers feel like your own
+        system — not a generic chat box.
       </GlowPanel>
 
       <GlowPanel title="Phone + tablet + desktop">
@@ -61,7 +62,8 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.5.0 · Lumen UI · local AI Chat · themes{"\n"}Running on {Platform.OS}
+        0.6.0 · Agent · Add-ons · Lumen UI · local AI{"\n"}Running on{" "}
+        {Platform.OS}
       </GlowPanel>
 
       <Text

@@ -21,6 +21,7 @@ import { ChatScreen } from "./src/screens/ChatScreen";
 import { VaultScreen } from "./src/screens/VaultScreen";
 import { FilesScreen } from "./src/screens/FilesScreen";
 import { PacksScreen } from "./src/screens/PacksScreen";
+import { PluginsScreen } from "./src/screens/PluginsScreen";
 import { AboutScreen } from "./src/screens/AboutScreen";
 import { BootSplash } from "./src/components/BootSplash";
 import { ScanlineOverlay } from "./src/components/ScanlineOverlay";
@@ -33,6 +34,7 @@ type RootTabParamList = {
   Chat: undefined;
   Vault: undefined;
   Packs: undefined;
+  Plugins: undefined;
   Files: undefined;
   About: undefined;
 };
@@ -51,6 +53,7 @@ const SCREENS: {
   { name: "Chat", component: ChatScreen, title: "Chat" },
   { name: "Vault", component: VaultScreen, title: "Knowledge Vault" },
   { name: "Packs", component: PacksScreen, title: "Knowledge Packs" },
+  { name: "Plugins", component: PluginsScreen, title: "Add-ons" },
   { name: "Files", component: FilesScreen, title: "Files" },
   { name: "About", component: AboutScreen, title: "About" },
 ];
@@ -249,7 +252,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   rail: {
-    width: 176,
+    width: 180,
     borderRightWidth: 1,
     paddingTop: spacing.md,
     paddingHorizontal: spacing.sm,
