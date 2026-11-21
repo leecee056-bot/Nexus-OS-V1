@@ -66,6 +66,13 @@ declare global {
         mode?: "window" | "external" | "app";
         browserId?: string;
       }) => Promise<{ ok: boolean; mode?: string; error?: string }>;
+      addToDesktop?: () => Promise<{
+        ok: boolean;
+        desktop?: string;
+        startMenu?: string;
+        created?: string[];
+        error?: string;
+      }>;
       platform?: string;
     };
   }

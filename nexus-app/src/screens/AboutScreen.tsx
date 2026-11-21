@@ -7,6 +7,7 @@ import {
   View,
 } from "react-native";
 import { BrowsePanel } from "../components/BrowsePanel";
+import { DesktopLauncherPanel } from "../components/DesktopLauncherPanel";
 import { ScreenShell } from "../components/ScreenShell";
 import { GlowPanel } from "../components/GlowPanel";
 import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
@@ -57,6 +58,8 @@ export function AboutScreen() {
 
       <OfflineGuidesPanel />
 
+      <DesktopLauncherPanel />
+
       <PortableUsbPanel />
 
       <BrowsePanel />
@@ -96,8 +99,8 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.12.1 · Spatial · Browse · Add-ons marketplace · Offline-first · Desk ·
-        Agent{"\n"}
+        0.12.2 · Spatial · Browse · Add-ons · Desktop launcher · Offline-first ·
+        Desk · Agent{"\n"}
         Running on {Platform.OS}
       </GlowPanel>
 
