@@ -3,6 +3,8 @@
  * Same tool ids are intended for later NEXUS OS / Cardputer agent ports.
  */
 
+import { AGENT_GUIDE_URL, COMPANION_GUIDE_URL } from "../updates/links";
+
 export type PluginId =
   | "vault-search"
   | "pack-notes"
@@ -20,6 +22,8 @@ export type PluginDef = {
   /** Tool name the agent invokes */
   tool: string;
   defaultEnabled: boolean;
+  /** Official guide / update page (we do not host binaries) */
+  updateUrl: string;
 };
 
 export const PLUGIN_CATALOG: PluginDef[] = [
@@ -30,6 +34,7 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     category: "knowledge",
     tool: "search_vault",
     defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
   },
   {
     id: "pack-notes",
@@ -38,6 +43,7 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     category: "knowledge",
     tool: "search_packs",
     defaultEnabled: true,
+    updateUrl: "https://nexus-os.apps.grok.bot/knowledge-packs",
   },
   {
     id: "files-browse",
@@ -46,6 +52,7 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     category: "files",
     tool: "list_files",
     defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
   },
   {
     id: "files-read",
@@ -54,6 +61,7 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     category: "files",
     tool: "read_file",
     defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
   },
   {
     id: "files-write",
@@ -62,6 +70,7 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     category: "files",
     tool: "write_file",
     defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
   },
   {
     id: "files-folder",
@@ -70,6 +79,7 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     category: "files",
     tool: "ensure_folder",
     defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
   },
   {
     id: "nexus-status",
@@ -78,6 +88,7 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     category: "system",
     tool: "nexus_status",
     defaultEnabled: true,
+    updateUrl: COMPANION_GUIDE_URL,
   },
 ];
 

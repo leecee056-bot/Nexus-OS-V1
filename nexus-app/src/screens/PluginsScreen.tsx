@@ -13,8 +13,10 @@ import {
   setPluginEnabled,
   type PluginState,
 } from "../plugins/store";
+import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
 import { GlassPanel } from "../components/GlassPanel";
 import { ScreenShell } from "../components/ScreenShell";
+import { AGENT_GUIDE_URL, OS_UPDATE_URL } from "../updates/links";
 import { spacing, useTheme } from "../theme";
 
 const CATEGORIES = [
@@ -101,6 +103,11 @@ export function PluginsScreen() {
                   >
                     tool · {p.tool}
                   </Text>
+                  <CheckUpdatesButton
+                    url={p.updateUrl}
+                    label="Check for updates"
+                    compact
+                  />
                 </View>
                 <Switch
                   value={!!state[p.id]}
@@ -116,6 +123,16 @@ export function PluginsScreen() {
           </View>
         ))
       )}
+
+      <GlassPanel title="Agent & OS updates" accent="purple">
+        Manual links to official pages — no background scanning. Same pattern
+        can later cover USB / Pi images and Cardputer firmware.
+        <CheckUpdatesButton url={AGENT_GUIDE_URL} label="Agent guide updates" />
+        <CheckUpdatesButton
+          url={OS_UPDATE_URL}
+          label="Check for OS updates"
+        />
+      </GlassPanel>
 
       <Pressable
         onPress={() =>

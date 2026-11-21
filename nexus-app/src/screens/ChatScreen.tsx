@@ -39,12 +39,14 @@ import {
 import { runAgentTurn } from "../agent/runner";
 import type { AgentStep } from "../agent/schema";
 import { AppStatusBar } from "../components/AppStatusBar";
+import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
 import { ContentFrame } from "../components/ContentFrame";
 import { PressableCard } from "../components/PressableCard";
 import { ProgressRing } from "../components/ProgressRing";
 import { ScanlineOverlay } from "../components/ScanlineOverlay";
 import { StatusOrb, type OrbState } from "../components/StatusOrb";
 import { TypewriterText } from "../components/TypewriterText";
+import { AGENT_GUIDE_URL, OS_UPDATE_URL } from "../updates/links";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
 
@@ -321,6 +323,26 @@ export function ChatScreen() {
           ) : null}
         </View>
 
+        <View style={styles.updateStrip}>
+          <CheckUpdatesButton
+            url={model.updateUrl}
+            label="Model updates"
+            compact
+          />
+          {mode === "agent" ? (
+            <CheckUpdatesButton
+              url={AGENT_GUIDE_URL}
+              label="Agent updates"
+              compact
+            />
+          ) : null}
+          <CheckUpdatesButton
+            url={OS_UPDATE_URL}
+            label="OS updates"
+            compact
+          />
+        </View>
+
         <View style={styles.modeRow}>
           {(["agent", "chat"] as ChatMode[]).map((m) => {
             const on = mode === m;
@@ -578,6 +600,11 @@ export function ChatScreen() {
                           {item.sizeLabel}
                           {on ? " · installed" : " · needs download"}
                         </Text>
+                        <CheckUpdatesButton
+                          url={item.updateUrl}
+                          label="Updates"
+                          compact
+                        />
                       </View>
                       {!on ? (
                         <Pressable
@@ -748,6 +775,13 @@ const styles = StyleSheet.create({
   },
   modelName: { fontWeight: "800", marginTop: 4 },
   modelMeta: { fontSize: 11, marginTop: 2 },
+  updateStrip: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.sm,
+  },
   modeRow: {
     flexDirection: "row",
     alignItems: "center",

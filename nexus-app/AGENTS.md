@@ -8,7 +8,11 @@
 - Agent: `src/agent/` (schema + tools + runner). Plugins: `src/plugins/`.
   Do **not** call the app “secondary” in UI copy.
 - Chat neural path: `src/chat/ollama.ts`. Fallback: `src/chat/tinychat.ts`.
+- Image Lab (desktop/web): `src/image/` + `ImageScreen` — Ollama image models;
+  Save PNG via Electron `nexus:save-image`. Guide: companion-image.md.
+- Updates: `src/updates/links.ts` + `CheckUpdatesButton` — manual curated links.
 - Premium UI: TypewriterText, StatusOrb, GlassPanel, ProgressRing, AppStatusBar,
   TerminalDashboard / TerminalTitleBar for the Terminal theme.
 - Desktop: Electron proxies Ollama; icons in `assets/brand/icon.{png,ico,icns}`.
-- Site: `/download#companion`, `public/guides/companion-agent.md`.
+- Site: `/download#companion`, `public/guides/companion-agent.md`,
+  `companion-image.md`, `companion-updates.md`.

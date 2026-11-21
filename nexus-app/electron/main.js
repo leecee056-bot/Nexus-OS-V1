@@ -53,6 +53,29 @@ ipcMain.handle("ollama:request", async (_event, args) => {
   }
 });
 
+/** Save a generated PNG into the user’s Pictures (or home) folder. */
+ipcMain.handle("nexus:save-image", async (_event, args) => {
+  try {
+    const base64 = String(args?.base64 || "");
+    const filename = String(args?.filename || `nexus-${Date.now()}.png`).replace(
+      /[^\w.\-]+/g,
+      "_",
+    );
+    if (!base64) return { ok: false, error: "Empty image." };
+
+    const pictures =
+      app.getPath("pictures") || app.getPath("downloads") || app.getPath("home");
+    const outPath = path.join(pictures, filename);
+    fs.writeFileSync(outPath, Buffer.from(base64, "base64"));
+    return { ok: true, path: outPath };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "save failed",
+    };
+  }
+});
+
 function createWindow() {
   const icon = resolveIcon();
   const win = new BrowserWindow({

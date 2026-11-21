@@ -8,7 +8,14 @@ import {
 } from "react-native";
 import { ScreenShell } from "../components/ScreenShell";
 import { GlowPanel } from "../components/GlowPanel";
+import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
 import { ThemePicker } from "../components/ThemePicker";
+import {
+  COMPANION_RELEASES_URL,
+  IMAGE_GUIDE_URL,
+  OS_RELEASES_URL,
+  OS_UPDATE_URL,
+} from "../updates/links";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
 
@@ -52,7 +59,25 @@ export function AboutScreen() {
       <GlowPanel title="Local models + Agent">
         Chat uses Ollama on this machine (or a host you set). Agent mode draws
         on your Vault, Add-ons library, and Files so answers feel like your own
-        system — not a generic chat box.
+        system — not a generic chat box. Desktop apps also include Image Lab for
+        optional local image models.
+      </GlowPanel>
+
+      <GlowPanel title="Check for updates" accent="purple">
+        Manual links to official pages — we do not host the large files. Same
+        pattern can later cover USB / Pi images and Cardputer firmware.
+        <CheckUpdatesButton
+          url={OS_UPDATE_URL}
+          label="Check for OS updates"
+        />
+        <CheckUpdatesButton url={OS_RELEASES_URL} label="GitHub releases" />
+        <CheckUpdatesButton
+          url={COMPANION_RELEASES_URL}
+          label="Companion app releases"
+        />
+        {Platform.OS === "web" ? (
+          <CheckUpdatesButton url={IMAGE_GUIDE_URL} label="Image Lab guide" />
+        ) : null}
       </GlowPanel>
 
       <GlowPanel title="Phone + tablet + desktop">
@@ -62,7 +87,7 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.7.0 · Agent · Terminal theme · Add-ons · local AI{"\n"}Running on{" "}
+        0.8.0 · Image Lab · Updates · Agent · Terminal · local AI{"\n"}Running on{" "}
         {Platform.OS}
       </GlowPanel>
 

@@ -76,6 +76,7 @@ export function HomeScreen() {
           • Chat / Agent — local models + Vault / Plugins / Files{"\n"}
           • Add-ons library — toggle the tools Agent may use{"\n"}
           • Themes — Basic, Matrix, Lumen, Terminal{"\n"}
+          • Image Lab (desktop) · Check for updates{"\n"}
           • Vault · Packs · Files — offline-first{"\n"}
           • Phone tabs · tablet rail · desktop icon
         </Text>
