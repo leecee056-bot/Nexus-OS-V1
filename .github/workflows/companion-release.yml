@@ -26,34 +26,7 @@ jobs:
       - run: npx expo export -p web --output-dir dist-web
       - run: npm install --no-save electron electron-builder @electron/asar
       - run: npx electron-builder --win portable nsis dir --x64 --config electron-builder.yml
-      - name: Verify Electron shell is packaged
-        shell: bash
-        run: |
-          set -euo pipefail
-          ASAR="release/win-unpacked/resources/app.asar"
-          test -f "$ASAR"
-          npx --yes @electron/asar list "$ASAR" | tee /tmp/asar-list.txt
-          # main must be present; browsers helpers are inlined into main as of 0.12.3
-          grep -E '^/electron/main\.js$' /tmp/asar-list.txt
-          grep -E '^/electron/portable\.js$' /tmp/asar-list.txt
-          grep -E '^/electron/preload\.js$' /tmp/asar-list.txt
-          grep -E '^/electron/browse-shell\.html$' /tmp/asar-list.txt
-          # Must NOT ship the Expo node_modules tree (was ~25k files)
-          if grep -E '^/node_modules/' /tmp/asar-list.txt | head -1 | grep -q .; then
-            count=$(grep -cE '^/node_modules/' /tmp/asar-list.txt || true)
-            if [ "${count:-0}" -gt 50 ]; then
-              echo "FAIL: asar still contains $count node_modules files"
-              exit 1
-            fi
-          fi
-          # Confirm main.js no longer require()s ./browsers
-          if npx --yes @electron/asar extract-file "$ASAR" electron/main.js /tmp/main-check.js; then
-            if grep -n "require([\"']\\.\\/browsers" /tmp/main-check.js; then
-              echo "FAIL: main.js still requires ./browsers"
-              exit 1
-            fi
-          fi
-          echo "Packaging verify OK"
+      # Upload first so a verify flake never leaves Download buttons on a 404.
       - uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
@@ -66,6 +39,50 @@ jobs:
           path: |
             nexus-app/release/*.exe
             nexus-app/release/win-unpacked/**
+      - name: Verify Electron shell is packaged
+        shell: bash
+        run: |
+          set -euo pipefail
+          ASAR="release/win-unpacked/resources/app.asar"
+          UNPACKED="release/win-unpacked/resources/app.asar.unpacked"
+          test -f "$ASAR"
+          # asarUnpack puts electron/* on disk (not only inside the asar list)
+          MAIN=""
+          for candidate in \
+            "$UNPACKED/electron/main.js" \
+            "release/win-unpacked/resources/app.asar.unpacked/electron/main.js"
+          do
+            if [ -f "$candidate" ]; then MAIN="$candidate"; break; fi
+          done
+          if [ -z "$MAIN" ]; then
+            # Fallback: still inside asar
+            npx --yes @electron/asar extract-file "$ASAR" electron/main.js /tmp/main-check.js
+            MAIN=/tmp/main-check.js
+          fi
+          test -f "$MAIN"
+          echo "Using main.js at $MAIN"
+          for name in portable.js preload.js browse-shell.html browse-preload.js; do
+            if [ -f "$UNPACKED/electron/$name" ]; then
+              echo "ok unpacked electron/$name"
+            elif npx --yes @electron/asar list "$ASAR" | grep -E "/electron/$name\$" >/dev/null; then
+              echo "ok asar electron/$name"
+            else
+              echo "FAIL: missing electron/$name"
+              exit 1
+            fi
+          done
+          if grep -nE "require\([\"']\\./browsers" "$MAIN"; then
+            echo "FAIL: main.js still requires ./browsers"
+            exit 1
+          fi
+          # Must NOT ship the Expo node_modules tree (was ~25k files)
+          count=$(npx --yes @electron/asar list "$ASAR" | grep -cE '^/node_modules/' || true)
+          echo "node_modules entries in asar: $count"
+          if [ "${count:-0}" -gt 50 ]; then
+            echo "FAIL: asar still contains $count node_modules files"
+            exit 1
+          fi
+          echo "Packaging verify OK"
 
   mac:
     runs-on: macos-latest
@@ -182,7 +199,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         with:
           # On manual dispatch, attach to the current Companion release tag.
-          tag_name: ${{ github.event_name == 'workflow_dispatch' && 'companion-v0.12.3' || github.ref_name }}
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && 'companion-v0.12.4' || github.ref_name }}
           files: nexus-app/release/NEXUS-Companion-Android-*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

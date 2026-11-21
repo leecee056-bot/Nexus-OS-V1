@@ -20,9 +20,9 @@ const { applyPortablePaths, ensureDir } = require("./portable");
 
 const APP_VERSION = (() => {
   try {
-    return require("../package.json").version || "0.12.3";
+    return require("../package.json").version || "0.12.4";
   } catch {
-    return "0.12.3";
+    return "0.12.4";
   }
 })();
 
