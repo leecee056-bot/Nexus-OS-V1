@@ -400,8 +400,9 @@ export function TerminalDashboard() {
 
         <TerminalPanel title="Welcome" style={pane(mid, 1)}>
           <Text style={monoStyle({ color: colors.fg, fontSize: 12 })}>
-            Portable local intelligence — Chat
-            {DESKTOP ? ", Image Lab, Games" : ""}, Vault, Packs, Files, Agent.
+            Local AI desk — Chat
+            {DESKTOP ? ", Image Lab, Games" : ""}, Vault, Files, and Agent when
+            you need tools.
           </Text>
           <Pressable
             onPress={() => go("Chat")}

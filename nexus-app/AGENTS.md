@@ -17,8 +17,9 @@
 - Updates: `src/updates/links.ts` + `CheckUpdatesButton` — manual curated links.
 - Premium UI: TypewriterText, StatusOrb, GlassPanel, ProgressRing, AppStatusBar,
   TerminalDashboard / TerminalTitleBar for the Terminal theme.
-- Chat wait state: `GraftingIndicator` + `assets/brand/rabbit-grafting.gif`
-  (looping rabbit dig — label “grafting… Ns”, never “thinking”).
+- Chat wait state: `WaitIndicator` + `assets/brand/rabbit-dig.gif` (small side
+  rabbit + rotating fun facts; Facts off = GIF only). Layout: Classic vs Desk
+  (`ShellModePicker` / `layout/shellMode.ts`).
 - USB portable: `electron/portable.js` redirects userData to kit `Data/`;
   kit template in `usb-kit/`; pack with `npm run pack:usb`. Guide:
   companion-usb.md. Chat history persists via `src/chat/history.ts`.

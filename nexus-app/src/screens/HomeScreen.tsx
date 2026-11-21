@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Image,
   Linking,
@@ -7,23 +8,40 @@ import {
   Text,
   View,
 } from "react-native";
-import { ScreenShell } from "../components/ScreenShell";
+import { useNavigation } from "@react-navigation/native";
+import { GetStartedPanel } from "../components/GetStartedPanel";
 import { GlowPanel } from "../components/GlowPanel";
 import { PortableUsbPanel } from "../components/PortableUsbPanel";
+import { ShellModePicker } from "../components/ShellModePicker";
+import { ScreenShell } from "../components/ScreenShell";
 import { TerminalDashboard } from "../components/TerminalDashboard";
 import { ThemePicker } from "../components/ThemePicker";
+import { loadShellMode, type ShellMode } from "../layout/shellMode";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
 
 export function HomeScreen() {
   const { isTablet, heroMascot } = useCompanionLayout();
   const { colors, themeId } = useTheme();
-  const showThemes = Platform.OS === "web" || isTablet || Platform.OS === "android";
+  const navigation = useNavigation<{ navigate: (n: string) => void }>();
+  const showThemes =
+    Platform.OS === "web" || isTablet || Platform.OS === "android";
+  const [shell, setShell] = useState<ShellMode>("classic");
 
-  if (themeId === "terminal" || colors.terminalShell) {
+  useEffect(() => {
+    void loadShellMode().then(setShell);
+  }, []);
+
+  const useDesk =
+    Platform.OS === "web" &&
+    (shell === "desk" || themeId === "terminal" || colors.terminalShell);
+
+  if (useDesk) {
     return (
       <ScreenShell rain contentStyle={styles.terminalPad}>
+        <ShellModePicker onChange={setShell} />
         <TerminalDashboard />
+        <GetStartedPanel />
       </ScreenShell>
     );
   }
@@ -53,37 +71,64 @@ export function HomeScreen() {
             Companion
           </Text>
           <Text style={[styles.lede, { color: colors.fgDim }]}>
-            Local AI Chat, Vault, Packs, and Files — crafted for phone, tablet,
-            and desktop with the NEXUS mark on every surface.
+            Your local AI computer — chat offline, keep a Vault, build a small
+            website, and carry it on USB when you want.
           </Text>
         </View>
       </View>
 
+      <View style={styles.ctaRow}>
+        <Pressable
+          style={[
+            styles.btn,
+            {
+              backgroundColor: colors.accentSoft,
+              borderColor: colors.accent,
+            },
+          ]}
+          onPress={() => navigation.navigate("Chat")}
+        >
+          <Text style={[styles.btnText, { color: colors.accent }]}>
+            Open Chat
+          </Text>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.btnGhost,
+            {
+              borderColor: colors.purple,
+              backgroundColor: colors.purpleSoft,
+            },
+          ]}
+          onPress={() => navigation.navigate("Files")}
+        >
+          <Text style={[styles.btnGhostText, { color: colors.purple }]}>
+            Files
+          </Text>
+        </Pressable>
+      </View>
+
+      <GetStartedPanel />
+
+      {Platform.OS === "web" ? (
+        <GlowPanel title="Layout" accent="purple">
+          <ShellModePicker onChange={setShell} />
+        </GlowPanel>
+      ) : null}
+
       <PortableUsbPanel />
 
-      <GlowPanel title="Local AI + Agent">
-        Open Chat → pick a model → switch Agent on. It can search your Vault /
-        packs, use Add-ons, and create files (even a website/ folder) while you
-        watch short status lines.
-      </GlowPanel>
-
       {showThemes ? (
-        <GlowPanel title="Look & feel" accent="purple">
+        <GlowPanel title="Themes">
           <ThemePicker />
         </GlowPanel>
       ) : null}
 
-      <GlowPanel title="What’s inside" accent={showThemes ? "green" : "purple"}>
+      <GlowPanel title="At a glance" accent={showThemes ? "purple" : "green"}>
         <Text style={[styles.body, { color: colors.fg }]}>
-          • NEXUS logo + rabbit-wizard presence{"\n"}
-          • Chat / Agent — local models + Vault / Plugins / Files{"\n"}
-          • Add-ons library — toggle the tools Agent may use{"\n"}
-          • Themes — Basic, Matrix, Lumen, Terminal{"\n"}
-          • Image Lab (desktop) · Check for updates{"\n"}
-          • Games (desktop) — Chess + tiny 2D extras{"\n"}
-          • USB portable kit — vault, chats, files on the stick{"\n"}
-          • Vault · Packs · Files — offline-first{"\n"}
-          • Phone tabs · tablet rail · desktop icon
+          Chat with a local model · Agent writes files when you ask · Vault &
+          Packs for offline notes · Image Lab & Games on desktop · USB kit to
+          take Companion with you
         </Text>
       </GlowPanel>
 
@@ -101,22 +146,8 @@ export function HomeScreen() {
           }
         >
           <Text style={[styles.btnText, { color: colors.accent }]}>
-            Get downloads
+            Downloads
           </Text>
-        </Pressable>
-        <Pressable
-          style={[
-            styles.btnGhost,
-            {
-              borderColor: colors.purple,
-              backgroundColor: colors.purpleSoft,
-            },
-          ]}
-          onPress={() =>
-            Linking.openURL("https://nexus-os.apps.grok.bot/knowledge-packs")
-          }
-        >
-          <Text style={styles.btnGhostText}>Knowledge packs</Text>
         </Pressable>
       </View>
     </ScreenShell>
@@ -127,38 +158,44 @@ const styles = StyleSheet.create({
   terminalPad: { maxWidth: 1200 },
   heroRow: {
     flexDirection: "row",
-    gap: spacing.md,
     alignItems: "center",
+    gap: spacing.lg,
     marginBottom: spacing.lg,
   },
   heroRowTablet: { gap: spacing.xl },
-  heroText: { flex: 1, minWidth: 160 },
+  heroText: { flex: 1 },
   brand: {
-    fontSize: 26,
-    fontWeight: "800",
+    fontWeight: "900",
     letterSpacing: 3,
+    fontSize: 22,
     textShadowRadius: 12,
   },
-  brandLg: { fontSize: 34, letterSpacing: 5 },
-  title: {
-    fontSize: 18,
-    marginTop: 2,
-    marginBottom: spacing.sm,
-    fontWeight: "700",
-  },
-  lede: { lineHeight: 22 },
+  brandLg: { fontSize: 28 },
+  title: { fontWeight: "800", fontSize: 18, marginTop: 2 },
+  lede: { marginTop: spacing.sm, lineHeight: 22, fontSize: 14 },
   body: { lineHeight: 22 },
-  actions: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
+  ctaRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.sm,
+    marginBottom: spacing.md,
+  },
+  actions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.sm,
+    marginTop: spacing.sm,
+  },
   btn: {
     borderWidth: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
   },
-  btnText: { fontWeight: "700" },
+  btnText: { fontWeight: "800" },
   btnGhost: {
     borderWidth: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
   },
-  btnGhostText: { color: "#d4b8ff", fontWeight: "700" },
+  btnGhostText: { fontWeight: "700" },
 });

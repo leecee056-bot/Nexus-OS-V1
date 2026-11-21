@@ -66,6 +66,13 @@ npm run android:apk
 See [companion-agent.md](./companion-agent.md) — Agent mode uses Vault, Add-ons,
 and Files with live status while answering.
 
+## Desk layout + wait state (v0.11)
+
+Desktop **Layout → Desk** mirrors the multi-window NEXUS OS mockup; **Classic**
+keeps the usual chat chrome. Chat wait uses a small rabbit dig GIF beside
+rotating fun facts (Facts off = GIF only). Agent is one tap and only opens
+Vault/Packs/Files when you ask — greetings stay greetings.
+
 ## Games (desktop / USB, v0.10)
 
 **Games** tab with Chess first, plus Snake, Pong, Breakout, Tetris, and 2048 —

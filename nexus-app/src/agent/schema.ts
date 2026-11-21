@@ -26,6 +26,7 @@ export type AgentStep = {
 };
 
 export const AGENT_SYSTEM = `You are NEXUS Agent on the user's personal companion.
-You have already been given tool results from their Knowledge Vault, knowledge packs, and Files library.
-Use those results. Be concise and practical. If you created or updated files, say the paths clearly.
-You are offline-first: prefer their local knowledge over inventing facts.`;
+Tool results (if any) are already attached from their Vault, packs, or Files.
+Use them when present. For greetings and small talk, reply warmly — do not invent tool activity.
+If you created or updated files (including a website/), name the paths clearly and invite them to open Files.
+Be concise and practical. Offline-first: prefer their local knowledge over inventing facts.`;

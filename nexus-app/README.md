@@ -10,17 +10,16 @@ rabbit-wizard branding throughout.
 | `nexus-esp32/` / `nexus-cardputer/` | Hardware firmware |
 | **`nexus-app/` (this folder)** | Windows · Mac · Android · iOS companion |
 
-## Features (v0.10)
+## Features (v0.11)
 
+- **Desk layout (desktop)** — multi-window NEXUS OS home (or Classic chat chrome)
 - **Games (desktop / USB)** — Chess first, plus Snake, Pong, Breakout, Tetris, 2048
-  (pure JS, one game mounted at a time — very low memory)
 - **USB portable kit** — unzip to a stick; Vault, chats, Knowledge travel with you
 - **Image Lab (desktop)** — optional local image models, Get-model + prompt
-- **Grafting wait** — rabbit GIF + `grafting… Ns` while Chat replies
+- **Wait state** — small rabbit dig + rotating fun facts (toggle facts off)
 - **Check for updates** — curated links for models, add-ons, packs, OS downloads
 - **Terminal theme** — CRT multi-panel “NEXUS OS” home dashboard with the real logo
-- **Agent mode** — uses Vault, knowledge packs, and the Add-ons / Plugin library
-  while chatting; can browse/create Files (including a `website/` project)
+- **Agent** — one tap; Vault / Files / website scaffolds when you ask (not on “hi”)
 - **Local AI Chat** — pick a lightweight model via [Ollama](https://ollama.com)
 - **Add-ons library** — toggle which tools the agent may call
 - **Premium UI** — Lumen glass, phosphor replies, status orb, Basic/Matrix/Lumen/Terminal
