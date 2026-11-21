@@ -3,6 +3,10 @@ import Link from "next/link";
 import {
   ARTIFACTS,
   BUILD_NOTE,
+  CARDPUTER_ARTIFACTS,
+  CARDPUTER_README,
+  CARDPUTER_REPO,
+  CARDPUTER_VERSION,
   PI_ARTIFACTS,
   PI_RELEASE_PAGE,
   PI_RELEASE_SHA256SUMS,
@@ -28,7 +32,7 @@ export default function DownloadPage() {
           <code className="mono">.img.xz</code> — unpack first, then flash the{" "}
           <code className="mono">.img</code> with balenaEtcher (
           <strong>USB stick</strong> for PC, <strong>microSD</strong> for Pi).{" "}
-          <strong>Pocket (ESP32):</strong> clone the firmware and flash with
+          <strong>Pocket / Cardputer:</strong> clone firmware and flash with
           PlatformIO — see Setup. Full steps:{" "}
           <Link href="/setup">Setup guide</Link>.
         </div>
@@ -36,13 +40,14 @@ export default function DownloadPage() {
         <h3 className="subhead">1. Choose your machine</h3>
         <p className="lede" style={{ marginBottom: "1rem" }}>
           Not sure? Old XP-era PC → 32-bit. Normal modern PC → 64-bit. Raspberry
-          Pi / cyberdeck → Pi image (Pi 4 first). Tiny board companion → NEXUS
-          Pocket (ESP32-S3).
+          Pi / cyberdeck → Pi image (Pi 4 first). ESP32 with PSRAM → Pocket.
+          M5Stack Cardputer ADV → Cardputer firmware (no PSRAM).
         </p>
         <nav className="jump-chips" aria-label="Jump to a build">
           <a href="#pc">PC USB</a>
           <a href="#pi">Raspberry Pi</a>
           <a href="#pocket">Pocket ESP32</a>
+          <a href="#cardputer">Cardputer ADV</a>
         </nav>
 
         <h3 className="subhead" id="pc">
@@ -166,6 +171,45 @@ export default function DownloadPage() {
           </div>
         ))}
 
+        <h3 className="subhead" id="cardputer" style={{ marginTop: "2rem" }}>
+          NEXUS Cardputer ADV
+        </h3>
+        <div className="alert" style={{ marginBottom: "1.5rem" }}>
+          Dedicated firmware for the <strong>M5Stack Cardputer ADV</strong>{" "}
+          (ESP32-S3FN8, 8 MB flash, <strong>no PSRAM</strong>, 240×135 +
+          keyboard). It cannot run USB/Pi images or Pocket’s stories260K model —
+          Chat here is TinyChat (flash corpus). Green terminal hub on the
+          built-in screen.
+        </div>
+        {CARDPUTER_ARTIFACTS.map((a) => (
+          <div className="panel" key={a.arch}>
+            <h3>
+              {a.label}{" "}
+              <span className="mono" style={{ fontWeight: 400, fontSize: "0.9em" }}>
+                v{CARDPUTER_VERSION}
+              </span>
+            </h3>
+            <p>{a.guidance}</p>
+            <p>
+              <strong>Source:</strong> <span className="mono">{a.filename}/</span> in
+              the GitHub repo
+              <br />
+              <strong>Size:</strong> {a.sizeLabel}
+            </p>
+            <div className="cta-row" style={{ marginTop: "0.85rem" }}>
+              <a className="btn" href={CARDPUTER_REPO}>
+                Open Cardputer firmware
+              </a>
+              <a className="btn btn-ghost" href={CARDPUTER_README}>
+                README on GitHub
+              </a>
+              <Link className="btn btn-quiet" href="/setup#cardputer">
+                Cardputer setup steps
+              </Link>
+            </div>
+          </div>
+        ))}
+
         <div className="panel" style={{ marginTop: "1.5rem" }}>
           <h3>After you download</h3>
           <ol className="steps">
@@ -186,6 +230,12 @@ export default function DownloadPage() {
               <code className="mono">uploadfs</code>, then open a Serial monitor
               at 115200 — details in Setup.
             </li>
+            <li>
+              <strong>Cardputer ADV:</strong>{" "}
+              <code className="mono">pio run -e cardputer-adv -t upload</code>{" "}
+              from <code className="mono">nexus-cardputer/</code> — hub appears
+              on the built-in screen.
+            </li>
           </ol>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
             <Link className="btn" href="/setup">
@@ -199,6 +249,9 @@ export default function DownloadPage() {
             </a>
             <a className="btn btn-ghost" href={POCKET_REPO}>
               Pocket on GitHub
+            </a>
+            <a className="btn btn-ghost" href={CARDPUTER_REPO}>
+              Cardputer on GitHub
             </a>
           </div>
         </div>

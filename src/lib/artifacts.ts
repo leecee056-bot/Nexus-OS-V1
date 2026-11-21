@@ -85,5 +85,25 @@ export const POCKET_ARTIFACTS = [
   },
 ] as const;
 
+/** NEXUS Cardputer ADV — no-PSRAM on-device hub (separate from Pocket). */
+export const CARDPUTER_REPO =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/tree/main/nexus-cardputer";
+
+export const CARDPUTER_README =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/blob/main/nexus-cardputer/README.md";
+
+export const CARDPUTER_VERSION = "0.1.0";
+
+export const CARDPUTER_ARTIFACTS = [
+  {
+    arch: "cardputer-adv",
+    label: "NEXUS Cardputer ADV",
+    filename: "nexus-cardputer",
+    sizeLabel: "Firmware only — TinyChat corpus in flash (no neural weights)",
+    guidance:
+      "Dedicated M5Stack Cardputer ADV firmware (ESP32-S3FN8, 8 MB flash, no PSRAM, 240×135 + keyboard). Green terminal hub on the built-in screen. Cannot run USB/Pi images or Pocket’s stories260K — use TinyChat + Notes/Status instead.",
+  },
+] as const;
+
 export const BUILD_NOTE =
-  "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), or NEXUS Pocket for ESP32-S3. Disk images unpack from .xz and flash with Etcher; Pocket uses PlatformIO. Full walkthrough on the Setup page.";
+  "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), NEXUS Pocket for ESP32-S3 with PSRAM, or Cardputer ADV firmware for the M5Stack pocket device. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
