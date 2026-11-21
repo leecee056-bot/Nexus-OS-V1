@@ -28,8 +28,9 @@ export default function SetupPage() {
         <nav className="jump-chips" aria-label="Jump in this guide">
           <a href="#pc-pi-steps">PC / Pi steps</a>
           <a href="#pocket">Pocket ESP32</a>
+          <a href="#cardputer">Cardputer ADV</a>
           <a href="#troubleshoot">Troubleshooting</a>
-          <Link href="/download#pocket">Pocket download</Link>
+          <Link href="/download#cardputer">Cardputer download</Link>
         </nav>
 
         <ol className="steps" id="pc-pi-steps">
@@ -64,9 +65,17 @@ export default function SetupPage() {
               <li>
                 <strong>NEXUS Pocket — ESP32-S3</strong>
                 <span>
-                  Tiny USB-Serial companion (not a disk image). Open the firmware
-                  on Download, then follow{" "}
+                  Tiny USB-Serial companion (not a disk image). Needs{" "}
+                  <strong>PSRAM</strong>. Follow{" "}
                   <Link href="#pocket">Pocket setup</Link> below.
+                </span>
+              </li>
+              <li>
+                <strong>NEXUS Cardputer ADV</strong>
+                <span>
+                  M5Stack Cardputer ADV only — on-device green hub.{" "}
+                  <strong>No PSRAM</strong>; cannot run USB/Pi images. Follow{" "}
+                  <Link href="#cardputer">Cardputer setup</Link>.
                 </span>
               </li>
             </ul>
@@ -375,6 +384,49 @@ pio device monitor`}
           </p>
         </div>
 
+        <div className="panel" id="cardputer" style={{ marginTop: "2rem" }}>
+          <h3>NEXUS Cardputer ADV setup</h3>
+          <p>
+            Dedicated firmware in <code className="mono">nexus-cardputer/</code>{" "}
+            for the M5Stack Cardputer ADV (ESP32-S3FN8, 8 MB flash,{" "}
+            <strong>no PSRAM</strong>, 240×135 display + 56-key keyboard). This
+            is separate from Pocket: Chat is <strong>TinyChat</strong> (flash
+            phrase corpus), not stories260K.
+          </p>
+          <ol className="steps">
+            <li>
+              <strong>Install PlatformIO</strong>
+              <span> and connect the Cardputer with a USB-C data cable.</span>
+            </li>
+            <li>
+              <strong>Build &amp; flash</strong>
+              <pre className="panel mono">
+{`git clone https://github.com/leecee056-bot/Nexus-OS-V1.git
+cd Nexus-OS-V1/nexus-cardputer
+pio run -e cardputer-adv -t upload`}
+              </pre>
+            </li>
+            <li>
+              <strong>Use the on-screen hub</strong>
+              <p style={{ marginTop: "0.5rem" }}>
+                <code className="mono">;</code> / <code className="mono">,</code>{" "}
+                up · <code className="mono">&apos;</code> /{" "}
+                <code className="mono">.</code> down · Enter opens ·{" "}
+                <code className="mono">`</code> back to hub. Optional microSD for
+                Notes.
+              </p>
+            </li>
+          </ol>
+          <p style={{ marginTop: "0.85rem" }}>
+            Checklist:{" "}
+            <a href="/guides/cardputer-flash.md">cardputer-flash.md</a>
+            {" · "}
+            <Link href="/faq#cardputer">FAQ</Link>
+            {" · "}
+            <Link href="/download#cardputer">Download</Link>
+          </p>
+        </div>
+
         <div className="panel" id="troubleshoot" style={{ marginTop: "1.5rem" }}>
           <h3>If something goes wrong</h3>
           <ul className="feature-list">
@@ -421,7 +473,18 @@ pio device monitor`}
                 <code className="mono">uploadfs</code> after{" "}
                 <code className="mono">fetch_model.sh</code> so{" "}
                 <code className="mono">model.bin</code> lands on SPIFFS. Boards
-                without PSRAM may stay in demo for chat.
+                without PSRAM may stay in demo for chat — use Cardputer ADV
+                firmware on that device instead of Pocket.
+              </span>
+            </li>
+            <li>
+              <strong>Cardputer ADV blank / won’t flash</strong>
+              <span>
+                Use a data USB-C cable, hold the reset/boot combo your board
+                docs describe, and flash{" "}
+                <code className="mono">-e cardputer-adv</code> from{" "}
+                <code className="mono">nexus-cardputer/</code> — not the Pocket
+                env.
               </span>
             </li>
             <li>

@@ -33,12 +33,21 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
-            <strong>NEXUS Pocket (ESP32-S3)</strong>
+            <strong>NEXUS Pocket (ESP32-S3 + PSRAM)</strong>
             <span>
               USB-Serial companion firmware: offline TinyStories chat, status,
               and tools (mem, notes, calc). Flash with PlatformIO; default model
               stories260K on SPIFFS. See{" "}
               <Link href="/setup#pocket">Pocket setup</Link>.
+            </span>
+          </li>
+          <li>
+            <strong>NEXUS Cardputer ADV</strong>
+            <span>
+              On-device green hub for the M5Stack Cardputer ADV (no PSRAM):
+              TinyChat, Notes, Status on the 240×135 screen with keyboard nav.
+              Separate from Pocket — see{" "}
+              <Link href="/setup#cardputer">Cardputer setup</Link>.
             </span>
           </li>
           <li>

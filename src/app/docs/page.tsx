@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  CARDPUTER_README,
+  CARDPUTER_REPO,
   PI_RELEASE_PAGE,
   POCKET_README,
   POCKET_REPO,
@@ -72,13 +74,25 @@ export default function DocsPage() {
             <li>
               <a href="/guides/pocket-flash.md">
                 Pocket flash checklist
-                <small>PlatformIO upload + SPIFFS model for ESP32-S3</small>
+                <small>PlatformIO upload + SPIFFS model for ESP32-S3 + PSRAM</small>
+              </a>
+            </li>
+            <li>
+              <a href="/guides/cardputer-flash.md">
+                Cardputer ADV flash checklist
+                <small>On-device hub for M5Stack Cardputer ADV (no PSRAM)</small>
               </a>
             </li>
             <li>
               <Link href="/faq#pocket">
                 FAQ — NEXUS Pocket
                 <small>What Pocket is vs the full USB/Pi hub</small>
+              </Link>
+            </li>
+            <li>
+              <Link href="/faq#cardputer">
+                FAQ — Cardputer ADV
+                <small>Why ADV needs its own firmware</small>
               </Link>
             </li>
             <li>
@@ -141,6 +155,18 @@ export default function DocsPage() {
               <a href={POCKET_README}>
                 Pocket README
                 <small>Hardware notes, fetch_model, Serial hub commands</small>
+              </a>
+            </li>
+            <li>
+              <a href={CARDPUTER_REPO}>
+                NEXUS Cardputer ADV — v0.1.0
+                <small>Firmware source in nexus-cardputer/ (PlatformIO)</small>
+              </a>
+            </li>
+            <li>
+              <a href={CARDPUTER_README}>
+                Cardputer ADV README
+                <small>No-PSRAM limits, TinyChat, keyboard hub</small>
               </a>
             </li>
           </ul>

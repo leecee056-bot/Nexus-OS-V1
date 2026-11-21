@@ -79,6 +79,13 @@ nexus-esp32/
 - Tokenizer encode is a compact longest-prefix lookup suitable for tok512; fine for Pocket prompts.
 - License: MIT (Lee Cee 2026), same family as portable-ai-os.
 
+## Related: Cardputer ADV
+
+M5Stack **Cardputer ADV** has **no PSRAM** — do not flash this Pocket firmware
+expecting stories260K. Use the dedicated project instead:
+
+→ [`../nexus-cardputer/`](../nexus-cardputer/) (on-screen TinyChat hub)
+
 ## Roadmap (not in v0.1)
 
 - Quantized weights (q8) for larger stories checkpoints

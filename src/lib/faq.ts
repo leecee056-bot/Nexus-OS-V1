@@ -28,7 +28,13 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "pocket",
     question: "What is NEXUS Pocket (ESP32)?",
     answer:
-      "Pocket is the ESP32-S3 firmware in the nexus-esp32 folder: a Serial hub with offline chat (TinyStories stories260K by default), status, and small tools (mem, notes, calc). Flash with PlatformIO, upload the model to SPIFFS, then open a 115200 baud monitor. It is not a USB/Pi disk image and does not replace the full hub — it is the tiny-board path.",
+      "Pocket is the ESP32-S3 firmware in the nexus-esp32 folder: a Serial hub with offline chat (TinyStories stories260K by default), status, and small tools (mem, notes, calc). It needs PSRAM. Flash with PlatformIO, upload the model to SPIFFS, then open a 115200 baud monitor. It is not a USB/Pi disk image and does not replace the full hub — it is the tiny-board path for PSRAM boards.",
+  },
+  {
+    id: "cardputer",
+    question: "What about the M5Stack Cardputer ADV?",
+    answer:
+      "Use the dedicated NEXUS Cardputer ADV firmware in nexus-cardputer/. That device has 8 MB flash and no PSRAM, so it cannot run USB/Pi Linux images or Pocket’s stories260K weights. It boots a green terminal-style hub on the 240×135 screen with keyboard navigation, TinyChat (flash phrase corpus), Notes (microSD/SPIFFS), and Status. See Setup → Cardputer ADV.",
   },
   {
     id: "wipe",
