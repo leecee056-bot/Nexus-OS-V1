@@ -6,9 +6,10 @@ a Play Store listing (yet). Source: [`nexus-app/`](../../nexus-app/).
 ## Install an APK (users)
 
 1. Download the `.apk` from the
-   [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.3.0)
-   (preferred) or the site Download page when a build is attached. Windows users
-   can grab the one-click `.exe` from the same release.
+   [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.4.0)
+   (preferred) or the site Download page when a build is attached. Windows / Mac
+   users can grab one-click desktop builds from the same release. For local AI
+   Chat, run Ollama on a PC on the same Wi‑Fi and set that host in Chat.
 2. On the phone: open the file → allow **Install unknown apps** for your
    browser/Files app if Android asks.
 3. Open NEXUS Companion → wait for the matrix boot splash → use Chat / Vault /

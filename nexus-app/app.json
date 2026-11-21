@@ -2,9 +2,9 @@
   "expo": {
     "name": "NEXUS Companion",
     "slug": "nexus-companion",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "orientation": "default",
-    "icon": "./assets/brand/logo-mark.png",
+    "icon": "./assets/brand/icon.png",
     "userInterfaceStyle": "dark",
     "scheme": "nexus-companion",
     "experiments": {
@@ -19,17 +19,22 @@
       "supportsTablet": true,
       "bundleIdentifier": "bot.grok.nexus.companion",
       "infoPlist": {
-        "CFBundleDisplayName": "NEXUS Companion"
+        "CFBundleDisplayName": "NEXUS Companion",
+        "NSLocalNetworkUsageDescription": "NEXUS Companion can reach a local Ollama server on your network for offline AI chat.",
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true
+        }
       }
     },
     "android": {
       "package": "bot.grok.nexus.companion",
-      "versionCode": 3,
+      "versionCode": 4,
       "softwareKeyboardLayoutMode": "pan",
       "allowBackup": true,
+      "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "backgroundColor": "#040804",
-        "foregroundImage": "./assets/brand/logo-mark.png"
+        "foregroundImage": "./assets/brand/icon.png"
       }
     },
     "web": {

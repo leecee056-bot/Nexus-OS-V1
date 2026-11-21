@@ -6,19 +6,36 @@ directories:
   buildResources: assets/brand
 files:
   - electron/main.js
+  - electron/preload.js
   - dist-web/**/*
+  - assets/brand/icon.png
+  - assets/brand/icon.ico
+  - assets/brand/logo-mark.png
   - package.json
 extraMetadata:
   main: electron/main.js
+extraResources: []
 win:
+  # 512 PNG — electron-builder converts to ICO (≥256 required)
+  icon: icon.png
   target:
     - target: portable
       arch:
         - x64
   artifactName: NEXUS-Companion-Windows-${version}-portable.exe
+mac:
+  icon: icon.icns
+  category: public.app-category.productivity
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  artifactName: NEXUS-Companion-Mac-${version}-${arch}.${ext}
+  hardenedRuntime: false
+  gatekeeperAssess: false
 linux:
+  icon: icon.png
   target:
     - AppImage
-mac:
-  target:
-    - dmg
+  artifactName: NEXUS-Companion-Linux-${version}.${ext}

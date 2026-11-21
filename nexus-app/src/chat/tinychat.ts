@@ -1,7 +1,6 @@
 /**
- * Lightweight offline chat stub for the companion app (v1).
- * Not a neural model — keyword + phrase replies, same idea as Cardputer TinyChat.
- * Later builds can plug in a local GGUF / on-device runtime.
+ * Offline phrase fallback when Ollama / a local model is not available yet.
+ * Real neural chat goes through src/chat/ollama.ts once a model is installed.
  */
 
 type Rule = { keys: string[]; reply: string };
@@ -10,42 +9,47 @@ const RULES: Rule[] = [
   {
     keys: ["hello", "hi", "hey"],
     reply:
-      "Hello. I am the NEXUS Companion offline stub. Ask about vault, boot, pocket, or knowledge packs.",
+      "Hello. Open the Model selector to install a local AI (TinyLlama, Qwen, …) via Ollama, then chat for real.",
   },
   {
     keys: ["vault", "notes", "knowledge", "pack", "kiwix", "gutenberg"],
     reply:
-      "Knowledge Vault holds plain .txt/.md notes. On Android, open Packs for Kiwix/Gutenberg links, then Import text into Vault — optional, offline.",
+      "Knowledge Vault holds plain .txt/.md notes. Open Packs for Kiwix/Gutenberg links, then Import text into Vault — optional, offline.",
   },
   {
     keys: ["android", "apk", "sideload"],
     reply:
-      "Android companion ships as a sideload APK (GitHub Releases) for now — not Play Store yet. Same offline Chat, Vault, Packs, and Files.",
+      "Android companion installs as a sideload APK. For local AI, run Ollama on a PC on the same Wi‑Fi and set that host in Chat.",
   },
   {
     keys: ["boot", "usb", "flash", "etcher"],
     reply:
-      "The full OS boots from a USB stick or Pi microSD (Etcher). This app is a companion — no flashing required.",
+      "The full OS boots from a USB stick or Pi microSD (Etcher). This app runs Chat, Vault, Packs, and Files without flashing.",
   },
   {
     keys: ["pocket", "esp32", "cardputer"],
     reply:
-      "Pocket needs ESP32-S3 + PSRAM. Cardputer ADV uses TinyChat + optional SD vault. This app runs on Windows/iOS.",
+      "Pocket needs ESP32-S3 + PSRAM. Cardputer ADV uses TinyChat + optional SD vault. This Companion app runs on Windows, Mac, and Android.",
   },
   {
-    keys: ["model", "llm", "ai", "smol"],
+    keys: ["model", "llm", "ai", "ollama", "qwen", "tinyllama"],
     reply:
-      "v1 chat here is a phrase stub (no heavy model). The USB/Pi image ships SmolLM2; a local model path can come later.",
+      "Tap Model in Chat, pick a lightweight local model, then Get model (Ollama). After that, chat stays offline on your machine.",
+  },
+  {
+    keys: ["mac", "windows", "desktop"],
+    reply:
+      "Desktop builds are normal apps with the NEXUS logo. Install Ollama once, then download a model from Chat.",
   },
   {
     keys: ["network", "chat room", "xmpp"],
     reply:
-      "NEXUS Network community chat is optional and not live yet. This app can wire to it later without changing the offline core.",
+      "NEXUS Network community chat is optional and separate. Local model chat does not need it.",
   },
   {
     keys: ["help", "what can"],
     reply:
-      "Try: vault, boot, pocket, model, network. Or open Vault / Files from the tab bar.",
+      "Try: model, vault, boot, android. Or open the Model selector to download a real local AI.",
   },
 ];
 
@@ -56,7 +60,7 @@ export function companionReply(prompt: string): string {
     if (rule.keys.some((k) => q.includes(k))) return rule.reply;
   }
   return (
-    "No strong match in the offline stub. Try words like vault, boot, pocket, or model — " +
-    "or add notes in Vault for your own reference."
+    "No strong match in the offline fallback. Open Model → Get a local AI via Ollama, " +
+    "or try words like vault, boot, or model."
   );
 }

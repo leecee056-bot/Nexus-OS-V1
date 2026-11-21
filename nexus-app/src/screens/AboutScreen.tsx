@@ -28,30 +28,30 @@ export function AboutScreen() {
         <View style={styles.heroText}>
           <Text style={[styles.title, isTablet && styles.titleLg]}>About</Text>
           <Text style={styles.body}>
-            NEXUS Companion — Windows, iOS, and Android shell for the NEXUS OS /
-            Tri-Cass family. Offline-first core; Network hooks can come later.
+            NEXUS Companion — Windows, Mac, iOS, and Android app for the NEXUS
+            OS / Tri-Cass family. Offline-first Chat with local models, plus
+            Vault, Packs, and Files.
           </Text>
         </View>
       </View>
 
-      <GlowPanel title="Not the bootable OS">
-        Flashing a USB/Pi image or Cardputer firmware is still the primary path.
-        Install this app when you want Chat, Vault, Packs, and Files without
-        special boot media.
+      <GlowPanel title="Local models">
+        Chat uses Ollama on this machine (or a host you set). Pick a lightweight
+        model, download once, then keep chatting without the cloud.
       </GlowPanel>
 
-      <GlowPanel title="Phone + tablet" accent="purple">
-        Phones keep bottom tabs. Tablets and wide Android devices switch to a
-        side rail so the matrix chrome stays usable in landscape.
+      <GlowPanel title="Phone + tablet + desktop" accent="purple">
+        Phones keep bottom tabs. Tablets switch to a side rail. Windows and Mac
+        builds ship with the NEXUS logo as the app icon.
       </GlowPanel>
 
       <GlowPanel title="Android APK">
         Sideload APKs from the companion GitHub Release when attached (not Play
-        Store yet). Build with EAS preview if you need a fresh binary.
+        Store yet). Point Chat at Ollama on a PC on the same Wi‑Fi if needed.
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.3.0 companion · Expo · matrix boot · Vault + Packs{"\n"}Running on{" "}
+        0.4.0 · local AI Chat · matrix boot · Vault + Packs{"\n"}Running on{" "}
         {Platform.OS}
       </GlowPanel>
 
@@ -71,7 +71,7 @@ export function AboutScreen() {
           Linking.openURL("https://nexus-os.apps.grok.bot/download#companion")
         }
       >
-        One-click companion downloads →
+        Companion downloads →
       </Text>
     </ScreenShell>
   );
