@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import {
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -12,6 +13,8 @@ import {
 import { PLUGIN_CATALOG } from "../plugins/catalog";
 import { ThemePicker } from "./ThemePicker";
 import { TerminalPanel } from "./TerminalPanel";
+import { CheckUpdatesButton } from "./CheckUpdatesButton";
+import { OS_UPDATE_URL } from "../updates/links";
 import { monoStyle } from "../theme/fonts";
 import { spacing, useTheme } from "../theme";
 
@@ -20,16 +23,19 @@ function pane(mid: boolean, flex = 1, minWidth = 160): ViewStyle {
   return { flex, flexGrow: flex, flexBasis: 0, minWidth };
 }
 
+const DESKTOP = Platform.OS === "web";
+
 type NavName =
   | "Home"
   | "Chat"
+  | "Image"
   | "Vault"
   | "Packs"
   | "Plugins"
   | "Files"
   | "About";
 
-const MENU: { label: string; hint: string; route: NavName }[] = [
+const MENU_CORE: { label: string; hint: string; route: NavName }[] = [
   { label: "AI Chat", hint: "Enter", route: "Chat" },
   { label: "Knowledge Vault", hint: "V", route: "Vault" },
   { label: "Knowledge Packs", hint: "P", route: "Packs" },
@@ -37,6 +43,14 @@ const MENU: { label: string; hint: string; route: NavName }[] = [
   { label: "File Manager", hint: "F", route: "Files" },
   { label: "Settings", hint: "O", route: "About" },
 ];
+
+const MENU: { label: string; hint: string; route: NavName }[] = DESKTOP
+  ? [
+      MENU_CORE[0],
+      { label: "Image Lab", hint: "I", route: "Image" },
+      ...MENU_CORE.slice(1),
+    ]
+  : MENU_CORE;
 
 const ASCII_FRACTAL = [
   "        ░░▓▓",
@@ -384,7 +398,8 @@ export function TerminalDashboard() {
 
         <TerminalPanel title="Welcome" style={pane(mid, 1)}>
           <Text style={monoStyle({ color: colors.fg, fontSize: 12 })}>
-            Portable local intelligence — Chat, Vault, Packs, Files, Agent.
+            Portable local intelligence — Chat
+            {DESKTOP ? ", Image Lab" : ""}, Vault, Packs, Files, Agent.
           </Text>
           <Pressable
             onPress={() => go("Chat")}
@@ -406,6 +421,11 @@ export function TerminalDashboard() {
               Ready when you are… :)
             </Text>
           </Pressable>
+          <CheckUpdatesButton
+            url={OS_UPDATE_URL}
+            label="Check for OS updates"
+            compact
+          />
         </TerminalPanel>
       </View>
     </View>

@@ -14,7 +14,9 @@ import * as DocumentPicker from "expo-document-picker";
 import { readAsStringAsync } from "expo-file-system/legacy";
 import { PACK_SOURCES } from "../packs/catalog";
 import { loadNotes, saveNotes, type VaultNote } from "../vault/store";
+import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
 import { ContentFrame } from "../components/ContentFrame";
+import { OS_UPDATE_URL } from "../updates/links";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
 
@@ -130,6 +132,10 @@ export function PacksScreen() {
             ? `${imported} pack note(s) already in Vault`
             : "No pack files imported yet"}
         </Text>
+        <CheckUpdatesButton
+          url={OS_UPDATE_URL}
+          label="Check for OS updates"
+        />
 
         <FlatList
           data={PACK_SOURCES}
@@ -178,6 +184,11 @@ export function PacksScreen() {
               >
                 Open →
               </Text>
+              <CheckUpdatesButton
+                url={item.url}
+                label="Check for updates"
+                compact
+              />
             </Pressable>
           )}
         />

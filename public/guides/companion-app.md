@@ -8,10 +8,10 @@ bottom tabs; tablets use a side rail.
 
 | Platform | Action |
 |----------|--------|
-| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.7.0/NEXUS-Companion-Windows-0.7.0-portable.exe) — double-click, NEXUS icon |
-| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.7.0) — grab the `.dmg` when attached |
+| **Windows** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.8.0/NEXUS-Companion-Windows-0.8.0-portable.exe) — double-click, NEXUS icon |
+| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.8.0) — grab the `.dmg` when attached |
 | **Web** | [Open /companion/](/companion/) in your browser |
-| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.7.0) when attached — see [android-apk.md](./android-apk.md) |
+| **Android** | Sideload APK from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.8.0) when attached — see [android-apk.md](./android-apk.md) |
 
 Site Download section: [/download#companion](/download#companion)
 
@@ -65,8 +65,21 @@ npm run android:apk
 See [companion-agent.md](./companion-agent.md) — Agent mode uses Vault, Add-ons,
 and Files with live status while answering.
 
-## What v0.7 includes
+## Image Lab (desktop, v0.8)
 
+Windows / Mac / web companion: **Image** tab with the same Get-model flow as
+Chat. See [companion-image.md](./companion-image.md).
+
+## Check for updates (v0.8)
+
+Manual **Check for updates** on models, add-ons, packs, and **Check for OS
+updates** in About / Chat / Plugins. See [companion-updates.md](./companion-updates.md).
+
+## What v0.8 includes
+
+- **Image Lab** (desktop) — local image models via Ollama + Save PNG
+- **Check for updates** — curated links for models, add-ons, packs, OS
+- More Chat model options (Phi-3, DeepSeek R1 1.5B, Llama/Qwen 3B, …)
 - **Terminal** theme — CRT multi-panel home dashboard with NEXUS logo
 - Agent mode + Add-ons / Plugin library
 - Lumen UI polish + Basic / Matrix / Lumen / Terminal themes

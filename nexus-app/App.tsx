@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import { HomeScreen } from "./src/screens/HomeScreen";
 import { ChatScreen } from "./src/screens/ChatScreen";
+import { ImageScreen } from "./src/screens/ImageScreen";
 import { VaultScreen } from "./src/screens/VaultScreen";
 import { FilesScreen } from "./src/screens/FilesScreen";
 import { PacksScreen } from "./src/screens/PacksScreen";
@@ -34,6 +35,7 @@ import { monoStyle } from "./src/theme/fonts";
 type RootTabParamList = {
   Home: undefined;
   Chat: undefined;
+  Image: undefined;
   Vault: undefined;
   Packs: undefined;
   Plugins: undefined;
@@ -46,7 +48,10 @@ type ScreenName = keyof RootTabParamList;
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const navRef = createNavigationContainerRef<RootTabParamList>();
 
-const SCREENS: {
+/** Image Lab is desktop-first (Windows / Mac / web companion). */
+const SHOW_IMAGE_LAB = Platform.OS === "web";
+
+const BASE_SCREENS: {
   name: ScreenName;
   component: ComponentType;
   title: string;
@@ -59,6 +64,19 @@ const SCREENS: {
   { name: "Files", component: FilesScreen, title: "Files" },
   { name: "About", component: AboutScreen, title: "About" },
 ];
+
+const SCREENS: {
+  name: ScreenName;
+  component: ComponentType;
+  title: string;
+}[] = SHOW_IMAGE_LAB
+  ? [
+      BASE_SCREENS[0],
+      BASE_SCREENS[1],
+      { name: "Image", component: ImageScreen, title: "Image" },
+      ...BASE_SCREENS.slice(2),
+    ]
+  : BASE_SCREENS;
 
 function HeaderBrand() {
   const { colors } = useTheme();

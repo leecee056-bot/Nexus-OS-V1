@@ -4,6 +4,7 @@ import { useTheme } from "../theme";
 const GLYPH: Record<string, string> = {
   Home: "⌂",
   Chat: "⌘",
+  Image: "▦",
   Vault: "▣",
   Packs: "⧉",
   Plugins: "⬡",

@@ -10,8 +10,10 @@ rabbit-wizard branding throughout.
 | `nexus-esp32/` / `nexus-cardputer/` | Hardware firmware |
 | **`nexus-app/` (this folder)** | Windows · Mac · Android · iOS companion |
 
-## Features (v0.7)
+## Features (v0.8)
 
+- **Image Lab (desktop)** — optional local image models, Get-model + prompt
+- **Check for updates** — curated links for models, add-ons, packs, OS downloads
 - **Terminal theme** — CRT multi-panel “NEXUS OS” home dashboard with the real logo
 - **Agent mode** — uses Vault, knowledge packs, and the Add-ons / Plugin library
   while chatting; can browse/create Files (including a `website/` project)
