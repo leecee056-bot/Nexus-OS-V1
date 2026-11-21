@@ -9,14 +9,23 @@ import {
 } from "react-native";
 import { ScreenShell } from "../components/ScreenShell";
 import { GlowPanel } from "../components/GlowPanel";
+import { TerminalDashboard } from "../components/TerminalDashboard";
 import { ThemePicker } from "../components/ThemePicker";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
 
 export function HomeScreen() {
   const { isTablet, heroMascot } = useCompanionLayout();
-  const { colors } = useTheme();
-  const showThemes = Platform.OS === "web" || isTablet;
+  const { colors, themeId } = useTheme();
+  const showThemes = Platform.OS === "web" || isTablet || Platform.OS === "android";
+
+  if (themeId === "terminal" || colors.terminalShell) {
+    return (
+      <ScreenShell rain contentStyle={styles.terminalPad}>
+        <TerminalDashboard />
+      </ScreenShell>
+    );
+  }
 
   return (
     <ScreenShell rain>
@@ -66,7 +75,7 @@ export function HomeScreen() {
           • NEXUS logo + rabbit-wizard presence{"\n"}
           • Chat / Agent — local models + Vault / Plugins / Files{"\n"}
           • Add-ons library — toggle the tools Agent may use{"\n"}
-          • Themes — Basic, Matrix, Lumen (desktop){"\n"}
+          • Themes — Basic, Matrix, Lumen, Terminal{"\n"}
           • Vault · Packs · Files — offline-first{"\n"}
           • Phone tabs · tablet rail · desktop icon
         </Text>
@@ -109,6 +118,7 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  terminalPad: { maxWidth: 1200 },
   heroRow: {
     flexDirection: "row",
     gap: spacing.md,

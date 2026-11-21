@@ -38,7 +38,9 @@ export function ScreenShell({
       ? (["rgba(244,247,244,0.2)", "rgba(244,247,244,0.85)", colors.bg] as const)
       : colors.id === "lumen"
         ? (["rgba(3,6,5,0.35)", "rgba(3,6,5,0.82)", colors.bg] as const)
-        : (["rgba(4,8,4,0.5)", "rgba(4,8,4,0.9)", colors.bg] as const);
+        : colors.id === "terminal"
+          ? (["rgba(0,0,0,0.25)", "rgba(0,0,0,0.78)", colors.bg] as const)
+          : (["rgba(4,8,4,0.5)", "rgba(4,8,4,0.9)", colors.bg] as const);
 
   return (
     <View style={[styles.root, { backgroundColor: colors.bg }]}>

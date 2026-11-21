@@ -1,19 +1,30 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { THEME_ORDER, spacing, useTheme, type ThemeId } from "../theme";
 import { THEMES } from "../theme/palettes";
+import { monoStyle } from "../theme/fonts";
 
 export function ThemePicker({ compact = false }: { compact?: boolean }) {
   const { themeId, setThemeId, colors, scanlines, setScanlines } = useTheme();
+  const mono = colors.mono;
 
   return (
     <View style={styles.wrap}>
       {!compact ? (
-        <Text style={[styles.heading, { color: colors.accent }]}>Theme</Text>
+        <Text
+          style={[
+            styles.heading,
+            { color: colors.accent },
+            mono ? monoStyle() : null,
+          ]}
+        >
+          Theme
+        </Text>
       ) : null}
       <View style={styles.row}>
         {THEME_ORDER.map((id: ThemeId) => {
           const t = THEMES[id];
           const on = id === themeId;
+          const blockOn = on && mono;
           return (
             <Pressable
               key={id}
@@ -22,22 +33,33 @@ export function ThemePicker({ compact = false }: { compact?: boolean }) {
                 styles.chip,
                 {
                   borderColor: on ? colors.accent : colors.border,
-                  backgroundColor: on ? colors.accentSoft : "transparent",
+                  backgroundColor: blockOn
+                    ? colors.accent
+                    : on
+                      ? colors.accentSoft
+                      : "transparent",
                 },
               ]}
             >
               <View
                 style={[
                   styles.swatch,
-                  { backgroundColor: t.accent, borderColor: t.bg },
+                  {
+                    backgroundColor: t.accent,
+                    borderColor: t.bg,
+                    borderRadius: mono ? 0 : 6,
+                  },
                 ]}
               />
               <Text
-                style={{
-                  color: on ? colors.accent : colors.fg,
-                  fontWeight: on ? "800" : "600",
-                  fontSize: compact ? 11 : 13,
-                }}
+                style={[
+                  {
+                    color: blockOn ? colors.bg : on ? colors.accent : colors.fg,
+                    fontWeight: on ? "800" : "600",
+                    fontSize: compact ? 11 : 13,
+                  },
+                  mono ? monoStyle({ fontSize: compact ? 10 : 12 }) : null,
+                ]}
               >
                 {t.label}
               </Text>

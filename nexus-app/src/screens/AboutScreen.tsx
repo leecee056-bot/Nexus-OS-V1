@@ -62,7 +62,7 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.6.0 · Agent · Add-ons · Lumen UI · local AI{"\n"}Running on{" "}
+        0.7.0 · Agent · Terminal theme · Add-ons · local AI{"\n"}Running on{" "}
         {Platform.OS}
       </GlowPanel>
 

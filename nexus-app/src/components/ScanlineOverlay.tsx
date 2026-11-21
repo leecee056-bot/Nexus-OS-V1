@@ -26,7 +26,9 @@ export function ScanlineOverlay() {
             backgroundColor:
               themeId === "lumen"
                 ? "rgba(40,120,70,0.04)"
-                : "rgba(0,40,0,0.05)",
+                : themeId === "terminal"
+                  ? "rgba(0,255,65,0.035)"
+                  : "rgba(0,40,0,0.05)",
           },
         ]}
       />
