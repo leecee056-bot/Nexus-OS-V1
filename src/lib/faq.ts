@@ -68,9 +68,9 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "companion",
-    question: "Is there a Windows, iOS, or Android app?",
+    question: "Is there a Windows, Mac, iPhone, or Android app?",
     answer:
-      "Yes — a secondary companion app lives in nexus-app/ (Expo) for Windows, iPhone/iPad, and Android. It offers Chat (lightweight offline stub), Knowledge Vault, optional knowledge packs (Kiwix/Gutenberg → import .txt/.md), and document browsing. Android is distributed as a sideload APK via GitHub Releases for now (not Play Store yet). It is not a replacement for the bootable USB/Pi images or Cardputer firmware.",
+      "Yes — NEXUS Companion (nexus-app/) for Windows, Mac, iPhone/iPad, and Android. Chat uses real local models through Ollama: pick a lightweight model, download once, then chat offline. Also includes Knowledge Vault, optional knowledge packs, and Files. Desktop builds use the NEXUS logo icon. Android is a sideload APK via GitHub Releases for now (not Play Store yet).",
   },
   {
     id: "cyberdeck",

@@ -326,18 +326,18 @@ sync`}
         </ol>
 
         <div className="panel" id="companion" style={{ marginTop: "2rem" }}>
-          <h3>Windows · iOS · Android companion (optional)</h3>
+          <h3>Windows · Mac · Android companion</h3>
           <p>
             Easiest:{" "}
             <Link href="/download#companion">Download → Companion</Link> —{" "}
-            <strong>Windows one-click .exe</strong>,{" "}
-            <a href="/companion/">web companion</a>, or Android APK sideload.
-            Developers: clone <code className="mono">nexus-app/</code>, then{" "}
+            <strong>Windows .exe</strong>, <strong>Mac .dmg</strong>,{" "}
+            <a href="/companion/">web</a>, or Android APK. In Chat, pick a local
+            model and download it once via Ollama, then chat offline. Developers:{" "}
+            <code className="mono">nexus-app/</code> →{" "}
             <code className="mono">npm run android</code> /{" "}
             <code className="mono">ios</code> /{" "}
-            <code className="mono">web</code>. Tablet uses a side rail; phones
-            use bottom tabs. See{" "}
-            <a href="/guides/android-apk.md">android-apk.md</a>.
+            <code className="mono">web</code>. See{" "}
+            <a href="/guides/companion-app.md">companion-app.md</a>.
           </p>
         </div>
 

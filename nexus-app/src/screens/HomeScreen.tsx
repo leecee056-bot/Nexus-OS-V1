@@ -27,27 +27,28 @@ export function HomeScreen() {
           <Text style={[styles.brand, isTablet && styles.brandLg]}>NEXUS OS</Text>
           <Text style={styles.title}>Companion</Text>
           <Text style={styles.lede}>
-            Offline-first Chat, Vault, Packs, and Files — phone and tablet ready.
+            Offline-first Chat with real local models, plus Vault, Packs, and
+            Files — phone and tablet ready.
             {Platform.OS === "android"
               ? " Sideload the APK; no Play Store required."
-              : " One-click downloads on the site when a build is published."}
+              : " One-click desktop builds on the Download page."}
           </Text>
         </View>
       </View>
 
-      <GlowPanel title="Secondary target">
-        The bootable USB / Pi images and Cardputer / Pocket firmware stay primary.
-        This app is the stylish, installable path with the same matrix vibe.
+      <GlowPanel title="Local AI Chat">
+        Open Chat → pick a lightweight model (Qwen, TinyLlama, and more) → tap
+        Get model once via Ollama → chat offline on this device.
       </GlowPanel>
 
       <GlowPanel title="What’s inside" accent="purple">
         <Text style={styles.body}>
           • Matrix boot splash + rabbit-wizard logo{"\n"}
-          • Chat — lightweight offline phrase stub{"\n"}
+          • Chat — real local models through Ollama{"\n"}
           • Vault — searchable on-device notes{"\n"}
           • Packs — Kiwix / Gutenberg → import .txt/.md{"\n"}
           • Files — import documents from the device{"\n"}
-          • Phone bottom tabs · tablet side rail
+          • Phone bottom tabs · tablet side rail · desktop app icon
         </Text>
       </GlowPanel>
 

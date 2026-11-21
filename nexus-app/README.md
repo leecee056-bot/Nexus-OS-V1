@@ -1,35 +1,42 @@
-# NEXUS Companion (Windows · iOS · Android)
+# NEXUS Companion (Windows · Mac · Android · iOS)
 
-**Secondary** desktop / mobile app for the NEXUS OS / Tri-Cass family.
-
-This is **not** the bootable USB/Pi OS image, and **not** Cardputer / Pocket
-firmware. It is a normal app so people can try the offline-first idea (Chat,
-Knowledge Vault, Packs, Files) without flashing media.
+Normal desktop / mobile app for the NEXUS OS / Tri-Cass family — Chat with
+**real local models**, Knowledge Vault, Packs, and Files. Matrix boot splash and
+rabbit-wizard branding throughout.
 
 | Path | Role |
 |------|------|
-| USB / Pi images | Primary full hub |
-| `nexus-esp32/` / `nexus-cardputer/` | Hardware companions |
-| **`nexus-app/` (this folder)** | Windows + iOS + **Android** companion |
+| USB / Pi images | Full bootable hub |
+| `nexus-esp32/` / `nexus-cardputer/` | Hardware firmware |
+| **`nexus-app/` (this folder)** | Windows · Mac · Android · iOS companion |
 
-## Features (v0.2)
+## Features (v0.4)
 
-- **Matrix boot splash** — falling glyphs + rabbit-wizard logo + “NEXUS OS”
-- **Home** — branded hero, secondary-target copy
-- **Chat** — lightweight offline phrase stub (honest stand-in until a local model is wired)
-- **Vault** — searchable on-device notes
-- **Packs** — optional knowledge: open Kiwix / Gutenberg, import `.txt`/`.md` into Vault
-- **Files** — import / list documents
-- **About** — version + APK / source links
+- **Local AI Chat** — pick a lightweight model (Qwen 2.5 0.5B/1.5B, TinyLlama,
+  Llama 3.2 1B, Gemma 2 2B), one-tap download via [Ollama](https://ollama.com),
+  then chat offline
+- **Desktop apps** — Windows portable `.exe` and Mac `.dmg` with NEXUS logo icon
+- **Matrix boot splash** + rabbit-wizard logo
+- **Vault / Packs / Files** — on-device notes and document import
+- **Phone + tablet** — bottom tabs on phones, side rail on tablets
 
-Dark theme with neon green + wizard-hat purple accents.
+## Quick start — Chat with a local model
+
+1. Install [Ollama](https://ollama.com/download) (Windows / Mac / Linux).
+2. Open **NEXUS Companion** → **Chat**.
+3. Tap **Model** → choose a recommended model → **Get**.
+4. Wait for the download once, then start chatting. After that it works offline.
+
+**Android:** run Ollama on a PC on the same Wi‑Fi, then in Chat open **Ollama host**
+and set e.g. `http://192.168.1.20:11434` (use your PC’s LAN IP).
 
 ## Requirements
 
 - Node.js 20+ (22 OK)
+- **Local AI:** [Ollama](https://ollama.com) running on the machine (or LAN host)
 - **Android:** device/emulator, or EAS cloud build for APK
 - **iOS:** macOS + Xcode, or Expo Go
-- **Windows:** `npm run web` or optional Electron shell
+- **Windows / Mac desktop:** Electron builds below
 
 ## Install
 
@@ -38,65 +45,41 @@ cd nexus-app
 npm install
 ```
 
-## Run — Android
+## Run
 
 ```bash
 npm run android
-# or
-npm start   # then press `a` / scan with Expo Go
+npm run ios
+npm run web
+# Desktop window (needs Expo web or a prior build:web):
+npm install --no-save electron && npm run desktop
 ```
 
-### Sideload APK (no Play Store yet)
-
-Build a release APK with EAS **preview** profile (`eas.json`):
+## Build one-click apps
 
 ```bash
-# npm i -g eas-cli && eas login && eas build:configure   # once
+# Windows portable .exe (logo icon in taskbar / explorer)
+npm run build:windows
+
+# Mac .dmg (run on macOS CI or a Mac)
+npm run build:mac
+
+# Android sideload APK
 npm run android:apk
 ```
 
-Download the `.apk` from the EAS build page → attach to a **GitHub Release** →
-link it from the site Download page. Users enable “Install unknown apps” for
-their browser/Files app, then install.
-
-Full notes: [`../public/guides/android-apk.md`](../public/guides/android-apk.md)
-
-## Run — iOS
-
-```bash
-npm run ios
-# or npm start + Expo Go
-```
-
-## Run — Windows
-
-```bash
-npm run web
-# optional desktop window:
-# npm install --no-save electron && npm run windows:electron
-```
-
-## Optional Knowledge Packs
-
-1. Open **Packs**
-2. Browse Kiwix / Gutenberg (we do not host the dumps)
-3. **Import .txt / .md into Vault** — searchable offline
-
-Site guide: https://nexus-os.apps.grok.bot/knowledge-packs
+Artifacts land in `release/` (gitignored). Attach them to a GitHub Release
+`companion-v*` tag — the site Download page links them.
 
 ## Project layout
 
 ```
 nexus-app/
   App.tsx
-  eas.json                 # Android APK preview profile
-  assets/brand/            # logo-mark + rabbit wizard
-  src/
-    components/            # MatrixRain, BootSplash
-    screens/               # Home, Chat, Vault, Packs, Files, About
-    packs/catalog.ts
-    chat/ tinychat.ts
-  README.md
+  electron/                # Desktop shell + Ollama IPC proxy
+  assets/brand/            # logo + app icons (.ico / .icns / .png)
+  src/chat/                # models catalog, Ollama client, fallback phrases
+  src/screens/             # Home, Chat, Vault, Packs, Files, About
 ```
 
 ## License

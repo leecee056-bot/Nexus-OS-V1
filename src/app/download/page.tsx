@@ -8,6 +8,7 @@ import {
   CARDPUTER_REPO,
   CARDPUTER_VERSION,
   COMPANION_ANDROID_NOTES,
+  COMPANION_MAC_URL,
   COMPANION_RELEASE_PAGE,
   COMPANION_VERSION,
   COMPANION_WEB_URL,
@@ -219,24 +220,32 @@ export default function DownloadPage() {
         ))}
 
         <div className="panel" id="companion" style={{ marginTop: "1.5rem" }}>
-          <h3>Companion apps (Windows · iOS · Android) — v{COMPANION_VERSION}</h3>
+          <h3>
+            Companion apps (Windows · Mac · Android) — v{COMPANION_VERSION}
+          </h3>
           <p>
-            Prefer a normal app instead of flashing a stick?{" "}
-            <strong>NEXUS Companion</strong> has Chat, Vault, Packs, and Files
-            with a matrix boot splash and rabbit logo. Phone + tablet layouts on
-            Android. It is <strong>not</strong> the bootable OS — that stays the
-            main path.
+            <strong>NEXUS Companion</strong> is a normal app with real{" "}
+            <strong>local AI Chat</strong>: pick a lightweight model (Qwen,
+            TinyLlama, and more), download it once via{" "}
+            <a href="https://ollama.com/download">Ollama</a>, then chat offline.
+            Also includes Vault, Packs, Files, matrix boot splash, and the NEXUS
+            logo as the desktop / home-screen icon. Phone + tablet layouts on
+            Android.
           </p>
           <p style={{ marginTop: "0.75rem" }}>
             <strong>Windows:</strong> one-click portable{" "}
-            <code className="mono">.exe</code> — download and double-click (no
-            installer). <strong>Web:</strong> open instantly in the browser.{" "}
-            <strong>Android:</strong> phone + tablet UI — one-click APK from the
-            companion Release when an APK asset is attached (EAS build otherwise).
+            <code className="mono">.exe</code>. <strong>Mac:</strong>{" "}
+            <code className="mono">.dmg</code> from the companion Release.{" "}
+            <strong>Web:</strong> open instantly. <strong>Android:</strong>{" "}
+            sideload APK when attached (point Chat at Ollama on your PC if
+            needed).
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
             <a className="btn" href={COMPANION_WINDOWS_URL}>
               Download Windows (.exe)
+            </a>
+            <a className="btn" href={COMPANION_MAC_URL}>
+              Download Mac (.dmg)
             </a>
             <a className="btn" href={COMPANION_WEB_URL}>
               Open web companion
@@ -248,7 +257,7 @@ export default function DownloadPage() {
               Android sideload notes
             </a>
             <a className="btn btn-quiet" href="/guides/companion-app.md">
-              Build notes
+              Local AI + build notes
             </a>
           </div>
         </div>

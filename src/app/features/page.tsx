@@ -51,11 +51,11 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
-            <strong>Windows · iOS · Android companion</strong>
+            <strong>Windows · Mac · Android companion</strong>
             <span>
-              Secondary Expo app (<code className="mono">nexus-app/</code>) with
-              Chat, Vault, Packs, and Files — matrix boot splash and rabbit logo.
-              Android APK sideload via Releases. See{" "}
+              Normal app (<code className="mono">nexus-app/</code>) with real
+              local AI Chat via Ollama, Vault, Packs, and Files — matrix boot
+              splash, rabbit logo, and desktop icon. See{" "}
               <Link href="/download#companion">Download → Companion</Link>.
             </span>
           </li>
