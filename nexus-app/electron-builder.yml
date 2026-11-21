@@ -4,8 +4,8 @@ copyright: Copyright © 2026 NEXUS OS
 directories:
   output: release
   buildResources: assets/brand
+# Only ship the desktop shell + web UI — never the Expo/RN node_modules tree.
 files:
-  # Include the whole Electron shell (Browse + desktop launcher modules).
   - electron/**/*
   - dist-web/**/*
   - assets/brand/icon.png
@@ -13,11 +13,19 @@ files:
   - assets/brand/icon.icns
   - assets/brand/logo-mark.png
   - package.json
+  - "!**/node_modules/**"
+  - "!node_modules"
+  - "!node_modules/**/*"
+asar: true
+# Unpack Electron shell so sibling HTML/JS always resolve as real files.
+asarUnpack:
+  - electron/**/*
 extraMetadata:
   main: electron/main.js
+  # Prevent electron-builder from pulling Expo deps into the desktop package.
+  dependencies: {}
 extraResources: []
 win:
-  # 512 PNG — electron-builder converts to ICO (≥256 required)
   icon: icon.png
   target:
     - target: portable
@@ -30,7 +38,6 @@ win:
       arch:
         - x64
 portable:
-  # Persist next to the .exe when used outside a full kit
   requestExecutionLevel: user
   artifactName: NEXUS-Companion-Windows-${version}-portable.exe
 nsis:

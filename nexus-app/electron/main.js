@@ -1,7 +1,8 @@
 /**
  * Desktop shell for NEXUS Companion (Windows · macOS).
  * Portable USB mode: settings / Vault / chats live under the kit Data/ folder.
- * Browse: themed in-app window + detect installed system browsers.
+ * Browse + desktop launcher helpers are inlined here so packaging cannot
+ * omit a sibling require() and crash the main process.
  */
 const {
   app,
@@ -14,20 +15,16 @@ const {
 } = require("electron");
 const path = require("path");
 const fs = require("fs");
+const { spawn } = require("child_process");
 const { applyPortablePaths, ensureDir } = require("./portable");
-const { addLaunchers } = require("./desktop-launcher");
 
-/** Browse helpers — degrade gracefully if packaging omitted the module. */
-let detectBrowsers = () => [];
-let openInBrowser = (_browser, url) => {
-  void shell.openExternal(url);
-  return { ok: true, mode: "external-default" };
-};
-try {
-  ({ detectBrowsers, openInBrowser } = require("./browsers"));
-} catch (e) {
-  console.error("NEXUS: browsers module missing — Browse handoff limited", e);
-}
+const APP_VERSION = (() => {
+  try {
+    return require("../package.json").version || "0.12.3";
+  } catch {
+    return "0.12.3";
+  }
+})();
 
 /** Must run before ready — redirects userData onto the USB kit. */
 const portableInfo = applyPortablePaths(app);
@@ -38,6 +35,7 @@ const startUrl =
   (isDev ? "http://127.0.0.1:8081" : null);
 
 const iconPath = path.join(__dirname, "..", "assets", "brand", "icon.png");
+const iconIcoPath = path.join(__dirname, "..", "assets", "brand", "icon.ico");
 
 function resolveIcon() {
   if (fs.existsSync(iconPath)) {
@@ -45,6 +43,330 @@ function resolveIcon() {
   }
   return undefined;
 }
+
+function fileExists(p) {
+  try {
+    return Boolean(p) && fs.existsSync(p);
+  } catch {
+    return false;
+  }
+}
+
+/* ─── Browser detection (inlined) ───────────────────────────────────── */
+
+function winBrowserCandidates() {
+  const local = process.env.LOCALAPPDATA || "";
+  const pf = process.env.PROGRAMFILES || "C:\\Program Files";
+  const pf86 = process.env["PROGRAMFILES(X86)"] || "C:\\Program Files (x86)";
+  return [
+    {
+      id: "edge",
+      name: "Microsoft Edge",
+      paths: [
+        path.join(pf, "Microsoft", "Edge", "Application", "msedge.exe"),
+        path.join(pf86, "Microsoft", "Edge", "Application", "msedge.exe"),
+      ],
+      appMode: true,
+    },
+    {
+      id: "chrome",
+      name: "Google Chrome",
+      paths: [
+        path.join(pf, "Google", "Chrome", "Application", "chrome.exe"),
+        path.join(pf86, "Google", "Chrome", "Application", "chrome.exe"),
+        path.join(local, "Google", "Chrome", "Application", "chrome.exe"),
+      ],
+      appMode: true,
+    },
+    {
+      id: "brave",
+      name: "Brave",
+      paths: [
+        path.join(
+          pf,
+          "BraveSoftware",
+          "Brave-Browser",
+          "Application",
+          "brave.exe",
+        ),
+        path.join(
+          local,
+          "BraveSoftware",
+          "Brave-Browser",
+          "Application",
+          "brave.exe",
+        ),
+      ],
+      appMode: true,
+    },
+    {
+      id: "firefox",
+      name: "Mozilla Firefox",
+      paths: [
+        path.join(pf, "Mozilla Firefox", "firefox.exe"),
+        path.join(pf86, "Mozilla Firefox", "firefox.exe"),
+      ],
+      appMode: false,
+    },
+    {
+      id: "opera",
+      name: "Opera",
+      paths: [
+        path.join(pf, "Opera", "opera.exe"),
+        path.join(local, "Programs", "Opera", "opera.exe"),
+      ],
+      appMode: true,
+    },
+  ];
+}
+
+function macBrowserCandidates() {
+  return [
+    {
+      id: "safari",
+      name: "Safari",
+      paths: ["/Applications/Safari.app"],
+      appMode: false,
+    },
+    {
+      id: "chrome",
+      name: "Google Chrome",
+      paths: ["/Applications/Google Chrome.app"],
+      appMode: true,
+    },
+    {
+      id: "edge",
+      name: "Microsoft Edge",
+      paths: ["/Applications/Microsoft Edge.app"],
+      appMode: true,
+    },
+    {
+      id: "brave",
+      name: "Brave",
+      paths: ["/Applications/Brave Browser.app"],
+      appMode: true,
+    },
+    {
+      id: "firefox",
+      name: "Mozilla Firefox",
+      paths: ["/Applications/Firefox.app"],
+      appMode: false,
+    },
+    {
+      id: "opera",
+      name: "Opera",
+      paths: ["/Applications/Opera.app"],
+      appMode: true,
+    },
+  ];
+}
+
+function detectBrowsers() {
+  const list =
+    process.platform === "darwin"
+      ? macBrowserCandidates()
+      : process.platform === "win32"
+        ? winBrowserCandidates()
+        : [];
+  const found = [];
+  for (const c of list) {
+    const hit = c.paths.find(fileExists);
+    if (hit) {
+      found.push({
+        id: c.id,
+        name: c.name,
+        path: hit,
+        appMode: Boolean(c.appMode),
+      });
+    }
+  }
+  return found;
+}
+
+function openInBrowser(browser, url, { appWindow = true } = {}) {
+  if (!browser?.path) {
+    void shell.openExternal(url);
+    return { ok: true, mode: "external-default" };
+  }
+
+  if (process.platform === "darwin") {
+    if (browser.id === "safari") {
+      spawn("open", ["-a", "Safari", url], {
+        detached: true,
+        stdio: "ignore",
+      }).unref();
+      return { ok: true, mode: "safari" };
+    }
+    if (appWindow && browser.appMode) {
+      const bin = path.join(browser.path, "Contents", "MacOS");
+      let exe = null;
+      try {
+        const names = fs.readdirSync(bin);
+        exe = names[0] ? path.join(bin, names[0]) : null;
+      } catch {
+        exe = null;
+      }
+      if (exe) {
+        spawn(exe, [`--app=${url}`], {
+          detached: true,
+          stdio: "ignore",
+        }).unref();
+        return { ok: true, mode: "app-window" };
+      }
+    }
+    spawn("open", ["-a", browser.path, url], {
+      detached: true,
+      stdio: "ignore",
+    }).unref();
+    return { ok: true, mode: "open-a" };
+  }
+
+  if (process.platform === "win32") {
+    const args = appWindow && browser.appMode ? [`--app=${url}`] : [url];
+    spawn(browser.path, args, { detached: true, stdio: "ignore" }).unref();
+    return {
+      ok: true,
+      mode: appWindow && browser.appMode ? "app-window" : "browser",
+    };
+  }
+
+  void shell.openExternal(url);
+  return { ok: true, mode: "external-default" };
+}
+
+/* ─── Desktop / Start Menu launchers (inlined) ──────────────────────── */
+
+function resolveAppTarget() {
+  if (process.platform === "darwin") {
+    const execDir = path.dirname(process.execPath);
+    const bundle = path.resolve(execDir, "..", "..");
+    if (bundle.endsWith(".app") && fileExists(bundle)) {
+      return { target: bundle, cwd: path.dirname(bundle) };
+    }
+  }
+  return {
+    target: process.execPath,
+    cwd: path.dirname(process.execPath),
+  };
+}
+
+function writeWinShortcut(linkPath, { target, cwd, description }) {
+  const icon = fileExists(iconIcoPath) ? iconIcoPath : target;
+  return shell.writeShortcutLink(linkPath, {
+    target,
+    cwd,
+    description: description || "NEXUS Companion",
+    icon,
+    iconIndex: 0,
+    appUserModelId: "bot.grok.nexus.companion",
+  });
+}
+
+function addLaunchers() {
+  const created = [];
+  const { target, cwd } = resolveAppTarget();
+
+  try {
+    if (process.platform === "win32") {
+      const desktop = path.join(app.getPath("desktop"), "NEXUS Companion.lnk");
+      if (
+        writeWinShortcut(desktop, {
+          target,
+          cwd,
+          description: "NEXUS Companion — local AI Chat",
+        })
+      ) {
+        created.push(desktop);
+      }
+
+      const programs = path.join(
+        app.getPath("appData"),
+        "Microsoft",
+        "Windows",
+        "Start Menu",
+        "Programs",
+      );
+      ensureDir(programs);
+      const startMenu = path.join(programs, "NEXUS Companion.lnk");
+      if (
+        writeWinShortcut(startMenu, {
+          target,
+          cwd,
+          description: "NEXUS Companion",
+        })
+      ) {
+        created.push(startMenu);
+      }
+
+      return {
+        ok: created.length > 0,
+        desktop,
+        startMenu,
+        created,
+        error: created.length ? undefined : "Could not write shortcut links.",
+      };
+    }
+
+    if (process.platform === "darwin") {
+      const desktop = app.getPath("desktop");
+      const aliasPath = path.join(desktop, "NEXUS Companion");
+      try {
+        if (fileExists(aliasPath)) fs.rmSync(aliasPath, { recursive: true });
+      } catch {
+        /* ignore */
+      }
+      const script = `tell application "Finder" to make alias file to POSIX file ${JSON.stringify(
+        target,
+      )} at POSIX file ${JSON.stringify(desktop)}`;
+      spawn("osascript", ["-e", script], {
+        detached: true,
+        stdio: "ignore",
+      }).unref();
+      created.push(aliasPath);
+
+      const cmd = path.join(desktop, "NEXUS Companion.command");
+      fs.writeFileSync(cmd, `#!/bin/bash\nopen ${JSON.stringify(target)}\n`, {
+        mode: 0o755,
+      });
+      created.push(cmd);
+      return { ok: true, desktop: aliasPath, created };
+    }
+
+    const desktopDir = app.getPath("desktop");
+    const icon = fileExists(iconPath) ? iconPath : target;
+    const entry = `[Desktop Entry]
+Type=Application
+Name=NEXUS Companion
+Comment=Local AI Chat for NEXUS OS
+Exec=${JSON.stringify(target)}
+Icon=${icon}
+Terminal=false
+Categories=Utility;
+`;
+    const desktopFile = path.join(desktopDir, "nexus-companion.desktop");
+    fs.writeFileSync(desktopFile, entry, { mode: 0o755 });
+    created.push(desktopFile);
+    const apps = path.join(
+      app.getPath("home"),
+      ".local",
+      "share",
+      "applications",
+    );
+    ensureDir(apps);
+    const appFile = path.join(apps, "nexus-companion.desktop");
+    fs.writeFileSync(appFile, entry, { mode: 0o755 });
+    created.push(appFile);
+    return { ok: true, desktop: desktopFile, startMenu: appFile, created };
+  } catch (e) {
+    return {
+      ok: false,
+      created,
+      error: e instanceof Error ? e.message : "launcher failed",
+    };
+  }
+}
+
+/* ─── App shell ─────────────────────────────────────────────────────── */
 
 app.setName("NEXUS Companion");
 if (process.platform === "win32") {
@@ -143,7 +465,6 @@ ipcMain.handle("nexus:import-to-usb", async (event) => {
       return {
         ok: false,
         error: e instanceof Error ? e.message : "copy failed",
-        copied,
       };
     }
   }
@@ -157,7 +478,6 @@ ipcMain.handle("nexus:export-chat", async (_event, args) => {
       args?.filename || `nexus-chat-${Date.now()}.md`,
     ).replace(/[^\w.\-]+/g, "_");
     if (!text) return { ok: false, error: "Empty chat." };
-
     const dir =
       portableInfo.chatsDir ||
       path.join(app.getPath("documents"), "NEXUS-Chats");
@@ -180,16 +500,13 @@ ipcMain.handle("nexus:open-path", async (_event, args) => {
   return { ok: !err, error: err || undefined };
 });
 
-/** Save a generated PNG — prefer USB Files/Images when portable. */
 ipcMain.handle("nexus:save-image", async (_event, args) => {
   try {
     const base64 = String(args?.base64 || "");
-    const filename = String(args?.filename || `nexus-${Date.now()}.png`).replace(
-      /[^\w.\-]+/g,
-      "_",
-    );
+    const filename = String(
+      args?.filename || `nexus-${Date.now()}.png`,
+    ).replace(/[^\w.\-]+/g, "_");
     if (!base64) return { ok: false, error: "Empty image." };
-
     const dir =
       portableInfo.imagesDir ||
       app.getPath("pictures") ||
@@ -197,7 +514,10 @@ ipcMain.handle("nexus:save-image", async (_event, args) => {
       app.getPath("home");
     ensureDir(dir);
     const outPath = path.join(dir, filename);
-    fs.writeFileSync(outPath, Buffer.from(base64, "base64"));
+    const raw = base64.includes("base64,")
+      ? base64.slice(base64.indexOf("base64,") + 7)
+      : base64;
+    fs.writeFileSync(outPath, Buffer.from(raw, "base64"));
     return { ok: true, path: outPath };
   } catch (e) {
     return {
@@ -208,6 +528,7 @@ ipcMain.handle("nexus:save-image", async (_event, args) => {
 });
 
 const BROWSE_CHROME = 56;
+
 const browsePrefsPath = () =>
   path.join(app.getPath("userData"), "browse-prefs.json");
 
@@ -285,7 +606,7 @@ function createBrowseWindow(rawUrl, themeId = "spatial") {
     minWidth: 640,
     minHeight: 480,
     backgroundColor: themeBackground(themeId),
-    title: "NEXUS Browse",
+    title: `NEXUS Browse · ${APP_VERSION}`,
     frame: false,
     show: false,
     icon,
@@ -396,9 +717,7 @@ ipcMain.on("browse:window", (event, action) => {
 ipcMain.handle("nexus:open-browse", async (_event, args) => {
   const url = String(args?.url || "https://duckduckgo.com").trim();
   const prefs = readBrowsePrefs();
-  const themeId = String(
-    args?.themeId || prefs.lastThemeId || "spatial",
-  );
+  const themeId = String(args?.themeId || prefs.lastThemeId || "spatial");
   if (args?.themeId) {
     writeBrowsePrefs({ ...prefs, lastThemeId: String(args.themeId) });
   }
@@ -442,6 +761,19 @@ ipcMain.handle("nexus:add-to-desktop", async () => {
   }
 });
 
+ipcMain.handle("nexus:app-version", async () => ({
+  ok: true,
+  version: APP_VERSION,
+  packaged: app.isPackaged,
+}));
+
+function windowTitle() {
+  const base = portableInfo.portable
+    ? "NEXUS Companion — USB"
+    : "NEXUS Companion";
+  return `${base} ${APP_VERSION}`;
+}
+
 function createWindow() {
   const icon = resolveIcon();
   const win = new BrowserWindow({
@@ -450,9 +782,7 @@ function createWindow() {
     minWidth: 420,
     minHeight: 640,
     backgroundColor: "#040804",
-    title: portableInfo.portable
-      ? "NEXUS Companion — USB"
-      : "NEXUS Companion",
+    title: windowTitle(),
     autoHideMenuBar: true,
     show: false,
     icon,
@@ -501,7 +831,6 @@ app.whenReady().then(async () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 
-  // One-time offer: Desktop + Start Menu launcher with NEXUS icon thumbnail.
   try {
     const flag = path.join(
       app.getPath("userData"),
@@ -513,7 +842,7 @@ app.whenReady().then(async () => {
         buttons: ["Add to Desktop", "Not now"],
         defaultId: 0,
         cancelId: 1,
-        title: "NEXUS Companion",
+        title: `NEXUS Companion ${APP_VERSION}`,
         message: "Add NEXUS Companion to your Desktop?",
         detail:
           "Creates a Desktop shortcut and Start Menu / Applications launcher with the NEXUS icon so you can open Companion like a normal app.",
@@ -523,7 +852,7 @@ app.whenReady().then(async () => {
       }
       fs.writeFileSync(
         flag,
-        JSON.stringify({ at: new Date().toISOString() }),
+        JSON.stringify({ at: new Date().toISOString(), version: APP_VERSION }),
         "utf8",
       );
     }

@@ -8,8 +8,8 @@ a Play Store listing (yet). Source: [`nexus-app/`](../../nexus-app/).
 1. One-click from the site
    [Download → Companion](/download#companion) → **Download Android (.apk)**,
    or grab
-   [NEXUS-Companion-Android-0.12.2.apk](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Android-0.12.2.apk)
-   from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.2).
+   [NEXUS-Companion-Android-0.12.3.apk](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-Android-0.12.3.apk)
+   from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.3).
 2. On the phone: open the file → allow **Install unknown apps** for your
    browser/Files app if Android asks.
 3. Open NEXUS Companion → wait for the matrix boot splash → use Chat / Vault /

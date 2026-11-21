@@ -110,29 +110,29 @@ export const BUILD_NOTE =
   "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), NEXUS Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), or the Companion USB portable kit (carry Chat + Vault on a stick). Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
 
 /** Companion app — Chat/Vault/Packs with local AI (not the bootable OS). */
-export const COMPANION_VERSION = "0.12.2";
+export const COMPANION_VERSION = "0.12.3";
 
 export const COMPANION_RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.2";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.3";
 
 /** Preferred Windows install — creates Desktop + Start Menu shortcuts with icon. */
 export const COMPANION_WINDOWS_SETUP_URL =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-setup.exe";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-Windows-0.12.3-setup.exe";
 
 export const COMPANION_WINDOWS_URL =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-setup.exe";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-Windows-0.12.3-setup.exe";
 
 export const COMPANION_WINDOWS_PORTABLE_URL =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-portable.exe";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-Windows-0.12.3-portable.exe";
 
 export const COMPANION_MAC_URL =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.2";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.3";
 
 export const COMPANION_USB_URL =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-USB-0.12.2.zip";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-USB-0.12.3.zip";
 
 export const COMPANION_ANDROID_URL =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Android-0.12.2.apk";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-Android-0.12.3.apk";
 
 export const COMPANION_WEB_URL = "/companion/";
 
