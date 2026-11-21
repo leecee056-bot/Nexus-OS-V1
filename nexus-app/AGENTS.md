@@ -31,6 +31,9 @@
 - Desktop: Electron proxies Ollama; icons in `assets/brand/icon.{png,ico,icns}`.
 - Browse (desktop): `electron/browsers.js` + `browse-shell.html` + BrowserView;
   UI `BrowsePanel` / `src/browse/api.ts`. Guide: companion-browse.md.
+- Add-ons marketplace: `src/plugins/marketplace/` — pages of one-click mini
+  apps installed into Files (`apps/…`) plus a few official download links.
+  UI on PluginsScreen. Guide: companion-addons.md.
 - Site: `/download#companion`, `/download#companion-usb`,
   `public/guides/companion-agent.md`, `companion-image.md`,
   `companion-updates.md`, `companion-usb.md`, `companion-browse.md`.

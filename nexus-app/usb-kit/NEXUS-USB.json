@@ -1,6 +1,6 @@
 {
   "kind": "companion-usb",
   "product": "NEXUS Companion",
-  "version": "0.12.0",
-  "blurb": "Portable offline Companion \u2014 Spatial theme, Browse, Desk, Vault, chats, Games on this drive."
+  "version": "0.12.1",
+  "blurb": "Portable offline Companion \u2014 Spatial, Browse, Add-ons marketplace, Desk, Vault on this drive."
 }

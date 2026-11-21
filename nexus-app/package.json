@@ -1,7 +1,7 @@
 {
   "name": "nexus-companion",
-  "version": "0.12.0",
-  "description": "NEXUS Companion — Spatial theme, Browse window, offline-first local AI",
+  "version": "0.12.1",
+  "description": "NEXUS Companion — Spatial theme, Browse, one-click Add-ons marketplace",
   "author": "NEXUS OS",
   "main": "index.ts",
   "dependencies": {
