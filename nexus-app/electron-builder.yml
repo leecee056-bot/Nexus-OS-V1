@@ -5,12 +5,12 @@ directories:
   output: release
   buildResources: assets/brand
 files:
-  - electron/main.js
-  - electron/preload.js
-  - electron/portable.js
+  # Include the whole Electron shell (Browse + desktop launcher modules).
+  - electron/**/*
   - dist-web/**/*
   - assets/brand/icon.png
   - assets/brand/icon.ico
+  - assets/brand/icon.icns
   - assets/brand/logo-mark.png
   - package.json
 extraMetadata:
@@ -23,13 +23,28 @@ win:
     - target: portable
       arch:
         - x64
+    - target: nsis
+      arch:
+        - x64
     - target: dir
       arch:
         - x64
-  artifactName: NEXUS-Companion-Windows-${version}-portable.exe
 portable:
   # Persist next to the .exe when used outside a full kit
   requestExecutionLevel: user
+  artifactName: NEXUS-Companion-Windows-${version}-portable.exe
+nsis:
+  oneClick: true
+  perMachine: false
+  allowToChangeInstallationDirectory: false
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: NEXUS Companion
+  installerIcon: icon.ico
+  uninstallerIcon: icon.ico
+  installerHeaderIcon: icon.ico
+  runAfterFinish: true
+  artifactName: NEXUS-Companion-Windows-${version}-setup.exe
 mac:
   icon: icon.icns
   category: public.app-category.productivity

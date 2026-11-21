@@ -11,5 +11,6 @@ contextBridge.exposeInMainWorld("nexus", {
   listBrowsers: () => ipcRenderer.invoke("nexus:list-browsers"),
   setBrowsePrefs: (args) => ipcRenderer.invoke("nexus:set-browse-prefs", args),
   openBrowse: (args) => ipcRenderer.invoke("nexus:open-browse", args),
+  addToDesktop: () => ipcRenderer.invoke("nexus:add-to-desktop"),
   platform: process.platform,
 });

@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BrowsePanel } from "../components/BrowsePanel";
+import { DesktopLauncherPanel } from "../components/DesktopLauncherPanel";
 import { GetStartedPanel } from "../components/GetStartedPanel";
 import { GlowPanel } from "../components/GlowPanel";
 import { OfflineGuidesPanel } from "../components/OfflineGuidesPanel";
@@ -146,6 +147,8 @@ export function HomeScreen() {
           <ShellModePicker onChange={setShell} />
         </GlowPanel>
       ) : null}
+
+      <DesktopLauncherPanel />
 
       <PortableUsbPanel />
 

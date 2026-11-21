@@ -25,7 +25,7 @@ jobs:
       - run: npm ci
       - run: npx expo export -p web --output-dir dist-web
       - run: npm install --no-save electron electron-builder
-      - run: npx electron-builder --win portable dir --x64 --config electron-builder.yml
+      - run: npx electron-builder --win portable nsis dir --x64 --config electron-builder.yml
       - uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
@@ -154,7 +154,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         with:
           # On manual dispatch, attach to the current Companion release tag.
-          tag_name: ${{ github.event_name == 'workflow_dispatch' && 'companion-v0.12.1' || github.ref_name }}
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && 'companion-v0.12.2' || github.ref_name }}
           files: nexus-app/release/NEXUS-Companion-Android-*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

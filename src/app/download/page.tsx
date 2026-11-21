@@ -14,6 +14,7 @@ import {
   COMPANION_USB_URL,
   COMPANION_VERSION,
   COMPANION_WEB_URL,
+  COMPANION_WINDOWS_PORTABLE_URL,
   COMPANION_WINDOWS_URL,
   PI_ARTIFACTS,
   PI_RELEASE_PAGE,
@@ -233,17 +234,21 @@ export default function DownloadPage() {
             <a href="https://ollama.com/download">Ollama</a>, then chat offline.
             Current release builds (v{COMPANION_VERSION}) include{" "}
             <strong>Spatial / Open</strong> theme, desktop <strong>Browse</strong>{" "}
-            window, one-click <strong>Add-ons marketplace</strong>, offline-first
-            Chat (website optional), a <strong>USB portable kit</strong>, rabbit{" "}
-            <strong>grafting</strong> wait animation, desktop{" "}
-            <strong>Image Lab</strong> + low-memory <strong>Games</strong> (Chess
-            first), Terminal CRT / Desk layout, Agent mode, and{" "}
+            window, one-click <strong>Add-ons marketplace</strong>,{" "}
+            <strong>Desktop / Start Menu launcher</strong> with NEXUS icon,
+            offline-first Chat (website optional), a{" "}
+            <strong>USB portable kit</strong>, rabbit <strong>grafting</strong>{" "}
+            wait animation, desktop <strong>Image Lab</strong> + low-memory{" "}
+            <strong>Games</strong> (Chess first), Terminal CRT / Desk layout,
+            Agent mode, and{" "}
             <strong>Basic / Matrix / Lumen / Terminal / Spatial</strong> themes.
             Vault, Packs, Plugins, Files, and the NEXUS icon on phone + tablet
             Android (Games / Image Lab / Browse stay desktop / web).
           </p>
           <p style={{ marginTop: "0.75rem" }}>
-            <strong>Windows:</strong> one-click portable{" "}
+            <strong>Windows:</strong> use the{" "}
+            <code className="mono">-setup.exe</code> installer (Desktop + Start
+            Menu shortcuts with icon), or the portable{" "}
             <code className="mono">.exe</code>. <strong>Mac:</strong>{" "}
             <code className="mono">.dmg</code> from the companion Release.{" "}
             <strong>Web:</strong> open instantly. <strong>Android:</strong>{" "}
@@ -251,7 +256,10 @@ export default function DownloadPage() {
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
             <a className="btn" href={COMPANION_WINDOWS_URL}>
-              Download Windows (.exe)
+              Download Windows setup (.exe)
+            </a>
+            <a className="btn btn-ghost" href={COMPANION_WINDOWS_PORTABLE_URL}>
+              Windows portable (.exe)
             </a>
             <a className="btn" href={COMPANION_MAC_URL}>
               Download Mac (.dmg)

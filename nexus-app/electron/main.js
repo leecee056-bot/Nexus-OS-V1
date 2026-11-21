@@ -15,7 +15,19 @@ const {
 const path = require("path");
 const fs = require("fs");
 const { applyPortablePaths, ensureDir } = require("./portable");
-const { detectBrowsers, openInBrowser } = require("./browsers");
+const { addLaunchers } = require("./desktop-launcher");
+
+/** Browse helpers — degrade gracefully if packaging omitted the module. */
+let detectBrowsers = () => [];
+let openInBrowser = (_browser, url) => {
+  void shell.openExternal(url);
+  return { ok: true, mode: "external-default" };
+};
+try {
+  ({ detectBrowsers, openInBrowser } = require("./browsers"));
+} catch (e) {
+  console.error("NEXUS: browsers module missing — Browse handoff limited", e);
+}
 
 /** Must run before ready — redirects userData onto the USB kit. */
 const portableInfo = applyPortablePaths(app);
@@ -404,8 +416,30 @@ ipcMain.handle("nexus:open-browse", async (_event, args) => {
     return { ok: true, ...result, browser: browser?.id || null };
   }
 
+  const shellFile = path.join(__dirname, "browse-shell.html");
+  if (!fs.existsSync(shellFile)) {
+    void shell.openExternal(url);
+    return {
+      ok: true,
+      mode: "external-default",
+      error: "Browse shell missing from this build — opened system browser.",
+    };
+  }
+
   createBrowseWindow(url, themeId);
   return { ok: true, mode: "window" };
+});
+
+ipcMain.handle("nexus:add-to-desktop", async () => {
+  try {
+    return addLaunchers();
+  } catch (e) {
+    return {
+      ok: false,
+      created: [],
+      error: e instanceof Error ? e.message : "launcher failed",
+    };
+  }
 });
 
 function createWindow() {
@@ -457,7 +491,7 @@ function createWindow() {
   }
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   if (process.platform === "darwin") {
     const icon = resolveIcon();
     if (icon) app.dock?.setIcon(icon);
@@ -466,6 +500,36 @@ app.whenReady().then(() => {
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+
+  // One-time offer: Desktop + Start Menu launcher with NEXUS icon thumbnail.
+  try {
+    const flag = path.join(
+      app.getPath("userData"),
+      "desktop-launcher-offered.json",
+    );
+    if (!fs.existsSync(flag)) {
+      const { response } = await dialog.showMessageBox({
+        type: "question",
+        buttons: ["Add to Desktop", "Not now"],
+        defaultId: 0,
+        cancelId: 1,
+        title: "NEXUS Companion",
+        message: "Add NEXUS Companion to your Desktop?",
+        detail:
+          "Creates a Desktop shortcut and Start Menu / Applications launcher with the NEXUS icon so you can open Companion like a normal app.",
+      });
+      if (response === 0) {
+        addLaunchers();
+      }
+      fs.writeFileSync(
+        flag,
+        JSON.stringify({ at: new Date().toISOString() }),
+        "utf8",
+      );
+    }
+  } catch (e) {
+    console.warn("desktop launcher offer", e);
+  }
 });
 
 app.on("window-all-closed", () => {

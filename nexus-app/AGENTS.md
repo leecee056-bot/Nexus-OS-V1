@@ -29,6 +29,10 @@
   kit template in `usb-kit/`; pack with `npm run pack:usb`. Guide:
   companion-usb.md. Chat history persists via `src/chat/history.ts`.
 - Desktop: Electron proxies Ollama; icons in `assets/brand/icon.{png,ico,icns}`.
+  `electron-builder.yml` must ship **all** of `electron/**/*` (Browse +
+  `desktop-launcher.js`). Windows targets: `nsis` setup (Desktop + Start Menu
+  shortcuts) and `portable`. In-app **Add to Desktop** via
+  `nexus:add-to-desktop` / `DesktopLauncherPanel`.
 - Browse (desktop): `electron/browsers.js` + `browse-shell.html` + BrowserView;
   UI `BrowsePanel` / `src/browse/api.ts`. Guide: companion-browse.md.
 - Add-ons marketplace: `src/plugins/marketplace/` — pages of one-click mini
