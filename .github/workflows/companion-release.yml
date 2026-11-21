@@ -127,15 +127,34 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - uses: android-actions/setup-android@v3
+      # GitHub-hosted runners already ship an Android SDK; avoid
+      # android-actions/setup-android (breaks on missing legacy `tools` package).
+      - name: Accept Android licenses + ensure platform packages
+        run: |
+          echo "ANDROID_HOME=${ANDROID_HOME:-}"
+          echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT:-}"
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          echo "SDK=$SDK"
+          yes | "$SDK/cmdline-tools/latest/bin/sdkmanager" --licenses >/tmp/sdk-licenses.txt || \
+          yes | sdkmanager --licenses >/tmp/sdk-licenses.txt || true
+          CMD="$SDK/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$CMD" ]; then
+            # Fall back to any cmdline-tools/*/bin/sdkmanager on the runner
+            CMD="$(find "$SDK/cmdline-tools" -type f -name sdkmanager 2>/dev/null | head -n 1)"
+          fi
+          echo "Using sdkmanager=$CMD"
+          yes | "$CMD" "platform-tools" "platforms;android-35" "build-tools;35.0.0" || \
+          yes | "$CMD" "platform-tools" "platforms;android-34" "build-tools;34.0.0"
       - run: npm ci
       - name: Build sideload APK (local Gradle — no EXPO_TOKEN)
         run: |
           chmod +x scripts/build-android-apk.sh
           ./scripts/build-android-apk.sh
       - uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         with:
+          # On manual dispatch, attach to the current Companion release tag.
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && 'companion-v0.10.0' || github.ref_name }}
           files: nexus-app/release/NEXUS-Companion-Android-*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
