@@ -107,4 +107,18 @@ export const CARDPUTER_ARTIFACTS = [
 ] as const;
 
 export const BUILD_NOTE =
-  "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), NEXUS Pocket for ESP32-S3 with PSRAM, or Cardputer ADV firmware for the M5Stack pocket device. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
+  "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), NEXUS Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, or the Companion apps (Windows one-click / Android APK / web). Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
+
+/** Companion app — secondary windowed Chat/Vault/Packs (not the bootable OS). */
+export const COMPANION_VERSION = "0.3.0";
+
+export const COMPANION_RELEASE_PAGE =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.3.0";
+
+export const COMPANION_WINDOWS_URL =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.3.0/NEXUS-Companion-Windows-0.3.0-portable.exe";
+
+export const COMPANION_WEB_URL = "/companion/";
+
+export const COMPANION_ANDROID_NOTES =
+  "https://nexus-os.apps.grok.bot/guides/android-apk.md";

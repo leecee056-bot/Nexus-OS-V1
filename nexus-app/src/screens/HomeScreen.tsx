@@ -2,110 +2,95 @@ import {
   Image,
   Linking,
   Platform,
-  ScrollView,
+  Pressable,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { MatrixRain } from "../components/MatrixRain";
+import { ScreenShell } from "../components/ScreenShell";
+import { GlowPanel } from "../components/GlowPanel";
+import { useCompanionLayout } from "../layout";
 import { colors, spacing } from "../theme";
 
 export function HomeScreen() {
+  const { isTablet, heroMascot } = useCompanionLayout();
+
   return (
-    <View style={styles.root}>
-      <MatrixRain dimmed />
-      <LinearGradient
-        colors={["rgba(4,8,4,0.55)", "rgba(4,8,4,0.92)", "#040804"]}
-        style={StyleSheet.absoluteFill}
-      />
-      <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.heroRow}>
-          <Image
-            source={require("../../assets/brand/nexus-rabbit-wizard.png")}
-            style={styles.mascot}
-            resizeMode="contain"
-          />
-          <View style={styles.heroText}>
-            <Text style={styles.brand}>NEXUS OS</Text>
-            <Text style={styles.title}>Companion</Text>
-            <Text style={styles.lede}>
-              Offline-first Chat, Vault, and Files — without flashing a USB
-              stick. {Platform.OS === "android" ? "Built for Android APK sideload." : "Also on Windows / iOS."}
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.panel}>
-          <Text style={styles.panelTitle}>Secondary target</Text>
-          <Text style={styles.body}>
-            The main project remains the bootable USB / Pi images and Cardputer /
-            Pocket firmware. This app is the easier path: same vibe, windowed UI,
-            optional knowledge packs on Android.
+    <ScreenShell rain>
+      <View style={[styles.heroRow, isTablet && styles.heroRowTablet]}>
+        <Image
+          source={require("../../assets/brand/nexus-rabbit-wizard.png")}
+          style={{ width: heroMascot.w, height: heroMascot.h }}
+          resizeMode="contain"
+        />
+        <View style={styles.heroText}>
+          <Text style={[styles.brand, isTablet && styles.brandLg]}>NEXUS OS</Text>
+          <Text style={styles.title}>Companion</Text>
+          <Text style={styles.lede}>
+            Offline-first Chat, Vault, Packs, and Files — phone and tablet ready.
+            {Platform.OS === "android"
+              ? " Sideload the APK; no Play Store required."
+              : " One-click downloads on the site when a build is published."}
           </Text>
         </View>
+      </View>
 
-        <View style={styles.panel}>
-          <Text style={styles.panelTitle}>What is in v0.2</Text>
-          <Text style={styles.body}>
-            • Matrix boot splash with the rabbit-wizard logo{"\n"}
-            • Chat — lightweight offline phrase stub{"\n"}
-            • Vault — searchable on-device notes{"\n"}
-            • Packs — open Kiwix / Gutenberg, import .txt/.md{"\n"}
-            • Files — import documents from the device
-          </Text>
-        </View>
+      <GlowPanel title="Secondary target">
+        The bootable USB / Pi images and Cardputer / Pocket firmware stay primary.
+        This app is the stylish, installable path with the same matrix vibe.
+      </GlowPanel>
 
-        <Text
-          style={styles.link}
-          onPress={() => Linking.openURL("https://nexus-os.apps.grok.bot/")}
-        >
-          Product site →
+      <GlowPanel title="What’s inside" accent="purple">
+        <Text style={styles.body}>
+          • Matrix boot splash + rabbit-wizard logo{"\n"}
+          • Chat — lightweight offline phrase stub{"\n"}
+          • Vault — searchable on-device notes{"\n"}
+          • Packs — Kiwix / Gutenberg → import .txt/.md{"\n"}
+          • Files — import documents from the device{"\n"}
+          • Phone bottom tabs · tablet side rail
         </Text>
-        <Text
-          style={styles.link}
+      </GlowPanel>
+
+      <View style={styles.actions}>
+        <Pressable
+          style={styles.btn}
+          onPress={() =>
+            Linking.openURL("https://nexus-os.apps.grok.bot/download#companion")
+          }
+        >
+          <Text style={styles.btnText}>Get downloads</Text>
+        </Pressable>
+        <Pressable
+          style={styles.btnGhost}
           onPress={() =>
             Linking.openURL("https://nexus-os.apps.grok.bot/knowledge-packs")
           }
         >
-          Optional Knowledge Packs →
-        </Text>
-        {Platform.OS === "android" ? (
-          <Text
-            style={styles.link}
-            onPress={() =>
-              Linking.openURL(
-                "https://nexus-os.apps.grok.bot/guides/android-apk.md",
-              )
-            }
-          >
-            Install APK / sideload notes →
-          </Text>
-        ) : null}
-      </ScrollView>
-    </View>
+          <Text style={styles.btnGhostText}>Knowledge packs</Text>
+        </Pressable>
+      </View>
+    </ScreenShell>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: spacing.lg, paddingBottom: spacing.xl * 2 },
   heroRow: {
     flexDirection: "row",
     gap: spacing.md,
     alignItems: "center",
     marginBottom: spacing.lg,
   },
-  mascot: { width: 110, height: 170 },
-  heroText: { flex: 1 },
+  heroRowTablet: { gap: spacing.xl },
+  heroText: { flex: 1, minWidth: 160 },
   brand: {
     color: colors.accent,
     fontSize: 26,
     fontWeight: "800",
     letterSpacing: 3,
-    textShadowColor: "rgba(57,255,20,0.4)",
-    textShadowRadius: 10,
+    textShadowColor: "rgba(57,255,20,0.45)",
+    textShadowRadius: 12,
   },
+  brandLg: { fontSize: 34, letterSpacing: 5 },
   title: {
     color: colors.purple,
     fontSize: 18,
@@ -113,23 +98,23 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
     fontWeight: "700",
   },
-  lede: { color: colors.fgDim, lineHeight: 21 },
-  panel: {
-    backgroundColor: "rgba(10,18,10,0.88)",
-    borderColor: colors.border,
-    borderWidth: 1,
-    padding: spacing.md,
-    marginBottom: spacing.md,
-  },
-  panelTitle: {
-    color: colors.accent,
-    fontWeight: "700",
-    marginBottom: spacing.sm,
-  },
+  lede: { color: colors.fgDim, lineHeight: 22 },
   body: { color: colors.fg, lineHeight: 22 },
-  link: {
-    color: colors.accent,
-    marginTop: spacing.sm,
-    textDecorationLine: "underline",
+  actions: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
+  btn: {
+    backgroundColor: colors.accentSoft,
+    borderColor: colors.accent,
+    borderWidth: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
+  btnText: { color: colors.accent, fontWeight: "700" },
+  btnGhost: {
+    borderColor: colors.purple,
+    borderWidth: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: colors.purpleSoft,
+  },
+  btnGhostText: { color: "#d4b8ff", fontWeight: "700" },
 });

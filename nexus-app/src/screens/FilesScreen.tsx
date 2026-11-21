@@ -10,6 +10,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import * as DocumentPicker from "expo-document-picker";
 import { loadDocs, saveDocs, type DocItem } from "../files/store";
+import { ContentFrame } from "../components/ContentFrame";
 import { colors, spacing } from "../theme";
 
 function formatSize(n?: number | null): string {
@@ -59,45 +60,48 @@ export function FilesScreen() {
 
   return (
     <View style={styles.root}>
-      <View style={styles.toolbar}>
-        <Text style={styles.hint}>
-          Import documents to browse offline. v1 keeps a local list (not a full
-          OS file manager).
-        </Text>
-        <Pressable style={styles.btn} onPress={() => void importDoc()}>
-          <Text style={styles.btnText}>Import</Text>
-        </Pressable>
-      </View>
-      <FlatList
-        data={docs}
-        keyExtractor={(d) => d.id}
-        contentContainerStyle={styles.list}
-        ListEmptyComponent={
-          <Text style={styles.empty}>
-            No documents yet. Tap Import to pick files from this device.
+      <ContentFrame>
+        <View style={styles.toolbar}>
+          <Text style={styles.hint}>
+            Import documents to browse offline. Keeps a local list (not a full
+            OS file manager).
           </Text>
-        }
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Pressable
-              style={{ flex: 1 }}
-              onPress={() => {
-                void Linking.openURL(item.uri).catch(() => undefined);
-              }}
-            >
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.meta}>
-                {[item.mimeType, formatSize(item.size)]
-                  .filter(Boolean)
-                  .join(" · ") || "document"}
-              </Text>
-            </Pressable>
-            <Pressable onPress={() => void remove(item.id)}>
-              <Text style={styles.remove}>Remove</Text>
-            </Pressable>
-          </View>
-        )}
-      />
+          <Pressable style={styles.btn} onPress={() => void importDoc()}>
+            <Text style={styles.btnText}>Import</Text>
+          </Pressable>
+        </View>
+        <FlatList
+          data={docs}
+          keyExtractor={(d) => d.id}
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.list}
+          ListEmptyComponent={
+            <Text style={styles.empty}>
+              No documents yet. Tap Import to pick files from this device.
+            </Text>
+          }
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <Pressable
+                style={{ flex: 1 }}
+                onPress={() => {
+                  void Linking.openURL(item.uri).catch(() => undefined);
+                }}
+              >
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.meta}>
+                  {[item.mimeType, formatSize(item.size)]
+                    .filter(Boolean)
+                    .join(" · ") || "document"}
+                </Text>
+              </Pressable>
+              <Pressable onPress={() => void remove(item.id)}>
+                <Text style={styles.remove}>Remove</Text>
+              </Pressable>
+            </View>
+          )}
+        />
+      </ContentFrame>
     </View>
   );
 }
@@ -105,7 +109,7 @@ export function FilesScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.bg },
   toolbar: {
-    padding: spacing.md,
+    paddingVertical: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
     gap: spacing.sm,

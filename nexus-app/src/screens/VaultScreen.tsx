@@ -15,9 +15,12 @@ import {
   searchNotes,
   type VaultNote,
 } from "../vault/store";
+import { ContentFrame } from "../components/ContentFrame";
+import { useCompanionLayout } from "../layout";
 import { colors, spacing } from "../theme";
 
 export function VaultScreen() {
+  const { isTablet } = useCompanionLayout();
   const [notes, setNotes] = useState<VaultNote[]>([]);
   const [query, setQuery] = useState("");
   const [editing, setEditing] = useState<VaultNote | null>(null);
@@ -78,37 +81,46 @@ export function VaultScreen() {
 
   return (
     <View style={styles.root}>
-      <View style={styles.toolbar}>
-        <TextInput
-          style={styles.search}
-          value={query}
-          onChangeText={setQuery}
-          placeholder="Search notes…"
-          placeholderTextColor={colors.fgDim}
-        />
-        <Pressable style={styles.btn} onPress={openNew}>
-          <Text style={styles.btnText}>New</Text>
-        </Pressable>
-      </View>
-      <FlatList
-        data={visible}
-        keyExtractor={(n) => n.id}
-        contentContainerStyle={styles.list}
-        ListEmptyComponent={
-          <Text style={styles.empty}>No notes match. Add one with New.</Text>
-        }
-        renderItem={({ item }) => (
-          <Pressable style={styles.card} onPress={() => openEdit(item)}>
-            <Text style={styles.cardTitle}>{item.title}</Text>
-            <Text style={styles.cardBody} numberOfLines={3}>
-              {item.body}
-            </Text>
+      <ContentFrame>
+        <View style={styles.toolbar}>
+          <TextInput
+            style={styles.search}
+            value={query}
+            onChangeText={setQuery}
+            placeholder="Search notes…"
+            placeholderTextColor={colors.fgDim}
+          />
+          <Pressable style={styles.btn} onPress={openNew}>
+            <Text style={styles.btnText}>New</Text>
           </Pressable>
-        )}
-      />
+        </View>
+        <FlatList
+          data={visible}
+          keyExtractor={(n) => n.id}
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.list}
+          numColumns={isTablet ? 2 : 1}
+          key={isTablet ? "vault-tab" : "vault-phone"}
+          columnWrapperStyle={isTablet ? styles.row : undefined}
+          ListEmptyComponent={
+            <Text style={styles.empty}>No notes match. Add one with New.</Text>
+          }
+          renderItem={({ item }) => (
+            <Pressable
+              style={[styles.card, isTablet && styles.cardHalf]}
+              onPress={() => openEdit(item)}
+            >
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text style={styles.cardBody} numberOfLines={3}>
+                {item.body}
+              </Text>
+            </Pressable>
+          )}
+        />
+      </ContentFrame>
 
       <Modal visible={!!editing} animationType="slide">
-        <View style={styles.modal}>
+        <View style={[styles.modal, isTablet && styles.modalWide]}>
           <Text style={styles.modalTitle}>Vault note</Text>
           <TextInput
             style={styles.input}
@@ -148,7 +160,7 @@ const styles = StyleSheet.create({
   toolbar: {
     flexDirection: "row",
     gap: spacing.sm,
-    padding: spacing.md,
+    paddingVertical: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
@@ -161,6 +173,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
   list: { padding: spacing.md },
+  row: { gap: spacing.sm },
   empty: { color: colors.fgDim, padding: spacing.lg },
   card: {
     borderWidth: 1,
@@ -168,7 +181,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgElev,
     padding: spacing.md,
     marginBottom: spacing.sm,
+    flex: 1,
   },
+  cardHalf: { minWidth: "48%" },
   cardTitle: { color: colors.accent, fontWeight: "600", marginBottom: 4 },
   cardBody: { color: colors.fg, lineHeight: 20 },
   btn: {
@@ -198,6 +213,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg,
     padding: spacing.lg,
     paddingTop: spacing.xl * 2,
+  },
+  modalWide: {
+    maxWidth: 720,
+    width: "100%",
+    alignSelf: "center",
   },
   modalTitle: { color: colors.accent, fontSize: 18, marginBottom: spacing.md },
   input: {

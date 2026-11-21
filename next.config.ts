@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/demo", destination: "/demo/index.html" },
       { source: "/demo/", destination: "/demo/index.html" },
+      { source: "/companion", destination: "/companion/index.html" },
+      { source: "/companion/", destination: "/companion/index.html" },
     ];
   },
 };
