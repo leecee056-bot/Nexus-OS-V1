@@ -246,13 +246,17 @@ export default function DownloadPage() {
             Android (Games / Image Lab / Browse stay desktop / web).
           </p>
           <p style={{ marginTop: "0.75rem" }}>
-            <strong>Windows:</strong> use the{" "}
-            <code className="mono">-setup.exe</code> installer (Desktop + Start
-            Menu shortcuts with icon), or the portable{" "}
-            <code className="mono">.exe</code>. <strong>Mac:</strong>{" "}
-            <code className="mono">.dmg</code> from the companion Release.{" "}
-            <strong>Web:</strong> open instantly. <strong>Android:</strong>{" "}
-            one-click sideload APK — point Chat at Ollama on your PC if needed.
+            <strong>Windows:</strong> download the{" "}
+            <code className="mono">0.12.3-setup.exe</code> installer (Desktop +
+            Start Menu shortcuts with icon). Delete any older{" "}
+            <code className="mono">0.12.0</code>/<code className="mono">0.12.1</code>{" "}
+            portable files first — those crash with a missing{" "}
+            <code className="mono">browsers</code> module. Portable{" "}
+            <code className="mono">.exe</code> is also available.{" "}
+            <strong>Mac:</strong> <code className="mono">.dmg</code> from the
+            companion Release. <strong>Web:</strong> open instantly.{" "}
+            <strong>Android:</strong> one-click sideload APK — point Chat at
+            Ollama on your PC if needed.
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
             <a className="btn" href={COMPANION_WINDOWS_URL}>

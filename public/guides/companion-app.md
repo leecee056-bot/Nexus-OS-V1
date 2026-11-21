@@ -8,12 +8,12 @@ bottom tabs; tablets use a side rail.
 
 | Platform | Action |
 |----------|--------|
-| **Windows setup** | [Download setup .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-setup.exe) — installs Desktop + Start Menu launcher with NEXUS icon |
-| **Windows portable** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-portable.exe) — or tap **Add to Desktop** inside the app |
-| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.2) — grab the `.dmg` when attached |
-| **USB kit** | [NEXUS-Companion-USB zip](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-USB-0.12.2.zip) — unzip to a stick, Start-NEXUS — see [companion-usb.md](./companion-usb.md) |
+| **Windows setup** | [Download setup .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-Windows-0.12.3-setup.exe) — installs Desktop + Start Menu launcher with NEXUS icon |
+| **Windows portable** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-Windows-0.12.3-portable.exe) — or tap **Add to Desktop** inside the app |
+| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.3) — grab the `.dmg` when attached |
+| **USB kit** | [NEXUS-Companion-USB zip](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-USB-0.12.3.zip) — unzip to a stick, Start-NEXUS — see [companion-usb.md](./companion-usb.md) |
 | **Web** | [Open /companion/](/companion/) in your browser |
-| **Android** | [Download APK](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Android-0.12.2.apk) — see [android-apk.md](./android-apk.md) |
+| **Android** | [Download APK](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.3/NEXUS-Companion-Android-0.12.3.apk) — see [android-apk.md](./android-apk.md) |
 
 Site Download section: [/download#companion](/download#companion)
 
