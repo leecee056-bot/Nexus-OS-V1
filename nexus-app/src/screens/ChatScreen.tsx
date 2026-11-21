@@ -44,10 +44,11 @@ import {
 } from "../chat/history";
 import { runAgentTurn } from "../agent/runner";
 import type { AgentStep } from "../agent/schema";
+import { tryBuildWebsiteFromMessage } from "../agent/website";
 import { AppStatusBar } from "../components/AppStatusBar";
 import { CheckUpdatesButton } from "../components/CheckUpdatesButton";
 import { ContentFrame } from "../components/ContentFrame";
-import { GraftingIndicator } from "../components/GraftingIndicator";
+import { WaitIndicator } from "../components/WaitIndicator";
 import { PressableCard } from "../components/PressableCard";
 import { ProgressRing } from "../components/ProgressRing";
 import { ScanlineOverlay } from "../components/ScanlineOverlay";
@@ -57,17 +58,18 @@ import { exportChatToUsb } from "../portable/info";
 import { AGENT_GUIDE_URL, OS_UPDATE_URL } from "../updates/links";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
+import { monoStyle } from "../theme/fonts";
 
 type Msg = { id: string; role: "you" | "nexus"; text: string; typed?: boolean };
 type ChatMode = "chat" | "agent";
 
 const SYSTEM_PROMPT =
-  "You are NEXUS, a helpful offline assistant in the NEXUS Companion app. Be concise and practical.";
+  "You are NEXUS, a helpful offline assistant in the NEXUS Companion app. Be concise and practical. For greetings, reply briefly — never invent tool activity.";
 
 export function ChatScreen() {
   const { isTablet } = useCompanionLayout();
   const { colors } = useTheme();
-  const [mode, setMode] = useState<ChatMode>("agent");
+  const [mode, setMode] = useState<ChatMode>("chat");
   const [agentSteps, setAgentSteps] = useState<AgentStep[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
@@ -103,16 +105,16 @@ export function ChatScreen() {
   const model = useMemo(() => findModel(modelId), [modelId]);
   const installed = isModelInstalled(tags, model.ollama);
 
-  /** Reply wait (not model download) — show grafting rabbit, not a spinner. */
-  const grafting = busy && pullPct == null && !pullNote;
+  /** Reply wait (not model download) — compact rabbit + fun facts. */
+  const waiting = busy && pullPct == null && !pullNote;
 
   useEffect(() => {
-    if (!grafting) return;
+    if (!waiting) return;
     const t = setTimeout(() => {
       listRef.current?.scrollToEnd({ animated: true });
     }, 80);
     return () => clearTimeout(t);
-  }, [grafting, msgs.length]);
+  }, [waiting, msgs.length]);
 
   const orb: OrbState = busy
     ? "thinking"
@@ -225,6 +227,9 @@ export function ChatScreen() {
         content: x.text,
       }));
 
+    // Website asks work in Chat or Agent — one clear request → files.
+    const siteNote = await tryBuildWebsiteFromMessage(text);
+
     if (mode === "agent") {
       const result = await runAgentTurn({
         host,
@@ -236,20 +241,25 @@ export function ChatScreen() {
       });
       const id = String(Date.now() + 1);
       setLatestTypedId(id);
+      const merged =
+        siteNote && !/website\//i.test(result.text)
+          ? `${result.text}\n\n${siteNote}`
+          : result.text;
       setMsgs((m) => [
         ...m,
-        { id, role: "nexus", text: result.text, typed: true },
+        { id, role: "nexus", text: merged, typed: true },
       ]);
       setBusy(false);
       return;
     }
 
     if (!ollamaOk || !installed) {
-      const fallback = companionReply(text);
-      const note =
-        !ollamaOk
-          ? "\n\n(Local model offline — install Ollama + a model in the selector for real AI.)"
-          : "\n\n(Selected model is not downloaded yet — tap Get model.)";
+      const fallback = siteNote || companionReply(text);
+      const note = siteNote
+        ? ""
+        : !ollamaOk
+          ? "\n\nLocal model offline — install Ollama, then tap Get model."
+          : "\n\nModel not downloaded yet — tap Get model.";
       const id = String(Date.now() + 1);
       setLatestTypedId(id);
       setMsgs((m) => [
@@ -269,12 +279,13 @@ export function ChatScreen() {
     const result = await chatCompletion(host, model.ollama, history);
     const id = String(Date.now() + 1);
     setLatestTypedId(id);
+    const reply = result.ok ? result.text : result.error;
     setMsgs((m) => [
       ...m,
       {
         id,
         role: "nexus",
-        text: result.ok ? result.text : result.error,
+        text: siteNote ? `${reply}\n\n${siteNote}` : reply,
         typed: true,
       },
     ]);
@@ -421,37 +432,32 @@ export function ChatScreen() {
         ) : null}
 
         <View style={styles.modeRow}>
-          {(["agent", "chat"] as ChatMode[]).map((m) => {
-            const on = mode === m;
-            return (
-              <Pressable
-                key={m}
-                onPress={() => setMode(m)}
-                style={[
-                  styles.modeChip,
-                  {
-                    borderColor: on ? colors.accent : colors.border,
-                    backgroundColor: on ? colors.accentSoft : "transparent",
-                  },
-                ]}
-              >
-                <Text
-                  style={{
-                    color: on ? colors.accent : colors.fgDim,
-                    fontWeight: on ? "800" : "600",
-                    fontSize: 12,
-                    letterSpacing: 0.5,
-                  }}
-                >
-                  {m === "agent" ? "Agent" : "Chat"}
-                </Text>
-              </Pressable>
-            );
-          })}
+          <Pressable
+            onPress={() => setMode(mode === "agent" ? "chat" : "agent")}
+            style={[
+              styles.modeChip,
+              {
+                borderColor: mode === "agent" ? colors.accent : colors.border,
+                backgroundColor:
+                  mode === "agent" ? colors.accentSoft : "transparent",
+              },
+            ]}
+          >
+            <Text
+              style={{
+                color: mode === "agent" ? colors.accent : colors.fgDim,
+                fontWeight: "800",
+                fontSize: 12,
+                letterSpacing: 0.4,
+              }}
+            >
+              {mode === "agent" ? "Agent on" : "Agent off"}
+            </Text>
+          </Pressable>
           <Text style={[styles.modeHint, { color: colors.fgDim }]}>
             {mode === "agent"
-              ? "Vault · Add-ons · Files"
-              : "Direct model reply"}
+              ? "One tap · Vault / Files / websites when you ask"
+              : "Straight chat · still builds a website if you ask"}
           </Text>
         </View>
 
@@ -540,7 +546,7 @@ export function ChatScreen() {
           keyExtractor={(m) => m.id}
           style={{ flex: 1 }}
           contentContainerStyle={styles.list}
-          ListFooterComponent={<GraftingIndicator active={grafting} />}
+          ListFooterComponent={<WaitIndicator active={waiting} />}
           renderItem={({ item }) => {
             const isYou = item.role === "you";
             return (
@@ -550,22 +556,27 @@ export function ChatScreen() {
                   isYou ? styles.you : styles.nexus,
                   isTablet && styles.bubbleWide,
                   {
-                    borderColor: isYou ? colors.accent : colors.border,
+                    borderColor: isYou
+                      ? colors.accent
+                      : "transparent",
+                    borderLeftColor: isYou ? colors.accent : colors.phosphor,
                     backgroundColor: isYou
                       ? colors.accentSoft
-                      : colors.glass
-                        ? colors.bgGlass
-                        : colors.bgElev,
-                    shadowColor: colors.accent,
-                    shadowOpacity: colors.glass && !isYou ? 0.18 : 0,
+                      : "transparent",
                   },
                 ]}
               >
-                <Text style={[styles.role, { color: colors.accent }]}>
+                <Text
+                  style={[
+                    styles.role,
+                    { color: isYou ? colors.purple : colors.accent },
+                    colors.mono ? monoStyle({ fontSize: 11 }) : null,
+                  ]}
+                >
                   {isYou ? "You" : "NEXUS"}
                 </Text>
                 {isYou ? (
-                  <Text style={{ color: colors.fg, lineHeight: 21 }}>
+                  <Text style={{ color: colors.fg, lineHeight: 22 }}>
                     {item.text}
                   </Text>
                 ) : (
@@ -591,7 +602,7 @@ export function ChatScreen() {
             value={input}
             onChangeText={setInput}
             placeholder={
-              installed ? "Message your local model…" : "Message…"
+              installed ? "Ask NEXUS…" : "Ask anything…"
             }
             placeholderTextColor={colors.fgDim}
             onSubmitEditing={() => void send()}
@@ -611,7 +622,7 @@ export function ChatScreen() {
             disabled={busy}
           >
             <Text style={[styles.btnText, { color: colors.accent }]}>
-              {grafting ? "…" : "Send"}
+              {waiting ? "…" : "Send"}
             </Text>
           </Pressable>
         </View>
@@ -922,17 +933,23 @@ const styles = StyleSheet.create({
   linkBtnGhostText: { fontSize: 12 },
   list: { paddingBottom: spacing.md, flexGrow: 1, paddingTop: spacing.sm },
   bubble: {
-    borderWidth: 1,
-    padding: spacing.md,
-    marginBottom: spacing.sm,
+    borderWidth: 0,
+    borderLeftWidth: 2,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    marginBottom: spacing.md,
     maxWidth: "92%",
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
   },
-  bubbleWide: { maxWidth: "70%" },
-  you: { alignSelf: "flex-end" },
+  bubbleWide: { maxWidth: "72%" },
+  you: { alignSelf: "flex-end", borderLeftWidth: 0, borderWidth: 1 },
   nexus: { alignSelf: "flex-start" },
-  role: { fontSize: 11, marginBottom: 4, fontWeight: "700" },
+  role: {
+    fontSize: 10,
+    marginBottom: 6,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    textTransform: "uppercase",
+  },
   row: {
     flexDirection: "row",
     gap: spacing.sm,

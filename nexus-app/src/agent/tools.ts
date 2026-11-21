@@ -22,19 +22,31 @@ function keywords(q: string): string[] {
 
 /** Heuristic plan — works with small local models that lack tool-calling. */
 export function planTools(userMessage: string, allowed: string[]): AgentToolCall[] {
-  const q = userMessage.toLowerCase();
+  const q = userMessage.trim().toLowerCase();
   const calls: AgentToolCall[] = [];
   const allow = new Set(allowed);
 
-  const wantsVault =
-    /vault|note|knowledge|pack|remember|what did i|lookup|look up|search/.test(
-      q,
-    ) || keywords(userMessage).length > 0;
-  const wantsFiles =
-    /file|folder|website|html|css|project|create|write|save|list files|in files/.test(
+  // Greetings / small talk must never open Vault or Packs.
+  const isChitchat =
+    /^(hi|hello|hey|yo|sup|thanks|thank you|ok|okay|cool|great|nice|bye|good (morning|afternoon|evening)|how are you)[\s!.?]*$/i.test(
       q,
     );
-  const wantsStatus = /status|what can you|plugins?|add-?ons?/.test(q);
+
+  const wantsVault =
+    !isChitchat &&
+    /\b(vault|notes?|knowledge|remember|what did i|lookup|look up|search (my |the )?(vault|notes|knowledge))\b/.test(
+      q,
+    );
+  const wantsPacks =
+    !isChitchat &&
+    /\b(packs?|wiki|wikipedia|gutenberg|offline (knowledge|pack))\b/.test(q);
+  const wantsFiles =
+    !isChitchat &&
+    /\b(file|folder|website|html|css|project|create|write|save|list files|in files|make (a |me )?(site|page|website))\b/.test(
+      q,
+    );
+  const wantsStatus =
+    !isChitchat && /\b(status|what can you|plugins?|add-?ons?)\b/.test(q);
 
   if (wantsVault && allow.has("search_vault")) {
     calls.push({
@@ -42,7 +54,7 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
       args: { query: keywords(userMessage).join(" ") || userMessage.slice(0, 80) },
     });
   }
-  if (wantsVault && allow.has("search_packs")) {
+  if (wantsPacks && allow.has("search_packs")) {
     calls.push({
       tool: "search_packs",
       args: { query: keywords(userMessage).join(" ") || userMessage.slice(0, 80) },
@@ -101,13 +113,21 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
     calls.push({ tool: "ensure_folder", args: { path: folderMatch2[1] } });
   }
 
-  // Website project shortcut
+  // Website project shortcut — one ask → files on disk.
+  const wantsWebsite =
+    /(?:make|create|build|spin up|scaffold)\s+(?:me\s+)?(?:a\s+|an\s+)?(?:simple\s+|small\s+|basic\s+)?(?:web\s*site|webpage|landing page|html site)/i.test(
+      userMessage,
+    ) || /(?:website|landing page).*(?:for|about|called)/i.test(userMessage);
   if (
-    /(?:make|create|build)\s+(?:a\s+)?(?:simple\s+)?website/i.test(q) &&
+    wantsWebsite &&
     allow.has("ensure_folder") &&
     allow.has("write_file")
   ) {
     const folder = "website";
+    const topicMatch = userMessage.match(
+      /(?:about|for|called|named)\s+["']?([^"'.\n]{2,48})/i,
+    );
+    const topic = (topicMatch?.[1] || "My site").trim();
     calls.push({ tool: "ensure_folder", args: { path: folder } });
     if (!writeMatch) {
       calls.push({
@@ -119,14 +139,15 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My NEXUS site</title>
+  <title>${topic}</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header><strong>NEXUS</strong></header>
+  <header><strong>NEXUS</strong> · ${topic}</header>
   <main>
-    <h1>Hello from your local agent</h1>
-    <p>Edit these files in the Files tab — they live on this device.</p>
+    <h1>${topic}</h1>
+    <p>Built locally by your NEXUS Companion agent. Edit these files in the Files tab.</p>
+    <p class="hint">Ask the agent to tweak copy, add pages, or restyle — it writes real files.</p>
   </main>
 </body>
 </html>`,
@@ -136,9 +157,20 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
         tool: "write_file",
         args: {
           path: `${folder}/styles.css`,
-          content: `body{font-family:system-ui,sans-serif;background:#040804;color:#b6ffb6;margin:0;padding:2rem}
-header{color:#39ff14;letter-spacing:.2em}
-main{max-width:40rem}`,
+          content: `*{box-sizing:border-box}
+body{font-family:ui-sans-serif,system-ui,sans-serif;background:radial-gradient(1200px 600px at 10% -10%,#163220,#040804 55%);color:#c8ffd0;margin:0;min-height:100vh;padding:2.5rem}
+header{color:#39ff14;letter-spacing:.18em;text-transform:uppercase;font-size:.85rem;margin-bottom:2rem}
+main{max-width:40rem;padding:1.5rem;border:1px solid rgba(57,255,20,.28);background:rgba(8,18,10,.72);backdrop-filter:blur(8px)}
+h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 .75rem;color:#eaffea}
+p{line-height:1.55;color:#9ad4a4}
+.hint{opacity:.75;font-size:.92rem}`,
+        },
+      });
+      calls.push({
+        tool: "write_file",
+        args: {
+          path: `${folder}/README.txt`,
+          content: `${topic}\n\nOpen index.html in a browser.\nEdit files from Companion → Files → website/.\n`,
         },
       });
     }
@@ -155,18 +187,7 @@ main{max-width:40rem}`,
     calls.push({ tool: "nexus_status", args: {} });
   }
 
-  // Always light vault search for substantive questions if nothing else planned
-  if (
-    calls.length === 0 &&
-    allow.has("search_vault") &&
-    userMessage.trim().length > 12
-  ) {
-    calls.push({
-      tool: "search_vault",
-      args: { query: keywords(userMessage).slice(0, 6).join(" ") },
-    });
-  }
-
+  // Do not auto-search Vault/Packs for casual messages — only explicit intents above.
   return calls;
 }
 

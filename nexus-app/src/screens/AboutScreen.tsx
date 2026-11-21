@@ -60,10 +60,9 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Local models + Agent">
-        Chat uses Ollama on this machine (or a host you set). Agent mode draws
-        on your Vault, Add-ons library, and Files so answers feel like your own
-        system — not a generic chat box. Desktop apps also include Image Lab for
-        optional local image models, plus a low-memory Games tab (Chess first).
+        Chat talks to Ollama on this machine. Flip Agent on when you want Vault
+        search, Add-ons, or real files written (ask it to make a website).
+        Desktop also includes Image Lab and a low-memory Games tab.
       </GlowPanel>
 
       <GlowPanel title="Check for updates" accent="purple">
@@ -90,7 +89,7 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.10.0 · USB · Games · grafting · Image Lab · Agent{"\n"}Running on{" "}
+        0.11.0 · Desk layout · fun facts · Games · Agent{"\n"}Running on{" "}
         {Platform.OS}
       </GlowPanel>
 

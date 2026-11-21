@@ -39,14 +39,14 @@ export async function runAgentTurn(opts: {
     opts.onStep?.(s, [...steps]);
   };
 
-  push(step("Planning", "Choosing Vault / Packs / Files tools…"));
-
   const pluginState = await loadPluginState();
   const allowed = enabledTools(pluginState);
   const plan = planTools(opts.userMessage, allowed);
 
   if (plan.length === 0) {
-    push(step("No tools", "Answering from conversation only."));
+    push(step("Ready", "Just chatting — no tools needed."));
+  } else {
+    push(step("Planning", `Running ${plan.length} tool${plan.length === 1 ? "" : "s"}…`));
   }
 
   const toolTexts: string[] = [];
