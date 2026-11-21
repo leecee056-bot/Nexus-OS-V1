@@ -13,9 +13,14 @@ const RULES: Rule[] = [
       "Hello. I am the NEXUS Companion offline stub. Ask about vault, boot, pocket, or knowledge packs.",
   },
   {
-    keys: ["vault", "notes", "knowledge"],
+    keys: ["vault", "notes", "knowledge", "pack", "kiwix", "gutenberg"],
     reply:
-      "Knowledge Vault holds plain .txt/.md notes. Add packs from Gutenberg or your own files — optional, offline.",
+      "Knowledge Vault holds plain .txt/.md notes. On Android, open Packs for Kiwix/Gutenberg links, then Import text into Vault — optional, offline.",
+  },
+  {
+    keys: ["android", "apk", "sideload"],
+    reply:
+      "Android companion ships as a sideload APK (GitHub Releases) for now — not Play Store yet. Same offline Chat, Vault, Packs, and Files.",
   },
   {
     keys: ["boot", "usb", "flash", "etcher"],

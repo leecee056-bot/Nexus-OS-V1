@@ -68,9 +68,9 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "companion",
-    question: "Is there a Windows or iOS app?",
+    question: "Is there a Windows, iOS, or Android app?",
     answer:
-      "Yes — a secondary companion app lives in nexus-app/ (Expo). It offers Chat (lightweight offline stub in v0.1), Knowledge Vault notes, and simple document browsing in a normal windowed UI for Windows and iPhone/iPad. It is not a replacement for the bootable USB/Pi images or Cardputer firmware. See Download → Companion app or the companion-app guide.",
+      "Yes — a secondary companion app lives in nexus-app/ (Expo) for Windows, iPhone/iPad, and Android. It offers Chat (lightweight offline stub), Knowledge Vault, optional knowledge packs (Kiwix/Gutenberg → import .txt/.md), and document browsing. Android is distributed as a sideload APK via GitHub Releases for now (not Play Store yet). It is not a replacement for the bootable USB/Pi images or Cardputer firmware.",
   },
   {
     id: "cyberdeck",
