@@ -51,11 +51,13 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
-            <strong>Windows · Mac · Android companion</strong>
+            <strong>Windows · Mac · Android · web companion</strong>
             <span>
               Normal app (<code className="mono">nexus-app/</code>) with real
               local AI Chat via Ollama, Vault, Packs, and Files — matrix boot
-              splash, rabbit logo, and desktop icon. See{" "}
+              splash, rabbit logo, and desktop icon. Published installers are on
+              the companion Release; iOS is developer/Expo only (no App Store
+              build). See{" "}
               <Link href="/download#companion">Download → Companion</Link>.
             </span>
           </li>
@@ -96,7 +98,10 @@ export default function FeaturesPage() {
             <span>
               Small helpers with a fixed allow-list (calculator, vault, files,
               notes, system info, models, pixel art) — not open access to
-              everything on the PC.
+              everything on the PC. Source also includes{" "}
+              <strong>Pocket Agent</strong> scaffolds (timer / notes / file
+              workspace helpers) for Companion and the hub Agents menu; those
+              land on flashed v1.0.1 sticks/cards after the next image bake.
             </span>
           </li>
           <li>

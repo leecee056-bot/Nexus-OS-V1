@@ -9,7 +9,8 @@ import {
   CARDPUTER_VERSION,
   COMPANION_ANDROID_NOTES,
   COMPANION_ANDROID_URL,
-  COMPANION_MAC_URL,
+  COMPANION_MAC_ARM64_URL,
+  COMPANION_MAC_X64_URL,
   COMPANION_RELEASE_PAGE,
   COMPANION_USB_URL,
   COMPANION_VERSION,
@@ -233,31 +234,27 @@ export default function DownloadPage() {
             <strong>local AI Chat</strong>: pick a lightweight model (Qwen,
             TinyLlama, and more), download it once via{" "}
             <a href="https://ollama.com/download">Ollama</a>, then chat offline.
-            Current release builds (v{COMPANION_VERSION}) include{" "}
-            <strong>Spatial / Open</strong> theme, desktop <strong>Browse</strong>{" "}
-            window, one-click <strong>Add-ons marketplace</strong>,{" "}
-            <strong>Desktop / Start Menu launcher</strong> with Tri-Cass icon,
-            offline-first Chat (website optional), a{" "}
-            <strong>USB portable kit</strong>, rabbit <strong>grafting</strong>{" "}
-            wait animation, desktop <strong>Image Lab</strong> + low-memory{" "}
-            <strong>Games</strong> (Chess first), Terminal CRT / Desk layout,
-            Agent mode, and{" "}
-            <strong>Basic / Matrix / Lumen / Terminal / Spatial</strong> themes.
-            Vault, Packs, Plugins, Files, and the Tri-Cass icon on phone + tablet
-            Android (Games / Image Lab / Browse stay desktop / web).
+            The <strong>downloadable release is v{COMPANION_VERSION}</strong>{" "}
+            (Windows setup + portable, Mac arm64/x64 <code className="mono">.dmg</code>,
+            Android APK, USB kit, web). It includes local Chat via Ollama, Vault,
+            Packs, Files, Agent mode, themes, and desktop extras in that build.
+            Newer hub features that landed in source after v{COMPANION_VERSION}{" "}
+            (for example latest chat chrome / Pocket Agent scaffolds) ship in the{" "}
+            <strong>next Companion release</strong> and on the web build when
+            republished — not automatically in older installers.
           </p>
           <p style={{ marginTop: "0.75rem" }}>
-            <strong>Windows:</strong> download the{" "}
+            <strong>Windows:</strong> use the{" "}
             <code className="mono">0.12.2-setup.exe</code> installer (Desktop +
-            Start Menu shortcuts with icon). Delete any older{" "}
+            Start Menu shortcuts). Delete any older{" "}
             <code className="mono">0.12.0</code>/<code className="mono">0.12.1</code>{" "}
             portable files first — those crash with a missing{" "}
             <code className="mono">browsers</code> module. Portable{" "}
             <code className="mono">.exe</code> is also available.{" "}
-            <strong>Mac:</strong> <code className="mono">.dmg</code> from the
-            companion Release. <strong>Web:</strong> open instantly.{" "}
-            <strong>Android:</strong> one-click sideload APK — point Chat at
-            Ollama on your PC if needed.
+            <strong>Mac:</strong> pick Apple Silicon or Intel{" "}
+            <code className="mono">.dmg</code> below. <strong>Web:</strong> open
+            instantly. <strong>Android:</strong> sideload APK — point Chat at
+            Ollama on your PC if needed. Not on the App Store / Play Store yet.
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
             <a className="btn" href={COMPANION_WINDOWS_URL}>
@@ -266,8 +263,11 @@ export default function DownloadPage() {
             <a className="btn btn-ghost" href={COMPANION_WINDOWS_PORTABLE_URL}>
               Windows portable (.exe)
             </a>
-            <a className="btn" href={COMPANION_MAC_URL}>
-              Download Mac (.dmg)
+            <a className="btn" href={COMPANION_MAC_ARM64_URL}>
+              Download Mac Apple Silicon (.dmg)
+            </a>
+            <a className="btn btn-ghost" href={COMPANION_MAC_X64_URL}>
+              Download Mac Intel (.dmg)
             </a>
             <a className="btn" href={COMPANION_USB_URL}>
               Download USB kit (.zip)
