@@ -28,10 +28,14 @@ this as the declared baseline for trust/review.
 
 | Piece | Detail |
 |-------|--------|
-| Boot | MBR + extlinux / SYSLINUX |
-| Partitions | `AI_SYS` + `AI_DATA` |
+| Boot (default) | MBR + extlinux / SYSLINUX |
+| Boot (`ENABLE_UEFI=1`) | GPT ESP + Debian `shim-signed` / `grub-efi-amd64-signed` + BIOS extlinux retained (HAP-64) |
+| Partitions | `AI_SYS` + `AI_DATA` (+ `TRI_CASS_ESP` when UEFI enabled) |
 | Hub | Python curses TUI in `tui/` |
 | Network | Stub only — offline by default |
+
+UEFI vendor `.deb` blobs are **not** in git; see `scripts/fetch-uefi-shim.sh` and
+`docs/uefi-secure-boot.md`.
 
 ## Release artifact pointers
 

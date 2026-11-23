@@ -45,6 +45,18 @@ QEMU smoke: `bash scripts/test-usb-qemu.sh x86_64`
 
 ## Boot honesty (v1)
 
-v1 images use **MBR + SYSLINUX** (legacy / BIOS-friendly). They are
-**unsigned**. Prefer CSM/legacy USB boot. **UEFI + Secure Boot** is tracked as
-HAP-64. Honest machine matrix: [/compat](https://nexus-os.apps.grok.bot/compat).
+Default images use **MBR + extlinux** (legacy / BIOS-friendly) and are
+**unsigned** for Secure Boot. Prefer CSM/legacy USB boot until a signed release
+is published.
+
+### HAP-64 scaffold (UEFI + Secure Boot, keep BIOS)
+
+```bash
+bash scripts/fetch-uefi-shim.sh          # Debian dual-signed shim+GRUB → build/uefi/vendor/
+ENABLE_UEFI=1 bash scripts/build-usb-image.sh x86_64
+```
+
+Design notes: [`docs/uefi-secure-boot.md`](docs/uefi-secure-boot.md). Default
+builds (no `ENABLE_UEFI`) stay BIOS-only so existing flash docs keep working.
+
+Honest machine matrix: [/compat](https://nexus-os.apps.grok.bot/compat).

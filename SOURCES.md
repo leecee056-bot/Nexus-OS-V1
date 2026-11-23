@@ -36,6 +36,8 @@ Contact: https://github.com/leecee056-bot/Nexus-OS-V1/issues
 
 ## Boot honesty (v1 images)
 
-Current v1 images are **unsigned** and primarily exercised on **legacy / BIOS
-(CSM)** style USB boot. **UEFI + Secure Boot dual-signed** boot is planned
-(HAP-64). See [/compat](/compat) for the honest hardware matrix.
+Default v1 images are **unsigned** and primarily exercised on **legacy / BIOS
+(CSM)** style USB boot. **UEFI + Secure Boot dual-signed** scaffolding lives in
+[`portable-ai-os/docs/uefi-secure-boot.md`](portable-ai-os/docs/uefi-secure-boot.md)
+(`ENABLE_UEFI=1` + `scripts/fetch-uefi-shim.sh`). See [/compat](/compat) for the
+honest hardware matrix.
