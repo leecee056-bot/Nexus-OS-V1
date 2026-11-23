@@ -107,7 +107,7 @@ export const CARDPUTER_ARTIFACTS = [
 ] as const;
 
 export const BUILD_NOTE =
-  "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), Tri-Cass Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), or the Companion USB portable kit (carry Chat + Vault on a stick). Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
+  "Choose a build: PC USB or Raspberry Pi microSD (release v1.0.1 — Knowledge Vault starter pack), Tri-Cass Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), or the Companion USB portable kit. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Flashed v1.0.1 images match that release — newer Tri-Cass branding and Pocket Agent scaffolds are in source and land on sticks/cards after the next image bake (Queued). Full walkthrough on the Setup page.";
 
 /**
  * Companion app — Chat/Vault/Packs with local AI (not the bootable OS).
@@ -130,8 +130,16 @@ export const COMPANION_WINDOWS_URL =
 export const COMPANION_WINDOWS_PORTABLE_URL =
   "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-portable.exe";
 
-export const COMPANION_MAC_URL =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.2";
+/** Apple Silicon Mac installer. */
+export const COMPANION_MAC_ARM64_URL =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Mac-0.12.2-arm64.dmg";
+
+/** Intel Mac installer. */
+export const COMPANION_MAC_X64_URL =
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Mac-0.12.2-x64.dmg";
+
+/** @deprecated Prefer COMPANION_MAC_ARM64_URL / COMPANION_MAC_X64_URL */
+export const COMPANION_MAC_URL = COMPANION_MAC_ARM64_URL;
 
 export const COMPANION_USB_URL =
   "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-USB-0.12.2.zip";

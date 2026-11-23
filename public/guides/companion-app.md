@@ -1,8 +1,15 @@
-# Tri-Cass Companion app (Windows · Mac · Android · iOS)
+# Tri-Cass Companion app (Windows · Mac · Android · web)
 
 Normal app with **real local AI Chat**, Vault, Packs, and Files. Matrix boot
 splash, rabbit-wizard logo, and a proper desktop / home-screen icon. Phones use
 bottom tabs; tablets use a side rail.
+
+**Honesty:** public downloads are **companion-v0.12.2**. Repo source may be
+ahead (for example `nexus-app` 0.13.x chat chrome / Pocket Agent scaffolds).
+Those newer bits ship in the next Companion release and on the web build when
+republished — not automatically in older installers. There is **no App Store /
+TestFlight iPhone or iPad build**; `npm run ios` is for developers with Xcode /
+Expo only.
 
 ## One-click downloads
 
@@ -10,7 +17,8 @@ bottom tabs; tablets use a side rail.
 |----------|--------|
 | **Windows setup** | [Download setup .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-setup.exe) — installs Desktop + Start Menu launcher with Tri-Cass icon |
 | **Windows portable** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-portable.exe) — or tap **Add to Desktop** inside the app |
-| **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.2) — grab the `.dmg` when attached |
+| **Mac Apple Silicon** | [Download arm64 .dmg](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Mac-0.12.2-arm64.dmg) |
+| **Mac Intel** | [Download x64 .dmg](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Mac-0.12.2-x64.dmg) |
 | **USB kit** | [Tri-Cass-Companion-USB zip](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-USB-0.12.2.zip) — unzip to a stick, Start-Tri-Cass — see [companion-usb.md](./companion-usb.md) |
 | **Web** | [Open /companion/](/companion/) in your browser |
 | **Android** | [Download APK](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Android-0.12.2.apk) — see [android-apk.md](./android-apk.md) |

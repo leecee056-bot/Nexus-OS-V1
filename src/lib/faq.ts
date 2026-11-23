@@ -70,7 +70,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "companion",
     question: "Is there a Windows, Mac, iPhone, or Android app?",
     answer:
-      "Yes — Tri-Cass Companion (nexus-app/) for Windows, Mac, iPhone/iPad, and Android. Chat uses real local models through Ollama. Agent mode can search your Knowledge Vault / packs, use the Add-ons library, and create files in Files. Desktop builds use the Tri-Cass logo icon. Android is a sideload APK via GitHub Releases for now (not Play Store yet).",
+      "Yes for Windows, Mac, Android, and web — Tri-Cass Companion (nexus-app/). Published downloads are the companion Release on GitHub (setup/portable .exe, arm64/x64 .dmg, APK, USB kit); the web build opens at /companion/. Chat uses local models through Ollama. Agent mode can search your Knowledge Vault / packs and create files in Files. Android is a sideload APK (not Play Store). There is no App Store / TestFlight iPhone or iPad build yet — the Expo project can run on iOS for developers (Xcode / Expo), but that is not a public download.",
   },
   {
     id: "cyberdeck",

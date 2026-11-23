@@ -126,17 +126,19 @@ export default function DocsPage() {
             </li>
             <li>
               <Link href="/download#companion">
-                Windows · iOS · Android companion
+                Windows · Mac · Android · web companion
                 <small>
-                  Secondary Expo app — Chat / Vault / Packs / Files; Android APK
-                  sideload
+                  Published installers + web — Chat / Vault / Packs / Files;
+                  Android APK sideload (no App Store iOS yet)
                 </small>
               </Link>
             </li>
             <li>
               <a href="/guides/companion-app.md">
                 Companion app short guide
-                <small>Build/run for Windows, iOS Expo, and Android</small>
+                <small>
+                  Downloads for Win/Mac/Android/web; iOS via Expo for developers
+                </small>
               </a>
             </li>
             <li>
