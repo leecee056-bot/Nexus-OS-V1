@@ -16,7 +16,16 @@ Without `DATABASE_URL`, accounts use in-memory PGlite (sample data). Published C
 
 ## Network chat server (separate)
 
-Prosody lab/VPS pack lives in [`network/`](network/). The website reserves `@user@tri-cass.network` accounts; real chat needs that Prosody box on a small VPS with DNS. See `network/README.md`.
+Prosody lab/VPS pack lives in [`network/`](network/). The website can reserve
+`@user@tri-cass.network` **usernames** (optional email; no password while chat
+is offline). Real chat needs that Prosody box on a small VPS with DNS. See
+`network/README.md`.
+
+## Source / GPL note for OS images
+
+See [`SOURCES.md`](SOURCES.md). MIT covers this repo’s product code; bootable
+images include GPL components whose corresponding source/build scripts are
+being published (HAP-63).
 
 ## Optional Knowledge Packs
 

@@ -3,15 +3,12 @@ import {
   SESSION_COOKIE,
   SESSION_DAYS,
   createSession,
-  hashPassword,
   sessionCookieOptions,
   signSessionToken,
   validateEmail,
-  validatePassword,
   validateUsername,
 } from "@/lib/auth";
 import { sql } from "@/lib/db";
-import { provisionProsodyAccount } from "@/lib/prosody";
 import { rateLimit } from "@/lib/rate-limit";
 import {
   assertSameOrigin,
@@ -19,6 +16,10 @@ import {
   csrfRejected,
 } from "@/lib/request-guard";
 
+/**
+ * Username (+ optional email) reservation only — no Network password collected
+ * while chat rooms are offline (early review trust fix).
+ */
 export async function POST(req: NextRequest) {
   if (!assertSameOrigin(req)) return csrfRejected();
 
@@ -41,7 +42,18 @@ export async function POST(req: NextRequest) {
   const username = (body.username || "").trim().toLowerCase();
   const emailRaw = (body.email || "").trim().toLowerCase();
   const email = emailRaw === "" ? null : emailRaw;
-  const password = body.password || "";
+
+  // Reject accidental password submission — we no longer store Network passwords
+  // at reservation time.
+  if (body.password != null && String(body.password).length > 0) {
+    return NextResponse.json(
+      {
+        error:
+          "Passwords are not collected for Network reservations yet. Reserve a username only; you will set a password when chat launches.",
+      },
+      { status: 400 },
+    );
+  }
 
   const uErr = validateUsername(username);
   if (uErr) return NextResponse.json({ error: uErr }, { status: 400 });
@@ -49,41 +61,32 @@ export async function POST(req: NextRequest) {
     const eErr = validateEmail(email);
     if (eErr) return NextResponse.json({ error: eErr }, { status: 400 });
   }
-  const pErr = validatePassword(password);
-  if (pErr) return NextResponse.json({ error: pErr }, { status: 400 });
 
   const displayJid = `${username}@tri-cass.network`;
-  const passwordHash = await hashPassword(password);
 
   try {
     const rows = await sql<{ id: string | number }>(
-      `INSERT INTO accounts (username, email, password_hash, display_jid, email_verified)
-       VALUES ($1, $2, $3, $4, FALSE)
+      `INSERT INTO accounts (username, email, password_hash, display_jid, email_verified, reservation_only)
+       VALUES ($1, $2, NULL, $3, FALSE, TRUE)
        RETURNING id`,
-      [username, email, passwordHash, displayJid],
+      [username, email, displayJid],
     );
     const accountId = rows[0]?.id;
     if (accountId == null) {
       return NextResponse.json({ error: "Could not create account." }, { status: 500 });
     }
 
-    const provision = await provisionProsodyAccount({ username });
-    if (!provision.ok) {
-      console.error("signup: prosody provision skipped/failed");
-    }
-
     const sessionId = await createSession(accountId);
     const token = signSessionToken(sessionId);
-    const liveChat = provision.ok && provision.provisioned;
     const res = NextResponse.json({
       ok: true,
-      message: liveChat
-        ? "Welcome @" + displayJid + " — Network chat account reserved."
-        : "Username reserved for @" +
-          displayJid +
-          ". Optional email is unique when provided; verification comes later.",
+      message:
+        "Username reserved for @" +
+        displayJid +
+        ". No password stored — you will set one when Tri-Cass Network chat launches.",
       displayJid: `@${displayJid}`,
-      chatProvisioned: liveChat,
+      chatProvisioned: false,
+      reservationOnly: true,
       emailVerified: false,
     });
     res.cookies.set(
@@ -94,8 +97,15 @@ export async function POST(req: NextRequest) {
     return res;
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    if (/unique|duplicate/i.test(msg)) {
-      // Same message for username or email conflict — avoids account enumeration.
+    if (/unique|duplicate|reservation_only|password_hash/i.test(msg)) {
+      // Column missing on old DBs — surface a clear migration hint in logs only.
+      if (/reservation_only|password_hash/i.test(msg)) {
+        console.error("signup: schema needs migration 004_reservation_only.sql");
+        return NextResponse.json(
+          { error: "Reservation temporarily unavailable. Try again later." },
+          { status: 503 },
+        );
+      }
       return NextResponse.json(
         { error: "Could not create account with those details." },
         { status: 409 },

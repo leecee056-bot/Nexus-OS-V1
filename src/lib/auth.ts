@@ -105,11 +105,29 @@ export async function createSession(accountId: string | number): Promise<string>
   const expires = new Date(
     Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000,
   ).toISOString();
+  // One active session family per account — drop older rows so stolen cookies
+  // from a previous login do not stay valid for the full 30 days.
+  await sql(`DELETE FROM sessions WHERE account_id = $1`, [accountId]);
   await sql(
     `INSERT INTO sessions (id, account_id, expires_at) VALUES ($1, $2, $3)`,
     [id, accountId, expires],
   );
   return id;
+}
+
+/** Dummy bcrypt hash so unknown usernames take a similar verify path. */
+const DUMMY_PASSWORD_HASH =
+  "$2a$12$oSFAXph15DnGIrGwmbPgD.3oGiWRmAhIHtJgdCGiysv3npX/QsZwW";
+
+export async function verifyPasswordOrDummy(
+  password: string,
+  hash: string | null | undefined,
+): Promise<boolean> {
+  if (!hash) {
+    await verifyPassword(password, DUMMY_PASSWORD_HASH);
+    return false;
+  }
+  return verifyPassword(password, hash);
 }
 
 export async function destroySession(sessionId: string): Promise<void> {

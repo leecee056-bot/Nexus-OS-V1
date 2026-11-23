@@ -155,9 +155,23 @@ export default function DocsPage() {
               <Link href="/network">
                 Tri-Cass Network
                 <small>
-                  Reserve a future username — chat rooms not live yet
+                  Reserve a username (no password while chat is offline)
                 </small>
               </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div className="docs-group">
+          <h3>Trust &amp; source</h3>
+          <ul className="docs-list">
+            <li>
+              <a href="/guides/sources.md">
+                Source / GPL note
+                <small>
+                  MIT product code vs GPL image components; boot honesty
+                </small>
+              </a>
             </li>
           </ul>
         </div>

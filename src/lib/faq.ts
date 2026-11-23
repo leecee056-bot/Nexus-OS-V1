@@ -82,13 +82,13 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "network",
     question: "What is the Network signup on this site?",
     answer:
-      "Optional only. Chat rooms are not live yet. Signing up here reserves a username for a future community. You can skip it entirely and still download and run Tri-Cass OS offline (including Pocket).",
+      "Optional only. Chat rooms are not live yet. You can reserve a username (and optional email) without setting a Network password — we do not collect passwords for chat that is not online. Skip it entirely and still download and run Tri-Cass OS offline (including Pocket).",
   },
   {
     id: "secure-boot",
     question: "Why won’t my PC boot from the stick?",
     answer:
-      "Try the USB boot menu (often F12, Esc, or F10), disable Secure Boot if the image is unsigned, and use the matching 32-bit or 64-bit image. See the Setup page for step-by-step checks. (This does not apply to Pocket — that uses a Serial monitor, not PC BIOS boot.)",
+      "v1 images are unsigned and work best with legacy / BIOS (CSM) USB boot. Try the USB boot menu (often F12, Esc, or F10) and the matching 32-bit or 64-bit image. Pure UEFI machines without CSM may not boot yet — signed UEFI support is planned. Turning Secure Boot off is only a last-resort workaround when legacy USB boot is still available. See Setup. (Pocket uses a Serial monitor, not PC BIOS boot.)",
   },
   {
     id: "name",

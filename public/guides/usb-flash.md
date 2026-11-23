@@ -29,8 +29,11 @@ Do **not** flash the `.xz` file.
 
 1. Restart the PC with the stick plugged in.
 2. Open the boot menu (often Esc / F10 / F12) → choose USB.
-3. Turn **Secure Boot Off** in BIOS if it will not start.
-4. Finish the first-boot questions → use the main menu.
+3. Prefer **legacy / BIOS (CSM)** USB boot — v1 images are unsigned; pure UEFI
+   + Secure Boot support is planned.
+4. Only if legacy USB boot exists but still blocks: try Secure Boot Off as a
+   temporary workaround.
+5. Finish the first-boot questions → use the main menu.
 
 ## Optional: more offline knowledge
 

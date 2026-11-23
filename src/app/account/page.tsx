@@ -39,8 +39,9 @@ export default async function AccountPage() {
             {new Date(account.created_at).toLocaleString()}
           </p>
           <div className="alert" style={{ marginTop: "1rem" }}>
-            Network servers coming — your account is reserved. No live chatrooms
-            yet.
+            Network servers coming — your username is reserved. No live
+            chatrooms yet. New reservations do not store a Network password;
+            you will set one when chat launches.
           </div>
           <div className="cta-row" style={{ marginTop: "1.25rem" }}>
             <SignOutButton />

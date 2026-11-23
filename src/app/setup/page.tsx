@@ -248,19 +248,21 @@ sync`}
                 </span>
               </li>
               <li>
-                <strong>Secure Boot</strong>
+                <strong>Honest boot note (v1)</strong>
                 <span>
-                  If the PC refuses to start from the stick, enter BIOS/UEFI
-                  setup and turn <strong>Secure Boot</strong>{" "}
-                  <strong>Off</strong>. Tri-Cass v1 images are not signed for
-                  Secure Boot.
+                  Current v1 images are <strong>unsigned</strong> and work best
+                  with <strong>legacy / BIOS (CSM)</strong> USB boot. Pure UEFI
+                  machines (especially post-2020 boards with no CSM) may not
+                  start the stick yet — signed UEFI + Secure Boot is planned.
                 </span>
               </li>
               <li>
-                <strong>Older / UEFI machines</strong>
+                <strong>Secure Boot (last resort)</strong>
                 <span>
-                  Prefer “Legacy”, “CSM”, or “USB legacy” boot if a pure UEFI
-                  boot fails.
+                  Only if your firmware still offers legacy USB boot but blocks
+                  the stick: enter setup and try Secure Boot{" "}
+                  <strong>Off</strong>. That is a temporary workaround for
+                  unsigned v1 images — not the long-term product path.
                 </span>
               </li>
             </ul>

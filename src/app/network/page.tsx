@@ -19,10 +19,10 @@ export default function NetworkPage() {
         </p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          Chat rooms are <strong>not online yet</strong>. You can still reserve a
-          username now (free) for when the community launches — like{" "}
-          <span className="mono">@you@tri-cass.network</span>. Email is contact only
-          and not verified yet. Prefer to skip this?{" "}
+          Chat rooms are <strong>not online yet</strong>. You can reserve a
+          username only (no password collected) for when the community launches —
+          like <span className="mono">@you@tri-cass.network</span>. Email is
+          optional contact and not verified. Prefer to skip this?{" "}
           <Link href="/download">Download Tri-Cass OS</Link> and use it offline
           today.
         </div>
@@ -85,11 +85,12 @@ export default function NetworkPage() {
           </div>
 
           <div className="panel">
-            <h3>Create Network account</h3>
+            <h3>Reserve a username</h3>
             <p className="hint" style={{ marginBottom: "1rem" }}>
-              Choose a username, email, and password (at least 10 characters).
-              Passwords are stored hashed. This signup is for Tri-Cass Network only —
-              it is separate from any other account you may have.
+              Username required; email optional. We do{" "}
+              <strong>not</strong> collect a Network password while chat is
+              offline — you will set one when rooms launch. This is separate from
+              any other account you may have.
             </p>
             <AuthForm mode="signup" />
           </div>

@@ -14,7 +14,7 @@ export default function PrivacyPage() {
         <h2>Privacy</h2>
         <p className="lede">
           Plain-language notes for this website and for Tri-Cass OS itself. Last
-          updated: 19 November 2026.
+          updated: 23 November 2026.
         </p>
 
         <h3 className="subhead">The offline OS</h3>
@@ -28,23 +28,26 @@ export default function PrivacyPage() {
         <h3 className="subhead">This website</h3>
         <p>
           You can browse Download, Setup, Docs, and most pages without creating
-          an account. If you optionally sign up to reserve a future Network
-          username, we store the username, email address, and a hashed password
-          in the site database, plus a session cookie so you can stay signed in.
+          an account. If you optionally reserve a future Network username, we
+          store the username and optional email in the site database, plus a
+          session cookie for that reservation. We do{" "}
+          <strong>not</strong> collect a Network password while chat rooms are
+          offline.
         </p>
         <ul className="feature-list">
           <li>
             <strong>What we use that for</strong>
             <span>
-              Holding your reserved username for a future community, and letting
-              you manage that account on this site. Chat rooms are not live yet.
+              Holding your reserved username for a future community. Chat rooms
+              are not live yet. Older accounts that already set a password can
+              still sign in; new reservations cannot until Network launches.
             </span>
           </li>
           <li>
             <strong>Email</strong>
             <span>
-              Email is for contact / account recovery once that is built. Addresses
-              are not verified yet — please use an address you control.
+              Email is optional contact only and is not verified yet — please use
+              an address you control if you provide one.
             </span>
           </li>
           <li>
