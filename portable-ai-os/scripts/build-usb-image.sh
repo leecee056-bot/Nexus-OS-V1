@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# Build a flashable MBR USB disk image for Tri-Cass OS (tree path: portable-ai-os/).
-# Layout: p1 ROOT (ext4, extlinux BIOS boot) + p2 AI_DATA (ext4, LABEL=AI_DATA)
+# Build a flashable USB disk image for Tri-Cass OS (tree path: portable-ai-os/).
+# Default: MBR + extlinux (BIOS / CSM) — proven v1 path.
+# Opt-in HAP-64: ENABLE_UEFI=1 adds GPT ESP with dual-signed shim+GRUB and keeps BIOS.
 # Usage: bash scripts/build-usb-image.sh [x86_64|i686]
+#        ENABLE_UEFI=1 bash scripts/build-usb-image.sh x86_64
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -10,6 +12,7 @@ OUT_DIR="${PORTABLE_AI_IMAGE_DIR:-/agent/portable-ai-os-images}"
 WORK="${PORTABLE_AI_BUILD_ROOT:-/tmp/portable-ai-os-build}/usb-${ARCH}"
 # virtual/686 kernel avoids huge linux-firmware blobs; leave room for SmolLM2 + AI_DATA
 SIZE_MB="${IMAGE_SIZE_MB:-3072}"
+ENABLE_UEFI="${ENABLE_UEFI:-0}"
 
 case "$ARCH" in
   x86_64|amd64)
@@ -44,6 +47,19 @@ need extlinux
 need losetup
 need rsync
 
+if [[ "$ENABLE_UEFI" == "1" ]]; then
+  if [[ "$DEB_ARCH" != "amd64" ]]; then
+    echo "ENABLE_UEFI=1 is x86_64/amd64 only (i686 stays BIOS)" >&2
+    exit 1
+  fi
+  need mkfs.vfat
+  if [[ ! -d "$ROOT/build/uefi/vendor/esp-binaries" ]]; then
+    echo "UEFI vendor binaries missing — run: bash $ROOT/scripts/fetch-uefi-shim.sh" >&2
+    exit 1
+  fi
+  echo "==> HAP-64 UEFI+Secure Boot path enabled (BIOS extlinux retained)"
+fi
+
 # Ensure llama + rescue model exist on host for bundling
 RUNTIME="${PORTABLE_AI_RUNTIME:-/agent/portable-ai-os-runtime}"
 if [[ ! -x "$RUNTIME_BIN_SRC/llama-server" ]]; then
@@ -63,14 +79,33 @@ fi
 # --- create sparse image + partitions ---
 rm -f "$IMG"
 dd if=/dev/zero of="$IMG" bs=1M count=0 seek="$SIZE_MB" status=none
-# MBR: p1 root (most of disk), p2 AI_DATA (~384MB) — sector math for SIZE_MB
-ROOT_SECTORS=$(( (SIZE_MB - 384) * 1024 * 1024 / 512 ))
-sfdisk "$IMG" <<EOF
+DATA_MB=384
+ESP_MB=256
+if [[ "$ENABLE_UEFI" == "1" ]]; then
+  # GPT: ESP + root + AI_DATA (HAP-64). BIOS still uses extlinux on root + hybrid MBR.
+  ESP_SECTORS=$(( ESP_MB * 1024 * 1024 / 512 ))
+  DATA_SECTORS=$(( DATA_MB * 1024 * 1024 / 512 ))
+  ROOT_SECTORS=$(( (SIZE_MB - ESP_MB - DATA_MB) * 1024 * 1024 / 512 ))
+  ESP_START=2048
+  ROOT_START=$(( ESP_START + ESP_SECTORS ))
+  DATA_START=$(( ROOT_START + ROOT_SECTORS ))
+  sfdisk "$IMG" <<EOF
+label: gpt
+unit: sectors
+start=$ESP_START, size=$ESP_SECTORS, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, name=TRI_CASS_ESP
+start=$ROOT_START, size=$ROOT_SECTORS, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, name=AI_SYS, bootable
+start=$DATA_START, size=$DATA_SECTORS, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, name=AI_DATA
+EOF
+else
+  # MBR: p1 root (most of disk), p2 AI_DATA (~384MB) — sector math for SIZE_MB
+  ROOT_SECTORS=$(( (SIZE_MB - DATA_MB) * 1024 * 1024 / 512 ))
+  sfdisk "$IMG" <<EOF
 label: dos
 unit: sectors
 start=2048, size=$ROOT_SECTORS, type=83, bootable
 start=$((2048 + ROOT_SECTORS)), type=83
 EOF
+fi
 
 LOOP=$(sudo losetup -f --show -P "$IMG")
 echo "Loop: $LOOP"
@@ -79,6 +114,7 @@ sudo partx -u "$LOOP" 2>/dev/null || sudo partx -a "$LOOP" 2>/dev/null || true
 sudo kpartx -av "$LOOP" 2>/dev/null || true
 cleanup() {
   sync || true
+  sudo umount "$WORK/mnt/efi" 2>/dev/null || true
   sudo umount "$WORK/mnt/data" 2>/dev/null || true
   sudo umount "$WORK/mnt/dev/pts" 2>/dev/null || true
   sudo umount "$WORK/mnt/dev" 2>/dev/null || true
@@ -92,26 +128,62 @@ cleanup() {
 trap cleanup EXIT
 
 # Resolve partition device paths (loopNp1 or mapper/loopNp1)
-P1="${LOOP}p1"
-P2="${LOOP}p2"
-if [[ ! -b "$P1" ]]; then
-  base=$(basename "$LOOP")
-  P1="/dev/mapper/${base}p1"
-  P2="/dev/mapper/${base}p2"
+resolve_part() {
+  local n="$1"
+  local p="${LOOP}p${n}"
+  if [[ ! -b "$p" ]]; then
+    local base
+    base=$(basename "$LOOP")
+    p="/dev/mapper/${base}p${n}"
+  fi
+  echo "$p"
+}
+
+if [[ "$ENABLE_UEFI" == "1" ]]; then
+  P_ESP="$(resolve_part 1)"
+  P_ROOT="$(resolve_part 2)"
+  P_DATA="$(resolve_part 3)"
+else
+  P_ESP=""
+  P_ROOT="$(resolve_part 1)"
+  P_DATA="$(resolve_part 2)"
 fi
+P1="$P_ROOT"
+P2="$P_DATA"
 for i in $(seq 1 30); do
-  [[ -b "$P1" && -b "$P2" ]] && break
+  if [[ "$ENABLE_UEFI" == "1" ]]; then
+    [[ -b "$P_ESP" && -b "$P_ROOT" && -b "$P_DATA" ]] && break
+  else
+    [[ -b "$P_ROOT" && -b "$P_DATA" ]] && break
+  fi
   sleep 0.2
 done
-[[ -b "$P1" && -b "$P2" ]] || { echo "partition devices missing: $P1 $P2" >&2; ls -l ${LOOP}* /dev/mapper/${base}* 2>/dev/null; exit 1; }
-echo "Partitions: $P1 $P2"
-sudo mkfs.ext4 -F -L AI_SYS "$P1"
-sudo mkfs.ext4 -F -L AI_DATA "$P2"
+if [[ "$ENABLE_UEFI" == "1" ]]; then
+  [[ -b "$P_ESP" && -b "$P_ROOT" && -b "$P_DATA" ]] || {
+    echo "partition devices missing: $P_ESP $P_ROOT $P_DATA" >&2
+    ls -l ${LOOP}* /dev/mapper/"$(basename "$LOOP")"* 2>/dev/null || true
+    exit 1
+  }
+  echo "Partitions: ESP=$P_ESP ROOT=$P_ROOT DATA=$P_DATA"
+  sudo mkfs.vfat -F32 -n TRI_CASS_ESP "$P_ESP"
+else
+  [[ -b "$P_ROOT" && -b "$P_DATA" ]] || {
+    echo "partition devices missing: $P_ROOT $P_DATA" >&2
+    exit 1
+  }
+  echo "Partitions: ROOT=$P_ROOT DATA=$P_DATA"
+fi
+sudo mkfs.ext4 -F -L AI_SYS "$P_ROOT"
+sudo mkfs.ext4 -F -L AI_DATA "$P_DATA"
 
 mkdir -p "$WORK/mnt"
-sudo mount "$P1" "$WORK/mnt"
+sudo mount "$P_ROOT" "$WORK/mnt"
 sudo mkdir -p "$WORK/mnt/data"
-sudo mount "$P2" "$WORK/mnt/data"
+sudo mount "$P_DATA" "$WORK/mnt/data"
+if [[ "$ENABLE_UEFI" == "1" ]]; then
+  sudo mkdir -p "$WORK/mnt/efi"
+  sudo mount "$P_ESP" "$WORK/mnt/efi"
+fi
 
 # --- debootstrap ---
 CACHE="$WORK/debootstrap-cache"
@@ -312,9 +384,9 @@ LABEL portable-ai
   APPEND root=UUID=$ROOT_UUID rw quiet console=tty0 console=ttyS0,115200n8
 EOF
 
-# Install extlinux into the partition + MBR
+# Install extlinux into the partition + MBR (kept for BIOS/CSM even with UEFI)
 sudo extlinux --install "$WORK/mnt/boot/extlinux"
-# dd MBR
+# dd MBR (also written on GPT images as a hybrid protective/legacy boot aid)
 MBR_BIN=""
 for c in /usr/lib/EXTLINUX/mbr.bin /usr/lib/syslinux/mbr/mbr.bin /usr/lib/syslinux/mbr.bin; do
   [[ -f "$c" ]] && MBR_BIN="$c" && break
@@ -322,11 +394,21 @@ done
 [[ -n "$MBR_BIN" ]] || { echo "mbr.bin not found" >&2; exit 1; }
 sudo dd if="$MBR_BIN" of="$LOOP" bs=440 count=1 conv=notrunc status=none
 
+BOOT_NOTE="BIOS/MBR extlinux"
+if [[ "$ENABLE_UEFI" == "1" ]]; then
+  bash "$ROOT/scripts/install-uefi-esp.sh" "$WORK/mnt/efi"
+  # Symlink-friendly names for GRUB search of vmlinuz/initrd
+  sudo ln -sfn "vmlinuz-$KVER" "$WORK/mnt/boot/vmlinuz"
+  sudo ln -sfn "$INITRD_BASE" "$WORK/mnt/boot/initrd.img"
+  BOOT_NOTE="UEFI shim+GRUB (Secure Boot) + BIOS/MBR extlinux"
+fi
+
 # Unmount binds before finishing
 sudo umount "$WORK/mnt/dev/pts" || true
 sudo umount "$WORK/mnt/dev" || true
 sudo umount "$WORK/mnt/proc" || true
 sudo umount "$WORK/mnt/sys" || true
+sudo umount "$WORK/mnt/efi" 2>/dev/null || true
 sudo umount "$WORK/mnt/data" || true
 sudo umount "$WORK/mnt" || true
 sudo kpartx -d "$LOOP" 2>/dev/null || true
@@ -348,7 +430,8 @@ size_mb=$SIZE_MB
 sha256=$(cut -d' ' -f1 "$OUT_DIR/SHA256SUMS-${ARCH}")
 built=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 bundled_models=$(ls "$RUNTIME/models"/SmolLM2*.gguf 2>/dev/null | xargs -n1 basename | tr '\n' ' ')
-boot=BIOS/MBR extlinux
+boot=$BOOT_NOTE
+enable_uefi=$ENABLE_UEFI
 persistence=AI_DATA (ext4 LABEL)
 EOF
 

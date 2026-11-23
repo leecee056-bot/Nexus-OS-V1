@@ -28,3 +28,10 @@ infer.bind=127.0.0.1
 # OS reserves (see plan §4)
 probe.os_reserve_mb=350
 probe.ui_reserve_mb=96
+
+# HAP-64 — UEFI Secure Boot (fetch via scripts/fetch-uefi-shim.sh)
+uefi.debian.suite=bookworm
+uefi.shim_package=shim-signed
+uefi.grub_package=grub-efi-amd64-signed
+uefi.esp_mb=256
+# Dual-signed Microsoft 2011+2023 CA chain via Debian shim; do not ship unsigned BOOTX64.EFI
