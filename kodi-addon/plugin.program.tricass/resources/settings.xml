@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="Tri-Cass">
+    <setting id="ollama_host" type="text" label="Ollama base URL" default="http://127.0.0.1:11434"/>
+    <setting id="ollama_model" type="text" label="Ollama model" default="tinyllama"/>
+    <setting id="vault_path" type="folder" label="Knowledge Vault folder" default=""/>
+  </category>
+</settings>

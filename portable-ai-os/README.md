@@ -60,3 +60,11 @@ Design notes: [`docs/uefi-secure-boot.md`](docs/uefi-secure-boot.md). Default
 builds (no `ENABLE_UEFI`) stay BIOS-only so existing flash docs keep working.
 
 Honest machine matrix: [/compat](https://nexus-os.apps.grok.bot/compat).
+
+### HAP-65 / 66 / 68 (scaffolded)
+
+| Track | Entry |
+|-------|--------|
+| CPU variants | `bash scripts/build-llama-all-variants.sh` · [docs/cpu-variants.md](docs/cpu-variants.md) |
+| Model ladder | `bash scripts/select-model.sh` · [docs/model-ladder.md](docs/model-ladder.md) |
+| Signed updates | `scripts/updates/*` · [docs/signed-updates.md](docs/signed-updates.md) |

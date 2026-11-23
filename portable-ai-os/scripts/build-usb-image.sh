@@ -68,7 +68,11 @@ if [[ ! -x "$RUNTIME_BIN_SRC/llama-server" ]]; then
     exit 1
   fi
   echo "Building llama.cpp into runtime..."
-  bash "$ROOT/scripts/build-llama.sh"
+  if [[ "${LLAMA_BUILD_ALL_VARIANTS:-0}" == "1" ]]; then
+    bash "$ROOT/scripts/build-llama-all-variants.sh"
+  else
+    bash "$ROOT/scripts/build-llama.sh"
+  fi
   RUNTIME_BIN_SRC="$RUNTIME/bin"
 fi
 if ! ls "$RUNTIME/models"/SmolLM2*.gguf >/dev/null 2>&1; then

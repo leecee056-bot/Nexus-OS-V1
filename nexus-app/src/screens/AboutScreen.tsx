@@ -51,9 +51,11 @@ export function AboutScreen() {
             About
           </Text>
           <Text style={[styles.body, { color: colors.fg }]}>
-            Tri-Cass Companion — Windows, Mac, iOS, and Android for the Tri-Cass OS /
-            Tri-Cass family. Offline-first Chat with local models, plus Vault,
-            Packs, and Files. No Tri-Cass cloud account required to use the app.
+            Tri-Cass Companion — Windows, Mac, iOS, and Android (including Android
+            TV / leanback sideload) for the Tri-Cass family. Offline-first Chat with
+            local models, plus Vault, Packs, and Files. No Tri-Cass cloud account
+            required. TV notes: see in-repo android-tv.md; Kodi users can install
+            the thin Tri-Cass Kodi add-on for Chat + Vault.
           </Text>
         </View>
       </View>

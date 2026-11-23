@@ -47,14 +47,24 @@ if [ -d "$STARTER_SRC" ]; then
   done
 fi
 
-# Hardware probe (best-effort)
+# Hardware probe + RAM model ladder (HAP-66)
 if [ -x /opt/portable-ai-os/scripts/probe-hw.sh ]; then
   /bin/bash /opt/portable-ai-os/scripts/probe-hw.sh > /data/logs/probe.json 2>/dev/null || true
+fi
+if [ -x /opt/portable-ai-os/scripts/select-model.sh ]; then
+  /bin/bash /opt/portable-ai-os/scripts/select-model.sh >/data/logs/model-ladder.log 2>&1 || true
+  if [ -f /data/config/model-ladder.env ]; then
+    # shellcheck disable=SC1091
+    set -a
+    . /data/config/model-ladder.env
+    set +a
+    export MODEL_PATH N_CTX N_THREADS
+  fi
 fi
 
 # Start llama-server if not up
 if ! curl -sf http://127.0.0.1:8080/health >/dev/null 2>&1; then
-  /bin/bash /opt/portable-ai-os/scripts/start-infer.sh || true
+  /bin/bash /opt/portable-ai-os/scripts/start-infer.sh ${MODEL_PATH:+"$MODEL_PATH"} || true
 fi
 
 cd /opt/portable-ai-os

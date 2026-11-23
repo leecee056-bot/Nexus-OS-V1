@@ -35,3 +35,14 @@ uefi.shim_package=shim-signed
 uefi.grub_package=grub-efi-amd64-signed
 uefi.esp_mb=256
 # Dual-signed Microsoft 2011+2023 CA chain via Debian shim; do not ship unsigned BOOTX64.EFI
+
+# HAP-65 — CPU variants (see docs/cpu-variants.md)
+llama.cpu_variants_script=scripts/build-llama-all-variants.sh
+
+# HAP-66 — model ladder
+ladder.os_reserve_mb=350
+ladder.ui_reserve_mb=96
+
+# HAP-68 — signed offline updates (operator keys; see docs/signed-updates.md)
+updates.bundle_prefix=tri-cass-update-
+updates.trust_pub=updates/trusted.pub

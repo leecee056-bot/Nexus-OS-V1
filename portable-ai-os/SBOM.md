@@ -37,6 +37,14 @@ this as the declared baseline for trust/review.
 UEFI vendor `.deb` blobs are **not** in git; see `scripts/fetch-uefi-shim.sh` and
 `docs/uefi-secure-boot.md`.
 
+## Related scaffolds
+
+| Track | Path |
+|-------|------|
+| HAP-65 CPU variants | `scripts/build-llama-all-variants.sh` |
+| HAP-66 model ladder | `scripts/select-model.sh` |
+| HAP-68 signed updates | `scripts/updates/` |
+
 ## Release artifact pointers
 
 See `build/images/ARTIFACT-*.txt` and `build/images/SHA256SUMS*` for the last

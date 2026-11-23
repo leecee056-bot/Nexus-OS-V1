@@ -26,8 +26,11 @@ echo "$COMMIT" > "$PREFIX/COMMIT"
 echo "$COMMIT" > "$RUNTIME_BIN/../COMMIT" 2>/dev/null || true
 
 # Portable CPU flags for old PCs / QEMU (override with GGML_NATIVE=ON for host-only speed).
-# HAP-65 (queued): prefer GGML_BACKEND_DL + CPU all-variants instead of stripping AVX;
-# this build remains the conservative SSE-friendly default until that lands.
+# HAP-65: for runtime CPU dispatch / dual binaries use build-llama-all-variants.sh
+# (or LLAMA_BUILD_ALL_VARIANTS=1 from image builds).
+if [[ "${LLAMA_BUILD_ALL_VARIANTS:-0}" == "1" ]]; then
+  exec bash "$ROOT/scripts/build-llama-all-variants.sh"
+fi
 NATIVE="${GGML_NATIVE:-OFF}"
 echo "==> Configuring (CPU, server, GGML_NATIVE=$NATIVE)"
 cmake -S . -B build \
