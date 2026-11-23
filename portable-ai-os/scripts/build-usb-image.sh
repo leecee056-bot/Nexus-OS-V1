@@ -268,12 +268,13 @@ sudo chroot "$WORK/mnt" /bin/bash -c "passwd -d root"
 
 # Payload
 sudo mkdir -p "$WORK/mnt/opt/portable-ai-os/runtime/"{bin,models} \
-  "$WORK/mnt/data/"{config,models,memory,images,logs,knowledge/raw,notes}
+  "$WORK/mnt/data/"{config,models,memory,images,logs,knowledge/raw,notes,projects}
 # Branding alias (keep portable-ai-os path for compatibility)
 sudo ln -sfn /opt/portable-ai-os "$WORK/mnt/opt/nexus-os"
 sudo rsync -a --exclude 'models/*.gguf' --exclude 'build/alpine' \
   "$ROOT"/catalog "$ROOT"/configs "$ROOT"/tui "$ROOT"/scripts "$ROOT"/docs \
-  "$ROOT"/knowledge "$ROOT"/versions.lock "$ROOT"/README.md "$ROOT"/LICENSE \
+  "$ROOT"/knowledge "$ROOT"/projects "$ROOT"/assets \
+  "$ROOT"/versions.lock "$ROOT"/README.md "$ROOT"/LICENSE \
   "$WORK/mnt/opt/portable-ai-os/"
 # Runtime bins (arch-matched) + rescue models only (keep image small)
 sudo rsync -a "$RUNTIME_BIN_SRC/" "$WORK/mnt/opt/portable-ai-os/runtime/bin/"

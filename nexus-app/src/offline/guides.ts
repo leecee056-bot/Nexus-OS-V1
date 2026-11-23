@@ -33,7 +33,7 @@ export const OFFLINE_GUIDES: OfflineGuide[] = [
     id: "agent",
     title: "Agent (local tools)",
     body:
-      "Agent uses your local model plus on-device tools: Vault search, Packs index, Files, and website scaffolding.\n" +
+      "Agent uses your local model plus on-device tools: Vault search, Packs index, Files, website scaffolding, and Pocket Agent project templates (timer / HTML / CLI under Files → projects/).\n" +
       "Saying hi never triggers pack searches. Ask explicitly to search or to “make a website…”.",
   },
   {

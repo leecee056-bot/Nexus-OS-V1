@@ -14,6 +14,7 @@ import {
 import { diskInfo } from "../files/diskBridge";
 import { loadPluginState, enabledTools } from "../plugins/store";
 import type { AgentToolCall, AgentToolName } from "./schema";
+import { guessScaffold, scaffoldFiles } from "./scaffolds";
 
 export type ToolResult = {
   tool: AgentToolName;
@@ -152,11 +153,27 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
     calls.push({ tool: "ensure_folder", args: { path: folderMatch2[1] } });
   }
 
+  // Pocket Agent project scaffolds (timer / html / cli / flask)
+  const pocket = guessScaffold(userMessage);
+  if (
+    pocket &&
+    allow.has("ensure_folder") &&
+    (allow.has("write_file") || allow.has("create_file"))
+  ) {
+    const writeTool = allow.has("write_file") ? "write_file" : "create_file";
+    const folder = `projects/${pocket.name}`;
+    calls.push({ tool: "ensure_folder", args: { path: folder } });
+    for (const f of scaffoldFiles(pocket.kind, pocket.name)) {
+      calls.push({ tool: writeTool, args: { path: f.path, content: f.content } });
+    }
+  }
+
   const wantsWebsite =
     /(?:make|create|build|spin up|scaffold)\s+(?:me\s+)?(?:a\s+|an\s+)?(?:simple\s+|small\s+|basic\s+)?(?:web\s*site|webpage|landing page|html site)/i.test(
       userMessage,
     ) || /(?:website|landing page).*(?:for|about|called)/i.test(userMessage);
   if (
+    !pocket &&
     wantsWebsite &&
     allow.has("ensure_folder") &&
     (allow.has("write_file") || allow.has("create_file"))

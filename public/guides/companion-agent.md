@@ -17,9 +17,15 @@ Add-ons / Plugin library — instead of chatting in isolation.
    - “Look up fetch API in my coding packs”
    - “List files in website”
    - “Create a simple website”
+   - “Make me a timer app called tea”
+   - “Scaffold an html app named notes”
    - “Write website/about.html with a short bio”
    - “Rename website/README.txt to website/NOTES.txt”
    - “Delete website/old.html”
+
+Project scaffolds land under `projects/<name>/` (timer, HTML app, Python CLI,
+stdlib HTTP / Flask-style). Free Lucide + Twemoji icons ship in the Companion
+`assets/ui-kit/` tree for those apps to reuse.
 
 Short status lines appear while the agent plans, searches, and writes. When
 files change, Chat shows a **Changes** list of created / updated / renamed /

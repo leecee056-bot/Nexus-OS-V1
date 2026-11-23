@@ -254,7 +254,7 @@ export function ChatScreen() {
         content: x.text,
       }));
 
-    // Website asks work in Chat or Agent — one clear request → files.
+    // Website / Pocket Agent scaffolds work in Chat or Agent — one ask → files.
     const siteNote = await tryBuildWebsiteFromMessage(text);
 
     if (mode === "agent") {
@@ -269,7 +269,9 @@ export function ChatScreen() {
       const id = String(Date.now() + 1);
       setLatestTypedId(id);
       const merged =
-        siteNote && !/website\//i.test(result.text)
+        siteNote &&
+        !/website\//i.test(result.text) &&
+        !/projects\//i.test(result.text)
           ? `${result.text}\n\n${siteNote}`
           : result.text;
       setMsgs((m) => [

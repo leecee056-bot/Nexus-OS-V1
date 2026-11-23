@@ -6,6 +6,14 @@ import operator
 import re
 from pathlib import Path
 
+from builder import (
+    guess_scaffold,
+    list_templates,
+    mkdir_project_path,
+    projects_root,
+    scaffold,
+    write_project_file,
+)
 from files import FileBrowser
 from llm import present_models, server_alive
 from monitor import snapshot
@@ -60,6 +68,12 @@ TOOLS = [
     ("vault", "Search knowledge vault — vault <q>"),
     ("note", "Append note to AI_DATA/notes — note <text>"),
     ("pxg", "Pixel art — pxg <prompt>"),
+    ("templates", "List Pocket Agent project templates"),
+    ("scaffold", "Copy template → /data/projects — scaffold <tpl> <name>"),
+    ("projects", "List /data/projects"),
+    ("mkdir", "Make folder under projects — mkdir <rel/path>"),
+    ("write", "Write file under projects — write <rel/path> | <content>"),
+    ("make", "Guess template from words — make <timer app called foo>"),
 ]
 
 
@@ -71,7 +85,10 @@ class AgentController:
         self.root = root
         self.cfg = cfg
         self.base = base
-        self.log: list[str] = ["Agent ready. Allowlisted tools only — no shell."]
+        self.log: list[str] = [
+            "Agent ready. Allowlisted tools only — no shell.",
+            "Pocket Agent: scaffold / make / write under /data/projects/",
+        ]
         self.input = ""
         self.pending_confirm: tuple[str, str] | None = None  # (tool, arg)
 
@@ -91,6 +108,13 @@ class AgentController:
         parts = line.split(None, 1)
         tool = parts[0].lower()
         arg = parts[1] if len(parts) > 1 else ""
+        known = {t[0] for t in TOOLS}
+        # Natural language → make (Pocket Agent)
+        if tool not in known:
+            guessed = guess_scaffold(line)
+            if guessed:
+                return self._dispatch("make", line, confirmed=False)
+            return f"Unknown tool '{tool}'. Try: " + ", ".join(t[0] for t in TOOLS)
         # Destructive-ish: note overwrite N/A; fileread ok; delete not exposed
         if tool in ("note",) and arg.startswith("!"):
             self.pending_confirm = (tool, arg)
@@ -147,6 +171,34 @@ class AgentController:
                     size=int(self.cfg.get("image_size") or 32),
                 )
                 return f"saved {res['png']}\n{res['ascii'][:500]}"
+            if tool == "templates":
+                names = list_templates(self.root)
+                return "\n".join(names) or "(no templates — check projects/templates)"
+            if tool == "scaffold":
+                bits = arg.split(None, 1)
+                if len(bits) < 2:
+                    return "Usage: scaffold <template> <name>"
+                return scaffold(self.root, self.data_dir, bits[0], bits[1])
+            if tool == "projects":
+                root = projects_root(self.data_dir)
+                kids = sorted(p.name for p in root.iterdir() if not p.name.startswith("."))
+                return "\n".join(kids) or "(empty — try: scaffold html-app demo)"
+            if tool == "mkdir":
+                if not arg:
+                    return "Usage: mkdir <rel/path under projects>"
+                return mkdir_project_path(self.data_dir, arg)
+            if tool == "write":
+                if "|" not in arg:
+                    return "Usage: write <rel/path> | <content>"
+                path_part, content = arg.split("|", 1)
+                return write_project_file(self.data_dir, path_part.strip(), content)
+            if tool == "make":
+                guessed = guess_scaffold(arg or "")
+                if not guessed:
+                    avail = ", ".join(list_templates(self.root)) or "html-app, timer-app, …"
+                    return f"Could not guess template. Try: scaffold <tpl> <name>\nTemplates: {avail}"
+                tpl, name = guessed
+                return scaffold(self.root, self.data_dir, tpl, name)
             return f"Unknown tool '{tool}'. Try: " + ", ".join(t[0] for t in TOOLS)
         except Exception as e:
             return f"Error: {e}"
