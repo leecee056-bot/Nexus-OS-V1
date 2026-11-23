@@ -15,6 +15,25 @@ CTX="${N_CTX:-512}"
 THREADS="${N_THREADS:-}"
 BATCH="${N_BATCH:-128}"
 
+# HAP-66: prefer model ladder env when present
+LADDER_ENV="${AI_DATA:-/data}/config/model-ladder.env"
+if [[ -z "$MODEL_PATH" && -f "$LADDER_ENV" ]]; then
+  # shellcheck disable=SC1090
+  set -a
+  # shellcheck source=/dev/null
+  source "$LADDER_ENV"
+  set +a
+fi
+if [[ -z "$MODEL_PATH" && -x "$ROOT/scripts/select-model.sh" ]]; then
+  bash "$ROOT/scripts/select-model.sh" >/dev/null 2>&1 || true
+  if [[ -f "$LADDER_ENV" ]]; then
+    set -a
+    # shellcheck source=/dev/null
+    source "$LADDER_ENV"
+    set +a
+  fi
+fi
+
 if [[ ! -x "$SERVER" ]]; then
   echo "llama-server missing at $SERVER; run scripts/build-llama.sh first" >&2
   exit 1

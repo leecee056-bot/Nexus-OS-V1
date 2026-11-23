@@ -52,6 +52,8 @@ const navRef = createNavigationContainerRef<RootTabParamList>();
 
 /** Image Lab + Games are desktop-first (Windows / Mac / web / USB). */
 const SHOW_DESKTOP_EXTRAS = Platform.OS === "web";
+/** Android TV / leanback (HAP-60) — larger remote-friendly tab targets. */
+const IS_TV = Platform.isTV === true;
 
 const BASE_SCREENS: {
   name: ScreenName;
@@ -313,9 +315,9 @@ function AppShell() {
                   : {
                       backgroundColor: colors.bgBar,
                       borderTopColor: colors.border,
-                      height: 58,
-                      paddingBottom: 6,
-                      paddingTop: 4,
+                      height: IS_TV ? 72 : 58,
+                      paddingBottom: IS_TV ? 10 : 6,
+                      paddingTop: IS_TV ? 8 : 4,
                     },
                 tabBarActiveTintColor: terminal ? colors.bg : colors.accent,
                 tabBarInactiveTintColor: colors.fgDim,
@@ -323,8 +325,8 @@ function AppShell() {
                   ? colors.accent
                   : undefined,
                 tabBarLabelStyle: [
-                  { fontSize: 10, fontWeight: "600" },
-                  terminal ? monoStyle({ fontSize: 9 }) : null,
+                  { fontSize: IS_TV ? 12 : 10, fontWeight: "600" },
+                  terminal ? monoStyle({ fontSize: IS_TV ? 11 : 9 }) : null,
                 ],
               }}
             >

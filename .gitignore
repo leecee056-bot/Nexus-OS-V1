@@ -6,6 +6,9 @@ portable-ai-os/build/**/*.iso
 portable-ai-os/build/**/*.tar.gz
 portable-ai-os/build/llama/bin/
 portable-ai-os/build/uefi/vendor/
+portable-ai-os/build/update-keys/
+portable-ai-os/build/updates/
+portable-ai-os/build/update-keys/**
 portable-ai-os/**/*.gguf
 portable-ai-os/**/__pycache__/
 portable-ai-os/**/*.pyc

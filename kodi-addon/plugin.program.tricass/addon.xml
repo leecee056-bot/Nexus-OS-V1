@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.program.tricass" name="Tri-Cass" version="0.1.0" provider-name="Tri-Cass">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Tri-Cass Chat + Knowledge Vault</summary>
+    <description lang="en_GB">
+      Thin offline companion for Tri-Cass: chat with a local Ollama endpoint or
+      phrase fallback, and search a Knowledge Vault folder (USB path). Remote-
+      friendly. Not a full Tri-Cass Companion replacement.
+    </description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
+</addon>

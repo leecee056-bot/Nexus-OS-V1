@@ -220,7 +220,9 @@ export default function CompatPage() {
             image.
           </p>
           <p style={{ marginTop: "0.75rem" }}>
-            Android TV and Kodi paths are queued separately (HAP-60 / HAP-61).
+            Android TV: leanback launcher intent + docs in{" "}
+            <code>nexus-app/docs/android-tv.md</code> (HAP-60). Kodi: thin Chat +
+            Vault add-on under <code>kodi-addon/</code> (HAP-61).
           </p>
         </div>
 
@@ -231,19 +233,32 @@ export default function CompatPage() {
           <ul className="feature-list">
             <li>
               <strong>UEFI + Secure Boot on</strong>
-              <span>Dual-signed shim; keep BIOS path (HAP-64).</span>
+              <span>
+                In-repo scaffold (`ENABLE_UEFI=1` + dual-signed shim). Default
+                download images stay BIOS/extlinux until a signed release is
+                published (HAP-64).
+              </span>
             </li>
             <li>
               <strong>All-CPU llama.cpp variants</strong>
-              <span>Drop SSE4.2-only floor for older 64-bit PCs (HAP-65).</span>
+              <span>
+                `build-llama-all-variants.sh` — runtime dispatch or portable+native
+                dual build (HAP-65).
+              </span>
             </li>
             <li>
               <strong>RAM-based model ladder</strong>
-              <span>Pick model + threads from free RAM at first boot (HAP-66).</span>
+              <span>
+                First-boot `select-model.sh` picks the largest fitting GGUF from
+                free RAM; SmolLM2 is rescue (HAP-66).
+              </span>
             </li>
             <li>
               <strong>Signed offline updates</strong>
-              <span>Sneakernet-friendly bundles + rollback (HAP-68).</span>
+              <span>
+                Pack / verify / apply / rollback scripts under
+                `portable-ai-os/scripts/updates/` (HAP-68).
+              </span>
             </li>
           </ul>
           <p style={{ marginTop: "0.75rem" }}>
