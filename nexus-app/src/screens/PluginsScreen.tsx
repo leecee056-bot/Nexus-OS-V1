@@ -17,6 +17,7 @@ import { MARKET_PAGES } from "../plugins/marketplace/catalog";
 import {
   installMarketItem,
   loadInstalled,
+  uninstallMarketItem,
   type InstalledMap,
 } from "../plugins/marketplace/install";
 import type { MarketItem, MarketPageId } from "../plugins/marketplace/types";
@@ -74,6 +75,14 @@ export function PluginsScreen() {
       setNote(`Installed ${item.name} → Files / ${res.path}`);
       void loadInstalled().then(setInstalled);
     }
+  }
+
+  async function uninstall(item: MarketItem) {
+    setBusyId(item.id);
+    await uninstallMarketItem(item.id);
+    setBusyId(null);
+    setNote(`Removed ${item.name} from installed list.`);
+    void loadInstalled().then(setInstalled);
   }
 
   const page = MARKET_PAGES.find((p) => p.id === tab);
@@ -339,10 +348,35 @@ export function PluginsScreen() {
                         : done
                           ? item.kind === "link"
                             ? "Open again"
-                            : "Re-download"
+                            : "Open / Re-download"
                           : "Download"}
                     </Text>
                   </Pressable>
+                  {done && item.kind !== "link" ? (
+                    <Pressable
+                      disabled={busy}
+                      onPress={() => void uninstall(item)}
+                      style={[
+                        styles.download,
+                        {
+                          borderColor: colors.danger,
+                          borderRadius: colors.radius || 12,
+                          marginTop: 6,
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={{
+                          color: colors.danger,
+                          fontWeight: "800",
+                          fontSize: 12,
+                          textAlign: "center",
+                        }}
+                      >
+                        Uninstall
+                      </Text>
+                    </Pressable>
+                  ) : null}
                 </View>
               );
             })}

@@ -22,7 +22,7 @@ export async function loadChatHistory(): Promise<StoredChatMsg[]> {
     if (!raw) return [...STARTER];
     const parsed = JSON.parse(raw) as StoredChatMsg[];
     if (!Array.isArray(parsed) || parsed.length === 0) return [...STARTER];
-    return parsed.slice(-80);
+    return parsed.slice(-200);
   } catch {
     return [...STARTER];
   }
@@ -30,7 +30,7 @@ export async function loadChatHistory(): Promise<StoredChatMsg[]> {
 
 export async function saveChatHistory(msgs: StoredChatMsg[]): Promise<void> {
   try {
-    const clipped = msgs.slice(-80);
+    const clipped = msgs.slice(-200);
     await AsyncStorage.setItem(KEY, JSON.stringify(clipped));
   } catch {
     /* ignore */

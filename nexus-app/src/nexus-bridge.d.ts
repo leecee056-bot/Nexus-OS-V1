@@ -73,6 +73,15 @@ declare global {
         created?: string[];
         error?: string;
       }>;
+      newWindow?: () => Promise<{ ok: boolean }>;
+      closeWindow?: () => Promise<{ ok: boolean }>;
+      windowBack?: () => Promise<{ ok: boolean; navigated?: boolean }>;
+      windowForward?: () => Promise<{ ok: boolean; navigated?: boolean }>;
+      windowNavState?: () => Promise<{
+        ok: boolean;
+        canBack?: boolean;
+        canForward?: boolean;
+      }>;
       workspace?: {
         info?: () => Promise<{
           ok: boolean;

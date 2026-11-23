@@ -95,7 +95,7 @@ export async function runAgentTurn(opts: {
 
   const messages: ChatMessage[] = [
     { role: "system", content: AGENT_SYSTEM },
-    ...opts.history.slice(-10),
+    ...opts.history.slice(-40),
     {
       role: "user",
       content: opts.userMessage + toolBlock,

@@ -23,6 +23,16 @@ async function saveInstalled(map: InstalledMap) {
   await AsyncStorage.setItem(KEY, JSON.stringify(map));
 }
 
+export async function uninstallMarketItem(
+  itemId: string,
+): Promise<{ ok: boolean }> {
+  const map = await loadInstalled();
+  if (!map[itemId]) return { ok: true };
+  delete map[itemId];
+  await saveInstalled(map);
+  return { ok: true };
+}
+
 export async function installMarketItem(
   item: MarketItem,
   themeId?: string,

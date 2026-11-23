@@ -2,7 +2,7 @@
   "expo": {
     "name": "Tri-Cass Companion",
     "slug": "tri-cass-companion",
-    "version": "0.12.4",
+    "version": "0.13.0",
     "orientation": "default",
     "icon": "./assets/brand/icon.png",
     "userInterfaceStyle": "dark",

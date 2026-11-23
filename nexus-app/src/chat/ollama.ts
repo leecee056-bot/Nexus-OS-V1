@@ -204,16 +204,43 @@ export async function pullModel(
   }
 }
 
+/** Default context tokens for local chat (was effectively short via history trim). */
+export const DEFAULT_NUM_CTX = 8192;
+export const DEFAULT_NUM_PREDICT = 1024;
+
+export async function deleteModel(
+  host: string,
+  ollamaName: string,
+): Promise<{ ok: boolean; error?: string }> {
+  // Ollama accepts DELETE /api/delete with model/name depending on version.
+  const res = await request(host, "DELETE", "/api/delete", {
+    model: ollamaName,
+    name: ollamaName,
+  });
+  if (!res.ok) {
+    return {
+      ok: false,
+      error: res.text || `Could not uninstall ${ollamaName} (${res.status})`,
+    };
+  }
+  return { ok: true };
+}
+
 export async function chatCompletion(
   host: string,
   model: string,
   messages: ChatMessage[],
+  opts?: { numCtx?: number; numPredict?: number; temperature?: number },
 ): Promise<{ ok: true; text: string } | { ok: false; error: string }> {
   const res = await request(host, "POST", "/api/chat", {
     model,
     messages,
     stream: false,
-    options: { temperature: 0.7, num_predict: 512 },
+    options: {
+      temperature: opts?.temperature ?? 0.7,
+      num_predict: opts?.numPredict ?? DEFAULT_NUM_PREDICT,
+      num_ctx: opts?.numCtx ?? DEFAULT_NUM_CTX,
+    },
   });
 
   if (!res.ok) {

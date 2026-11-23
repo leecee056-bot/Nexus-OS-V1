@@ -1,6 +1,6 @@
 {
   "name": "tri-cass-companion",
-  "version": "0.12.5",
+  "version": "0.13.0",
   "description": "Tri-Cass Companion — Spatial, Browse, Add-ons marketplace, desktop launcher",
   "author": "Tri-Cass OS",
   "main": "index.ts",

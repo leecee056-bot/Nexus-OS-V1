@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { spacing, useTheme } from "../theme";
-import { monoStyle } from "../theme/fonts";
+import { monoStyle, themeBodyStyle } from "../theme/fonts";
 
 /**
- * Cheeky on-brand wait state while the local model grafts a reply.
- * Avoids the word “thinking” — shows rabbit GIF + live seconds.
+ * On-brand wait state — rabbit GIF on a light plate (no dark drop-shadow).
  */
 export function GraftingIndicator({ active }: { active: boolean }) {
-  const { colors } = useTheme();
+  const { colors, themeId } = useTheme();
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
@@ -30,19 +29,28 @@ export function GraftingIndicator({ active }: { active: boolean }) {
         {
           borderColor: colors.border,
           backgroundColor: colors.glass ? colors.bgGlass : colors.bgElev,
-          shadowColor: colors.phosphor,
         },
       ]}
       accessibilityLiveRegion="polite"
       accessibilityLabel={`grafting ${seconds} seconds`}
     >
-      <Image
-        source={require("../../assets/brand/rabbit-grafting.gif")}
-        style={styles.gif}
-        resizeMode="contain"
-        // web / Android animate GIF natively via RN Image
-        accessibilityIgnoresInvertColors
-      />
+      <View
+        style={[
+          styles.gifPlate,
+          {
+            backgroundColor:
+              themeId === "basic" ? "#e8e4da" : "rgba(240,248,240,0.94)",
+            borderColor: colors.border,
+          },
+        ]}
+      >
+        <Image
+          source={require("../../assets/brand/rabbit-grafting.gif")}
+          style={styles.gif}
+          resizeMode="contain"
+          accessibilityIgnoresInvertColors
+        />
+      </View>
       <Text
         style={[
           styles.label,
@@ -52,7 +60,13 @@ export function GraftingIndicator({ active }: { active: boolean }) {
       >
         grafting… {seconds}s
       </Text>
-      <Text style={[styles.hint, { color: colors.fgDim }]}>
+      <Text
+        style={[
+          styles.hint,
+          { color: colors.fgDim },
+          themeBodyStyle(themeId),
+        ]}
+      >
         rabbit on shovel duty
       </Text>
     </View>
@@ -68,9 +82,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     marginBottom: spacing.sm,
     maxWidth: 220,
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 0 },
+  },
+  gifPlate: {
+    borderWidth: 1,
+    padding: 6,
+    borderRadius: 4,
   },
   gif: {
     width: 96,

@@ -24,6 +24,8 @@ import {
 import {
   chatCompletion,
   checkOllama,
+  deleteModel,
+  DEFAULT_NUM_CTX,
   isModelInstalled,
   listLocalTags,
   OLLAMA_INSTALL_URL,
@@ -58,7 +60,10 @@ import { exportChatToUsb } from "../portable/info";
 import { AGENT_GUIDE_URL, OS_UPDATE_URL } from "../updates/links";
 import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
-import { monoStyle } from "../theme/fonts";
+import { monoStyle, themeBodyStyle } from "../theme/fonts";
+
+/** Keep enough turns for local models with ~8k context. */
+const HISTORY_TURNS = 40;
 
 type Msg = { id: string; role: "you" | "tricass"; text: string; typed?: boolean };
 type ChatMode = "chat" | "agent";
@@ -68,7 +73,7 @@ const SYSTEM_PROMPT =
 
 export function ChatScreen() {
   const { isTablet } = useCompanionLayout();
-  const { colors } = useTheme();
+  const { colors, themeId } = useTheme();
   const [mode, setMode] = useState<ChatMode>("chat");
   const [agentSteps, setAgentSteps] = useState<AgentStep[]>([]);
   const [input, setInput] = useState("");
@@ -209,6 +214,28 @@ export function ChatScreen() {
     await refresh();
   }
 
+  async function uninstallModel(m: LocalModel) {
+    if (!ollamaOk) return;
+    setBusy(true);
+    setPullNote(`Uninstalling ${m.label}…`);
+    const result = await deleteModel(host, m.ollama);
+    setBusy(false);
+    setPullNote(null);
+    if (!result.ok) {
+      setStatusNote(result.error || "Uninstall failed.");
+      return;
+    }
+    await refresh();
+    setStatusNote(null);
+  }
+
+  function newChat() {
+    setMsgs([]);
+    setAgentSteps([]);
+    setExportNote(null);
+    setLatestTypedId(null);
+  }
+
   async function send() {
     const text = input.trim();
     if (!text || busy) return;
@@ -221,7 +248,7 @@ export function ChatScreen() {
 
     const historyForAgent: ChatMessage[] = msgs
       .filter((x) => x.id !== "0")
-      .slice(-12)
+      .slice(-HISTORY_TURNS)
       .map((x) => ({
         role: (x.role === "you" ? "user" : "assistant") as "user" | "assistant",
         content: x.text,
@@ -276,7 +303,10 @@ export function ChatScreen() {
       { role: "user", content: text },
     ];
 
-    const result = await chatCompletion(host, model.ollama, history);
+    const result = await chatCompletion(host, model.ollama, history, {
+      numCtx: DEFAULT_NUM_CTX,
+      numPredict: 1024,
+    });
     const id = String(Date.now() + 1);
     setLatestTypedId(id);
     const reply = result.ok ? result.text : result.error;
@@ -380,6 +410,29 @@ export function ChatScreen() {
             label="Website downloads (optional)"
             compact
           />
+          <Pressable
+            onPress={newChat}
+            style={[
+              styles.saveChatBtn,
+              {
+                borderColor: colors.border,
+                backgroundColor: colors.bgElev,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                {
+                  color: colors.fg,
+                  fontWeight: "700",
+                  fontSize: 11,
+                },
+                themeBodyStyle(themeId),
+              ]}
+            >
+              New chat
+            </Text>
+          </Pressable>
           <Pressable
             onPress={() =>
               void (async () => {
@@ -651,10 +704,29 @@ export function ChatScreen() {
             <Text style={[styles.modalTitle, { color: colors.accent }]}>
               Local models
             </Text>
-            <Text style={[styles.modalLede, { color: colors.fgDim }]}>
-              Lightweight picks via Ollama. Download once, then chat offline on
-              Tri-Cass.
+            <Text
+              style={[
+                styles.modalLede,
+                { color: colors.fgDim },
+                themeBodyStyle(themeId),
+              ]}
+            >
+              Browse recommended picks or anything already installed in Ollama.
+              Get / Use / Uninstall — models stay on this machine.
             </Text>
+            {tags.length > 0 ? (
+              <Text
+                style={{
+                  color: colors.purple,
+                  fontSize: 12,
+                  fontWeight: "700",
+                  marginBottom: 8,
+                }}
+              >
+                Installed on this PC ({tags.length}): {tags.slice(0, 8).join(", ")}
+                {tags.length > 8 ? "…" : ""}
+              </Text>
+            ) : null}
             <FlatList
               data={RECOMMENDED_MODELS}
               keyExtractor={(m) => m.id}
@@ -692,39 +764,61 @@ export function ChatScreen() {
                           compact
                         />
                       </View>
-                      {!on ? (
-                        <Pressable
-                          style={[
-                            styles.cardGet,
-                            { borderColor: colors.accent },
-                          ]}
-                          disabled={busy || !ollamaOk}
-                          onPress={() => void installModel(item)}
-                        >
-                          {busy && pullPct != null && modelId === item.id ? (
-                            <ProgressRing progress={pullPct} size={32} />
-                          ) : (
+                      <View style={{ gap: 6, alignItems: "flex-end" }}>
+                        {!on ? (
+                          <Pressable
+                            style={[
+                              styles.cardGet,
+                              { borderColor: colors.accent },
+                            ]}
+                            disabled={busy || !ollamaOk}
+                            onPress={() => void installModel(item)}
+                          >
+                            {busy && pullPct != null && modelId === item.id ? (
+                              <ProgressRing progress={pullPct} size={32} />
+                            ) : (
+                              <Text
+                                style={[
+                                  styles.cardGetText,
+                                  { color: colors.accent },
+                                ]}
+                              >
+                                Get
+                              </Text>
+                            )}
+                          </Pressable>
+                        ) : (
+                          <>
                             <Text
-                              style={[
-                                styles.cardGetText,
-                                { color: colors.accent },
-                              ]}
+                              style={{
+                                color: colors.purple,
+                                fontWeight: "700",
+                                paddingHorizontal: 8,
+                              }}
                             >
-                              Get
+                              Use
                             </Text>
-                          )}
-                        </Pressable>
-                      ) : (
-                        <Text
-                          style={{
-                            color: colors.purple,
-                            fontWeight: "700",
-                            paddingHorizontal: 8,
-                          }}
-                        >
-                          Use
-                        </Text>
-                      )}
+                            <Pressable
+                              style={[
+                                styles.cardGet,
+                                { borderColor: colors.danger },
+                              ]}
+                              disabled={busy || !ollamaOk}
+                              onPress={() => void uninstallModel(item)}
+                            >
+                              <Text
+                                style={{
+                                  color: colors.danger,
+                                  fontWeight: "700",
+                                  fontSize: 11,
+                                }}
+                              >
+                                Uninstall
+                              </Text>
+                            </Pressable>
+                          </>
+                        )}
+                      </View>
                     </View>
                   </PressableCard>
                 );

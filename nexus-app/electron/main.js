@@ -20,9 +20,9 @@ const { applyPortablePaths, ensureDir } = require("./portable");
 
 const APP_VERSION = (() => {
   try {
-    return require("../package.json").version || "0.12.4";
+    return require("../package.json").version || "0.13.0";
   } catch {
-    return "0.12.4";
+    return "0.13.0";
   }
 })();
 
@@ -250,8 +250,16 @@ function resolveAppTarget() {
   };
 }
 
+function shortcutIconPath() {
+  // Prefer .ico for Windows shortcuts; fall back to png; never the bare .exe
+  // (exe-as-icon often shows a blank/white tile in Explorer / dialogs).
+  if (fileExists(iconIcoPath)) return iconIcoPath;
+  if (fileExists(iconPath)) return iconPath;
+  return undefined;
+}
+
 function writeWinShortcut(linkPath, { target, cwd, description }) {
-  const icon = fileExists(iconIcoPath) ? iconIcoPath : target;
+  const icon = shortcutIconPath() || target;
   return shell.writeShortcutLink(linkPath, {
     target,
     cwd,
@@ -930,6 +938,44 @@ ipcMain.handle("nexus:add-to-desktop", async () => {
   }
 });
 
+ipcMain.handle("nexus:new-window", async () => {
+  createWindow();
+  return { ok: true };
+});
+
+ipcMain.handle("nexus:close-window", async (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (win && !win.isDestroyed()) win.close();
+  return { ok: true };
+});
+
+ipcMain.handle("nexus:window-back", async (event) => {
+  const wc = event.sender;
+  if (wc.canGoBack()) {
+    wc.goBack();
+    return { ok: true, navigated: true };
+  }
+  return { ok: true, navigated: false };
+});
+
+ipcMain.handle("nexus:window-forward", async (event) => {
+  const wc = event.sender;
+  if (wc.canGoForward()) {
+    wc.goForward();
+    return { ok: true, navigated: true };
+  }
+  return { ok: true, navigated: false };
+});
+
+ipcMain.handle("nexus:window-nav-state", async (event) => {
+  const wc = event.sender;
+  return {
+    ok: true,
+    canBack: wc.canGoBack(),
+    canForward: wc.canGoForward(),
+  };
+});
+
 ipcMain.handle("nexus:app-version", async () => ({
   ok: true,
   version: APP_VERSION,
@@ -1006,6 +1052,7 @@ app.whenReady().then(async () => {
       "desktop-launcher-offered.json",
     );
     if (!fs.existsSync(flag)) {
+      const dialogIcon = resolveIcon();
       const { response } = await dialog.showMessageBox({
         type: "question",
         buttons: ["Add to Desktop", "Not now"],
@@ -1015,6 +1062,7 @@ app.whenReady().then(async () => {
         message: "Add Tri-Cass Companion to your Desktop?",
         detail:
           "Creates a Desktop shortcut and Start Menu / Applications launcher with the Tri-Cass icon so you can open Companion like a normal app.",
+        icon: dialogIcon,
       });
       if (response === 0) {
         addLaunchers();

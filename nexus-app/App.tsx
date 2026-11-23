@@ -1,4 +1,11 @@
-import { useCallback, useMemo, useState, type ComponentType } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ComponentType,
+} from "react";
 import {
   NavigationContainer,
   DarkTheme,
@@ -26,12 +33,13 @@ import { PacksScreen } from "./src/screens/PacksScreen";
 import { PluginsScreen } from "./src/screens/PluginsScreen";
 import { AboutScreen } from "./src/screens/AboutScreen";
 import { BootSplash } from "./src/components/BootSplash";
+import { DesktopWindowBar } from "./src/components/DesktopWindowBar";
 import { ScanlineOverlay } from "./src/components/ScanlineOverlay";
 import { TabIcon } from "./src/components/TabIcon";
 import { TerminalTitleBar } from "./src/components/TerminalTitleBar";
 import { ThemePicker } from "./src/components/ThemePicker";
 import { ThemeProvider, spacing, useTheme } from "./src/theme";
-import { monoStyle } from "./src/theme/fonts";
+import { monoStyle, themeTitleStyle } from "./src/theme/fonts";
 
 type RootTabParamList = {
   Home: undefined;
@@ -232,10 +240,26 @@ function AppShell() {
   const [routeName, setRouteName] = useState<ScreenName>(() =>
     initialWebRoute(),
   );
+  const historyRef = useRef<ScreenName[]>([initialWebRoute()]);
+  const [histIndex, setHistIndex] = useState(0);
+  const skipHist = useRef(false);
   const { width, height } = useWindowDimensions();
   const isTablet = Math.min(width, height) >= 600 || width >= 768;
   const finishBoot = useCallback(() => setBooting(false), []);
   const { colors, themeId } = useTheme();
+
+  // Prevent default black text on Electron/web when a Text omits color.
+  useEffect(() => {
+    if (Platform.OS !== "web" || typeof document === "undefined") return;
+    const id = "tricass-theme-root-color";
+    let el = document.getElementById(id) as HTMLStyleElement | null;
+    if (!el) {
+      el = document.createElement("style");
+      el.id = id;
+      document.head.appendChild(el);
+    }
+    el.textContent = `html,body,#root{background:${colors.bg};color:${colors.fg}}`;
+  }, [colors.bg, colors.fg]);
 
   const navTheme = useMemo(() => {
     const base = themeId === "basic" ? DefaultTheme : DarkTheme;
@@ -255,8 +279,58 @@ function AppShell() {
   const terminal = colors.terminalShell;
   const spatial = colors.spatialShell;
 
+  const pushHistory = useCallback((name: ScreenName) => {
+    if (skipHist.current) {
+      skipHist.current = false;
+      return;
+    }
+    setHistIndex((idx) => {
+      const stack = historyRef.current.slice(0, idx + 1);
+      if (stack[stack.length - 1] === name) {
+        historyRef.current = stack;
+        return stack.length - 1;
+      }
+      stack.push(name);
+      historyRef.current = stack.slice(-40);
+      return historyRef.current.length - 1;
+    });
+  }, []);
+
+  const goBack = useCallback(() => {
+    if (histIndex <= 0) {
+      void window.nexus?.windowBack?.();
+      return;
+    }
+    const next = histIndex - 1;
+    const name = historyRef.current[next];
+    setHistIndex(next);
+    skipHist.current = true;
+    if (navRef.isReady() && name) navRef.navigate(name);
+  }, [histIndex]);
+
+  const goForward = useCallback(() => {
+    if (histIndex >= historyRef.current.length - 1) {
+      void window.nexus?.windowForward?.();
+      return;
+    }
+    const next = histIndex + 1;
+    const name = historyRef.current[next];
+    setHistIndex(next);
+    skipHist.current = true;
+    if (navRef.isReady() && name) navRef.navigate(name);
+  }, [histIndex]);
+
   return (
     <View style={[styles.root, { backgroundColor: colors.bg }]}>
+      <DesktopWindowBar
+        canBack={histIndex > 0}
+        canForward={histIndex < historyRef.current.length - 1}
+        onBack={goBack}
+        onForward={goForward}
+        onNewWindow={() => void window.nexus?.newWindow?.()}
+        onCloseWindow={() => void window.nexus?.closeWindow?.()}
+        title={`Tri-Cass · ${routeName}`}
+      />
       <NavigationContainer
         ref={navRef}
         theme={navTheme}
@@ -275,6 +349,7 @@ function AppShell() {
           const name = navRef.getCurrentRoute()?.name as ScreenName | undefined;
           if (name) {
             setRouteName(name);
+            pushHistory(name);
             if (Platform.OS === "web" && typeof window !== "undefined") {
               const next = `#${name}`;
               if (window.location.hash !== next) {
@@ -307,7 +382,8 @@ function AppShell() {
                 },
                 headerTintColor: colors.accent,
                 headerTitleStyle: [
-                  { fontWeight: "700" },
+                  { fontWeight: "700", color: colors.accent },
+                  themeTitleStyle(themeId, { fontSize: 15 }),
                   terminal ? monoStyle({ fontSize: 14 }) : null,
                 ],
                 tabBarStyle: isTablet
