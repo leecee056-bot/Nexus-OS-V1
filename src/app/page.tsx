@@ -21,14 +21,14 @@ export default function HomePage() {
               height={140}
               priority
             />
-            <BrandWordmark>NEXUS OS</BrandWordmark>
+            <BrandWordmark>Tri-Cass OS</BrandWordmark>
           </p>
           <h1>
             Offline AI on a USB stick, Raspberry Pi, or ESP32 Pocket — for old
             PCs, cyberdecks, and tiny boards.
           </h1>
           <p>
-            Download a PC or Pi image and boot the on‑screen hub, or flash NEXUS
+            Download a PC or Pi image and boot the on‑screen hub, or flash Tri-Cass
             Pocket on an ESP32-S3 for USB-Serial chat. No cloud account and no
             install onto your hard drive.
           </p>
@@ -96,10 +96,10 @@ export default function HomePage() {
           <figure className="shot">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/nexus-os-hub-screen.jpg"
-              alt="NEXUS OS running: hub menu on a computer monitor"
+              src="/images/tri-cass-os-hub-screen.jpg"
+              alt="Tri-Cass OS running: hub menu on a computer monitor"
             />
-            <figcaption>NEXUS OS hub menu on a PC screen.</figcaption>
+            <figcaption>Tri-Cass OS hub menu on a PC screen.</figcaption>
           </figure>
 
           <h3 className="subhead">What you can use it for</h3>
@@ -124,7 +124,7 @@ export default function HomePage() {
               <strong>ESP32 Pocket</strong> and a{" "}
               <Link href="/download#companion">Windows / Mac / Android companion</Link>
               <span>
-                Flash NEXUS Pocket on an ESP32-S3 with PSRAM for offline
+                Flash Tri-Cass Pocket on an ESP32-S3 with PSRAM for offline
                 TinyStories chat and tools over USB Serial — no full Linux image
                 required.
               </span>
@@ -183,7 +183,7 @@ export default function HomePage() {
               </p>
             </div>
             <div className="panel">
-              <h3>NEXUS Pocket</h3>
+              <h3>Tri-Cass Pocket</h3>
               <p>
                 ESP32-S3 with PSRAM (16 MB flash preferred). PlatformIO + Serial
                 at 115200. TinyStories stories260K by default.
@@ -232,7 +232,7 @@ export default function HomePage() {
 
           <div className="cta-row">
             <Link className="btn" href="/download">
-              Download NEXUS OS
+              Download Tri-Cass OS
             </Link>
             <Link className="btn btn-ghost" href="/about">
               About &amp; glossary

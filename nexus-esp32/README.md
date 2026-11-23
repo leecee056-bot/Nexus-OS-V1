@@ -1,6 +1,6 @@
-# NEXUS Pocket (ESP32-S3)
+# Tri-Cass Pocket (ESP32-S3)
 
-Offline USB-Serial tiny-ML companion for **NEXUS OS**.
+Offline USB-Serial tiny-ML companion for **Tri-Cass OS**.
 
 Runs a Karpathy-style **llama2.c** transformer on-device (default: TinyStories **stories260K**), with a Serial hub TUI and a few built-in tools. No Wi‑Fi required at runtime.
 

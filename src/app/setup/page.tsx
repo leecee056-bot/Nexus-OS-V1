@@ -7,14 +7,14 @@ export default function SetupPage() {
   return (
     <section className="section">
       <div className="shell">
-        <h2>How to set up NEXUS OS</h2>
+        <h2>How to set up Tri-Cass OS</h2>
         <p className="lede">
-          NEXUS OS turns a USB stick (PC) or microSD card (Raspberry Pi) into
+          Tri-Cass OS turns a USB stick (PC) or microSD card (Raspberry Pi) into
           its own small computer with offline AI.{" "}
-          <strong>NEXUS Pocket</strong> is the ESP32-S3 path: a USB-Serial
+          <strong>Tri-Cass Pocket</strong> is the ESP32-S3 path: a USB-Serial
           companion with a tiny on-device model. Disk images do{" "}
           <strong>not</strong> install inside Windows or Mac — you boot from
-          that media and the NEXUS menu appears. New to the words we use? See{" "}
+          that media and the Tri-Cass menu appears. New to the words we use? See{" "}
           <Link href="/about">About</Link>.
         </p>
 
@@ -65,7 +65,7 @@ export default function SetupPage() {
                 </span>
               </li>
               <li>
-                <strong>NEXUS Pocket — ESP32-S3</strong>
+                <strong>Tri-Cass Pocket — ESP32-S3</strong>
                 <span>
                   Tiny USB-Serial companion (not a disk image). Needs{" "}
                   <strong>PSRAM</strong>. Follow{" "}
@@ -73,7 +73,7 @@ export default function SetupPage() {
                 </span>
               </li>
               <li>
-                <strong>NEXUS Cardputer ADV</strong>
+                <strong>Tri-Cass Cardputer ADV</strong>
                 <span>
                   M5Stack Cardputer ADV only — on-device green hub.{" "}
                   <strong>No PSRAM</strong>; cannot run USB/Pi images. Follow{" "}
@@ -252,7 +252,7 @@ sync`}
                 <span>
                   If the PC refuses to start from the stick, enter BIOS/UEFI
                   setup and turn <strong>Secure Boot</strong>{" "}
-                  <strong>Off</strong>. NEXUS v1 images are not signed for
+                  <strong>Off</strong>. Tri-Cass v1 images are not signed for
                   Secure Boot.
                 </span>
               </li>
@@ -317,7 +317,7 @@ sync`}
               Leave the stick plugged in, power on, boot from USB again. No
               internet is required for Chat, Files, Vault, Agents, or Games.
               Settings can change theme and models.{" "}
-              <strong>NEXUS Network</strong> (online community chat) is listed
+              <strong>Tri-Cass Network</strong> (online community chat) is listed
               but not live yet — ignore it for offline use, or{" "}
               <Link href="/network">reserve a name</Link> on this website for
               later.
@@ -350,7 +350,7 @@ sync`}
             plain-text books, and similar — then copy{" "}
             <code className="mono">.txt</code> / <code className="mono">.md</code>{" "}
             into the Vault folder (PC/Pi) or{" "}
-            <code className="mono">/nexus-vault/</code> (Cardputer ADV). We
+            <code className="mono">/tri-cass-vault/</code> (Cardputer ADV). We
             point at public archives; we do not host the large files.
           </p>
           <ol className="steps" style={{ marginTop: "0.75rem" }}>
@@ -385,7 +385,7 @@ sync`}
         </div>
 
         <div className="panel" id="pocket" style={{ marginTop: "2rem" }}>
-          <h3>NEXUS Pocket (ESP32-S3) setup</h3>
+          <h3>Tri-Cass Pocket (ESP32-S3) setup</h3>
           <p>
             Pocket is a separate build from the USB/Pi images: firmware in{" "}
             <code className="mono">nexus-esp32/</code>, flashed with PlatformIO.
@@ -448,7 +448,7 @@ pio device monitor`}
         </div>
 
         <div className="panel" id="cardputer" style={{ marginTop: "2rem" }}>
-          <h3>NEXUS Cardputer ADV setup</h3>
+          <h3>Tri-Cass Cardputer ADV setup</h3>
           <p>
             Dedicated firmware in <code className="mono">nexus-cardputer/</code>{" "}
             for the M5Stack Cardputer ADV (ESP32-S3FN8, 8 MB flash,{" "}
@@ -484,7 +484,7 @@ pio run -e cardputer-adv -t upload`}
             <li>
               <strong>Optional: microSD Vault</strong>
               <p style={{ marginTop: "0.5rem" }}>
-                Copy <code className="mono">sd-example/nexus-vault/</code> to the
+                Copy <code className="mono">sd-example/tri-cass-vault/</code> to the
                 root of a FAT microSD card, insert it, then open{" "}
                 <strong>Vault</strong>. Enter opens a file; type a word + Enter
                 to search. Without a card, Vault just shows a hint. Larger free
@@ -578,8 +578,8 @@ pio run -e cardputer-adv -t upload`}
         <figure className="shot">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/nexus-os-hub-screen.jpg"
-            alt="NEXUS OS hub menu on a computer screen"
+            src="/images/tri-cass-os-hub-screen.jpg"
+            alt="Tri-Cass OS hub menu on a computer screen"
           />
           <figcaption>
             Example of the hub menu after a successful USB boot.

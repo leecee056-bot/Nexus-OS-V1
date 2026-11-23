@@ -27,7 +27,7 @@ export type ThemeColors = {
   statusBar: string;
   rain: boolean;
   glass: boolean;
-  /** Multi-panel CRT shell inspired by classic NEXUS OS mockups */
+  /** Multi-panel CRT shell inspired by classic Tri-Cass OS mockups */
   terminalShell: boolean;
   /** Open canvas — floating glass, depth, soft light (desktop-first) */
   spatialShell: boolean;
@@ -124,14 +124,14 @@ export const LUMEN: ThemeColors = {
 };
 
 /**
- * CRT “NEXUS OS” terminal — sharp panels, phosphor green, dashboard home.
+ * CRT “Tri-Cass OS” terminal — sharp panels, phosphor green, dashboard home.
  * Inspired by the portable local-intelligence mockup; uses the real logo mark.
  */
 export const TERMINAL: ThemeColors = {
   id: "terminal",
   label: "Terminal",
   blurb:
-    "NEXUS OS CRT — tiled windows, mono type, scanlines, real logo mark.",
+    "Tri-Cass OS CRT — tiled windows, mono type, scanlines, real logo mark.",
   bg: "#000000",
   bgElev: "#010901",
   bgBar: "#001200",

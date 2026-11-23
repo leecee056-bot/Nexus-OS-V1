@@ -42,7 +42,7 @@ export function SiteFooter() {
                 width={36}
                 height={36}
               />
-              <span>NEXUS OS</span>
+              <span>Tri Cass OS</span>
             </Link>
             <p>
               Offline AI on a USB stick, Raspberry Pi, or ESP32 Pocket — for old
@@ -101,18 +101,18 @@ export function SiteFooter() {
 
         <div className="footer-bottom">
           <p className="disclaimer">
-            NEXUS OS boots from a USB stick (PC) or microSD card (Raspberry Pi),
-            or runs as NEXUS Pocket on ESP32-S3 over USB Serial. AI Chat and the
+            Tri-Cass OS boots from a USB stick (PC) or microSD card (Raspberry Pi),
+            or runs as Tri-Cass Pocket on ESP32-S3 over USB Serial. AI Chat and the
             other apps run on that device with no cloud required. Online Network
             chat is optional and not live yet — signing up here only reserves a
             future username.
           </p>
           <p className="disclaimer">
             Not affiliated with unrelated products or companies that use the name
-            “Nexus.” This site is the product home for the NEXUS OS project.
+            This site is the product home for the Tri-Cass OS project.
           </p>
           <p className="footer-copy">
-            © {new Date().getFullYear()} NEXUS OS ·{" "}
+            © {new Date().getFullYear()} Tri-Cass OS ·{" "}
             <Link href="/privacy">Privacy</Link>
             {" · "}
             <Link href="/terms">Terms</Link>

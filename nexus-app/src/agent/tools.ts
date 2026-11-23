@@ -92,12 +92,12 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>NEXUS site</title>
+  <title>Tri-Cass site</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main>
-    <h1>NEXUS</h1>
+    <h1>Tri-Cass</h1>
     <p>${body || "Built with your local agent."}</p>
   </main>
 </body>
@@ -143,10 +143,10 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header><strong>NEXUS</strong> · ${topic}</header>
+  <header><strong>Tri-Cass</strong> · ${topic}</header>
   <main>
     <h1>${topic}</h1>
-    <p>Built locally by your NEXUS Companion agent. Edit these files in the Files tab.</p>
+    <p>Built locally by your Tri-Cass Companion agent. Edit these files in the Files tab.</p>
     <p class="hint">Ask the agent to tweak copy, add pages, or restyle — it writes real files.</p>
   </main>
 </body>
@@ -183,8 +183,8 @@ p{line-height:1.55;color:#9ad4a4}
     calls.push({ tool: "read_file", args: { path: readMatch[1] } });
   }
 
-  if (wantsStatus && allow.has("nexus_status")) {
-    calls.push({ tool: "nexus_status", args: {} });
+  if (wantsStatus && allow.has("tricass_status")) {
+    calls.push({ tool: "tricass_status", args: {} });
   }
 
   // Do not auto-search Vault/Packs for casual messages — only explicit intents above.
@@ -286,7 +286,7 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
         text: `Folder ready: ${folder.name}`,
       };
     }
-    case "nexus_status": {
+    case "tricass_status": {
       const state = await loadPluginState();
       const tools = enabledTools(state);
       const docs = await loadDocs();
@@ -294,7 +294,7 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
       return {
         tool: call.tool,
         ok: true,
-        text: `NEXUS Agent status\nPlugins/tools: ${tools.join(", ") || "(none)"}\nVault notes: ${notes.length}\nFiles entries: ${docs.length}`,
+        text: `Tri-Cass Agent status\nPlugins/tools: ${tools.join(", ") || "(none)"}\nVault notes: ${notes.length}\nFiles entries: ${docs.length}`,
       };
     }
     default:

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms of use",
   description:
-    "Basic terms for using the NEXUS OS website and downloading the offline system images.",
+    "Basic terms for using the Tri-Cass OS website and downloading the offline system images.",
 };
 
 export default function TermsPage() {
@@ -13,16 +13,16 @@ export default function TermsPage() {
       <div className="shell legal">
         <h2>Terms of use</h2>
         <p className="lede">
-          Simple rules for using this website and the NEXUS OS downloads. Last
+          Simple rules for using this website and the Tri-Cass OS downloads. Last
           updated: 19 November 2026.
         </p>
 
         <h3 className="subhead">The project</h3>
         <p>
-          NEXUS OS is a portable offline AI system distributed as downloadable
+          Tri-Cass OS is a portable offline AI system distributed as downloadable
           disk images for PC (USB) and Raspberry Pi (microSD). This website is the
           product home for that project. It is not affiliated with unrelated
-          products or companies that use the name “Nexus.”
+          unrelated products or companies that share a similar name.
         </p>
 
         <h3 className="subhead">Downloads and your hardware</h3>

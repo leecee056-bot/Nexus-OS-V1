@@ -1,6 +1,6 @@
 /**
  * Detect common installed browsers on Windows / macOS.
- * Used so Companion can open pages in a themed NEXUS Browse window
+ * Used so Companion can open pages in a themed Tri-Cass Browse window
  * or hand off to the user's preferred installed browser.
  */
 const fs = require("fs");

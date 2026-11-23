@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PLUGIN_CATALOG, type PluginId } from "./catalog";
 
-const KEY = "nexus.companion.plugins.v1";
+const KEY = "tricass.companion.plugins.v1";
 
 export type PluginState = Record<PluginId, boolean>;
 

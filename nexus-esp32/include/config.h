@@ -1,9 +1,9 @@
 #pragma once
 
-// NEXUS Pocket — product + memory knobs
+// Tri-Cass Pocket — product + memory knobs
 
 #define NEXUS_POCKET_VERSION "0.1.0"
-#define NEXUS_POCKET_NAME "NEXUS Pocket"
+#define NEXUS_POCKET_NAME "Tri-Cass Pocket"
 
 #ifndef NEXUS_SERIAL_BAUD
 #define NEXUS_SERIAL_BAUD 115200

@@ -1,8 +1,8 @@
--- NEXUS Network — Prosody v1 (lab + production-shaped)
--- Domain: nexus.network  |  MUC: conference.nexus.network
+-- Tri-Cass Network — Prosody v1 (lab + production-shaped)
+-- Domain: tri-cass.network  |  MUC: conference.tri-cass.network
 -- Open in-band registration stays OFF (accounts via admin / website provisioner).
 
-admins = { "admin@nexus.network" }
+admins = { "admin@tri-cass.network" }
 
 pidfile = "/var/lib/prosody/prosody.pid"
 data_path = "/var/lib/prosody"
@@ -56,19 +56,19 @@ http_ports = { 5280 }
 http_interfaces = { "*", "::" }
 
 ssl = {
-  key = "/etc/prosody/certs/nexus.network.key";
-  certificate = "/etc/prosody/certs/nexus.network.crt";
+  key = "/etc/prosody/certs/tri-cass.network.key";
+  certificate = "/etc/prosody/certs/tri-cass.network.crt";
 }
 
-VirtualHost "nexus.network"
+VirtualHost "tri-cass.network"
   enabled = true
   ssl = {
-    key = "/etc/prosody/certs/nexus.network.key";
-    certificate = "/etc/prosody/certs/nexus.network.crt";
+    key = "/etc/prosody/certs/tri-cass.network.key";
+    certificate = "/etc/prosody/certs/tri-cass.network.crt";
   }
 
-Component "conference.nexus.network" "muc"
-  name = "NEXUS Network chatrooms"
+Component "conference.tri-cass.network" "muc"
+  name = "Tri-Cass Network chatrooms"
   restrict_room_creation = "local"
   -- Lab/v1: allow immediate joins without an unlock form after room create.
   muc_room_locking = false

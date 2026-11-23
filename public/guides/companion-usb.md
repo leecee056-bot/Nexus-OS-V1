@@ -1,18 +1,18 @@
 # Companion USB / portable kit (Windows · Mac)
 
-A **portable desktop** edition of NEXUS Companion that lives on a USB stick,
+A **portable desktop** edition of Tri-Cass Companion that lives on a USB stick,
 memory card, or external hard drive. Heavier than the bootable OS images, but
 the same Companion features — carried with your Vault, chats, and files.
 
 ## Download → USB → go
 
-1. Download **NEXUS-Companion-USB-…zip** from
+1. Download **Tri-Cass-Companion-USB-…zip** from
    [/download#companion-usb](/download#companion-usb) (or the
    [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases?q=companion)).
 2. Unzip onto the USB (keep the folder structure).
-3. Open **START-HERE.html** (shows the NEXUS logo) or:
-   - **Windows:** `Windows\Start-NEXUS.bat` (2–3 clicks; allow SmartScreen if asked)
-   - **Mac:** `Mac/Start-NEXUS.command` (right‑click → Open the first time)
+3. Open **START-HERE.html** (shows the Tri-Cass logo) or:
+   - **Windows:** `Windows\Start-Tri-Cass.bat` (2–3 clicks; allow SmartScreen if asked)
+   - **Mac:** `Mac/Start-Tri-Cass.command` (right‑click → Open the first time)
 
 ## What travels with the stick
 
@@ -23,7 +23,7 @@ the same Companion features — carried with your Vault, chats, and files.
 | `Files/` | Generated images + document space |
 | `Chats/` | **Save chat** markdown exports |
 
-Unplug safely after quitting Companion; plug into another PC and Start-NEXUS —
+Unplug safely after quitting Companion; plug into another PC and Start-Tri-Cass —
 your personal setup comes along.
 
 ## Features (same as desktop Companion)
@@ -42,7 +42,7 @@ Terminal), Check for updates.
 |--|----------------------|-------------------|
 | Boots its own OS | Yes | No — runs on Windows/Mac |
 | Size | Lean OS image | Heavier desktop app + your data |
-| Setup | Flash with Etcher | Unzip + Start-NEXUS |
+| Setup | Flash with Etcher | Unzip + Start-Tri-Cass |
 | Best for | Dedicated offline machine | Carry Companion between PCs |
 
 ## Build the kit (devs)
@@ -50,7 +50,7 @@ Terminal), Check for updates.
 ```bash
 cd nexus-app
 npm run build:desktop   # win portable+dir, mac dmg+zip
-npm run pack:usb        # → release/NEXUS-Companion-USB-<version>.zip
+npm run pack:usb        # → release/Tri-Cass-Companion-USB-<version>.zip
 ```
 
 CI attaches the zip on `companion-v*` tags when Windows + Mac jobs finish.

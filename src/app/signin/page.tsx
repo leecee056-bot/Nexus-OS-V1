@@ -13,7 +13,7 @@ export default function SignInPage() {
       <div className="shell">
         <h2>Sign in</h2>
         <p className="lede">
-          Access your reserved NEXUS Network identity. Chat servers are not
+          Access your reserved Tri-Cass Network identity. Chat servers are not
           online yet — this opens your account profile stub.
         </p>
         {sample ? (

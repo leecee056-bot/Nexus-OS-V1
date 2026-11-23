@@ -7,10 +7,10 @@ export default function AboutPage() {
   return (
     <section className="section">
       <div className="shell">
-        <h2>About NEXUS OS</h2>
+        <h2>About Tri-Cass OS</h2>
         <p className="lede">
-          NEXUS OS is a ready-made offline AI system for a USB stick (PC), a
-          microSD card (Raspberry Pi), or <strong>NEXUS Pocket</strong> on an
+          Tri-Cass OS is a ready-made offline AI system for a USB stick (PC), a
+          microSD card (Raspberry Pi), or <strong>Tri-Cass Pocket</strong> on an
           ESP32-S3. Boot the stick/card for the full on-screen hub, or flash
           Pocket for USB-Serial chat on a tiny board — without installing onto
           your hard drive.
@@ -19,8 +19,8 @@ export default function AboutPage() {
         <figure className="shot">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/nexus-os-hub-screen.jpg"
-            alt="NEXUS OS hub menu shown on a computer screen"
+            src="/images/tri-cass-os-hub-screen.jpg"
+            alt="Tri-Cass OS hub menu shown on a computer screen"
           />
           <figcaption>
             The main menu after you boot from a USB stick or Pi microSD card.
@@ -77,7 +77,7 @@ export default function AboutPage() {
             <strong>Revive an old spare PC</strong>
             <span>
               Turn a dusty tower into something useful again without wiping
-              Windows permanently — just boot from the stick when you want NEXUS.
+              Windows permanently — just boot from the stick when you want Tri-Cass.
             </span>
           </li>
           <li>
@@ -97,7 +97,7 @@ export default function AboutPage() {
           <li>
             <strong>Keep notes and search them</strong>
             <span>
-              The Knowledge Vault ships with a small starter pack (NEXUS guide,
+              The Knowledge Vault ships with a small starter pack (Tri-Cass guide,
               glossary, flash/boot and Chat how-tos). Drop in more{" "}
               <span className="mono">.txt</span> / <span className="mono">.md</span>{" "}
               files and rebuild the index; Chat can optionally use those notes as
@@ -126,7 +126,7 @@ export default function AboutPage() {
             <strong>Linux</strong>
             <span>
               The kind of operating system under the hood (like Windows or macOS,
-              but different). You do not need to “know Linux” — you use the NEXUS
+              but different). You do not need to “know Linux” — you use the Tri-Cass
               menu.
             </span>
           </li>
@@ -149,7 +149,7 @@ export default function AboutPage() {
             <strong>Cyberdeck</strong>
             <span>
               A homemade portable computer — often a Raspberry Pi in a custom
-              case with a small screen and keyboard. NEXUS OS on microSD is aimed
+              case with a small screen and keyboard. Tri-Cass OS on microSD is aimed
               at that kind of build as well as plain Pi boards.
             </span>
           </li>
@@ -183,7 +183,7 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>NEXUS Network</strong>
+            <strong>Tri-Cass Network</strong>
             <span>
               Optional future online community. Not required for offline AI. You
               can <Link href="/network">reserve a username</Link> on this website;
@@ -201,7 +201,7 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>NEXUS Pocket</strong>
+            <strong>Tri-Cass Pocket</strong>
             <span>
               ESP32-S3 firmware with a USB-Serial hub, TinyStories stories260K
               chat, and small tools. Flash with PlatformIO — see{" "}
@@ -235,7 +235,7 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>NEXUS Pocket (ESP32-S3)</strong>
+            <strong>Tri-Cass Pocket (ESP32-S3)</strong>
             <span>
               Board with PSRAM (8 MB preferred). 16 MB flash for the default
               PlatformIO env; 8 MB flash boards use the alternate env. USB data

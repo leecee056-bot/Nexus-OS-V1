@@ -54,7 +54,7 @@ export function BrowsePanel() {
       res.ok
         ? mode === "external" || prefs.mode === "external"
           ? "Opened in your installed browser."
-          : "Opened NEXUS Browse window."
+          : "Opened Tri-Cass Browse window."
         : res.error || "Could not open.",
     );
   }
@@ -74,7 +74,7 @@ export function BrowsePanel() {
   return (
     <GlassPanel title="Browse" accent="purple" floatDelay={40}>
       <Text style={[styles.body, { color: colors.fgDim }]}>
-        Open the web in a NEXUS window that matches your theme (especially
+        Open the web in a Tri-Cass window that matches your theme (especially
         Spatial / Open). Uses your installed browsers for detection and optional
         external open — we do not ship a separate browser engine product.
       </Text>
@@ -115,7 +115,7 @@ export function BrowsePanel() {
               ]}
             >
               <Text style={{ color: colors.accent, fontWeight: "800" }}>
-                Open in NEXUS window
+                Open in Tri-Cass window
               </Text>
             </Pressable>
             <Pressable
@@ -140,7 +140,7 @@ export function BrowsePanel() {
           <View style={styles.row}>
             {(
               [
-                ["window", "NEXUS window"],
+                ["window", "Tri-Cass window"],
                 ["app", "Browser app window"],
                 ["external", "System browser"],
               ] as const
@@ -178,7 +178,7 @@ export function BrowsePanel() {
           </Text>
           {browsers.length === 0 ? (
             <Text style={{ color: colors.fgDim, fontSize: 12 }}>
-              None found yet — you can still use the NEXUS Browse window.
+              None found yet — you can still use the Tri-Cass Browse window.
             </Text>
           ) : (
             <View style={styles.row}>

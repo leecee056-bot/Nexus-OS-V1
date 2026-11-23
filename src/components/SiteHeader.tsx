@@ -38,7 +38,7 @@ export function SiteHeader() {
             height={40}
             priority
           />
-          <span>NEXUS OS</span>
+          <span>Tri Cass OS</span>
         </Link>
         <nav
           id="primary-nav"

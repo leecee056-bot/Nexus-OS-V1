@@ -1,7 +1,7 @@
-NEXUS Companion — Offline independence
+Tri-Cass Companion — Offline independence
 ======================================
 
-This kit runs without a NEXUS cloud account.
+This kit runs without a Tri-Cass cloud account.
 
 What stays local
 ----------------

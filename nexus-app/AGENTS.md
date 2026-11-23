@@ -1,4 +1,4 @@
-# NEXUS Companion — agent notes
+# Tri-Cass Companion — agent notes
 
 - Expo app for Windows / Mac / Android / iOS. Product positioning for users: a
   real companion app with local AI Chat — do **not** call it “secondary” or a
@@ -22,7 +22,7 @@
 - Chat wait state: `WaitIndicator` + `assets/brand/rabbit-dig.gif` (small side
   rabbit + rotating fun facts; Facts off = GIF only). Layout: Classic vs Desk
   (`ShellModePicker` / `layout/shellMode.ts`).
-- Offline-first: no NEXUS cloud API at runtime. Website links are optional
+- Offline-first: no Tri-Cass cloud API at runtime. Website links are optional
   downloads only (`updates/links.ts`, `OfflineGuidesPanel`, `offline/guides.ts`).
 - Web deep links: `#Chat`, `#About`, … set the initial tab (`App.tsx`).
 - USB portable: `electron/portable.js` redirects userData to kit `Data/`;

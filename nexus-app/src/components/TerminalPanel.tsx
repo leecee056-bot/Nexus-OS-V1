@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View, type ViewStyle } from "react-native"
 import { monoStyle } from "../theme/fonts";
 import { spacing, useTheme } from "../theme";
 
-/** Sharp CRT pane — title strip + body, inspired by the NEXUS OS mockup. */
+/** Sharp CRT pane — title strip + body, inspired by the Tri-Cass OS mockup. */
 export function TerminalPanel({
   title,
   children,

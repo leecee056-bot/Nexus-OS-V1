@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AuthForm } from "@/components/AuthForms";
 import { isUsingSampleDb } from "@/lib/db";
 
-export const metadata: Metadata = { title: "NEXUS Network" };
+export const metadata: Metadata = { title: "Tri-Cass Network" };
 
 export default function NetworkPage() {
   const sample = isUsingSampleDb();
@@ -11,9 +11,9 @@ export default function NetworkPage() {
   return (
     <section className="section">
       <div className="shell">
-        <h2>NEXUS Network</h2>
+        <h2>Tri-Cass Network</h2>
         <p className="lede">
-          An optional online community for people using NEXUS OS. You do{" "}
+          An optional online community for people using Tri-Cass OS. You do{" "}
           <strong>not</strong> need this to download or run the USB / Pi system —
           offline AI works without it.
         </p>
@@ -21,9 +21,9 @@ export default function NetworkPage() {
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
           Chat rooms are <strong>not online yet</strong>. You can still reserve a
           username now (free) for when the community launches — like{" "}
-          <span className="mono">@you@nexus.network</span>. Email is contact only
+          <span className="mono">@you@tri-cass.network</span>. Email is contact only
           and not verified yet. Prefer to skip this?{" "}
-          <Link href="/download">Download NEXUS OS</Link> and use it offline
+          <Link href="/download">Download Tri-Cass OS</Link> and use it offline
           today.
         </div>
 
@@ -57,8 +57,8 @@ export default function NetworkPage() {
                 <strong>How it will look</strong>
                 <span>
                   Names will look like{" "}
-                  <code className="mono">@you@nexus.network</code> — a simple
-                  online identity for NEXUS users.
+                  <code className="mono">@you@tri-cass.network</code> — a simple
+                  online identity for Tri-Cass users.
                 </span>
               </li>
               <li>
@@ -88,7 +88,7 @@ export default function NetworkPage() {
             <h3>Create Network account</h3>
             <p className="hint" style={{ marginBottom: "1rem" }}>
               Choose a username, email, and password (at least 10 characters).
-              Passwords are stored hashed. This signup is for NEXUS Network only —
+              Passwords are stored hashed. This signup is for Tri-Cass Network only —
               it is separate from any other account you may have.
             </p>
             <AuthForm mode="signup" />
@@ -98,8 +98,8 @@ export default function NetworkPage() {
         <figure className="shot">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/nexus-os-mockup-network.png"
-            alt="NEXUS Network design mockup"
+            src="/images/tri-cass-os-mockup-network.png"
+            alt="Tri-Cass Network design mockup"
           />
           <figcaption>
             Network mockup — design target only. Not a live chat client.

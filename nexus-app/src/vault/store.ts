@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const KEY = "nexus.companion.vault.v1";
+const KEY = "tricass.companion.vault.v1";
 
 export type VaultNote = {
   id: string;
@@ -12,7 +12,7 @@ export type VaultNote = {
 const STARTER: VaultNote[] = [
   {
     id: "starter-guide",
-    title: "NEXUS companion guide",
+    title: "Tri-Cass companion guide",
     body:
       "This app mirrors the Knowledge Vault idea from the bootable OS.\n\n" +
       "Add short notes here. Search from the Vault screen.\n" +
@@ -25,7 +25,7 @@ const STARTER: VaultNote[] = [
     title: "Offline independence",
     body:
       "Chat and Agent use local Ollama (or a tiny phrase fallback). " +
-      "No NEXUS Network signup is required.\n\n" +
+      "No Tri-Cass Network signup is required.\n\n" +
       "The website is only for downloading Companion builds and OS images. " +
       "Once installed, this app runs without it.",
     updatedAt: Date.now(),

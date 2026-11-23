@@ -1,5 +1,5 @@
 /**
- * Create Desktop + Start Menu / Dock-friendly launchers with the NEXUS icon.
+ * Create Desktop + Start Menu / Dock-friendly launchers with the Tri-Cass icon.
  */
 const path = require("path");
 const fs = require("fs");
@@ -17,7 +17,7 @@ function brandIconPaths() {
 
 function resolveAppTarget() {
   if (process.platform === "darwin") {
-    // .../NEXUS Companion.app/Contents/MacOS/<bin> → .app bundle
+    // .../Tri-Cass Companion.app/Contents/MacOS/<bin> → .app bundle
     const execDir = path.dirname(process.execPath);
     const bundle = path.resolve(execDir, "..", "..");
     if (bundle.endsWith(".app") && fs.existsSync(bundle)) {
@@ -37,7 +37,7 @@ function writeWinShortcut(linkPath, { target, cwd, description }) {
   return shell.writeShortcutLink(linkPath, {
     target,
     cwd,
-    description: description || "NEXUS Companion",
+    description: description || "Tri-Cass Companion",
     icon,
     iconIndex: 0,
     appUserModelId: "bot.grok.nexus.companion",
@@ -59,12 +59,12 @@ function addLaunchers() {
 
   try {
     if (process.platform === "win32") {
-      const desktop = path.join(app.getPath("desktop"), "NEXUS Companion.lnk");
+      const desktop = path.join(app.getPath("desktop"), "Tri-Cass Companion.lnk");
       if (
         writeWinShortcut(desktop, {
           target,
           cwd,
-          description: "NEXUS Companion — local AI Chat",
+          description: "Tri-Cass Companion — local AI Chat",
         })
       ) {
         created.push(desktop);
@@ -78,12 +78,12 @@ function addLaunchers() {
         "Programs",
       );
       ensureDir(programs);
-      const startMenu = path.join(programs, "NEXUS Companion.lnk");
+      const startMenu = path.join(programs, "Tri-Cass Companion.lnk");
       if (
         writeWinShortcut(startMenu, {
           target,
           cwd,
-          description: "NEXUS Companion",
+          description: "Tri-Cass Companion",
         })
       ) {
         created.push(startMenu);
@@ -100,7 +100,7 @@ function addLaunchers() {
 
     if (process.platform === "darwin") {
       const desktop = app.getPath("desktop");
-      const aliasPath = path.join(desktop, "NEXUS Companion");
+      const aliasPath = path.join(desktop, "Tri-Cass Companion");
       // Remove stale alias/symlink
       try {
         if (fs.existsSync(aliasPath)) fs.rmSync(aliasPath, { recursive: true });
@@ -116,10 +116,10 @@ function addLaunchers() {
         detached: true,
         stdio: "ignore",
       }).unref();
-      created.push(path.join(desktop, "NEXUS Companion"));
+      created.push(path.join(desktop, "Tri-Cass Companion"));
 
       // Also drop a .command launcher as a fallback
-      const cmd = path.join(desktop, "NEXUS Companion.command");
+      const cmd = path.join(desktop, "Tri-Cass Companion.command");
       const body = `#!/bin/bash\nopen ${JSON.stringify(target)}\n`;
       fs.writeFileSync(cmd, body, { mode: 0o755 });
       created.push(cmd);
@@ -132,20 +132,20 @@ function addLaunchers() {
     const icon = fs.existsSync(icons.png) ? icons.png : target;
     const entry = `[Desktop Entry]
 Type=Application
-Name=NEXUS Companion
-Comment=Local AI Chat for NEXUS OS
+Name=Tri-Cass Companion
+Comment=Local AI Chat for Tri-Cass OS
 Exec=${JSON.stringify(target)}
 Icon=${icon}
 Terminal=false
 Categories=Utility;
 `;
-    const desktopFile = path.join(desktopDir, "nexus-companion.desktop");
+    const desktopFile = path.join(desktopDir, "tri-cass-companion.desktop");
     fs.writeFileSync(desktopFile, entry, { mode: 0o755 });
     created.push(desktopFile);
 
     const apps = path.join(app.getPath("home"), ".local", "share", "applications");
     ensureDir(apps);
-    const appFile = path.join(apps, "nexus-companion.desktop");
+    const appFile = path.join(apps, "tri-cass-companion.desktop");
     fs.writeFileSync(appFile, entry, { mode: 0o755 });
     created.push(appFile);
 

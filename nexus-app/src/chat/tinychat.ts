@@ -39,12 +39,12 @@ const RULES: Rule[] = [
   {
     keys: ["mac", "windows", "desktop"],
     reply:
-      "Desktop builds are normal apps with the NEXUS logo. Install Ollama once, then download a model from Chat.",
+      "Desktop builds are normal apps with the Tri-Cass logo. Install Ollama once, then download a model from Chat.",
   },
   {
     keys: ["network", "chat room", "xmpp"],
     reply:
-      "NEXUS Network community chat is optional and separate. Local model chat does not need it.",
+      "Tri-Cass Network community chat is optional and separate. Local model chat does not need it.",
   },
   {
     keys: ["help", "what can"],

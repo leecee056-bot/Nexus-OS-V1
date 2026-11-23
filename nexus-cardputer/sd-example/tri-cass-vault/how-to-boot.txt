@@ -3,4 +3,4 @@ Flash and boot tips
 PC: unpack .img.xz, Etcher to USB, Secure Boot off if needed.
 Pi: flash aarch64 image to microSD, prefer Pi 4.
 Cardputer: pio run -e cardputer-adv -t upload.
-Vault SD: copy nexus-vault/ to the card root, then Hub → Vault.
+Vault SD: copy tri-cass-vault/ to the card root, then Hub → Vault.

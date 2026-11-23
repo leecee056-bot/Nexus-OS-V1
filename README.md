@@ -1,6 +1,6 @@
-# NEXUS OS product website
+# Tri-Cass OS product website
 
-Marketing + download + Network account reservation site for **NEXUS OS**.
+Marketing + download + Network account reservation site for **Tri-Cass OS**.
 
 This site is **separate from the USB OS image** — never flash this app onto the stick.
 
@@ -16,7 +16,7 @@ Without `DATABASE_URL`, accounts use in-memory PGlite (sample data). Published C
 
 ## Network chat server (separate)
 
-Prosody lab/VPS pack lives in [`network/`](network/). The website reserves `@user@nexus.network` accounts; real chat needs that Prosody box on a small VPS with DNS. See `network/README.md`.
+Prosody lab/VPS pack lives in [`network/`](network/). The website reserves `@user@tri-cass.network` accounts; real chat needs that Prosody box on a small VPS with DNS. See `network/README.md`.
 
 ## Optional Knowledge Packs
 
@@ -41,4 +41,4 @@ Next.js 15 · Postgres/PGlite · bcrypt password hashing · httpOnly sessions
 
 ## License
 
-NEXUS OS code is licensed under the MIT License — see [`LICENSE`](LICENSE).
+Tri-Cass OS code is licensed under the MIT License — see [`LICENSE`](LICENSE).

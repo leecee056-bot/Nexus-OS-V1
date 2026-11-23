@@ -9,9 +9,9 @@ cd "$ROOT"
 
 VERSION="$(node -p "require('./package.json').version")"
 OUT_DIR="$ROOT/release"
-OUT_APK="$OUT_DIR/NEXUS-Companion-Android-${VERSION}.apk"
+OUT_APK="$OUT_DIR/Tri-Cass-Companion-Android-${VERSION}.apk"
 
-echo "Building NEXUS Companion Android ${VERSION}…"
+echo "Building Tri-Cass Companion Android ${VERSION}…"
 
 rm -rf android
 npx expo prebuild -p android --non-interactive

@@ -72,7 +72,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
               pattern="[a-z][a-z0-9_]{2,23}"
             />
             <span className="hint">
-              Becomes @username@nexus.network when Network launches
+              Becomes @username@tri-cass.network when Network launches
             </span>
           </label>
           <label>

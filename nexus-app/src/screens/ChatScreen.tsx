@@ -60,11 +60,11 @@ import { useCompanionLayout } from "../layout";
 import { spacing, useTheme } from "../theme";
 import { monoStyle } from "../theme/fonts";
 
-type Msg = { id: string; role: "you" | "nexus"; text: string; typed?: boolean };
+type Msg = { id: string; role: "you" | "tricass"; text: string; typed?: boolean };
 type ChatMode = "chat" | "agent";
 
 const SYSTEM_PROMPT =
-  "You are NEXUS, a helpful offline assistant in the NEXUS Companion app. Be concise and practical. For greetings, reply briefly — never invent tool activity.";
+  "You are Tri-Cass, a helpful offline assistant in the Tri-Cass Companion app. Be concise and practical. For greetings, reply briefly — never invent tool activity.";
 
 export function ChatScreen() {
   const { isTablet } = useCompanionLayout();
@@ -196,8 +196,8 @@ export function ChatScreen() {
       ...prev,
       {
         id,
-        role: "nexus",
-        text: `${m.label} is ready. Ask me anything — it runs locally on NEXUS.`,
+        role: "tricass",
+        text: `${m.label} is ready. Ask me anything — it runs locally on Tri-Cass.`,
         typed: true,
       },
     ]);
@@ -247,7 +247,7 @@ export function ChatScreen() {
           : result.text;
       setMsgs((m) => [
         ...m,
-        { id, role: "nexus", text: merged, typed: true },
+        { id, role: "tricass", text: merged, typed: true },
       ]);
       setBusy(false);
       return;
@@ -264,7 +264,7 @@ export function ChatScreen() {
       setLatestTypedId(id);
       setMsgs((m) => [
         ...m,
-        { id, role: "nexus", text: fallback + note, typed: true },
+        { id, role: "tricass", text: fallback + note, typed: true },
       ]);
       setBusy(false);
       return;
@@ -284,7 +284,7 @@ export function ChatScreen() {
       ...m,
       {
         id,
-        role: "nexus",
+        role: "tricass",
         text: siteNote ? `${reply}\n\n${siteNote}` : reply,
         typed: true,
       },
@@ -387,7 +387,7 @@ export function ChatScreen() {
                 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
                 const r = await exportChatToUsb(
                   md,
-                  `nexus-chat-${stamp}.md`,
+                  `tri-cass-chat-${stamp}.md`,
                 );
                 setExportNote(
                   r.ok
@@ -553,7 +553,7 @@ export function ChatScreen() {
               <View
                 style={[
                   styles.bubble,
-                  isYou ? styles.you : styles.nexus,
+                  isYou ? styles.you : styles.tricass,
                   isTablet && styles.bubbleWide,
                   {
                     borderColor: isYou
@@ -573,7 +573,7 @@ export function ChatScreen() {
                     colors.mono ? monoStyle({ fontSize: 11 }) : null,
                   ]}
                 >
-                  {isYou ? "You" : "NEXUS"}
+                  {isYou ? "You" : "Tri-Cass"}
                 </Text>
                 {isYou ? (
                   <Text style={{ color: colors.fg, lineHeight: 22 }}>
@@ -602,7 +602,7 @@ export function ChatScreen() {
             value={input}
             onChangeText={setInput}
             placeholder={
-              installed ? "Ask NEXUS…" : "Ask anything…"
+              installed ? "Ask Tri-Cass…" : "Ask anything…"
             }
             placeholderTextColor={colors.fgDim}
             onSubmitEditing={() => void send()}
@@ -653,7 +653,7 @@ export function ChatScreen() {
             </Text>
             <Text style={[styles.modalLede, { color: colors.fgDim }]}>
               Lightweight picks via Ollama. Download once, then chat offline on
-              NEXUS.
+              Tri-Cass.
             </Text>
             <FlatList
               data={RECOMMENDED_MODELS}
@@ -942,7 +942,7 @@ const styles = StyleSheet.create({
   },
   bubbleWide: { maxWidth: "72%" },
   you: { alignSelf: "flex-end", borderLeftWidth: 0, borderWidth: 1 },
-  nexus: { alignSelf: "flex-start" },
+  tricass: { alignSelf: "flex-start" },
   role: {
     fontSize: 10,
     marginBottom: 6,

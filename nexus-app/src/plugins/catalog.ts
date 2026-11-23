@@ -1,6 +1,6 @@
 /**
  * Built-in Plugin / Add-ons Library.
- * Same tool ids are intended for later NEXUS OS / Cardputer agent ports.
+ * Same tool ids are intended for later Tri-Cass OS / Cardputer agent ports.
  */
 
 import { AGENT_GUIDE_URL, COMPANION_GUIDE_URL } from "../updates/links";
@@ -12,7 +12,7 @@ export type PluginId =
   | "files-read"
   | "files-write"
   | "files-folder"
-  | "nexus-status";
+  | "tricass-status";
 
 export type PluginDef = {
   id: PluginId;
@@ -82,11 +82,11 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     updateUrl: AGENT_GUIDE_URL,
   },
   {
-    id: "nexus-status",
-    name: "NEXUS Status",
+    id: "tricass-status",
+    name: "Tri-Cass Status",
     blurb: "Report companion status (model, plugins enabled).",
     category: "system",
-    tool: "nexus_status",
+    tool: "tricass_status",
     defaultEnabled: true,
     updateUrl: COMPANION_GUIDE_URL,
   },

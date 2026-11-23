@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Dimensions, StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme";
 
-const GLYPHS = "01アイウエオカキクケコサシスセソナニヌネノﾊﾐﾑﾒﾓNEXUS";
+const GLYPHS = "01アイウエオカキクケコサシスセソナニヌネノﾊﾐﾑﾒﾓTRICASS";
 const COLS = 14;
 
 type Column = {

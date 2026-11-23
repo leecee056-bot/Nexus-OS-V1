@@ -91,7 +91,7 @@ export function BootSplash({ onDone }: Props) {
           </Animated.View>
         </Animated.View>
         <Animated.View style={{ opacity: title }}>
-          <Text style={styles.brand}>NEXUS OS</Text>
+          <Text style={styles.brand}>Tri-Cass OS</Text>
           <Text style={styles.sub}>Companion · offline first</Text>
         </Animated.View>
       </View>

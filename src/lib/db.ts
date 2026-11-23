@@ -7,7 +7,7 @@ const isProd = process.env.NODE_ENV === "production";
 let pool: pg.Pool | undefined;
 
 type GlobalDb = {
-  nexusPglite?: Promise<PGlite>;
+  triCassPglite?: Promise<PGlite>;
 };
 
 const g = globalThis as typeof globalThis & GlobalDb;
@@ -39,11 +39,11 @@ export async function sql<T = Record<string, unknown>>(
     );
   }
 
-  g.nexusPglite ??= startLocal().catch((error: unknown) => {
-    g.nexusPglite = undefined;
+  g.triCassPglite ??= startLocal().catch((error: unknown) => {
+    g.triCassPglite = undefined;
     throw error;
   });
-  return (await (await g.nexusPglite).query<T>(text, params)).rows;
+  return (await (await g.triCassPglite).query<T>(text, params)).rows;
 }
 
 async function startLocal(): Promise<PGlite> {

@@ -124,7 +124,7 @@ function deviceHints() {
   }
 }
 
-/** Home dashboard for Terminal theme — multi-pane CRT shell + NEXUS logo. */
+/** Home dashboard for Terminal theme — multi-pane CRT shell + Tri-Cass logo. */
 export function TerminalDashboard() {
   const { colors } = useTheme();
   const navigation = useNavigation<{ navigate: (n: NavName) => void }>();
@@ -170,7 +170,7 @@ export function TerminalDashboard() {
                   textShadowRadius: 10,
                 })}
               >
-                NEXUS OS
+                Tri-Cass OS
               </Text>
               <Text style={monoStyle({ color: colors.fgDim, fontSize: 11 })}>
                 Your AI Computer. Anywhere.
@@ -262,13 +262,13 @@ export function TerminalDashboard() {
           onPress={() => go("Files")}
         >
           <Text style={monoStyle({ color: colors.accent, fontSize: 11 })}>
-            /Nexus/
+            /Tri-Cass/
           </Text>
           <Text style={monoStyle({ color: colors.fg, fontSize: 11 })}>
             {"  "}📁 AI_Models
           </Text>
           <Text style={monoStyle({ color: colors.fg, fontSize: 11 })}>
-            {"  "}📁 Notes
+            {"  "}📄 tri-cass-notes.txt
           </Text>
           <Text style={monoStyle({ color: colors.fg, fontSize: 11 })}>
             {"  "}📁 Projects/website

@@ -49,9 +49,9 @@ export function AboutScreen() {
             About
           </Text>
           <Text style={[styles.body, { color: colors.fg }]}>
-            NEXUS Companion — Windows, Mac, iOS, and Android for the NEXUS OS /
+            Tri-Cass Companion — Windows, Mac, iOS, and Android for the Tri-Cass OS /
             Tri-Cass family. Offline-first Chat with local models, plus Vault,
-            Packs, and Files. No NEXUS cloud account required to use the app.
+            Packs, and Files. No Tri-Cass cloud account required to use the app.
           </Text>
         </View>
       </View>
@@ -94,7 +94,7 @@ export function AboutScreen() {
 
       <GlowPanel title="Phone + tablet + desktop">
         Phones keep bottom tabs with glow on the active item. Tablets switch to
-        a side rail. Windows and Mac builds ship with the NEXUS logo as the app
+        a side rail. Windows and Mac builds ship with the Tri-Cass logo as the app
         icon.
       </GlowPanel>
 

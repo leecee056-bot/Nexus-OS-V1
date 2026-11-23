@@ -6,7 +6,7 @@ function shell(title: string, accent: string, body: string, script = ""): string
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>${title} · NEXUS</title>
+<title>${title} · Tri-Cass</title>
 <style>
   :root { --accent:${accent}; --bg:#0b0d12; --fg:#eef2ff; --dim:#9aa3c7; --card:#141824; }
   * { box-sizing: border-box; }
@@ -26,7 +26,7 @@ function shell(title: string, accent: string, body: string, script = ""): string
 <body>
   <div class="card">
     <h1>${title}</h1>
-    <p class="sub">Installed from NEXUS Add-ons · works offline in Files</p>
+    <p class="sub">Installed from Tri-Cass Add-ons · works offline in Files</p>
     ${body}
   </div>
   <script>${script}</script>
@@ -68,7 +68,7 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
       "Sticky notes",
       "#f5c542",
       `<textarea id="n" rows="10" placeholder="Jot something…"></textarea><button id="save">Save on this device</button><p class="sub" id="st"></p>`,
-      `const k='nexus.sticky';n.value=localStorage.getItem(k)||'';save.onclick=()=>{localStorage.setItem(k,n.value);st.textContent='Saved '+new Date().toLocaleTimeString()};`,
+      `const k='tricass.sticky';n.value=localStorage.getItem(k)||'';save.onclick=()=>{localStorage.setItem(k,n.value);st.textContent='Saved '+new Date().toLocaleTimeString()};`,
     ),
   units: () =>
     shell(
@@ -103,7 +103,7 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
       "Checklist",
       "#38bdf8",
       `<div class="row"><input id="item" placeholder="Add item" /><button id="add">Add</button></div><div id="list"></div>`,
-      `const k='nexus.check';let items=JSON.parse(localStorage.getItem(k)||'[]');function save(){localStorage.setItem(k,JSON.stringify(items));render()}function render(){list.innerHTML='';items.forEach((it,i)=>{const row=document.createElement('div');row.className='row';row.style.margin='6px 0';row.innerHTML='<label style="flex:1"><input type="checkbox" '+(it.done?'checked':'')+'/> '+it.text+'</label>';row.querySelector('input').onchange=e=>{items[i].done=e.target.checked;save()};const del=document.createElement('button');del.textContent='✕';del.onclick=()=>{items.splice(i,1);save()};row.appendChild(del);list.appendChild(row)})}add.onclick=()=>{if(!item.value.trim())return;items.push({text:item.value.trim(),done:false});item.value='';save()};render();`,
+      `const k='tricass.check';let items=JSON.parse(localStorage.getItem(k)||'[]');function save(){localStorage.setItem(k,JSON.stringify(items));render()}function render(){list.innerHTML='';items.forEach((it,i)=>{const row=document.createElement('div');row.className='row';row.style.margin='6px 0';row.innerHTML='<label style="flex:1"><input type="checkbox" '+(it.done?'checked':'')+'/> '+it.text+'</label>';row.querySelector('input').onchange=e=>{items[i].done=e.target.checked;save()};const del=document.createElement('button');del.textContent='✕';del.onclick=()=>{items.splice(i,1);save()};row.appendChild(del);list.appendChild(row)})}add.onclick=()=>{if(!item.value.trim())return;items.push({text:item.value.trim(),done:false});item.value='';save()};render();`,
     ),
   worldclock: () =>
     shell(
@@ -138,7 +138,7 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
     shell(
       "Base64",
       "#67e8f9",
-      `<textarea id="src" rows="4">NEXUS</textarea><div class="row"><button id="enc">Encode</button><button id="dec">Decode</button></div><pre id="out"></pre>`,
+      `<textarea id="src" rows="4">Tri-Cass</textarea><div class="row"><button id="enc">Encode</button><button id="dec">Decode</button></div><pre id="out"></pre>`,
       `enc.onclick=()=>{out.textContent=btoa(unescape(encodeURIComponent(src.value)))};dec.onclick=()=>{try{out.textContent=decodeURIComponent(escape(atob(src.value)))}catch(e){out.textContent=String(e)}};`,
     ),
   uuid: () =>
@@ -152,7 +152,7 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
     shell(
       "Markdown preview",
       "#94a3b8",
-      `<textarea id="src" rows="8"># Hello\\n\\n**NEXUS** mini markdown.</textarea><div id="out"></div>`,
+      `<textarea id="src" rows="8"># Hello\\n\\n**Tri-Cass** mini markdown.</textarea><div id="out"></div>`,
       `function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])}function md(t){return esc(t).replace(/^### (.*)$/gm,'<h3>$1</h3>').replace(/^## (.*)$/gm,'<h2>$1</h2>').replace(/^# (.*)$/gm,'<h1>$1</h1>').replace(/\\*\\*(.+?)\\*\\*/g,'<strong>$1</strong>').replace(/\\*(.+?)\\*/g,'<em>$1</em>').replace(/\\n/g,'<br/>')}src.oninput=()=>out.innerHTML=md(src.value);src.oninput();`,
     ),
   htmlpad: () =>
@@ -166,7 +166,7 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
     shell(
       "SHA-256 hash",
       "#2dd4bf",
-      `<textarea id="src" rows="4">NEXUS</textarea><button id="go">Hash</button><pre id="out"></pre>`,
+      `<textarea id="src" rows="4">Tri-Cass</textarea><button id="go">Hash</button><pre id="out"></pre>`,
       `go.onclick=async()=>{const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(src.value));out.textContent=[...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('')};`,
     ),
   diff: () =>
@@ -194,7 +194,7 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
       "SQL scratch notes",
       "#60a5fa",
       `<textarea id="n" rows="12" placeholder="-- draft queries here"></textarea><button id="save">Save</button>`,
-      `const k='nexus.sql';n.value=localStorage.getItem(k)||'SELECT * FROM notes;\\n';save.onclick=()=>localStorage.setItem(k,n.value);`,
+      `const k='tricass.sql';n.value=localStorage.getItem(k)||'SELECT * FROM notes;\\n';save.onclick=()=>localStorage.setItem(k,n.value);`,
     ),
   hex: () =>
     shell(
@@ -229,7 +229,7 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
     shell(
       "Typing test",
       "#38bdf8",
-      `<p id="prompt">the quick nexus companion types offline with calm focus</p><textarea id="src" rows="3"></textarea><pre id="out"></pre>`,
+      `<p id="prompt">the quick tri-cass companion types offline with calm focus</p><textarea id="src" rows="3"></textarea><pre id="out"></pre>`,
       `const t0=Date.now();src.oninput=()=>{const a=prompt.textContent.trim().split(/\\s+/);const b=src.value.trim().split(/\\s+/).filter(Boolean);let ok=0;for(let i=0;i<b.length;i++)if(b[i]===a[i])ok++;const mins=(Date.now()-t0)/60000;out.textContent='Words '+b.length+' · Accuracy '+Math.round(100*ok/Math.max(1,b.length))+'% · WPM '+Math.round(b.length/Math.max(0.01,mins))};`,
     ),
   pixel: () =>
@@ -243,7 +243,7 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
     shell(
       "ASCII banner",
       "#94a3b8",
-      `<input id="src" value="NEXUS" /><pre id="out" style="font-size:10px;line-height:1.1"></pre>`,
+      `<input id="src" value="Tri-Cass" /><pre id="out" style="font-size:10px;line-height:1.1"></pre>`,
       `const map={A:[' ██ ','█  █','████','█  █','█  █'],N:['█  █','██ █','█ ██','█  █','█  █'],E:['████','█   ','███ ','█   ','████'],X:['█  █',' ██ ','  █ ',' ██ ','█  █'],U:['█  █','█  █','█  █','█  █',' ██ '],S:[' ███','█   ',' ██ ','   █','███ '],' ':['    ','    ','    ','    ','    ']};function run(){const rows=['','','','',''];for(const ch of src.value.toUpperCase()){const g=map[ch]||map[' '];g.forEach((line,i)=>rows[i]+=line+' ')}out.textContent=rows.join('\\n')}src.oninput=run;run();`,
     ),
   flashcards: () =>
@@ -280,7 +280,7 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
       "Kanban lite",
       "#818cf8",
       `<div class="row" id="cols" style="align-items:stretch"></div><div class="row"><input id="item" placeholder="New card" /><button id="add">Add to Todo</button></div>`,
-      `const k='nexus.kanban';let data=JSON.parse(localStorage.getItem(k)||'{"Todo":["Plan"],"Doing":[],"Done":[]}');function save(){localStorage.setItem(k,JSON.stringify(data));render()}function render(){cols.innerHTML='';Object.keys(data).forEach(col=>{const box=document.createElement('div');box.style.flex='1';box.style.minWidth='120px';box.innerHTML='<strong>'+col+'</strong>';data[col].forEach((t,i)=>{const card=document.createElement('div');card.style.cssText='margin:8px 0;padding:8px;border-radius:10px;background:rgba(255,255,255,.08);cursor:pointer';card.textContent=t;card.onclick=()=>{const keys=Object.keys(data);const n=(keys.indexOf(col)+1)%keys.length;data[col].splice(i,1);data[keys[n]].push(t);save()};box.appendChild(card)});cols.appendChild(box)})}add.onclick=()=>{if(!item.value.trim())return;data.Todo.push(item.value.trim());item.value='';save()};render();`,
+      `const k='tricass.kanban';let data=JSON.parse(localStorage.getItem(k)||'{"Todo":["Plan"],"Doing":[],"Done":[]}');function save(){localStorage.setItem(k,JSON.stringify(data));render()}function render(){cols.innerHTML='';Object.keys(data).forEach(col=>{const box=document.createElement('div');box.style.flex='1';box.style.minWidth='120px';box.innerHTML='<strong>'+col+'</strong>';data[col].forEach((t,i)=>{const card=document.createElement('div');card.style.cssText='margin:8px 0;padding:8px;border-radius:10px;background:rgba(255,255,255,.08);cursor:pointer';card.textContent=t;card.onclick=()=>{const keys=Object.keys(data);const n=(keys.indexOf(col)+1)%keys.length;data[col].splice(i,1);data[keys[n]].push(t);save()};box.appendChild(card)});cols.appendChild(box)})}add.onclick=()=>{if(!item.value.trim())return;data.Todo.push(item.value.trim());item.value='';save()};render();`,
     ),
   csv: () =>
     shell(
@@ -301,14 +301,14 @@ export const MINI_APP_BUILDERS: Record<string, () => string> = {
       "Meeting notes",
       "#fb923c",
       `<textarea id="n" rows="12" placeholder="Agenda / notes / actions"></textarea><button id="save">Save</button>`,
-      `const k='nexus.meeting';n.value=localStorage.getItem(k)||'# Meeting\\n\\n- Attendees:\\n- Notes:\\n- Actions:\\n';save.onclick=()=>localStorage.setItem(k,n.value);`,
+      `const k='tricass.meeting';n.value=localStorage.getItem(k)||'# Meeting\\n\\n- Attendees:\\n- Notes:\\n- Actions:\\n';save.onclick=()=>localStorage.setItem(k,n.value);`,
     ),
   resume: () =>
     shell(
       "Resume outline",
       "#38bdf8",
       `<textarea id="n" rows="14"></textarea><button id="save">Save</button>`,
-      `const k='nexus.resume';n.value=localStorage.getItem(k)||'# Name\\n\\n## Summary\\n\\n## Experience\\n- Role — Company\\n\\n## Skills\\n- \\n';save.onclick=()=>localStorage.setItem(k,n.value);`,
+      `const k='tricass.resume';n.value=localStorage.getItem(k)||'# Name\\n\\n## Summary\\n\\n## Experience\\n- Role — Company\\n\\n## Skills\\n- \\n';save.onclick=()=>localStorage.setItem(k,n.value);`,
     ),
   mindmap: () =>
     shell(

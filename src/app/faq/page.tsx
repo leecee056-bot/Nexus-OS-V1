@@ -5,7 +5,7 @@ import { FAQ_ITEMS } from "@/lib/faq";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Frequently asked questions about NEXUS OS — downloads, flashing, offline AI, Raspberry Pi, NEXUS Pocket (ESP32), cyberdecks, and the optional Network signup.",
+    "Frequently asked questions about Tri-Cass OS — downloads, flashing, offline AI, Raspberry Pi, Tri-Cass Pocket (ESP32), cyberdecks, and the optional Network signup.",
 };
 
 export default function FaqPage() {
@@ -14,7 +14,7 @@ export default function FaqPage() {
       <div className="shell">
         <h2>Frequently asked questions</h2>
         <p className="lede">
-          Short answers about what NEXUS OS is, how to flash PC/Pi images or
+          Short answers about what Tri-Cass OS is, how to flash PC/Pi images or
           Pocket, and what you need (or don’t need) to get started. Still stuck?
           See <Link href="/setup">Setup</Link> or <Link href="/docs">Docs</Link>.
         </p>

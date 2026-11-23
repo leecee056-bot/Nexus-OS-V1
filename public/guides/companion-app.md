@@ -1,4 +1,4 @@
-# NEXUS Companion app (Windows · Mac · Android · iOS)
+# Tri-Cass Companion app (Windows · Mac · Android · iOS)
 
 Normal app with **real local AI Chat**, Vault, Packs, and Files. Matrix boot
 splash, rabbit-wizard logo, and a proper desktop / home-screen icon. Phones use
@@ -8,10 +8,10 @@ bottom tabs; tablets use a side rail.
 
 | Platform | Action |
 |----------|--------|
-| **Windows setup** | [Download setup .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-setup.exe) — installs Desktop + Start Menu launcher with NEXUS icon |
+| **Windows setup** | [Download setup .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-setup.exe) — installs Desktop + Start Menu launcher with Tri-Cass icon |
 | **Windows portable** | [Download portable .exe](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Windows-0.12.2-portable.exe) — or tap **Add to Desktop** inside the app |
 | **Mac** | [Companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.2) — grab the `.dmg` when attached |
-| **USB kit** | [NEXUS-Companion-USB zip](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-USB-0.12.2.zip) — unzip to a stick, Start-NEXUS — see [companion-usb.md](./companion-usb.md) |
+| **USB kit** | [Tri-Cass-Companion-USB zip](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-USB-0.12.2.zip) — unzip to a stick, Start-Tri-Cass — see [companion-usb.md](./companion-usb.md) |
 | **Web** | [Open /companion/](/companion/) in your browser |
 | **Android** | [Download APK](https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/companion-v0.12.2/NEXUS-Companion-Android-0.12.2.apk) — see [android-apk.md](./android-apk.md) |
 
@@ -31,7 +31,7 @@ set `http://YOUR_PC_LAN_IP:11434`.
 
 ## Offline independence
 
-Companion does **not** need a NEXUS cloud account. Chat, Agent, Vault, Files,
+Companion does **not** need a Tri-Cass cloud account. Chat, Agent, Vault, Files,
 Games, Image Lab, and themes run on-device with local Ollama (or a tiny phrase
 fallback). The website is only for downloads / releases — every
 “Website downloads (optional)” button can be ignored after install.
@@ -46,14 +46,14 @@ Home / About (every platform) and the desktop side rail can switch looks:
 | Theme | Feel |
 |-------|------|
 | **Basic** | Clean light UI (same idea as the website Basic theme) |
-| **Matrix** | Classic neon-green terminal NEXUS |
+| **Matrix** | Classic neon-green terminal Tri-Cass |
 | **Lumen** | Frosted glass panels, soft edge light, premium phosphor glow (default) |
-| **Terminal** | CRT multi-panel “NEXUS OS” dashboard — mono type, scanlines, real logo mark |
+| **Terminal** | CRT multi-panel “Tri-Cass OS” dashboard — mono type, scanlines, real logo mark |
 | **Spatial / Open** | Open canvas, floating liquid glass, soft depth lighting (desktop-first) |
 
 ## Browse (desktop)
 
-Windows / Mac: open links in a themed **NEXUS Browse** window, or hand off to an
+Windows / Mac: open links in a themed **Tri-Cass Browse** window, or hand off to an
 installed browser (Chrome, Edge, Firefox, Safari, …). See
 [companion-browse.md](./companion-browse.md).
 
@@ -92,7 +92,7 @@ and Files with live status while answering.
 
 ## Desk layout + wait state (v0.11)
 
-Desktop **Layout → Desk** mirrors the multi-window NEXUS OS mockup; **Classic**
+Desktop **Layout → Desk** mirrors the multi-window Tri-Cass OS mockup; **Classic**
 keeps the usual chat chrome. Chat wait uses a small rabbit dig GIF beside
 rotating fun facts (Facts off = GIF only). Agent is one tap and only opens
 Vault/Packs/Files when you ask — greetings stay greetings.
@@ -130,10 +130,10 @@ updates** in About / Chat / Plugins. See [companion-updates.md](./companion-upda
 - **Image Lab** (desktop) — local image models via Ollama + Save PNG
 - **Check for updates** — curated links for models, add-ons, packs, OS
 - More Chat model options (Phi-3, DeepSeek R1 1.5B, Llama/Qwen 3B, …)
-- **Terminal** theme — CRT multi-panel home dashboard with NEXUS logo
+- **Terminal** theme — CRT multi-panel home dashboard with Tri-Cass logo
 - Agent mode + Add-ons / Plugin library
 - Lumen UI polish + Basic / Matrix / Lumen / Terminal themes
 - Real local models via Ollama + model selector
-- Windows / Mac desktop packaging with NEXUS logo icon
+- Windows / Mac desktop packaging with Tri-Cass logo icon
 - Vault + optional Packs import + Files folders/text
 - Phone + tablet responsive chrome

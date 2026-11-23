@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Optional Knowledge Packs",
   description:
-    "Free public offline knowledge sources you can copy onto a USB stick or microSD for NEXUS OS and Cardputer ADV — optional, not hosted by us.",
+    "Free public offline knowledge sources you can copy onto a USB stick or microSD for Tri-Cass OS and Cardputer ADV — optional, not hosted by us.",
 };
 
 export default function KnowledgePacksPage() {
@@ -19,7 +19,7 @@ export default function KnowledgePacksPage() {
         </p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          <strong>Optional.</strong> NEXUS OS, Pocket, and Cardputer ADV all work
+          <strong>Optional.</strong> Tri-Cass OS, Pocket, and Cardputer ADV all work
           without any of these downloads. Use them only if you have spare space
           (a <strong>32 GB+</strong> stick or card is plenty for lots of text)
           and want Wikipedia-style pages, books, or other reference material the
@@ -44,7 +44,7 @@ export default function KnowledgePacksPage() {
             account, and we do not host the large dumps.
           </p>
           <p style={{ marginTop: "0.75rem" }}>
-            Best fit: you have already flashed NEXUS OS (or Cardputer), tried the
+            Best fit: you have already flashed Tri-Cass OS (or Cardputer), tried the
             starter Vault notes, and want more reference text for offline
             lookup.
           </p>
@@ -57,7 +57,7 @@ export default function KnowledgePacksPage() {
           These projects publish free offline material. Prefer{" "}
           <strong>plain text</strong> (
           <code className="mono">.txt</code> / <code className="mono">.md</code>
-          ) for the NEXUS Knowledge Vault and Cardputer. Large{" "}
+          ) for the Tri-Cass Knowledge Vault and Cardputer. Large{" "}
           <code className="mono">.zim</code> archives are great with a Kiwix
           reader; for Vault search, extract or pick text editions.
         </p>
@@ -71,7 +71,7 @@ export default function KnowledgePacksPage() {
             <a href="https://www.kiwix.org/" rel="noopener noreferrer">
               Kiwix
             </a>{" "}
-            on a PC or Pi. For NEXUS Vault / Cardputer, convert or export useful
+            on a PC or Pi. For Tri-Cass Vault / Cardputer, convert or export useful
             articles to plain <code className="mono">.txt</code> /{" "}
             <code className="mono">.md</code> (a full English Wikipedia dump can
             be many gigabytes — start with a small language or “nopic” /
@@ -190,7 +190,7 @@ export default function KnowledgePacksPage() {
             <strong>Copy onto the media</strong>
             <span>
               {" "}
-              Put the files where NEXUS expects them (see paths below). Do not
+              Put the files where Tri-Cass expects them (see paths below). Do not
               overwrite the whole OS image — only add knowledge files beside it
               (or onto the Cardputer microSD).
             </span>
@@ -224,9 +224,9 @@ export default function KnowledgePacksPage() {
               <strong>Cardputer ADV microSD</strong>
               <span>
                 FAT card. Preferred folder:{" "}
-                <code className="mono">/nexus-vault/</code> at the card root
+                <code className="mono">/tri-cass-vault/</code> at the card root
                 (also accepts <code className="mono">/vault/</code> or a single{" "}
-                <code className="mono">/nexus-vault.txt</code>). Keep files
+                <code className="mono">/tri-cass-vault.txt</code>). Keep files
                 short — the screen is small and the hub lists a limited number
                 of notes. Firmware still runs with no card.
               </span>
@@ -240,7 +240,7 @@ export default function KnowledgePacksPage() {
 │   ├── glossary.txt
 │   └── books/
 │       └── frankenstein.txt
-└── nexus-vault/           ← Cardputer ADV preferred path
+└── tri-cass-vault/           ← Cardputer ADV preferred path
     ├── 00-readme.txt
     └── cheatsheet.txt`}
               </pre>
@@ -256,7 +256,7 @@ export default function KnowledgePacksPage() {
 
         <div className="cta-row" style={{ marginTop: "2rem" }}>
           <Link className="btn" href="/download">
-            Download NEXUS OS
+            Download Tri-Cass OS
           </Link>
           <Link className="btn btn-ghost" href="/setup">
             Setup guide

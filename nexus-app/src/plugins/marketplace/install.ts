@@ -5,7 +5,7 @@ import { openBrowse, isDesktopBrowseAvailable } from "../../browse/api";
 import { buildMiniAppHtml } from "./templates";
 import type { MarketItem } from "./types";
 
-const KEY = "nexus.companion.market.installed.v1";
+const KEY = "tricass.companion.market.installed.v1";
 
 export type InstalledMap = Record<string, { at: number; path?: string }>;
 

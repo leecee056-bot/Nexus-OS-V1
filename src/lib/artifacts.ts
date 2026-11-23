@@ -65,7 +65,7 @@ export const PI_ARTIFACTS = [
   },
 ] as const;
 
-/** NEXUS Pocket — ESP32-S3 firmware (source + flash guide; not a disk image). */
+/** Tri-Cass Pocket — ESP32-S3 firmware (source + flash guide; not a disk image). */
 export const POCKET_REPO =
   "https://github.com/leecee056-bot/Nexus-OS-V1/tree/main/nexus-esp32";
 
@@ -77,7 +77,7 @@ export const POCKET_VERSION = "0.1.0";
 export const POCKET_ARTIFACTS = [
   {
     arch: "esp32-s3",
-    label: "NEXUS Pocket (ESP32-S3)",
+    label: "Tri-Cass Pocket (ESP32-S3)",
     filename: "nexus-esp32",
     sizeLabel: "Firmware source + ~1 MB TinyStories model (stories260K)",
     guidance:
@@ -85,7 +85,7 @@ export const POCKET_ARTIFACTS = [
   },
 ] as const;
 
-/** NEXUS Cardputer ADV — no-PSRAM on-device hub (separate from Pocket). */
+/** Tri-Cass Cardputer ADV — no-PSRAM on-device hub (separate from Pocket). */
 export const CARDPUTER_REPO =
   "https://github.com/leecee056-bot/Nexus-OS-V1/tree/main/nexus-cardputer";
 
@@ -97,17 +97,17 @@ export const CARDPUTER_VERSION = "0.2.0";
 export const CARDPUTER_ARTIFACTS = [
   {
     arch: "cardputer-adv",
-    label: "NEXUS Cardputer ADV",
+    label: "Tri-Cass Cardputer ADV",
     filename: "nexus-cardputer",
     sizeLabel:
       "Firmware + optional microSD Vault example (TinyChat in flash; no neural weights)",
     guidance:
-      "Dedicated M5Stack Cardputer ADV firmware (ESP32-S3FN8, 8 MB flash, no PSRAM, 240×135 + keyboard). Green terminal hub on the built-in screen with TinyChat, Notes, and an optional Knowledge Vault on microSD (/nexus-vault). Cannot run USB/Pi images or Pocket’s stories260K.",
+      "Dedicated M5Stack Cardputer ADV firmware (ESP32-S3FN8, 8 MB flash, no PSRAM, 240×135 + keyboard). Green terminal hub on the built-in screen with TinyChat, Notes, and an optional Knowledge Vault on microSD (/tri-cass-vault). Cannot run USB/Pi images or Pocket’s stories260K.",
   },
 ] as const;
 
 export const BUILD_NOTE =
-  "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), NEXUS Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), or the Companion USB portable kit (carry Chat + Vault on a stick). Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
+  "Choose a build: PC USB or Raspberry Pi microSD (v1.0.1 — Knowledge Vault starter pack), Tri-Cass Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), or the Companion USB portable kit (carry Chat + Vault on a stick). Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
 
 /**
  * Companion app — Chat/Vault/Packs with local AI (not the bootable OS).

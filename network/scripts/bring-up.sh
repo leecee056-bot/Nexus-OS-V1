@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One-command lab / VPS bring-up for NEXUS Network (Prosody).
+# One-command lab / VPS bring-up for Tri-Cass Network (Prosody).
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
@@ -32,7 +32,7 @@ fi
 
 echo "Waiting for Prosody..."
 for i in $(seq 1 40); do
-  if "${DOCKER[@]}" exec nexus-prosody prosodyctl status >/dev/null 2>&1; then
+  if "${DOCKER[@]}" exec tricass-prosody prosodyctl status >/dev/null 2>&1; then
     echo "Prosody is up."
     break
   fi

@@ -1,6 +1,6 @@
-# Put NEXUS OS on a USB stick (short version)
+# Put Tri-Cass OS on a USB stick (short version)
 
-NEXUS OS is its own small system on a stick. It does **not** install inside Windows.
+Tri-Cass OS is its own small system on a stick. It does **not** install inside Windows.
 Full plain-English guide: [/setup](/setup) on the website.
 
 ## 1. Download

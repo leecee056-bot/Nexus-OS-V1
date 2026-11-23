@@ -15,7 +15,7 @@ function formatDate(d: Date) {
   return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
 }
 
-/** Top strip: NEXUS OS v1.0 | … + live clock (Europe/London-facing local). */
+/** Top strip: Tri-Cass OS v1.0 | … + live clock (Europe/London-facing local). */
 export function TerminalTitleBar({
   offline = false,
 }: {
@@ -52,7 +52,7 @@ export function TerminalTitleBar({
         })}
         numberOfLines={1}
       >
-        NEXUS OS v1.0 | Portable Local Intelligence System
+        Tri-Cass OS v1.0 | Portable Local Intelligence System
       </Text>
       <View style={styles.spacer} />
       <Text style={monoStyle({ color: colors.fgDim, fontSize: 10 })}>

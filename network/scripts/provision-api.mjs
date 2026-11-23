@@ -10,8 +10,8 @@ import { spawn } from "node:child_process";
 
 const PORT = Number(process.env.PROVISION_PORT || 8787);
 const TOKEN = process.env.PROSODY_PROVISION_TOKEN || "";
-const DOMAIN = process.env.NEXUS_XMPP_DOMAIN || "nexus.network";
-const CONTAINER = process.env.PROSODY_CONTAINER || "nexus-prosody";
+const DOMAIN = process.env.NEXUS_XMPP_DOMAIN || "tri-cass.network";
+const CONTAINER = process.env.PROSODY_CONTAINER || "tricass-prosody";
 
 if (!TOKEN || TOKEN.length < 16) {
   console.error("Set a strong PROSODY_PROVISION_TOKEN (16+ chars).");
@@ -56,7 +56,7 @@ function dockerAddUser(username, password) {
 const server = createServer(async (req, res) => {
   if (req.method === "GET" && req.url === "/health") {
     res.writeHead(200, { "content-type": "application/json" });
-    res.end(JSON.stringify({ ok: true, service: "nexus-prosody-provision" }));
+    res.end(JSON.stringify({ ok: true, service: "tricass-prosody-provision" }));
     return;
   }
   if (req.method !== "POST" || req.url !== "/provision") {

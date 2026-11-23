@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const KEY = "nexus.companion.files.v1";
+const KEY = "tricass.companion.files.v1";
 
 export type DocItem = {
   id: string;
@@ -60,7 +60,7 @@ export async function ensureFolder(path: string): Promise<DocItem> {
   const folder: DocItem = {
     id: `folder-${Date.now()}-${name}`,
     name,
-    uri: `nexus-folder://${name}`,
+    uri: `tri-cass-folder://${name}`,
     size: 0,
     mimeType: "inode/directory",
     addedAt: Date.now(),
@@ -85,7 +85,7 @@ export async function writeTextFile(
   const next: DocItem = {
     id: `file-${Date.now()}-${name}`,
     name,
-    uri: `nexus-text://${encodeURIComponent(name)}`,
+    uri: `tri-cass-text://${encodeURIComponent(name)}`,
     size: content.length,
     mimeType: mime,
     addedAt: Date.now(),

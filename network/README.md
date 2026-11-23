@@ -1,6 +1,6 @@
-# NEXUS Network (Prosody)
+# Tri-Cass Network (Prosody)
 
-Off-USB XMPP server for NEXUS OS. The website at https://nexus-os.apps.grok.bot reserves accounts; this folder is the real chat server.
+Off-USB XMPP server for Tri-Cass OS. The website at https://nexus-os.apps.grok.bot reserves accounts; this folder is the real chat server.
 
 ## Lab / VPS bring-up
 
@@ -33,4 +33,4 @@ node scripts/provision-api.mjs
 
 ## Honesty
 
-Until DNS for `nexus.network` points at a public VPS running this stack, Network is **lab-only**. Do not claim live chatrooms on the product site.
+Until DNS for `tri-cass.network` points at a public VPS running this stack, Network is **lab-only**. Do not claim live chatrooms on the product site.

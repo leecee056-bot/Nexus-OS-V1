@@ -1,6 +1,6 @@
 appId: bot.grok.nexus.companion
-productName: NEXUS Companion
-copyright: Copyright © 2026 NEXUS OS
+productName: Tri-Cass Companion
+copyright: Copyright © 2026 Tri-Cass OS
 directories:
   output: release
   buildResources: assets/brand
@@ -39,19 +39,19 @@ win:
         - x64
 portable:
   requestExecutionLevel: user
-  artifactName: NEXUS-Companion-Windows-${version}-portable.exe
+  artifactName: Tri-Cass-Companion-Windows-${version}-portable.exe
 nsis:
   oneClick: true
   perMachine: false
   allowToChangeInstallationDirectory: false
   createDesktopShortcut: always
   createStartMenuShortcut: true
-  shortcutName: NEXUS Companion
+  shortcutName: Tri-Cass Companion
   installerIcon: icon.ico
   uninstallerIcon: icon.ico
   installerHeaderIcon: icon.ico
   runAfterFinish: true
-  artifactName: NEXUS-Companion-Windows-${version}-setup.exe
+  artifactName: Tri-Cass-Companion-Windows-${version}-setup.exe
 mac:
   icon: icon.icns
   category: public.app-category.productivity
@@ -64,11 +64,11 @@ mac:
       arch:
         - x64
         - arm64
-  artifactName: NEXUS-Companion-Mac-${version}-${arch}.${ext}
+  artifactName: Tri-Cass-Companion-Mac-${version}-${arch}.${ext}
   hardenedRuntime: false
   gatekeeperAssess: false
 linux:
   icon: icon.png
   target:
     - AppImage
-  artifactName: NEXUS-Companion-Linux-${version}.${ext}
+  artifactName: Tri-Cass-Companion-Linux-${version}.${ext}

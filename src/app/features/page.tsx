@@ -9,7 +9,7 @@ export default function FeaturesPage() {
       <div className="shell">
         <h2>What&apos;s included</h2>
         <p className="lede">
-          Plain list of what works today on the USB / Pi hub and on NEXUS Pocket
+          Plain list of what works today on the USB / Pi hub and on Tri-Cass Pocket
           (ESP32). For “what is a Vault?” and similar words, see{" "}
           <Link href="/about">About</Link>.
         </p>
@@ -17,8 +17,8 @@ export default function FeaturesPage() {
         <figure className="shot">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/nexus-os-hub-screen.jpg"
-            alt="NEXUS OS hub menu on a computer screen"
+            src="/images/tri-cass-os-hub-screen.jpg"
+            alt="Tri-Cass OS hub menu on a computer screen"
           />
           <figcaption>Main menu after booting from USB or Pi microSD.</figcaption>
         </figure>
@@ -33,7 +33,7 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
-            <strong>NEXUS Pocket (ESP32-S3 + PSRAM)</strong>
+            <strong>Tri-Cass Pocket (ESP32-S3 + PSRAM)</strong>
             <span>
               USB-Serial companion firmware: offline TinyStories chat, status,
               and tools (mem, notes, calc). Flash with PlatformIO; default model
@@ -42,7 +42,7 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
-            <strong>NEXUS Cardputer ADV</strong>
+            <strong>Tri-Cass Cardputer ADV</strong>
             <span>
               On-device green hub for the M5Stack Cardputer ADV (no PSRAM):
               TinyChat, Notes, Status, and an optional microSD Knowledge Vault
@@ -113,7 +113,7 @@ export default function FeaturesPage() {
           </li>
           <li>
             <strong>
-              NEXUS Network
+              Tri-Cass Network
               <span className="badge badge-coming">coming</span>
             </strong>
             <span>
