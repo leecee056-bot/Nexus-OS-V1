@@ -15,8 +15,8 @@ export default function HomePage() {
           <p className="brand-hero">
             <Image
               className="brand-hero-mark"
-              src="/brand/logo.png"
-              alt=""
+              src="/brand/tri-cass-rabbit-wizard.png"
+              alt="Tri-Cass rabbit wizard logo"
               width={72}
               height={140}
               priority

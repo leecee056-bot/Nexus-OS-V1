@@ -6,7 +6,7 @@
 2. Unpack if the download is `.xz` / `.zip`.
 3. Flash with Etcher (or `dd`). This **erases** the USB stick — pick the correct target.
 4. Boot the PC from USB (boot menu often F12 / Esc / F10). Disable Secure Boot if the unsigned image will not start.
-5. After boot you should see the NEXUS hub menu.
+5. After boot you should see the **Tri-Cass OS** hub (rabbit mark + menu).
 
 ## Raspberry Pi (microSD)
 

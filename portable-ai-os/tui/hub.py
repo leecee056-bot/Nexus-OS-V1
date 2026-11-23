@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""NEXUS OS — main menu hub (TUI). One maximised app at a time (T0-friendly)."""
+"""Tri-Cass OS — main menu hub (TUI). One maximised app at a time (T0-friendly)."""
 from __future__ import annotations
 
 import argparse
@@ -17,6 +17,7 @@ if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
 from agents import AgentController  # noqa: E402
+from brand import NETWORK, PRODUCT, TAGLINE, hub_title, rabbit_block  # noqa: E402
 from config_store import load_ui_config, resolve_data_dir, save_ui_config  # noqa: E402
 from files import FileBrowser  # noqa: E402
 from games import Minesweeper, SnakeGame  # noqa: E402
@@ -35,7 +36,7 @@ from vault import Vault  # noqa: E402
 DEFAULT_CATALOG = ROOT / "catalog" / "catalog.json"
 DEFAULT_MODELS = Path(
     os.environ.get("PORTABLE_AI_MODELS")
-    or os.environ.get("NEXUS_MODELS")
+    or os.environ.get("NEXUS_MODELS")  # legacy alias
     or (ROOT / "models")
 )
 
@@ -46,7 +47,7 @@ MENU = [
     ("files", "File Manager", "F"),
     ("vault", "Knowledge Vault", "K"),
     ("agents", "Agents & Tools", "A"),
-    ("network", "NEXUS Network", "N"),
+    ("network", NETWORK, "N"),
     ("games", "Games", "G"),
     ("monitor", "System Monitor", "S"),
     ("models", "Models", "M"),
@@ -77,7 +78,7 @@ class Hub:
         self.messages = [
             {
                 "role": "system",
-                "content": "You are NEXUS OS, a helpful local offline assistant. Be concise.",
+                "content": f"You are {PRODUCT}, a helpful local offline assistant. Be concise.",
             }
         ]
         self.chat_log: list[str] = []
@@ -127,7 +128,10 @@ class Hub:
             ("ctx", f"Context: {c.get('ctx')}"),
             ("threads", f"Threads: {c.get('threads') or 'auto'}"),
             ("vault_rag", f"Vault RAG in chat: {'ON' if c.get('vault_rag') else 'OFF'}"),
-            ("network", f"NEXUS Network: {'ON' if c.get('network_enabled') else 'OFF'} (client not shipped)"),
+            (
+                "network",
+                f"{NETWORK}: {'ON' if c.get('network_enabled') else 'OFF'} (client not shipped)",
+            ),
             ("allow_host", f"Allow host FS: {'ON' if c.get('allow_host_fs') else 'OFF'}"),
             ("save", "Save & return to menu"),
         ]
@@ -139,7 +143,7 @@ class Hub:
         if self.theme.name == "matrix":
             self.theme.paint_backdrop(self.stdscr, h, w)
         net = "Online" if self.cfg.get("network_enabled") else "Offline"
-        title = f"NEXUS OS v1  |  USB Mode  |  {net}  |  Esc=menu  F10=quit"
+        title = hub_title(net=net)
         self.stdscr.addnstr(0, 0, title.ljust(w), w, self.theme.attr_title())
         if self.app == "menu":
             self._draw_menu(h, w)
@@ -172,18 +176,28 @@ class Hub:
         self.stdscr.refresh()
 
     def _draw_menu(self, h, w):
-        self.stdscr.addnstr(2, 2, "NEXUS OS", w - 4, self.theme.attr_bold())
-        self.stdscr.addnstr(3, 2, "Your AI Computer. Anywhere.", w - 4, self.theme.attr_dim())
-        self.stdscr.addnstr(4, 2, "(One app at a time — maximised)", w - 4, self.theme.attr_dim())
-        for i, (_id, label, key) in enumerate(MENU):
-            row = 6 + i
+        row = 2
+        for line in rabbit_block():
             if row >= h - 2:
+                break
+            self.stdscr.addnstr(row, 2, line, w - 4, self.theme.attr_dim())
+            row += 1
+        self.stdscr.addnstr(row, 2, PRODUCT, w - 4, self.theme.attr_bold())
+        row += 1
+        self.stdscr.addnstr(row, 2, TAGLINE, w - 4, self.theme.attr_dim())
+        row += 1
+        self.stdscr.addnstr(row, 2, "(One app at a time — maximised)", w - 4, self.theme.attr_dim())
+        row += 2
+        menu_top = row
+        for i, (_id, label, key) in enumerate(MENU):
+            r = menu_top + i
+            if r >= h - 2:
                 break
             mark = ">" if i == self.menu_idx else " "
             stub = "  [stub]" if _id == "network" else ""
-            line = f"{mark} {label:<18} [{key}]{stub}"
+            line = f"{mark} {label:<22} [{key}]{stub}"
             attr = self.theme.attr_select() if i == self.menu_idx else self.theme.attr_normal()
-            self.stdscr.addnstr(row, 2, line, w - 4, attr)
+            self.stdscr.addnstr(r, 2, line, w - 4, attr)
 
     def _draw_chat(self, h, w):
         self.stdscr.addnstr(1, 1, f"AI Chat — {self.active_model or 'no model'}", w - 2, self.theme.attr_bold())
@@ -301,7 +315,7 @@ class Hub:
 
     def _draw_network(self, h, w):
         lines = [
-            "NEXUS Network",
+            NETWORK,
             "",
             "Status: NOT CONNECTED",
             "Client: not shipped in this build (see HAP-10).",
@@ -316,8 +330,8 @@ class Hub:
             self.stdscr.addnstr(2 + i, 2, line, w - 4, self.theme.attr_normal())
 
     def _draw_help(self, h, w):
-        text = """NEXUS OS Help
-Flashable offline AI USB. Terminal is the application.
+        text = f"""{PRODUCT} Help
+Flashable offline AI USB / Pi. Terminal is the application.
 
 Menu keys: arrows + Enter, or letter shortcuts shown in menu.
 Esc returns to main menu. F10 quits.
@@ -329,7 +343,7 @@ Knowledge Vault indexes txt/md on the stick (SQLite FTS5).
 A small starter pack (guide, glossary, how-tos) ships in knowledge/raw.
 Agents: allowlisted tools only — no shell.
 Games are optional and use no model RAM when idle.
-NEXUS Network is a stub until HAP-10.
+{NETWORK} is a stub until HAP-10.
 """
         lines = text.splitlines()
         for i, line in enumerate(lines[self.help_scroll :]):
@@ -338,7 +352,14 @@ NEXUS Network is a stub until HAP-10.
             self.stdscr.addnstr(1 + i, 1, line, w - 2, self.theme.attr_normal())
 
     def _draw_firstboot(self, h, w):
-        self.stdscr.addnstr(1, 2, "NEXUS OS — First boot", w - 4, self.theme.attr_bold())
+        row = 1
+        for line in rabbit_block():
+            self.stdscr.addnstr(row, 2, line, w - 4, self.theme.attr_dim())
+            row += 1
+        self.stdscr.addnstr(row, 2, f"{PRODUCT} — First boot", w - 4, self.theme.attr_bold())
+        row += 1
+        self.stdscr.addnstr(row, 2, TAGLINE, w - 4, self.theme.attr_dim())
+        row += 2
         steps = [
             f"Theme: {self.theme.name}",
             f"Image gen: {'ON' if self.cfg.get('image_gen') else 'OFF'}",
@@ -347,15 +368,18 @@ NEXUS Network is a stub until HAP-10.
         ]
         for i, s in enumerate(steps):
             attr = self.theme.attr_select() if i == self.fb_idx else self.theme.attr_normal()
-            self.stdscr.addnstr(3 + i, 2, s, w - 4, attr)
+            self.stdscr.addnstr(row + i, 2, s, w - 4, attr)
+        model_top = row + len(steps) + 1
         if self.fb_idx == 2:
             for i, m in enumerate(self.models):
                 if not m.get("present"):
                     continue
-                if 8 + i >= h - 2:
+                if model_top + i >= h - 2:
                     break
                 mark = ">" if i == self.model_idx else " "
-                self.stdscr.addnstr(8 + i, 4, f"{mark} {m.get('name')}", w - 6, self.theme.attr_normal())
+                self.stdscr.addnstr(
+                    model_top + i, 4, f"{mark} {m.get('name')}", w - 6, self.theme.attr_normal()
+                )
 
     # ----- actions -----
     def open_app(self, app_id: str):
@@ -368,7 +392,7 @@ NEXUS Network is a stub until HAP-10.
             self.files.allow_host = bool(self.cfg.get("allow_host_fs"))
             self.files.refresh()
         if app_id == "chat" and not self.chat_log:
-            self.chat_log.append("system: Connected to NEXUS OS. Esc=menu.")
+            self.chat_log.append(f"system: Connected to {PRODUCT}. Esc=menu.")
 
     def activate_model(self):
         self.models = present_models(self.models_dir, self.catalog)
@@ -769,11 +793,11 @@ NEXUS Network is a stub until HAP-10.
                 self.cfg["first_boot_done"] = True
                 self.persist()
                 self.app = "menu"
-                self.status = "Welcome to NEXUS OS"
+                self.status = f"Welcome to {PRODUCT}"
 
 
 def main():
-    ap = argparse.ArgumentParser(description="NEXUS OS Hub")
+    ap = argparse.ArgumentParser(description=f"{PRODUCT} Hub")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8080)
     ap.add_argument("--catalog", default=str(DEFAULT_CATALOG))
