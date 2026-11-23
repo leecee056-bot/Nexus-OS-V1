@@ -11,7 +11,10 @@ export type PluginId =
   | "files-browse"
   | "files-read"
   | "files-write"
+  | "files-create"
   | "files-folder"
+  | "files-rename"
+  | "files-delete"
   | "tricass-status";
 
 export type PluginDef = {
@@ -66,25 +69,53 @@ export const PLUGIN_CATALOG: PluginDef[] = [
   {
     id: "files-write",
     name: "Files Write",
-    blurb: "Create or update text files (HTML, CSS, MD, …) in Files.",
+    blurb:
+      "Create or update text/code files in the sandboxed workspace (or USB Files/).",
     category: "files",
     tool: "write_file",
     defaultEnabled: true,
     updateUrl: AGENT_GUIDE_URL,
   },
   {
+    id: "files-create",
+    name: "Files Create",
+    blurb: "Same sandbox as Write — create_file alias for clear agent plans.",
+    category: "files",
+    tool: "create_file",
+    defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
+  },
+  {
     id: "files-folder",
     name: "Folders",
-    blurb: "Create folders in Files — e.g. a website/ project the agent can fill.",
+    blurb: "Create folders in the workspace — e.g. a website/ project the agent can fill.",
     category: "files",
     tool: "ensure_folder",
     defaultEnabled: true,
     updateUrl: AGENT_GUIDE_URL,
   },
   {
+    id: "files-rename",
+    name: "Files Rename",
+    blurb: "Rename or move files and folders inside the workspace sandbox.",
+    category: "files",
+    tool: "rename_file",
+    defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
+  },
+  {
+    id: "files-delete",
+    name: "Files Delete",
+    blurb: "Delete files or folders inside the workspace only (never outside).",
+    category: "files",
+    tool: "delete_file",
+    defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
+  },
+  {
     id: "tricass-status",
     name: "Tri-Cass Status",
-    blurb: "Report companion status (model, plugins enabled).",
+    blurb: "Report companion status (model, plugins, workspace root).",
     category: "system",
     tool: "tricass_status",
     defaultEnabled: true,

@@ -400,18 +400,187 @@ ipcMain.handle("ollama:request", async (_event, args) => {
   }
 });
 
+function workspaceRoot() {
+  if (portableInfo.portable && portableInfo.filesDir) {
+    return portableInfo.filesDir;
+  }
+  return ensureDir(path.join(app.getPath("userData"), "Workspace"));
+}
+
+/** Resolve a relative workspace path; throw if it escapes the sandbox. */
+function resolveWorkspacePath(relRaw) {
+  const root = path.resolve(workspaceRoot());
+  const rel = String(relRaw || "")
+    .replace(/\\/g, "/")
+    .replace(/^\/+/, "");
+  if (!rel || rel.split("/").some((p) => p === ".." || p === "")) {
+    throw new Error("Invalid workspace path.");
+  }
+  const full = path.resolve(root, rel);
+  const rootWithSep = root.endsWith(path.sep) ? root : root + path.sep;
+  if (full !== root && !full.startsWith(rootWithSep)) {
+    throw new Error("Path escapes the workspace sandbox.");
+  }
+  return { root, full, rel: path.relative(root, full).split(path.sep).join("/") };
+}
+
 ipcMain.handle("nexus:portable-info", async () => {
+  const root = workspaceRoot();
   if (!portableInfo.portable) {
-    return { portable: false };
+    return {
+      portable: false,
+      workspaceDir: root,
+      filesDir: root,
+    };
   }
   return {
     portable: true,
     kitRoot: portableInfo.kitRoot,
     knowledgeDir: portableInfo.knowledgeDir,
     filesDir: portableInfo.filesDir,
+    workspaceDir: root,
     chatsDir: portableInfo.chatsDir,
     userData: portableInfo.userData,
   };
+});
+
+ipcMain.handle("nexus:workspace-info", async () => {
+  try {
+    const root = workspaceRoot();
+    return {
+      ok: true,
+      root,
+      portable: !!portableInfo.portable,
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "workspace info failed",
+    };
+  }
+});
+
+ipcMain.handle("nexus:workspace-list", async (_event, args) => {
+  try {
+    const prefix = String(args?.prefix || "")
+      .replace(/\\/g, "/")
+      .replace(/^\/+|\/+$/g, "");
+    const root = workspaceRoot();
+    const base = prefix ? resolveWorkspacePath(prefix).full : root;
+    if (!fs.existsSync(base)) {
+      return { ok: true, entries: [], root };
+    }
+    const st = fs.statSync(base);
+    if (!st.isDirectory()) {
+      return { ok: true, entries: [{ name: prefix, kind: "file" }], root };
+    }
+    const walk = (dir, relBase, out, depth) => {
+      if (depth > 6 || out.length > 400) return;
+      let names;
+      try {
+        names = fs.readdirSync(dir);
+      } catch {
+        return;
+      }
+      for (const name of names) {
+        if (name.startsWith(".")) continue;
+        const full = path.join(dir, name);
+        const rel = relBase ? `${relBase}/${name}` : name;
+        let kind = "file";
+        try {
+          kind = fs.statSync(full).isDirectory() ? "folder" : "file";
+        } catch {
+          continue;
+        }
+        out.push({ name: rel.replace(/\\/g, "/"), kind });
+        if (kind === "folder") walk(full, rel, out, depth + 1);
+      }
+    };
+    const entries = [];
+    walk(base, prefix, entries, 0);
+    return { ok: true, entries, root };
+  } catch (e) {
+    return {
+      ok: false,
+      entries: [],
+      error: e instanceof Error ? e.message : "list failed",
+    };
+  }
+});
+
+ipcMain.handle("nexus:workspace-read", async (_event, args) => {
+  try {
+    const { full } = resolveWorkspacePath(args?.path);
+    const text = fs.readFileSync(full, "utf8");
+    return { ok: true, text };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "read failed",
+    };
+  }
+});
+
+ipcMain.handle("nexus:workspace-write", async (_event, args) => {
+  try {
+    const { full, rel } = resolveWorkspacePath(args?.path);
+    ensureDir(path.dirname(full));
+    const content = String(args?.content ?? "");
+    fs.writeFileSync(full, content, "utf8");
+    return { ok: true, path: rel, bytes: Buffer.byteLength(content, "utf8") };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "write failed",
+    };
+  }
+});
+
+ipcMain.handle("nexus:workspace-mkdir", async (_event, args) => {
+  try {
+    const { full, rel } = resolveWorkspacePath(args?.path);
+    ensureDir(full);
+    return { ok: true, path: rel };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "mkdir failed",
+    };
+  }
+});
+
+ipcMain.handle("nexus:workspace-rename", async (_event, args) => {
+  try {
+    const from = resolveWorkspacePath(args?.from);
+    const to = resolveWorkspacePath(args?.to);
+    ensureDir(path.dirname(to.full));
+    fs.renameSync(from.full, to.full);
+    return { ok: true, path: to.rel };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "rename failed",
+    };
+  }
+});
+
+ipcMain.handle("nexus:workspace-remove", async (_event, args) => {
+  try {
+    const { full } = resolveWorkspacePath(args?.path);
+    if (!fs.existsSync(full)) return { ok: true };
+    const st = fs.statSync(full);
+    if (st.isDirectory()) {
+      fs.rmSync(full, { recursive: true, force: true });
+    } else {
+      fs.unlinkSync(full);
+    }
+    return { ok: true };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "remove failed",
+    };
+  }
 });
 
 ipcMain.handle("nexus:list-knowledge", async () => {

@@ -73,6 +73,44 @@ declare global {
         created?: string[];
         error?: string;
       }>;
+      workspace?: {
+        info?: () => Promise<{
+          ok: boolean;
+          root?: string;
+          portable?: boolean;
+          error?: string;
+        }>;
+        list?: (args: {
+          prefix?: string;
+        }) => Promise<{
+          ok: boolean;
+          entries?: { name: string; kind: "file" | "folder" }[];
+          root?: string;
+          error?: string;
+        }>;
+        read?: (args: {
+          path: string;
+        }) => Promise<{ ok: boolean; text?: string; error?: string }>;
+        write?: (args: {
+          path: string;
+          content: string;
+        }) => Promise<{
+          ok: boolean;
+          path?: string;
+          bytes?: number;
+          error?: string;
+        }>;
+        mkdir?: (args: {
+          path: string;
+        }) => Promise<{ ok: boolean; path?: string; error?: string }>;
+        rename?: (args: {
+          from: string;
+          to: string;
+        }) => Promise<{ ok: boolean; path?: string; error?: string }>;
+        remove?: (args: {
+          path: string;
+        }) => Promise<{ ok: boolean; error?: string }>;
+      };
       platform?: string;
     };
   }

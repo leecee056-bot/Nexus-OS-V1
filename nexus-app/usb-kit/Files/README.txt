@@ -1,5 +1,13 @@
-Files on this USB
-=================
+Files / agent workspace (USB portable)
+======================================
 
-Companion can write generated images and project files here when running in
-USB portable mode. You can also drop your own documents in this folder.
+When Companion runs from this USB kit, Agent file tools use this folder as
+the sandboxed workspace (create / edit / rename / organise text and code).
+
+Examples Agent can create here:
+  website/index.html
+  scripts/hello.py
+  notes/tri-cass-notes.txt
+
+You can also drop your own documents here. Companion never writes outside
+this kit's Files/ (and Images/) from Agent tools.

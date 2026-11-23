@@ -8,7 +8,9 @@
   Spatial / Open: floating liquid glass (`spatialShell`), `SpatialAtmosphere`,
   `FloatIn` entrances — desktop-first premium canvas.
 - Agent: `src/agent/` (schema + tools + runner). Plugins: `src/plugins/`.
-  Do **not** call the app “secondary” in UI copy.
+  File tools sandbox via `src/files/` + Electron `nexus:workspace-*`
+  (USB `Files/` or `userData/Workspace`). Includes rename/delete + change
+  summary. Do **not** call the app “secondary” in UI copy.
 - Chat neural path: `src/chat/ollama.ts`. Fallback: `src/chat/tinychat.ts`.
 - Image Lab (desktop/web): `src/image/` + `ImageScreen` — Ollama image models;
   Save PNG via Electron `nexus:save-image`. Guide: companion-image.md.
