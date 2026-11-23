@@ -257,7 +257,7 @@ sysfs /sys sysfs defaults 0 0
 EOF
 
 # Hostname + hosts
-echo "portable-ai-os" | sudo tee "$WORK/mnt/etc/hostname" >/dev/null
+echo "tri-cass-os" | sudo tee "$WORK/mnt/etc/hostname" >/dev/null
 sudo tee "$WORK/mnt/etc/hosts" >/dev/null <<EOF
 127.0.0.1 localhost portable-ai-os
 ::1 localhost
@@ -271,6 +271,22 @@ sudo mkdir -p "$WORK/mnt/opt/portable-ai-os/runtime/"{bin,models} \
   "$WORK/mnt/data/"{config,models,memory,images,logs,knowledge/raw,notes,projects}
 # Branding alias (keep portable-ai-os path for compatibility)
 sudo ln -sfn /opt/portable-ai-os "$WORK/mnt/opt/nexus-os"
+sudo ln -sfn /opt/portable-ai-os "$WORK/mnt/opt/tri-cass-os"
+
+# Boot branding (getty / login)
+sudo tee "$WORK/mnt/etc/issue" >/dev/null <<'ISSUE'
+Tri-Cass OS
+Your AI Computer. Anywhere.
+
+ISSUE
+sudo tee "$WORK/mnt/etc/motd" >/dev/null <<'MOTD'
+
+  ((\ 
+  (-.-)  *   Tri-Cass OS
+ o_(")(")   Offline AI — local models only
+
+MOTD
+
 sudo rsync -a --exclude 'models/*.gguf' --exclude 'build/alpine' \
   "$ROOT"/catalog "$ROOT"/configs "$ROOT"/tui "$ROOT"/scripts "$ROOT"/docs \
   "$ROOT"/knowledge "$ROOT"/projects "$ROOT"/assets \

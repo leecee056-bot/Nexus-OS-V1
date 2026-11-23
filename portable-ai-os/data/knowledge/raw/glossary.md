@@ -1,7 +1,7 @@
 # Glossary (plain English)
 
 **USB / SD image (.img)**  
-A full disk picture of NEXUS OS. You write it to a stick (PC) or microSD card (Pi).
+A full disk picture of Tri-Cass OS. You write it to a stick (PC) or microSD card (Pi).
 
 **Flash / Etcher**  
 Copying the image onto the stick or card. balenaEtcher is a common free tool. Flashing erases that stick/card.
@@ -24,7 +24,7 @@ Your searchable notebook on the device. Indexes `.txt` / `.md` (and PDF text if 
 **Agents & tools**  
 Small helpers limited to safe built-in actions (calc, vault, files, notes, sysinfo, models, PXG) — not a free shell on the whole PC.
 
-**NEXUS Network**  
+**Tri-Cass Network**  
 Optional future online community. Not needed for offline AI.
 
 **i686 / x86_64 / aarch64**  

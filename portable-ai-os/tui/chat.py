@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""NEXUS OS — CLI entry (oneshot / pxg / theme) and interactive hub launcher."""
+"""Tri-Cass OS — CLI entry (oneshot / pxg / theme) and interactive hub launcher."""
 from __future__ import annotations
 
 import argparse
@@ -26,7 +26,7 @@ DEFAULT_PORT = 8080
 
 
 def main():
-    ap = argparse.ArgumentParser(description="NEXUS OS TUI / CLI")
+    ap = argparse.ArgumentParser(description="Tri-Cass OS TUI / CLI")
     ap.add_argument("--host", default=DEFAULT_HOST)
     ap.add_argument("--port", type=int, default=DEFAULT_PORT)
     ap.add_argument("--catalog", default=str(DEFAULT_CATALOG))
@@ -58,7 +58,7 @@ def main():
             print("ERROR: server not up", file=sys.stderr)
             sys.exit(1)
         msgs = [
-            {"role": "system", "content": "You are NEXUS OS, a helpful local assistant. Be concise."},
+            {"role": "system", "content": "You are Tri-Cass OS, a helpful local assistant. Be concise."},
             {"role": "user", "content": args.oneshot},
         ]
         # optional vault RAG

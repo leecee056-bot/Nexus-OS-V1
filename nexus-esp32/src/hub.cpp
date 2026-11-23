@@ -12,8 +12,10 @@ static size_t line_len = 0;
 void hub_banner(const ModelRunner *mr) {
   Serial.println();
   Serial.println("========================================");
+  Serial.println("  ((\\ ");
+  Serial.println("  (-.-)  *   Tri-Cass Pocket");
+  Serial.println(" o_(\")(\")  offline tiny-ML (ESP32-S3)");
   Serial.printf("  %s  v%s\n", NEXUS_POCKET_NAME, NEXUS_POCKET_VERSION);
-  Serial.println("  offline tiny-ML companion (ESP32-S3)");
   Serial.println("========================================");
   model_print_status(mr);
   Serial.println("type  help  for commands");

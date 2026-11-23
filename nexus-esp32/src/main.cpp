@@ -12,7 +12,11 @@ void setup() {
   Serial.begin(NEXUS_SERIAL_BAUD);
   delay(800);
 
-  Serial.printf("\n%s boot %s\n", NEXUS_POCKET_NAME, NEXUS_POCKET_VERSION);
+  Serial.println();
+  Serial.println("  ((\\ ");
+  Serial.println("  (-.-)  *");
+  Serial.println(" o_(\")(\")");
+  Serial.printf("%s boot %s\n", NEXUS_POCKET_NAME, NEXUS_POCKET_VERSION);
   Serial.printf("PSRAM: %u bytes\n", ESP.getPsramSize());
 
   if (!SPIFFS.begin(true)) {

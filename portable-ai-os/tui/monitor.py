@@ -82,7 +82,7 @@ def snapshot(data_dir: Path, model_id: str = "", server_up: bool = False) -> lis
     mem = mem_info()
     disk = disk_info(data_dir if data_dir.exists() else Path("/"))
     lines = [
-        "NEXUS OS — System Monitor",
+        "Tri-Cass OS — System Monitor",
         "",
         f"CPU  {bar(cpu)}",
         f"RAM  {bar(mem['percent'])}  {mem['used_mb']}/{mem['total_mb']} MB",

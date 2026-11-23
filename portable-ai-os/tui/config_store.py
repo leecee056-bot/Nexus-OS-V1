@@ -1,4 +1,4 @@
-"""Load/save NEXUS OS UI + model settings from AI_DATA (or local data/)."""
+"""Load/save Tri-Cass OS UI + model settings from AI_DATA (or local data/)."""
 from __future__ import annotations
 
 import os
@@ -81,7 +81,7 @@ def _parse_toml_simple(text: str) -> dict:
 
 def _dump_toml(cfg: dict) -> str:
     lines = [
-        "# NEXUS OS UI settings — edited by TUI",
+        "# Tri-Cass OS UI settings — edited by TUI",
         f'theme = "{cfg.get("theme", "basic")}"',
         f"image_gen = {'true' if cfg.get('image_gen') else 'false'}",
         f"image_size = {int(cfg.get('image_size', 32))}",

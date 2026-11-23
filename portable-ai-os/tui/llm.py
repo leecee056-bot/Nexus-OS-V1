@@ -1,4 +1,4 @@
-"""Shared llama-server helpers for NEXUS OS TUI apps."""
+"""Shared llama-server helpers for Tri-Cass OS TUI apps."""
 from __future__ import annotations
 
 import json

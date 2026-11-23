@@ -6,7 +6,8 @@ They are **not** a full encyclopedia. Add your own `.txt` / `.md` files under `A
 
 Included:
 
-- `nexus-guide.md` — what Tri-Cass OS is
+- `tri-cass-guide.md` — what Tri-Cass OS is
+- `nexus-guide.md` — legacy pointer (same product)
 - `glossary.md` — plain-English terms
 - `howto-flash-boot.md` — flash and boot checklist
 - `howto-chat-vault.md` — Chat + Vault tips
