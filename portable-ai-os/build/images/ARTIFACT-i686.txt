@@ -1,0 +1,6 @@
+artifact=/agent/portable-ai-os-images/portable-ai-os-i686.img
+arch=i686
+size_bytes=3221225472
+sha256=fb2b39abeb025a1040178dd1eb327206538df2c31ba1cc2a05089bb7ba661e43
+built=2026-11-19T18:52:49Z
+note=v1.0.1-usb Knowledge Vault starter pack payload refresh

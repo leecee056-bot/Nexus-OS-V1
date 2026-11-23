@@ -1,0 +1,8 @@
+artifact=/agent/portable-ai-os-images/portable-ai-os-aarch64.img
+arch=aarch64
+platform=raspberry-pi
+boards=pi4,pi5
+size_bytes=4294967296
+sha256=777419a193379d37f3d7f26c69af8410800dca1651a9f6237c2cba17139abc8b
+built=2026-11-19T18:52:49Z
+note=v1.0.1-pi Knowledge Vault starter pack payload refresh

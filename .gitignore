@@ -1,3 +1,14 @@
+# Image build outputs (source tree is portable-ai-os/; never commit blobs)
+portable-ai-os/build/**/*.img
+portable-ai-os/build/**/*.xz
+portable-ai-os/build/**/*.squashfs
+portable-ai-os/build/**/*.iso
+portable-ai-os/build/**/*.tar.gz
+portable-ai-os/build/llama/bin/
+portable-ai-os/**/*.gguf
+portable-ai-os/**/__pycache__/
+portable-ai-os/**/*.pyc
+
 node_modules
 # Expo web export embeds hashed assets under this path — keep them.
 !public/companion/assets/node_modules/

@@ -11,6 +11,7 @@ const PRODUCT = [
 
 const RESOURCES = [
   { href: "/docs", label: "Docs" },
+  { href: "/compat", label: "Hardware compat" },
   { href: "/knowledge-packs", label: "Knowledge packs" },
   { href: "/download#companion", label: "Companion app" },
   { href: "/faq", label: "FAQ" },

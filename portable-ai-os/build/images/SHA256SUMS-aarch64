@@ -1,0 +1,6 @@
+# Tri-Cass OS Raspberry Pi aarch64 — verify after download / decompress
+# Compressed release asset:
+ab55937df18bc05f9a00c29b26098b874c50ecad6e31c003b4cf5f08f29c40a7  portable-ai-os-aarch64.img.xz
+
+# Raw .img after: xz -d portable-ai-os-aarch64.img.xz
+7aa7341853a9f290f2637363b14f8cc2d21a90a3fb19d3697891c213e6b7f72d  portable-ai-os-aarch64.img

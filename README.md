@@ -23,9 +23,10 @@ is offline). Real chat needs that Prosody box on a small VPS with DNS. See
 
 ## Source / GPL note for OS images
 
-See [`SOURCES.md`](SOURCES.md). MIT covers this repo’s product code; bootable
-images include GPL components whose corresponding source/build scripts are
-being published (HAP-63).
+See [`SOURCES.md`](SOURCES.md) and [`portable-ai-os/`](portable-ai-os/) (build
+scripts, hub TUI, [`SBOM.md`](portable-ai-os/SBOM.md)). MIT covers product code
+in this repo; bootable images also include GPL components covered by the source
+offer. Honest hardware matrix: [`/compat`](src/app/compat/page.tsx).
 
 ## Optional Knowledge Packs
 

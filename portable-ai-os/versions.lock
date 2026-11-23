@@ -1,0 +1,30 @@
+# Portable AI OS — pinned versions (Phase A prototype)
+# Update deliberately; rebuild after changes.
+
+alpine.version=3.20.3
+alpine.mirror=https://dl-cdn.alpinelinux.org/alpine
+alpine.release=v3.20
+
+llama.cpp.git=https://github.com/ggerganov/llama.cpp.git
+llama.cpp.tag=b4600
+# Fallback if tag moves: pin by commit after first successful build
+llama.cpp.commit=553f1e46e9e864514bbd6bf4009146db66be0541
+
+# Host toolchain for this prototype slice
+prototype.host_arch=x86_64
+prototype.qemu_ram_mb=4096
+prototype.server_host=127.0.0.1
+prototype.server_port=8080
+
+# Inference defaults (cgroup-friendly)
+infer.n_threads_reserve=1
+infer.n_ctx_t0=512
+infer.n_ctx_t1=2048
+infer.n_ctx_t2=4096
+infer.n_batch_t0=128
+infer.n_batch_t1=256
+infer.bind=127.0.0.1
+
+# OS reserves (see plan §4)
+probe.os_reserve_mb=350
+probe.ui_reserve_mb=96

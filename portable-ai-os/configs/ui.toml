@@ -1,0 +1,16 @@
+# Tri-Cass OS — UI settings (persisted on AI_DATA)
+# Copied to /data/config/ui.toml on first boot; TUI rewrites this file.
+
+theme = "basic"          # basic | matrix
+image_gen = true         # Pixel Art / Image Lab (PXG); off = zero cost
+image_size = 32          # pixel art width/height (16–64)
+first_boot_done = false
+active_model = ""
+pin_model = ""
+host = "127.0.0.1"
+port = 8080
+ctx = 512                # context tokens (0 = catalog default)
+threads = 0              # 0 = nproc-1
+network_enabled = false  # Tri-Cass Network master switch (off by default)
+vault_rag = true         # prepend vault hits into chat when available
+allow_host_fs = false    # File Manager: require confirm to leave AI_DATA
