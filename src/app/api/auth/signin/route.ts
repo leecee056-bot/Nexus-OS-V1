@@ -5,7 +5,7 @@ import {
   createSession,
   sessionCookieOptions,
   signSessionToken,
-  verifyPassword,
+  verifyPasswordOrDummy,
 } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { rateLimit } from "@/lib/rate-limit";
@@ -43,32 +43,48 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Prefer exact username match; email login only when a single row matches.
   const byUser = await sql<{
     id: string | number;
-    password_hash: string;
+    password_hash: string | null;
     display_jid: string;
+    reservation_only: boolean | null;
   }>(
-    `SELECT id, password_hash, display_jid FROM accounts WHERE username = $1 LIMIT 1`,
+    `SELECT id, password_hash, display_jid, reservation_only FROM accounts WHERE username = $1 LIMIT 1`,
     [login],
   );
   let account = byUser[0];
   if (!account) {
     const byEmail = await sql<{
       id: string | number;
-      password_hash: string;
+      password_hash: string | null;
       display_jid: string;
+      reservation_only: boolean | null;
     }>(
-      `SELECT id, password_hash, display_jid FROM accounts WHERE email = $1 LIMIT 2`,
+      `SELECT id, password_hash, display_jid, reservation_only FROM accounts WHERE email = $1 LIMIT 2`,
       [login],
     );
     if (byEmail.length === 1) account = byEmail[0];
   }
 
-  if (!account || !(await verifyPassword(password, account.password_hash))) {
+  const ok = await verifyPasswordOrDummy(
+    password,
+    account?.password_hash ?? null,
+  );
+
+  if (!account || !ok) {
     return NextResponse.json(
       { error: "Invalid credentials." },
       { status: 401 },
+    );
+  }
+
+  if (account.reservation_only || !account.password_hash) {
+    return NextResponse.json(
+      {
+        error:
+          "This username is reserved without a password. Sign-in with a password will open when Tri-Cass Network chat launches.",
+      },
+      { status: 403 },
     );
   }
 

@@ -45,7 +45,8 @@ export default function HomePage() {
           </div>
           <p className="hero-note">
             Optional later:{" "}
-            <Link href="/network">reserve a Network username</Link>.
+            <Link href="/network">reserve a Network username</Link>{" "}
+            (no password while chat is offline).
           </p>
         </div>
       </section>

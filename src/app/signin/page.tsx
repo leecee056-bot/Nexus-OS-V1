@@ -13,8 +13,8 @@ export default function SignInPage() {
       <div className="shell">
         <h2>Sign in</h2>
         <p className="lede">
-          Access your reserved Tri-Cass Network identity. Chat servers are not
-          online yet — this opens your account profile stub.
+          Sign in only if you already set a Network password (older accounts).
+          New username reservations do not use a password until chat launches.
         </p>
         {sample ? (
           <div className="alert" style={{ marginBottom: "1.5rem" }}>
@@ -26,7 +26,7 @@ export default function SignInPage() {
           <AuthForm mode="signin" />
         </div>
         <p style={{ marginTop: "1.25rem", color: "var(--fg-dim)" }}>
-          No account? <Link href="/network">Create Network account</Link>
+          Need a handle? <Link href="/network">Reserve a username</Link>
         </p>
       </div>
     </section>

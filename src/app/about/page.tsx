@@ -250,16 +250,26 @@ export default function AboutPage() {
             </span>
           </li>
           <li>
-            <strong>PC BIOS</strong>
+            <strong>PC boot (v1 honesty)</strong>
             <span>
-              Ability to boot from USB; Secure Boot off (v1 images are unsigned).
+              USB boot with legacy / BIOS (CSM) is the proven path. Images are
+              unsigned today. UEFI + Secure Boot dual-signed boot is planned —
+              do not expect every modern Secure Boot laptop to start v1 yet.
+            </span>
+          </li>
+          <li>
+            <strong>CPU note</strong>
+            <span>
+              The current x86_64 image targets modern-enough 64-bit CPUs. Very
+              old 64-bit towers (pre–SSE4.2 era) may need a future all-CPU
+              llama.cpp build before chat runs well.
             </span>
           </li>
           <li>
             <strong>Coming later</strong>
             <span>
-              Stronger Pi 5 support, older Pi boards, Apple Silicon as a target,
-              larger Pocket models / BLE mirror, and live Network chat.
+              UEFI Secure Boot, broader CPU coverage, stronger Pi 5 / cyberdeck
+              layouts, larger Pocket models, and live Network chat.
             </span>
           </li>
         </ul>

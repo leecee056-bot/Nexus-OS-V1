@@ -23,7 +23,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
       const endpoint = mode === "signup" ? "/api/auth/signup" : "/api/auth/signin";
       const body =
         mode === "signup"
-          ? { username, email, password }
+          ? { username, email }
           : { login: username || email, password };
       const res = await fetch(endpoint, {
         method: "POST",
@@ -43,7 +43,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
       setOk(
         data.message ||
           (mode === "signup"
-            ? "Account reserved. Network servers coming."
+            ? "Username reserved. Network chat coming later."
             : "Signed in."),
       );
       router.push("/account");
@@ -85,45 +85,48 @@ export function AuthForm({ mode }: { mode: Mode }) {
               onChange={(e) => setEmail(e.target.value)}
             />
             <span className="hint">
-              Optional contact — unique when set. Username is the Network
-              reservation; email verification comes later.
+              Optional contact only. We do not collect a Network password until
+              chat is live.
             </span>
           </label>
         </>
       ) : (
-        <label>
-          Username or email
-          <input
-            name="login"
-            autoComplete="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
+        <>
+          <label>
+            Username or email
+            <input
+              name="login"
+              autoComplete="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Password
+            <input
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={10}
+            />
+            <span className="hint">
+              Only for accounts created before password-free reservations. New
+              username holds cannot sign in until Network chat launches.
+            </span>
+          </label>
+        </>
       )}
-      <label>
-        Password
-        <input
-          name="password"
-          type="password"
-          autoComplete={mode === "signup" ? "new-password" : "current-password"}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          minLength={10}
-        />
-        {mode === "signup" ? (
-          <span className="hint">At least 10 characters. Stored hashed.</span>
-        ) : null}
-      </label>
       {error ? <div className="alert alert-error">{error}</div> : null}
       {ok ? <div className="alert">{ok}</div> : null}
       <button className="btn" type="submit" disabled={pending}>
         {pending
           ? "Working…"
           : mode === "signup"
-            ? "Create Network account"
+            ? "Reserve username"
             : "Sign in"}
       </button>
     </form>
