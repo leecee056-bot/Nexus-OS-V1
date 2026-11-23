@@ -37,8 +37,21 @@ const STARTER: VaultNote[] = [
       "Hub — main menu on the USB/Pi image.\n" +
       "Vault — searchable notes the Agent can read.\n" +
       "Companion — this Windows/Mac/Android app with Chat + Agent.\n" +
-      "Add-ons — plugins the Agent may use (Files, Vault, …).\n" +
+      "Add-ons — plugins the Agent may use (Files, Vault, Coding Packs…).\n" +
+      "Coding packs — DevDocs / Stack Overflow excerpts tagged pack-coding-* for Agent.\n" +
       "Pocket / Cardputer — ESP32 firmware paths.",
+    updatedAt: Date.now(),
+  },
+  {
+    id: "starter-coding-packs",
+    title: "Coding packs + small models",
+    body:
+      "With a ~1.5B (or smaller) local model, prefer:\n" +
+      "1) Look up docs in coding packs you imported\n" +
+      "2) Use Agent file tools (list / read / write)\n" +
+      "3) Make short edits, scripts, or starters — not large apps\n\n" +
+      "Packs → Import as coding pack. USB kit tip: Knowledge/coding/*.txt\n" +
+      "We don’t host multi-GB ZIMs — download via Kiwix (DevDocs / Stack Exchange).",
     updatedAt: Date.now(),
   },
 ];

@@ -8,6 +8,7 @@ import { AGENT_GUIDE_URL, COMPANION_GUIDE_URL } from "../updates/links";
 export type PluginId =
   | "vault-search"
   | "pack-notes"
+  | "coding-packs"
   | "files-browse"
   | "files-read"
   | "files-write"
@@ -47,6 +48,16 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     tool: "search_packs",
     defaultEnabled: true,
     updateUrl: "https://nexus-os.apps.grok.bot/knowledge-packs",
+  },
+  {
+    id: "coding-packs",
+    name: "Coding Packs",
+    blurb:
+      "Search DevDocs / Stack Overflow excerpts you imported as coding packs (pack-coding-*).",
+    category: "knowledge",
+    tool: "search_coding_packs",
+    defaultEnabled: true,
+    updateUrl: "https://nexus-os.apps.grok.bot/knowledge-packs#coding",
   },
   {
     id: "files-browse",

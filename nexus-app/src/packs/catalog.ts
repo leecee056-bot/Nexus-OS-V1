@@ -3,11 +3,43 @@ export type PackSource = {
   title: string;
   blurb: string;
   url: string;
-  kind: "browse" | "books" | "wiki";
+  kind: "browse" | "books" | "wiki" | "coding";
 };
 
 /** Public archives — we do not host the large files. */
 export const PACK_SOURCES: PackSource[] = [
+  {
+    id: "kiwix-devdocs",
+    title: "DevDocs (via Kiwix)",
+    blurb:
+      "Offline API docs for many languages (.zim). Browse in Kiwix, then Import useful .txt/.md excerpts into Vault as coding packs for Agent.",
+    url: "https://library.kiwix.org/?q=devdocs",
+    kind: "coding",
+  },
+  {
+    id: "kiwix-stackoverflow",
+    title: "Stack Overflow / Stack Exchange ZIMs",
+    blurb:
+      "Offline Q&A dumps via Kiwix. Huge — start with a small topic ZIM or export a few threads to plain text before importing.",
+    url: "https://download.kiwix.org/zim/stack_exchange/",
+    kind: "coding",
+  },
+  {
+    id: "kiwix-library-coding",
+    title: "Kiwix library (search coding)",
+    blurb:
+      "Find DevDocs, Stack Exchange, and other tech ZIMs in the Kiwix library. We do not host these files.",
+    url: "https://library.kiwix.org/",
+    kind: "coding",
+  },
+  {
+    id: "site-packs-coding",
+    title: "Coding packs how-to (website)",
+    blurb:
+      "Site guide: download → USB Knowledge/coding/ → Import → Agent search_coding_packs. Optional; Chat works without packs.",
+    url: "https://nexus-os.apps.grok.bot/knowledge-packs#coding",
+    kind: "coding",
+  },
   {
     id: "kiwix-library",
     title: "Kiwix library",
@@ -46,3 +78,7 @@ export const PACK_SOURCES: PackSource[] = [
     kind: "browse",
   },
 ];
+
+export function packsByKind(kind: PackSource["kind"]): PackSource[] {
+  return PACK_SOURCES.filter((p) => p.kind === kind);
+}

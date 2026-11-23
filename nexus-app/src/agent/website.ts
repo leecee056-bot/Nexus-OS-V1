@@ -41,6 +41,7 @@ export async function tryBuildWebsiteFromMessage(
       "list_files",
       "search_vault",
       "search_packs",
+      "search_coding_packs",
       "read_file",
       "tricass_status",
       "create_file",

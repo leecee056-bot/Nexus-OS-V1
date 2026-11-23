@@ -19,7 +19,8 @@ What stays on this drive
 ------------------------
   Data/        App settings, Vault notes, themes, plugin toggles
   Knowledge/   Drop your own wiki / notes / folders here (or use Add from this PC)
-  Files/       Companion Files library exports + generated images
+  Knowledge/coding/  Optional DevDocs / SO excerpts → Packs → Import as coding pack
+  Files/       Agent workspace sandbox + documents / generated images
   Chats/       Saved chat transcripts (Chat → Save chat)
 
 Ollama (local models)

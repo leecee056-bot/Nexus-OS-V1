@@ -20,6 +20,7 @@ the same Companion features — carried with your Vault, chats, and files.
 |--------|------|
 | `Data/` | App settings, Vault, themes, plugins (Electron userData) |
 | `Knowledge/` | Your wiki / notes / folders — drop files or use **Add from this PC** |
+| `Knowledge/coding/` | Optional coding pack excerpts (DevDocs / SO → Import as coding pack) |
 | `Files/` | Agent workspace sandbox + documents (images under `Files/Images/`) |
 | `Chats/` | **Save chat** markdown exports |
 

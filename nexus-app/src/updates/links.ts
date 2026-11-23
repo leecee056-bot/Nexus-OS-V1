@@ -6,6 +6,10 @@
  */
 
 export const OS_UPDATE_URL = "https://nexus-os.apps.grok.bot/download";
+export const KNOWLEDGE_PACKS_URL =
+  "https://nexus-os.apps.grok.bot/knowledge-packs";
+export const CODING_PACKS_URL =
+  "https://nexus-os.apps.grok.bot/knowledge-packs#coding";
 export const OS_RELEASES_URL =
   "https://github.com/leecee056-bot/Nexus-OS-V1/releases";
 export const COMPANION_RELEASES_URL =

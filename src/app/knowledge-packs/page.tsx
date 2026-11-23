@@ -28,6 +28,7 @@ export default function KnowledgePacksPage() {
 
         <nav className="jump-chips" aria-label="On this page">
           <a href="#why">Why</a>
+          <a href="#coding">Coding packs</a>
           <a href="#sources">Public sources</a>
           <a href="#how">How to load</a>
           <a href="#paths">Where files go</a>
@@ -48,6 +49,77 @@ export default function KnowledgePacksPage() {
             starter Vault notes, and want more reference text for offline
             lookup.
           </p>
+        </div>
+
+        <div className="panel" id="coding" style={{ marginTop: "1.5rem" }}>
+          <h3>Coding packs (DevDocs / Stack Overflow)</h3>
+          <p>
+            Optional offline coding docs for Tri-Cass Companion Agent — especially
+            useful with small local models (~1.5B). We point at free Kiwix ZIMs; we
+            do <strong>not</strong> host multi‑GB dumps.
+          </p>
+          <ul className="feature-list" style={{ marginTop: "0.75rem" }}>
+            <li>
+              <strong>DevDocs (via Kiwix)</strong>
+              <span>
+                Offline API docs for many languages. Browse in{" "}
+                <a href="https://www.kiwix.org/" rel="noopener noreferrer">
+                  Kiwix
+                </a>
+                , then copy useful pages to plain{" "}
+                <code className="mono">.txt</code> /{" "}
+                <code className="mono">.md</code>. Library search:{" "}
+                <a
+                  href="https://library.kiwix.org/?q=devdocs"
+                  rel="noopener noreferrer"
+                >
+                  library.kiwix.org/?q=devdocs
+                </a>
+                .
+              </span>
+            </li>
+            <li>
+              <strong>Stack Overflow / Stack Exchange</strong>
+              <span>
+                Huge ZIMs under{" "}
+                <a
+                  href="https://download.kiwix.org/zim/stack_exchange/"
+                  rel="noopener noreferrer"
+                >
+                  download.kiwix.org/zim/stack_exchange/
+                </a>
+                . Start small — export a few threads or a topic ZIM, not the
+                whole dump.
+              </span>
+            </li>
+            <li>
+              <strong>USB layout</strong>
+              <span>
+                Suggested:{" "}
+                <code className="mono">Knowledge/coding/</code> on the Companion
+                USB kit (or any vault folder). Keep excerpts short and
+                searchable.
+              </span>
+            </li>
+            <li>
+              <strong>Companion import</strong>
+              <span>
+                Packs → <strong>Import as coding pack</strong> tags notes as{" "}
+                <code className="mono">pack-coding-*</code>. Agent tool{" "}
+                <code className="mono">search_coding_packs</code> searches those
+                first (Add-ons → Coding Packs).
+              </span>
+            </li>
+            <li>
+              <strong>Small-model tip</strong>
+              <span>
+                Prefer packs lookup → file tools → short edits / scripts /
+                starters. Do not expect a 1.5B model to ship a large app alone —
+                see the{" "}
+                <a href="/guides/companion-agent.md">Agent guide</a>.
+              </span>
+            </li>
+          </ul>
         </div>
 
         <h3 className="subhead" id="sources" style={{ marginTop: "2rem" }}>
@@ -240,6 +312,8 @@ export default function KnowledgePacksPage() {
 │   ├── glossary.txt
 │   └── books/
 │       └── frankenstein.txt
+├── Knowledge/             ← Companion USB kit
+│   └── coding/            ← DevDocs / SO excerpts (.txt/.md)
 └── tri-cass-vault/           ← Cardputer ADV preferred path
     ├── 00-readme.txt
     └── cheatsheet.txt`}
