@@ -2,6 +2,7 @@
   "name": "nexus-os-website",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev -H 127.0.0.1 -p 3456",
     "build": "next build && node scripts/migrate.mjs",
