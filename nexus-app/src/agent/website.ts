@@ -42,8 +42,11 @@ export async function tryBuildWebsiteFromMessage(
       "search_vault",
       "search_packs",
       "read_file",
-      "nexus_status",
-    ]).filter((c) => ["ensure_folder", "write_file"].includes(c.tool));
+      "tricass_status",
+      "create_file",
+    ]).filter((c) =>
+      ["ensure_folder", "write_file", "create_file"].includes(c.tool),
+    );
     if (forced.length === 0) return null;
     const notes: string[] = [];
     for (const call of forced) {

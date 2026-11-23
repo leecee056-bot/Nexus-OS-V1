@@ -1,15 +1,26 @@
 import { loadNotes, searchNotes } from "../vault/store";
 import {
+  deletePath,
   ensureFolder,
-  listTree,
-  loadDocs,
+  listWorkspace,
   readTextFile,
+  renamePath,
   writeTextFile,
 } from "../files/store";
+import {
+  formatChangeSummary,
+  type FileChange,
+} from "../files/workspace";
+import { diskInfo } from "../files/diskBridge";
 import { loadPluginState, enabledTools } from "../plugins/store";
 import type { AgentToolCall, AgentToolName } from "./schema";
 
-export type ToolResult = { tool: AgentToolName; ok: boolean; text: string };
+export type ToolResult = {
+  tool: AgentToolName;
+  ok: boolean;
+  text: string;
+  change?: FileChange;
+};
 
 function keywords(q: string): string[] {
   return q
@@ -26,7 +37,6 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
   const calls: AgentToolCall[] = [];
   const allow = new Set(allowed);
 
-  // Greetings / small talk must never open Vault or Packs.
   const isChitchat =
     /^(hi|hello|hey|yo|sup|thanks|thank you|ok|okay|cool|great|nice|bye|good (morning|afternoon|evening)|how are you)[\s!.?]*$/i.test(
       q,
@@ -39,14 +49,16 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
     );
   const wantsPacks =
     !isChitchat &&
-    /\b(packs?|wiki|wikipedia|gutenberg|offline (knowledge|pack))\b/.test(q);
+    /\b(packs?|wiki|wikipedia|gutenberg|offline (knowledge|pack)|devdocs|stack\s*overflow)\b/.test(
+      q,
+    );
   const wantsFiles =
     !isChitchat &&
-    /\b(file|folder|website|html|css|project|create|write|save|list files|in files|make (a |me )?(site|page|website))\b/.test(
+    /\b(file|folder|website|html|css|project|create|write|save|list files|in files|make (a |me )?(site|page|website)|rename|delete|remove|mkdir|organise|organize)\b/.test(
       q,
     );
   const wantsStatus =
-    !isChitchat && /\b(status|what can you|plugins?|add-?ons?)\b/.test(q);
+    !isChitchat && /\b(status|what can you|plugins?|add-?ons?|workspace)\b/.test(q);
 
   if (wantsVault && allow.has("search_vault")) {
     calls.push({
@@ -62,16 +74,30 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
   }
 
   if (wantsFiles && allow.has("list_files")) {
-    const folderMatch = q.match(
-      /(?:in|folder|project)\s+([a-z0-9_./-]+)/i,
-    );
+    const folderMatch = q.match(/(?:in|folder|project)\s+([a-z0-9_./-]+)/i);
     calls.push({
       tool: "list_files",
       args: { prefix: folderMatch?.[1] ?? "" },
     });
   }
 
-  // Explicit write: "create website/index.html with ..." or "write file X: ..."
+  const renameMatch = userMessage.match(
+    /(?:rename|move)\s+(?:file\s+|folder\s+)?([a-z0-9_./-]+)\s+(?:to|as|->)\s+([a-z0-9_./-]+)/i,
+  );
+  if (renameMatch && allow.has("rename_file")) {
+    calls.push({
+      tool: "rename_file",
+      args: { from: renameMatch[1], to: renameMatch[2] },
+    });
+  }
+
+  const deleteMatch = userMessage.match(
+    /(?:delete|remove|rm)\s+(?:file\s+|folder\s+)?([a-z0-9_./-]+)/i,
+  );
+  if (deleteMatch && allow.has("delete_file") && !renameMatch) {
+    calls.push({ tool: "delete_file", args: { path: deleteMatch[1] } });
+  }
+
   const writeMatch =
     userMessage.match(
       /(?:create|write|save|make)\s+(?:(?:a|an|the)\s+)?(?:file\s+)?([a-z0-9_./-]+\.[a-z0-9]+)\s*(?:with|containing|:)\s*([\s\S]+)/i,
@@ -80,7 +106,7 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
       /(?:create|write|save)\s+([a-z0-9_./-]+\.[a-z0-9]+)\s+as\s+([\s\S]+)/i,
     );
 
-  if (writeMatch && allow.has("write_file")) {
+  if (writeMatch && (allow.has("write_file") || allow.has("create_file"))) {
     const path = writeMatch[1];
     let body = writeMatch[2].trim();
     if (
@@ -103,7 +129,8 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
 </body>
 </html>`;
     }
-    calls.push({ tool: "write_file", args: { path, content: body } });
+    const tool = allow.has("write_file") ? "write_file" : "create_file";
+    calls.push({ tool, args: { path, content: body } });
   }
 
   const folderMatch2 = userMessage.match(
@@ -113,7 +140,6 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
     calls.push({ tool: "ensure_folder", args: { path: folderMatch2[1] } });
   }
 
-  // Website project shortcut — one ask → files on disk.
   const wantsWebsite =
     /(?:make|create|build|spin up|scaffold)\s+(?:me\s+)?(?:a\s+|an\s+)?(?:simple\s+|small\s+|basic\s+)?(?:web\s*site|webpage|landing page|html site)/i.test(
       userMessage,
@@ -121,17 +147,18 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
   if (
     wantsWebsite &&
     allow.has("ensure_folder") &&
-    allow.has("write_file")
+    (allow.has("write_file") || allow.has("create_file"))
   ) {
     const folder = "website";
     const topicMatch = userMessage.match(
       /(?:about|for|called|named)\s+["']?([^"'.\n]{2,48})/i,
     );
     const topic = (topicMatch?.[1] || "My site").trim();
+    const writeTool = allow.has("write_file") ? "write_file" : "create_file";
     calls.push({ tool: "ensure_folder", args: { path: folder } });
     if (!writeMatch) {
       calls.push({
-        tool: "write_file",
+        tool: writeTool,
         args: {
           path: `${folder}/index.html`,
           content: `<!DOCTYPE html>
@@ -147,14 +174,14 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
   <main>
     <h1>${topic}</h1>
     <p>Built locally by your Tri-Cass Companion agent. Edit these files in the Files tab.</p>
-    <p class="hint">Ask the agent to tweak copy, add pages, or restyle — it writes real files.</p>
+    <p class="hint">Ask the agent to tweak copy, add pages, or restyle — it writes real files in the workspace.</p>
   </main>
 </body>
 </html>`,
         },
       });
       calls.push({
-        tool: "write_file",
+        tool: writeTool,
         args: {
           path: `${folder}/styles.css`,
           content: `*{box-sizing:border-box}
@@ -167,10 +194,10 @@ p{line-height:1.55;color:#9ad4a4}
         },
       });
       calls.push({
-        tool: "write_file",
+        tool: writeTool,
         args: {
           path: `${folder}/README.txt`,
-          content: `${topic}\n\nOpen index.html in a browser.\nEdit files from Companion → Files → website/.\n`,
+          content: `${topic}\n\nOpen index.html in a browser.\nEdit files from Companion → Files → website/.\nOn USB portable kits, these live under Files/ on the stick.\n`,
         },
       });
     }
@@ -187,7 +214,6 @@ p{line-height:1.55;color:#9ad4a4}
     calls.push({ tool: "tricass_status", args: {} });
   }
 
-  // Do not auto-search Vault/Packs for casual messages — only explicit intents above.
   return calls;
 }
 
@@ -197,11 +223,7 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
       const notes = await loadNotes();
       const hits = searchNotes(notes, call.args.query || "").slice(0, 6);
       if (hits.length === 0) {
-        return {
-          tool: call.tool,
-          ok: true,
-          text: "Vault: no matching notes.",
-        };
+        return { tool: call.tool, ok: true, text: "Vault: no matching notes." };
       }
       return {
         tool: call.tool,
@@ -241,15 +263,14 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
       };
     }
     case "list_files": {
-      const docs = await loadDocs();
-      const lines = listTree(docs, call.args.prefix || "");
+      const lines = await listWorkspace(call.args.prefix || "");
       return {
         tool: call.tool,
         ok: true,
         text:
           lines.length > 0
             ? `Files:\n${lines.join("\n")}`
-            : "Files: empty library.",
+            : "Files: empty workspace.",
       };
     }
     case "read_file": {
@@ -261,40 +282,111 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
         text: `File ${res.doc.name}:\n${res.text.slice(0, 6000)}`,
       };
     }
-    case "write_file": {
+    case "write_file":
+    case "create_file": {
       const path = call.args.path || "";
       const content = call.args.content ?? "";
       if (!path) {
         return { tool: call.tool, ok: false, text: "write_file needs a path" };
       }
-      const doc = await writeTextFile(path, content);
-      return {
-        tool: call.tool,
-        ok: true,
-        text: `Wrote ${doc.name} (${doc.size ?? 0} bytes) into Files.`,
-      };
+      try {
+        const { doc, change } = await writeTextFile(path, content);
+        return {
+          tool: call.tool,
+          ok: true,
+          text: `Wrote ${doc.name} (${doc.size ?? 0} bytes) into the workspace.`,
+          change,
+        };
+      } catch (e) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: e instanceof Error ? e.message : "write failed",
+        };
+      }
     }
     case "ensure_folder": {
       const path = call.args.path || "";
       if (!path) {
         return { tool: call.tool, ok: false, text: "ensure_folder needs a path" };
       }
-      const folder = await ensureFolder(path);
-      return {
-        tool: call.tool,
-        ok: true,
-        text: `Folder ready: ${folder.name}`,
-      };
+      try {
+        const folder = await ensureFolder(path);
+        return {
+          tool: call.tool,
+          ok: true,
+          text: `Folder ready: ${folder.name}`,
+          change: { action: "folder", path: folder.name },
+        };
+      } catch (e) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: e instanceof Error ? e.message : "folder failed",
+        };
+      }
+    }
+    case "rename_file": {
+      const from = call.args.from || call.args.path || "";
+      const to = call.args.to || "";
+      if (!from || !to) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: "rename_file needs from and to paths",
+        };
+      }
+      try {
+        const { change } = await renamePath(from, to);
+        return {
+          tool: call.tool,
+          ok: true,
+          text: `Renamed ${change.from} → ${change.path}`,
+          change,
+        };
+      } catch (e) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: e instanceof Error ? e.message : "rename failed",
+        };
+      }
+    }
+    case "delete_file": {
+      const path = call.args.path || "";
+      if (!path) {
+        return { tool: call.tool, ok: false, text: "delete_file needs a path" };
+      }
+      try {
+        const { change } = await deletePath(path);
+        return {
+          tool: call.tool,
+          ok: true,
+          text: `Deleted ${change.path}`,
+          change,
+        };
+      } catch (e) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: e instanceof Error ? e.message : "delete failed",
+        };
+      }
     }
     case "tricass_status": {
       const state = await loadPluginState();
       const tools = enabledTools(state);
-      const docs = await loadDocs();
+      const lines = await listWorkspace("");
       const notes = await loadNotes();
+      const info = await diskInfo();
+      const root =
+        info && "root" in info && info.root
+          ? `\nWorkspace disk: ${info.root}${info.portable ? " (USB portable)" : ""}`
+          : "\nWorkspace disk: in-app library (mobile/web) or desktop Workspace folder";
       return {
         tool: call.tool,
         ok: true,
-        text: `Tri-Cass Agent status\nPlugins/tools: ${tools.join(", ") || "(none)"}\nVault notes: ${notes.length}\nFiles entries: ${docs.length}`,
+        text: `Tri-Cass Agent status\nPlugins/tools: ${tools.join(", ") || "(none)"}\nVault notes: ${notes.length}\nFiles entries: ${lines.length}${root}`,
       };
     }
     default:
@@ -305,3 +397,5 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
       };
   }
 }
+
+export { formatChangeSummary };

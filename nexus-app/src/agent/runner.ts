@@ -1,12 +1,14 @@
 import { chatCompletion, type ChatMessage } from "../chat/ollama";
 import { companionReply } from "../chat/tinychat";
+import type { FileChange } from "../files/workspace";
 import { enabledTools, loadPluginState } from "../plugins/store";
 import { AGENT_SYSTEM, type AgentStep } from "./schema";
-import { planTools, runTool } from "./tools";
+import { formatChangeSummary, planTools, runTool } from "./tools";
 
 export type AgentRunResult = {
   text: string;
   steps: AgentStep[];
+  changes: FileChange[];
 };
 
 function step(
@@ -50,6 +52,7 @@ export async function runAgentTurn(opts: {
   }
 
   const toolTexts: string[] = [];
+  const changes: FileChange[] = [];
   for (const call of plan) {
     push(
       step(`Using ${call.tool}`, summarizeArgs(call.args), {
@@ -65,8 +68,10 @@ export async function runAgentTurn(opts: {
       ),
     );
     toolTexts.push(result.text);
+    if (result.change) changes.push(result.change);
   }
 
+  const changeSummary = formatChangeSummary(changes);
   const toolBlock =
     toolTexts.length > 0
       ? `\n\n[Local tool results]\n${toolTexts.join("\n---\n")}\n[/Local tool results]`
@@ -74,14 +79,18 @@ export async function runAgentTurn(opts: {
 
   push(step("Thinking", opts.modelReady ? "Local model…" : "Fallback reply…"));
 
+  const withChanges = (body: string) =>
+    changeSummary ? `${body}\n\n${changeSummary}` : body;
+
   if (!opts.modelReady) {
-    const text =
+    const text = withChanges(
       companionReply(opts.userMessage) +
-      (toolBlock
-        ? `\n\n(Agent tools ran locally.)\n${toolTexts.map((t) => t.split("\n")[0]).join("\n")}`
-        : "\n\n(Enable a downloaded model in Chat for fuller Agent answers.)");
-    push(step("Done"));
-    return { text, steps };
+        (toolBlock
+          ? `\n\n(Agent tools ran locally.)\n${toolTexts.map((t) => t.split("\n")[0]).join("\n")}`
+          : "\n\n(Enable a downloaded model in Chat for fuller Agent answers.)"),
+    );
+    push(step("Done", changeSummary || undefined));
+    return { text, steps, changes };
   }
 
   const messages: ChatMessage[] = [
@@ -94,12 +103,14 @@ export async function runAgentTurn(opts: {
   ];
 
   const result = await chatCompletion(opts.host, opts.model, messages);
-  push(step("Done", result.ok ? undefined : result.error));
+  push(step("Done", result.ok ? changeSummary || undefined : result.error));
+  const base = result.ok
+    ? result.text
+    : `${result.error}${toolBlock ? "\n\nTool notes:\n" + toolTexts.join("\n") : ""}`;
   return {
-    text: result.ok
-      ? result.text
-      : `${result.error}${toolBlock ? "\n\nTool notes:\n" + toolTexts.join("\n") : ""}`,
+    text: withChanges(base),
     steps,
+    changes,
   };
 }
 

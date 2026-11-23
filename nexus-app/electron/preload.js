@@ -12,5 +12,14 @@ contextBridge.exposeInMainWorld("nexus", {
   setBrowsePrefs: (args) => ipcRenderer.invoke("nexus:set-browse-prefs", args),
   openBrowse: (args) => ipcRenderer.invoke("nexus:open-browse", args),
   addToDesktop: () => ipcRenderer.invoke("nexus:add-to-desktop"),
+  workspace: {
+    info: () => ipcRenderer.invoke("nexus:workspace-info"),
+    list: (args) => ipcRenderer.invoke("nexus:workspace-list", args),
+    read: (args) => ipcRenderer.invoke("nexus:workspace-read", args),
+    write: (args) => ipcRenderer.invoke("nexus:workspace-write", args),
+    mkdir: (args) => ipcRenderer.invoke("nexus:workspace-mkdir", args),
+    rename: (args) => ipcRenderer.invoke("nexus:workspace-rename", args),
+    remove: (args) => ipcRenderer.invoke("nexus:workspace-remove", args),
+  },
   platform: process.platform,
 });

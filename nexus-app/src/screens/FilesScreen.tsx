@@ -111,8 +111,9 @@ h1{color:#39ff14}`,
       <ContentFrame>
         <View style={[styles.toolbar, { borderBottomColor: colors.border }]}>
           <Text style={{ color: colors.fgDim, lineHeight: 20 }}>
-            Your Files library — import documents or let Agent create folders
-            and text files (try a website/ project).
+            Sandboxed workspace — Agent can create, edit, rename, and organise
+            text/code files here (desktop/USB also writes under Files/ or
+            Workspace/). Try a website/ project.
           </Text>
           <View style={styles.actions}>
             <Pressable
