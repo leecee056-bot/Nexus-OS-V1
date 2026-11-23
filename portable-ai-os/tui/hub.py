@@ -18,6 +18,7 @@ if str(HERE) not in sys.path:
 
 from agents import AgentController  # noqa: E402
 from brand import NETWORK, PRODUCT, TAGLINE, hub_title, rabbit_block  # noqa: E402
+from chat_sessions import index_listing, load_session, save_session  # noqa: E402
 from config_store import load_ui_config, resolve_data_dir, save_ui_config  # noqa: E402
 from files import FileBrowser  # noqa: E402
 from games import Minesweeper, SnakeGame  # noqa: E402
@@ -200,10 +201,23 @@ class Hub:
             self.stdscr.addnstr(r, 2, line, w - 4, attr)
 
     def _draw_chat(self, h, w):
-        self.stdscr.addnstr(1, 1, f"AI Chat — {self.active_model or 'no model'}", w - 2, self.theme.attr_bold())
-        body = self.chat_log[-(h - 5) :]
+        self.stdscr.addnstr(
+            1,
+            1,
+            f"AI Chat — {self.active_model or 'no model'}",
+            w - 2,
+            self.theme.attr_bold(),
+        )
+        self.stdscr.addnstr(
+            2,
+            1,
+            "/new  /save  /clear  /chats  /open N   (Esc=menu)",
+            w - 2,
+            self.theme.attr_dim(),
+        )
+        body = self.chat_log[-(h - 6) :]
         for i, line in enumerate(body):
-            self.stdscr.addnstr(2 + i, 1, line, w - 2, self.theme.attr_normal())
+            self.stdscr.addnstr(3 + i, 1, line, w - 2, self.theme.attr_normal())
         self.stdscr.addnstr(h - 2, 0, f"> {self.input}"[: w - 1].ljust(w - 1), w - 1, self.theme.attr_input())
 
     def _draw_models(self, h, w):
@@ -421,10 +435,53 @@ Games are optional and use no model RAM when idle.
         self.persist()
         self.status = f"Theme: {self.theme.name}"
 
+    def _chat_command(self, text: str) -> bool:
+        """Handle /new /save /clear /chats /open N. Returns True if consumed."""
+        low = text.lower().strip()
+        if low in ("/new", "/n"):
+            self.chat_log = [f"system: New chat — {PRODUCT}. Esc=menu."]
+            self.messages = [self.messages[0]]
+            self.status = "New chat"
+            return True
+        if low in ("/clear", "/close", "/w"):
+            self.chat_log = [f"system: Chat cleared. Esc=menu."]
+            self.messages = [self.messages[0]]
+            self.status = "Chat closed"
+            return True
+        if low in ("/save", "/s"):
+            self.status = save_session(self.data_dir, self.chat_log)
+            self.chat_log.append(f"system: {self.status}")
+            return True
+        if low in ("/chats", "/list", "/l"):
+            listing = index_listing(self.data_dir)
+            self.chat_log.append("system: Saved chats — /open N to reopen")
+            self.chat_log.extend(f"system: {ln}" for ln in listing)
+            self.status = "Chat list"
+            return True
+        if low.startswith("/open ") or low.startswith("/o "):
+            part = low.split(None, 1)[1].strip()
+            try:
+                idx = int(part)
+            except ValueError:
+                self.status = "Usage: /open 1"
+                return True
+            note, lines = load_session(self.data_dir, idx)
+            if not lines:
+                self.status = note
+                self.chat_log.append(f"system: {note}")
+                return True
+            self.chat_log = lines
+            self.messages = [self.messages[0]]
+            self.status = note
+            return True
+        return False
+
     def send_chat(self):
         text = self.input.strip()
         self.input = ""
         if not text:
+            return
+        if text.startswith("/") and self._chat_command(text):
             return
         self.chat_log.append(f"you: {text}")
         msgs = list(self.messages)

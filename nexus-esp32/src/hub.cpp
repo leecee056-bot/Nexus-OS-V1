@@ -28,9 +28,10 @@ void hub_help(void) {
   Serial.println("  status            model + memory");
   Serial.println("  chat <prompt>     generate (TinyStories / demo)");
   Serial.println("  c <prompt>        short alias for chat");
+  Serial.println("  new               clear chat context (new chat)");
   Serial.println("  tool <name> [arg] run a built-in tool");
   Serial.println("  tools             list tools");
-  Serial.println("  clear             clear screen (ANSI)");
+  Serial.println("  clear             clear screen (ANSI) / close window");
   Serial.println("  reboot            restart board");
   Serial.println();
   Serial.println("examples:");
@@ -86,6 +87,12 @@ static void handle_line(ModelRunner *mr, char *line) {
   }
   if (is_cmd(line, "tools")) {
     tools_list();
+    return;
+  }
+  if (is_cmd(line, "new")) {
+    Serial.println("new chat — context cleared (stateless prompts)");
+    Serial.print("\033[2J\033[H");
+    hub_banner(mr);
     return;
   }
   if (is_cmd(line, "clear")) {

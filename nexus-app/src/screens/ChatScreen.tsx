@@ -40,9 +40,15 @@ import {
   saveSelectedModelId,
 } from "../chat/settings";
 import {
+  archiveChatSession,
   chatToMarkdown,
+  deleteChatSession,
+  listChatSessions,
   loadChatHistory,
+  openChatSession,
   saveChatHistory,
+  starterMessages,
+  type ChatSessionMeta,
 } from "../chat/history";
 import { runAgentTurn } from "../agent/runner";
 import type { AgentStep } from "../agent/schema";
@@ -93,6 +99,8 @@ export function ChatScreen() {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [historyReady, setHistoryReady] = useState(false);
   const [exportNote, setExportNote] = useState<string | null>(null);
+  const [chatsOpen, setChatsOpen] = useState(false);
+  const [sessions, setSessions] = useState<ChatSessionMeta[]>([]);
   const listRef = useRef<FlatListType<Msg>>(null);
 
   useEffect(() => {
@@ -229,11 +237,55 @@ export function ChatScreen() {
     setStatusNote(null);
   }
 
-  function newChat() {
-    setMsgs([]);
+  async function refreshSessions() {
+    setSessions(await listChatSessions());
+  }
+
+  async function newChat() {
+    const archived = await archiveChatSession(msgs);
+    setMsgs(starterMessages());
     setAgentSteps([]);
-    setExportNote(null);
     setLatestTypedId(null);
+    setExportNote(
+      archived
+        ? `Started new chat · previous saved as “${archived.title}”`
+        : "New chat",
+    );
+  }
+
+  async function closeChat() {
+    await archiveChatSession(msgs);
+    setMsgs(starterMessages());
+    setAgentSteps([]);
+    setLatestTypedId(null);
+    setExportNote("Chat closed");
+  }
+
+  async function saveChatLibrary() {
+    const md = chatToMarkdown(msgs);
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const archived = await archiveChatSession(msgs);
+    const r = await exportChatToUsb(md, `tri-cass-chat-${stamp}.md`);
+    const bits: string[] = [];
+    if (archived) bits.push(`Library: ${archived.title}`);
+    if (r.ok) bits.push(r.path ? `File → ${r.path}` : "Saved on this drive");
+    else if (r.error) bits.push(r.error);
+    setExportNote(bits.join(" · ") || "Nothing to save");
+    await refreshSessions();
+  }
+
+  async function openSession(id: string) {
+    await archiveChatSession(msgs);
+    const loaded = await openChatSession(id);
+    if (!loaded) {
+      setExportNote("Could not open that chat");
+      return;
+    }
+    setMsgs(loaded);
+    setAgentSteps([]);
+    setLatestTypedId(null);
+    setChatsOpen(false);
+    setExportNote("Opened prior chat");
   }
 
   async function send() {
@@ -413,7 +465,7 @@ export function ChatScreen() {
             compact
           />
           <Pressable
-            onPress={newChat}
+            onPress={() => void newChat()}
             style={[
               styles.saveChatBtn,
               {
@@ -436,23 +488,7 @@ export function ChatScreen() {
             </Text>
           </Pressable>
           <Pressable
-            onPress={() =>
-              void (async () => {
-                const md = chatToMarkdown(msgs);
-                const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-                const r = await exportChatToUsb(
-                  md,
-                  `tri-cass-chat-${stamp}.md`,
-                );
-                setExportNote(
-                  r.ok
-                    ? r.path
-                      ? `Saved chat → ${r.path}`
-                      : "Chat saved on this drive"
-                    : r.error || "Could not save chat",
-                );
-              })()
-            }
+            onPress={() => void saveChatLibrary()}
             style={[
               styles.saveChatBtn,
               {
@@ -469,6 +505,46 @@ export function ChatScreen() {
               }}
             >
               Save chat
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => void closeChat()}
+            style={[
+              styles.saveChatBtn,
+              {
+                borderColor: colors.border,
+                backgroundColor: colors.bgElev,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                { color: colors.fgDim, fontWeight: "700", fontSize: 11 },
+                themeBodyStyle(themeId),
+              ]}
+            >
+              Close
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              void refreshSessions().then(() => setChatsOpen(true));
+            }}
+            style={[
+              styles.saveChatBtn,
+              {
+                borderColor: colors.border,
+                backgroundColor: colors.bgElev,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                { color: colors.fg, fontWeight: "700", fontSize: 11 },
+                themeBodyStyle(themeId),
+              ]}
+            >
+              Chats
             </Text>
           </Pressable>
         </View>
@@ -861,6 +937,88 @@ export function ChatScreen() {
                 </Text>
               </Pressable>
             </View>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        visible={chatsOpen}
+        animationType="fade"
+        transparent
+        onRequestClose={() => setChatsOpen(false)}
+      >
+        <View style={styles.modalScrim}>
+          <View
+            style={[
+              styles.modalSheet,
+              isTablet && styles.modalWide,
+              { backgroundColor: colors.bgElev, borderColor: colors.border },
+            ]}
+          >
+            <Text style={[styles.modalTitle, { color: colors.fg }]}>
+              Prior chats
+            </Text>
+            <Text
+              style={{ color: colors.fgDim, fontSize: 12, marginBottom: 8 }}
+            >
+              Open a saved conversation. Current chat is archived first if it
+              has messages.
+            </Text>
+            {sessions.length === 0 ? (
+              <Text style={{ color: colors.fgDim, marginBottom: 12 }}>
+                No saved chats yet — use Save chat or New chat.
+              </Text>
+            ) : (
+              sessions.map((s) => (
+                <View
+                  key={s.id}
+                  style={{
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderBottomColor: colors.border,
+                    paddingVertical: 8,
+                  }}
+                >
+                  <Pressable onPress={() => void openSession(s.id)}>
+                    <Text style={{ color: colors.fg, fontWeight: "700" }}>
+                      {s.title}
+                    </Text>
+                    <Text
+                      style={{
+                        color: colors.fgDim,
+                        fontSize: 11,
+                        marginTop: 2,
+                      }}
+                      numberOfLines={2}
+                    >
+                      {s.preview}
+                    </Text>
+                  </Pressable>
+                  <Pressable
+                    onPress={() =>
+                      void deleteChatSession(s.id).then(() =>
+                        refreshSessions(),
+                      )
+                    }
+                    style={{ marginTop: 4 }}
+                  >
+                    <Text style={{ color: colors.fgDim, fontSize: 11 }}>
+                      Delete
+                    </Text>
+                  </Pressable>
+                </View>
+              ))
+            )}
+            <Pressable
+              style={[
+                styles.linkBtnGhost,
+                { borderColor: colors.border, marginTop: 12 },
+              ]}
+              onPress={() => setChatsOpen(false)}
+            >
+              <Text style={[styles.linkBtnGhostText, { color: colors.fg }]}>
+                Close
+              </Text>
+            </Pressable>
           </View>
         </View>
       </Modal>

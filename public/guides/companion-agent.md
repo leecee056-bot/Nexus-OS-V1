@@ -31,6 +31,10 @@ Short status lines appear while the agent plans, searches, and writes. When
 files change, Chat shows a **Changes** list of created / updated / renamed /
 deleted paths.
 
+Chat chrome (Companion): **New chat**, **Save chat**, **Close**, and **Chats**
+(open a prior saved conversation). On the OS hub TUI: `/new` `/save` `/clear`
+`/chats` `/open N`.
+
 ## Workspace sandbox
 
 Agent file tools stay inside a **workspace**:
