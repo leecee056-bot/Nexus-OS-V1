@@ -16,7 +16,9 @@ is the offline OS image.
 | `configs/` | Infer / UI / model policy |
 | `catalog/` | Model catalog metadata |
 | `knowledge/` | Starter Vault plain-text pack |
-| `docs/` | Flash / Pi notes for builders |
+| `projects/templates/` | Pocket Agent scaffolds (HTML, timer, CLI, HTTP) |
+| `assets/ui-kit/` | Free Lucide + Twemoji for local apps |
+| `docs/` | Flash / Pi / Pocket Agent notes for builders |
 | `versions.lock` | Pinned Alpine + llama.cpp revisions |
 | `build/images/` | Release artifact pointers + SHA256 lists (not the `.img` blobs) |
 | `build/llama/COMMIT` | llama.cpp commit used for shipped builds |

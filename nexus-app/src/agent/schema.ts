@@ -35,4 +35,4 @@ Use them when present. For greetings and small talk, reply warmly — do not inv
 If you created, updated, renamed, or deleted files, name the paths clearly and invite them to open Files.
 The workspace is sandboxed (Companion Files / USB kit Files/) — you cannot touch arbitrary host paths.
 Be concise and practical. Offline-first: prefer their local knowledge over inventing facts.
-Small-model workflow (~1.5B and smaller): (1) search coding packs / Vault, (2) use file tools, (3) make short edits or starters — not large greenfield apps. Say when something is beyond a small local model.`;
+Small-model workflow (~1.5B and smaller): (1) search coding packs / Vault, (2) use file tools, (3) scaffold from templates (timer / html-app / python-cli) under projects/, then make short edits — not large greenfield apps. Say when something is beyond a small local model.`;

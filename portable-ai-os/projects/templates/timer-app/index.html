@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Timer — Tri-Cass</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 10% -10%, #163220, #040804 55%);
+      color: #c8ffd0; margin: 0; min-height: 100vh; padding: 2.5rem;
+    }
+    header { color: #39ff14; letter-spacing: .18em; text-transform: uppercase; font-size: .85rem; margin-bottom: 2rem; }
+    main { max-width: 28rem; }
+    .display { font-size: 2.8rem; font-variant-numeric: tabular-nums; margin: 1rem 0; color: #39ff14; }
+    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .btn {
+      background: rgba(57,255,20,.12); border: 1px solid rgba(57,255,20,.35);
+      color: #eaffea; padding: .55rem 1rem; cursor: pointer; font: inherit;
+    }
+    .btn:hover { background: rgba(57,255,20,.22); }
+    .status { opacity: .8; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header><strong>Tri-Cass</strong> · Timer</header>
+  <main>
+    <div class="display" id="clock">05:00</div>
+    <div class="row">
+      <button class="btn" type="button" data-m="1">1 min</button>
+      <button class="btn" type="button" data-m="5">5 min</button>
+      <button class="btn" type="button" data-m="25">25 min</button>
+      <button class="btn" type="button" id="start">Start</button>
+      <button class="btn" type="button" id="reset">Reset</button>
+    </div>
+    <p class="status" id="status">Offline timer — no cloud.</p>
+  </main>
+  <script>
+    let left = 300, timer = null;
+    const clock = document.getElementById("clock");
+    const status = document.getElementById("status");
+    function paint() {
+      const m = String(Math.floor(left / 60)).padStart(2, "0");
+      const s = String(left % 60).padStart(2, "0");
+      clock.textContent = m + ":" + s;
+    }
+    document.querySelectorAll("[data-m]").forEach((b) => {
+      b.onclick = () => { left = Number(b.dataset.m) * 60; paint(); status.textContent = "Ready"; };
+    });
+    document.getElementById("start").onclick = () => {
+      if (timer) return;
+      status.textContent = "Running…";
+      timer = setInterval(() => {
+        left -= 1;
+        paint();
+        if (left <= 0) { clearInterval(timer); timer = null; status.textContent = "Done"; left = 0; paint(); }
+      }, 1000);
+    };
+    document.getElementById("reset").onclick = () => {
+      if (timer) clearInterval(timer);
+      timer = null; left = 300; paint(); status.textContent = "Reset";
+    };
+    paint();
+  </script>
+</body>
+</html>
