@@ -3,7 +3,14 @@ export { MATRIX as colors } from "./theme/palettes";
 export type { ThemeId, ThemeColors } from "./theme/palettes";
 export { THEMES, THEME_ORDER, DEFAULT_THEME } from "./theme/palettes";
 export { ThemeProvider, useTheme } from "./theme/ThemeContext";
-export { monoFont, monoStyle } from "./theme/fonts";
+export {
+  monoFont,
+  monoStyle,
+  themeBodyStyle,
+  themeTitleStyle,
+  themeBodyFont,
+  themeTitleFont,
+} from "./theme/fonts";
 
 export const spacing = {
   xs: 4,

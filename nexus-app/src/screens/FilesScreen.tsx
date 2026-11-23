@@ -16,12 +16,14 @@ import * as DocumentPicker from "expo-document-picker";
 import {
   ensureFolder,
   loadDocs,
+  renamePath,
   saveDocs,
   writeTextFile,
   type DocItem,
 } from "../files/store";
 import { ContentFrame } from "../components/ContentFrame";
 import { spacing, useTheme } from "../theme";
+import { themeBodyStyle } from "../theme/fonts";
 
 function formatSize(n?: number | null): string {
   if (n == null || Number.isNaN(n)) return "";
@@ -31,11 +33,16 @@ function formatSize(n?: number | null): string {
 }
 
 export function FilesScreen() {
-  const { colors } = useTheme();
+  const { colors, themeId } = useTheme();
   const [docs, setDocs] = useState<DocItem[]>([]);
   const [preview, setPreview] = useState<DocItem | null>(null);
   const [newFolder, setNewFolder] = useState(false);
   const [folderName, setFolderName] = useState("website");
+  const [newFile, setNewFile] = useState(false);
+  const [fileName, setFileName] = useState("notes/hello.md");
+  const [fileBody, setFileBody] = useState("# Hello from Tri-Cass\n");
+  const [renameTarget, setRenameTarget] = useState<DocItem | null>(null);
+  const [renameTo, setRenameTo] = useState("");
 
   const refresh = useCallback(() => {
     void loadDocs().then(setDocs);
@@ -82,6 +89,26 @@ export function FilesScreen() {
     refresh();
   }
 
+  async function createFile() {
+    const name = fileName.trim().replace(/^\/+/, "");
+    if (!name) return;
+    await writeTextFile(name, fileBody);
+    setNewFile(false);
+    refresh();
+  }
+
+  async function applyRename() {
+    if (!renameTarget) return;
+    const to = renameTo.trim().replace(/^\/+/, "");
+    if (!to || to === renameTarget.name) {
+      setRenameTarget(null);
+      return;
+    }
+    await renamePath(renameTarget.name, to);
+    setRenameTarget(null);
+    refresh();
+  }
+
   async function seedWebsite() {
     await writeTextFile(
       "website/index.html",
@@ -110,12 +137,39 @@ h1{color:#39ff14}`,
     <View style={[styles.root, { backgroundColor: colors.bg }]}>
       <ContentFrame>
         <View style={[styles.toolbar, { borderBottomColor: colors.border }]}>
-          <Text style={{ color: colors.fgDim, lineHeight: 20 }}>
-            Sandboxed workspace — Agent can create, edit, rename, and organise
-            text/code files here (desktop/USB also writes under Files/ or
-            Workspace/). Try a website/ project.
+          <Text
+            style={[
+              { color: colors.fgDim, lineHeight: 20 },
+              themeBodyStyle(themeId),
+            ]}
+          >
+            Sandboxed workspace — create, open, rename, and remove files like a
+            small OS file manager. Agent can edit here too (desktop/USB writes
+            under Files/ or Workspace/).
           </Text>
           <View style={styles.actions}>
+            <Pressable
+              style={[
+                styles.btn,
+                {
+                  borderColor: colors.accent,
+                  backgroundColor: colors.accentSoft,
+                },
+              ]}
+              onPress={() => setNewFile(true)}
+            >
+              <Text style={{ color: colors.accent, fontWeight: "700" }}>
+                New file
+              </Text>
+            </Pressable>
+            <Pressable
+              style={[styles.btn, { borderColor: colors.border }]}
+              onPress={() => setNewFolder(true)}
+            >
+              <Text style={{ color: colors.fg, fontWeight: "600" }}>
+                New folder
+              </Text>
+            </Pressable>
             <Pressable
               style={[
                 styles.btn,
@@ -131,18 +185,18 @@ h1{color:#39ff14}`,
               </Text>
             </Pressable>
             <Pressable
-              style={[styles.btn, { borderColor: colors.border }]}
-              onPress={() => setNewFolder(true)}
-            >
-              <Text style={{ color: colors.fg }}>New folder</Text>
-            </Pressable>
-            <Pressable
               style={[styles.btn, { borderColor: colors.purple }]}
               onPress={() => void seedWebsite()}
             >
               <Text style={{ color: colors.purple, fontWeight: "600" }}>
                 Seed website/
               </Text>
+            </Pressable>
+            <Pressable
+              style={[styles.btn, { borderColor: colors.border }]}
+              onPress={refresh}
+            >
+              <Text style={{ color: colors.fg }}>Refresh</Text>
             </Pressable>
           </View>
         </View>
@@ -190,11 +244,23 @@ h1{color:#39ff14}`,
                   {item.content != null ? " · local text" : ""}
                 </Text>
               </Pressable>
-              <Pressable onPress={() => void remove(item.id)}>
-                <Text style={{ color: colors.danger, fontSize: 12 }}>
-                  Remove
-                </Text>
-              </Pressable>
+              <View style={{ gap: 8, alignItems: "flex-end" }}>
+                <Pressable
+                  onPress={() => {
+                    setRenameTarget(item);
+                    setRenameTo(item.name);
+                  }}
+                >
+                  <Text style={{ color: colors.accent, fontSize: 12 }}>
+                    Rename
+                  </Text>
+                </Pressable>
+                <Pressable onPress={() => void remove(item.id)}>
+                  <Text style={{ color: colors.danger, fontSize: 12 }}>
+                    Delete
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           )}
         />
@@ -295,6 +361,127 @@ h1{color:#39ff14}`,
               <Pressable
                 style={[styles.btn, { borderColor: colors.border }]}
                 onPress={() => setNewFolder(false)}
+              >
+                <Text style={{ color: colors.fg }}>Cancel</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal visible={newFile} animationType="fade" transparent>
+        <View style={styles.scrim}>
+          <View
+            style={[
+              styles.sheet,
+              { backgroundColor: colors.bgBar, borderColor: colors.border },
+            ]}
+          >
+            <Text style={{ color: colors.accent, fontWeight: "800" }}>
+              New file
+            </Text>
+            <TextInput
+              style={[
+                styles.input,
+                {
+                  color: colors.fg,
+                  borderColor: colors.border,
+                  backgroundColor: colors.bgElev,
+                },
+              ]}
+              value={fileName}
+              onChangeText={setFileName}
+              placeholder="notes/hello.md"
+              placeholderTextColor={colors.fgDim}
+              autoCapitalize="none"
+            />
+            <TextInput
+              style={[
+                styles.input,
+                {
+                  color: colors.fg,
+                  borderColor: colors.border,
+                  backgroundColor: colors.bgElev,
+                  minHeight: 120,
+                  textAlignVertical: "top",
+                },
+              ]}
+              value={fileBody}
+              onChangeText={setFileBody}
+              multiline
+              placeholder="File contents…"
+              placeholderTextColor={colors.fgDim}
+            />
+            <View style={styles.actions}>
+              <Pressable
+                style={[
+                  styles.btn,
+                  {
+                    borderColor: colors.accent,
+                    backgroundColor: colors.accentSoft,
+                  },
+                ]}
+                onPress={() => void createFile()}
+              >
+                <Text style={{ color: colors.accent, fontWeight: "700" }}>
+                  Create
+                </Text>
+              </Pressable>
+              <Pressable
+                style={[styles.btn, { borderColor: colors.border }]}
+                onPress={() => setNewFile(false)}
+              >
+                <Text style={{ color: colors.fg }}>Cancel</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal visible={!!renameTarget} animationType="fade" transparent>
+        <View style={styles.scrim}>
+          <View
+            style={[
+              styles.sheet,
+              { backgroundColor: colors.bgBar, borderColor: colors.border },
+            ]}
+          >
+            <Text style={{ color: colors.accent, fontWeight: "800" }}>
+              Rename
+            </Text>
+            <TextInput
+              style={[
+                styles.input,
+                {
+                  color: colors.fg,
+                  borderColor: colors.border,
+                  backgroundColor: colors.bgElev,
+                },
+              ]}
+              value={renameTo}
+              onChangeText={setRenameTo}
+              placeholder="new/path.md"
+              placeholderTextColor={colors.fgDim}
+              autoCapitalize="none"
+            />
+            <View style={styles.actions}>
+              <Pressable
+                style={[
+                  styles.btn,
+                  {
+                    borderColor: colors.accent,
+                    backgroundColor: colors.accentSoft,
+                  },
+                ]}
+                onPress={() => void applyRename()}
+              >
+                <Text style={{ color: colors.accent, fontWeight: "700" }}>
+                  Save
+                </Text>
+              </Pressable>
+              <Pressable
+                style={[styles.btn, { borderColor: colors.border }]}
+                onPress={() => setRenameTarget(null)}
               >
                 <Text style={{ color: colors.fg }}>Cancel</Text>
               </Pressable>

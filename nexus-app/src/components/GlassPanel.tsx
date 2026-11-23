@@ -38,7 +38,7 @@ export function GlassPanel({
           borderColor: colors.glass ? edge : colors.border,
           backgroundColor: colors.glass ? colors.bgGlass : colors.bgElev,
           shadowColor: spatial
-            ? "#000"
+            ? "rgba(0,0,0,0.55)"
             : colors.glass
               ? colors.accent
               : "transparent",

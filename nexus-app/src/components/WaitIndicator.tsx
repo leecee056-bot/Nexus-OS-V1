@@ -6,14 +6,13 @@ import {
   saveFunFactsEnabled,
 } from "../layout/shellMode";
 import { spacing, useTheme } from "../theme";
-import { monoStyle } from "../theme/fonts";
+import { monoStyle, themeBodyStyle } from "../theme/fonts";
 
 /**
- * Compact wait state: small rabbit on the side + rotating fun facts
- * (toggleable). Replaces the old “grafting…” block.
+ * Compact wait state: rabbit GIF on a light plate (no dark shadow) + fun facts.
  */
 export function WaitIndicator({ active }: { active: boolean }) {
-  const { colors } = useTheme();
+  const { colors, themeId } = useTheme();
   const [seconds, setSeconds] = useState(0);
   const [fact, setFact] = useState(() => pickFunFact());
   const [factsOn, setFactsOn] = useState(true);
@@ -55,31 +54,54 @@ export function WaitIndicator({ active }: { active: boolean }) {
         },
       ]}
       accessibilityLiveRegion="polite"
-      accessibilityLabel={factsOn ? `Fun fact, ${seconds} seconds` : `Waiting ${seconds} seconds`}
+      accessibilityLabel={
+        factsOn ? `Fun fact, ${seconds} seconds` : `Waiting ${seconds} seconds`
+      }
     >
-      <Image
-        source={require("../../assets/brand/rabbit-dig.gif")}
-        style={styles.gif}
-        resizeMode="contain"
-      />
+      {/* Light plate so dark GIF edges stay readable on dark themes */}
+      <View
+        style={[
+          styles.gifPlate,
+          {
+            backgroundColor:
+              themeId === "basic" ? "#e8e4da" : "rgba(240,248,240,0.92)",
+            borderColor: colors.border,
+          },
+        ]}
+      >
+        <Image
+          source={require("../../assets/brand/rabbit-dig.gif")}
+          style={styles.gif}
+          resizeMode="contain"
+        />
+      </View>
       <View style={styles.copy}>
         {factsOn ? (
           <Text
             style={[
               styles.fact,
               { color: colors.fg },
+              themeBodyStyle(themeId),
               colors.mono ? monoStyle() : null,
             ]}
           >
             {fact}
           </Text>
         ) : (
-          <Text style={[styles.quiet, { color: colors.fgDim }]}>
+          <Text
+            style={[
+              styles.quiet,
+              { color: colors.fgDim },
+              themeBodyStyle(themeId),
+            ]}
+          >
             Digging up a reply…
           </Text>
         )}
         <View style={styles.meta}>
-          <Text style={[styles.secs, { color: colors.accent }]}>{seconds}s</Text>
+          <Text style={[styles.secs, { color: colors.accent }]}>
+            {seconds}s
+          </Text>
           <Pressable
             onPress={() => {
               const next = !factsOn;
@@ -88,7 +110,9 @@ export function WaitIndicator({ active }: { active: boolean }) {
             }}
             hitSlop={8}
           >
-            <Text style={{ color: colors.purple, fontSize: 11, fontWeight: "700" }}>
+            <Text
+              style={{ color: colors.purple, fontSize: 11, fontWeight: "700" }}
+            >
               {factsOn ? "Facts off" : "Facts on"}
             </Text>
           </Pressable>
@@ -109,6 +133,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.sm,
     marginBottom: spacing.sm,
     maxWidth: 420,
+  },
+  gifPlate: {
+    borderWidth: 1,
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    borderRadius: 4,
   },
   gif: {
     width: 36,
