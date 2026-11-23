@@ -1,4 +1,4 @@
-# NEXUS OS on Raspberry Pi
+# Tri-Cass OS on Raspberry Pi
 
 **Status:** Build in progress — images not public yet.
 
@@ -35,4 +35,4 @@ Vault (Gutenberg books, extracted wiki articles, your notes). Optional —
 see [`../public/guides/knowledge-packs.md`](../public/guides/knowledge-packs.md)
 or the site `/knowledge-packs` page.
 
-See also: [`../docs/nexus-os-raspberry-pi-plan.md`](../../docs/nexus-os-raspberry-pi-plan.md) in the Project docs store, or ask for status on the site About page.
+See also: [`../docs/raspberry-pi-plan.md`](../../docs/raspberry-pi-plan.md) in the Project docs store, or ask for status on the site About page.

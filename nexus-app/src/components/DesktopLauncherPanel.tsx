@@ -8,7 +8,7 @@ function hasDesktopBridge() {
 }
 
 /**
- * Desktop-only: pin NEXUS Companion to the Desktop + Start Menu / Applications
+ * Desktop-only: pin Tri-Cass Companion to the Desktop + Start Menu / Applications
  * with the rabbit-wizard icon thumbnail.
  */
 export function DesktopLauncherPanel() {
@@ -27,7 +27,7 @@ export function DesktopLauncherPanel() {
           result.desktop ||
           (result.created && result.created[0]) ||
           "Desktop";
-        setNote(`Launcher ready — look for NEXUS Companion on your Desktop (${where}).`);
+        setNote(`Launcher ready — look for Tri-Cass Companion on your Desktop (${where}).`);
       } else {
         setNote(result.error || "Could not create launcher.");
       }
@@ -47,12 +47,12 @@ export function DesktopLauncherPanel() {
           source={require("../../assets/brand/logo-mark.png")}
           style={styles.thumb}
           resizeMode="contain"
-          accessibilityLabel="NEXUS Companion icon"
+          accessibilityLabel="Tri-Cass Companion icon"
         />
         <View style={{ flex: 1 }}>
           <Text style={{ color: colors.fg, lineHeight: 20 }}>
             Add a Desktop shortcut (and Start Menu / Applications entry) with
-            the NEXUS icon so you can launch Companion like a normal app.
+            the Tri-Cass icon so you can launch Companion like a normal app.
           </Text>
         </View>
       </View>

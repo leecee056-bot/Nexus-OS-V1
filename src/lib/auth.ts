@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { sql } from "./db";
 
-const SESSION_COOKIE = "nexus_session";
+const SESSION_COOKIE = "tri_cass_session";
 const SESSION_DAYS = 30;
 const USERNAME_RE = /^[a-z][a-z0-9_]{2,23}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,7 +24,7 @@ export function validateUsername(username: string): string | null {
   const reserved = new Set([
     "admin",
     "root",
-    "nexus",
+    "tricass",
     "system",
     "support",
     "null",

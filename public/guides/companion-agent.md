@@ -1,4 +1,4 @@
-# NEXUS Companion Agent
+# Tri-Cass Companion Agent
 
 Agent mode turns Chat into a personal helper that can use the knowledge and
 tools **you** added — Vault notes, knowledge packs, and the Add-ons / Plugin
@@ -27,7 +27,7 @@ Short status lines appear while the agent plans, searches, and writes.
 | Files Read | `read_file` | Open local text files |
 | Files Write | `write_file` | Create/update text files |
 | Folders | `ensure_folder` | Create folders (e.g. `website/`) |
-| NEXUS Status | `nexus_status` | Report plugins + counts |
+| Tri-Cass Status | `tricass_status` | Report plugins + counts |
 
 Disable any plugin in **Add-ons** and Agent will not call that tool.
 
@@ -36,7 +36,7 @@ Disable any plugin in **Add-ons** and Agent will not call that tool.
 You assemble the system: pick the model, import packs into Vault, enable
 Add-ons, grow Files (even a small site). Agent answers with **those** pieces.
 The same tool names in `nexus-app/src/agent/schema.ts` are meant for later
-ports to the bootable NEXUS OS images and Cardputer firmware.
+ports to the bootable Tri-Cass OS images and Cardputer firmware.
 
 ## Chat vs Agent
 

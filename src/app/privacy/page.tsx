@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy",
   description:
-    "How the NEXUS OS website handles account data, and how the offline OS keeps your chats on your device.",
+    "How the Tri-Cass OS website handles account data, and how the offline OS keeps your chats on your device.",
 };
 
 export default function PrivacyPage() {
@@ -13,13 +13,13 @@ export default function PrivacyPage() {
       <div className="shell legal">
         <h2>Privacy</h2>
         <p className="lede">
-          Plain-language notes for this website and for NEXUS OS itself. Last
+          Plain-language notes for this website and for Tri-Cass OS itself. Last
           updated: 19 November 2026.
         </p>
 
         <h3 className="subhead">The offline OS</h3>
         <p>
-          When you run NEXUS OS from a USB stick or microSD card, AI Chat, notes,
+          When you run Tri-Cass OS from a USB stick or microSD card, AI Chat, notes,
           and related tools run on that machine. They are designed to work
           offline. This website does not receive your chat messages or files from
           the stick or card.

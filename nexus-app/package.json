@@ -1,8 +1,8 @@
 {
-  "name": "nexus-companion",
+  "name": "tri-cass-companion",
   "version": "0.12.4",
-  "description": "NEXUS Companion — Spatial, Browse, Add-ons marketplace, desktop launcher",
-  "author": "NEXUS OS",
+  "description": "Tri-Cass Companion — Spatial, Browse, Add-ons marketplace, desktop launcher",
+  "author": "Tri-Cass OS",
   "main": "index.ts",
   "dependencies": {
     "@expo/metro-runtime": "~58.0.17",

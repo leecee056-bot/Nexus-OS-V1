@@ -1,6 +1,6 @@
 # Companion Browse (Windows · Mac)
 
-Open the web inside a **NEXUS Browse** window that matches your Companion theme
+Open the web inside a **Tri-Cass Browse** window that matches your Companion theme
 — especially **Spatial / Open** — without building a separate browser product.
 
 ## What it is
@@ -8,7 +8,7 @@ Open the web inside a **NEXUS Browse** window that matches your Companion theme
 - A dedicated, themed window owned by Companion (back / forward / URL / reload).
 - Detects common installed browsers (Chrome, Edge, Firefox, Safari, Brave, Opera).
 - Lets you set a preferred browser and choose:
-  - **NEXUS window** — in-app chrome + page view (Electron Chromium surface)
+  - **Tri-Cass window** — in-app chrome + page view (Electron Chromium surface)
   - **Browser app window** — Chromium-family browsers via `--app=` when available
   - **System browser** — hand off to your installed browser normally
 
@@ -22,7 +22,7 @@ shell’s Chromium view; detection and hand-off use browsers already on your PC.
 | Home | **Browse** button, or the **Browse** panel |
 | About | **Browse** panel |
 | Desk layout | Browse panel under the dashboard |
-| Any `window.open` / external http(s) link in the desktop app | Opens NEXUS Browse by default |
+| Any `window.open` / external http(s) link in the desktop app | Opens Tri-Cass Browse by default |
 
 ## Themes
 

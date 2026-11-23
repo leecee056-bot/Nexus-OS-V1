@@ -278,14 +278,14 @@ img {
   inset: 0;
   background:
     linear-gradient(to top, var(--bg) 18%, transparent 62%),
-    url("/images/nexus-os-mockup-offline.png") center / cover no-repeat;
+    url("/images/tri-cass-os-homepage-bg.jpg") center / cover no-repeat;
   opacity: 0.38;
   filter: saturate(1.15) contrast(1.05);
   animation: phosphorPulse 7s ease-in-out infinite;
   z-index: 0;
 }
 
-/* Extra scrim so copy stays readable over the busy mockup */
+/* Extra scrim so copy stays readable over the hero art */
 .hero::after {
   content: "";
   position: absolute;

@@ -57,7 +57,7 @@ export function ImageScreen() {
   const isDesktopShell = Platform.OS === "web";
 
   const [prompt, setPrompt] = useState(
-    "Pixel art moon over mountains, vaporwave neon, NEXUS green accents",
+    "Pixel art moon over mountains, vaporwave neon, Tri-Cass green accents",
   );
   const [busy, setBusy] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -169,7 +169,7 @@ export function ImageScreen() {
   async function onSave() {
     if (!resultB64) return;
     const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-    const filename = `nexus-image-${stamp}.png`;
+    const filename = `tri-cass-image-${stamp}.png`;
     const saved = await saveGeneratedImage(resultB64, filename);
     if (saved.ok) {
       setSaveNote(saved.path ? `Saved: ${saved.path}` : "Saved.");

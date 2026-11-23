@@ -5,7 +5,7 @@
 const path = require("path");
 const fs = require("fs");
 
-const MARKER = "NEXUS-USB.json";
+const MARKER = "Tri-Cass-USB.json";
 
 function exists(p) {
   try {
@@ -28,13 +28,14 @@ function findMarkerUp(startDir, maxUp = 4) {
 }
 
 /**
- * Kit root when running from a NEXUS USB folder, else null.
+ * Kit root when running from a Tri-Cass USB folder, else null.
  * Windows portable: PORTABLE_EXECUTABLE_DIR (exe often in Windows/).
  * Mac .app: sibling of the .app bundle.
  */
 function resolveKitRoot() {
-  if (process.env.NEXUS_USB_ROOT && exists(process.env.NEXUS_USB_ROOT)) {
-    return path.resolve(process.env.NEXUS_USB_ROOT);
+  const usbRoot = process.env.TRICASS_USB_ROOT || process.env.NEXUS_USB_ROOT;
+  if (usbRoot && exists(usbRoot)) {
+    return path.resolve(usbRoot);
   }
 
   if (process.env.PORTABLE_EXECUTABLE_DIR) {
@@ -46,7 +47,7 @@ function resolveKitRoot() {
     );
   }
 
-  // Packaged Mac: .../Mac/NEXUS Companion.app/Contents/MacOS/<bin>
+  // Packaged Mac: .../Mac/Tri-Cass Companion.app/Contents/MacOS/<bin>
   const execDir = path.dirname(process.execPath);
   const appBundle = path.resolve(execDir, "..", "..");
   const nextToApp = path.dirname(appBundle);
@@ -73,6 +74,7 @@ function applyPortablePaths(app) {
   const portable =
     !!kitRoot ||
     !!process.env.PORTABLE_EXECUTABLE_DIR ||
+    process.env.TRICASS_PORTABLE === "1" ||
     process.env.NEXUS_PORTABLE === "1";
 
   if (!portable) {

@@ -28,7 +28,7 @@ export async function provisionProsodyAccount(input: {
       },
       body: JSON.stringify({
         username: input.username,
-        domain: process.env.NEXUS_XMPP_DOMAIN?.trim() || "nexus.network",
+        domain: process.env.NEXUS_XMPP_DOMAIN?.trim() || "tri-cass.network",
         // Intentionally no password — site credentials never leave this app.
         reserveOnly: true,
       }),

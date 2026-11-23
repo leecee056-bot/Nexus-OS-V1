@@ -18,7 +18,7 @@ export default async function AccountPage() {
         <h2>Account</h2>
         <p className="lede">
           Profile stub for your reserved Network identity. Presence, rooms, and
-          messaging unlock when NEXUS Network servers launch.
+          messaging unlock when Tri-Cass Network servers launch.
         </p>
         {sample ? (
           <div className="alert" style={{ marginBottom: "1.5rem" }}>

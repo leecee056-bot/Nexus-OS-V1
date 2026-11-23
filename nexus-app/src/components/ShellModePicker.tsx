@@ -17,7 +17,7 @@ const MODES: { id: ShellMode; label: string; blurb: string }[] = [
   {
     id: "desk",
     label: "Desk",
-    blurb: "NEXUS OS windows — multi-panel desk like the CRT mockup.",
+    blurb: "Tri-Cass OS windows — multi-panel desk like the CRT mockup.",
   },
 ];
 

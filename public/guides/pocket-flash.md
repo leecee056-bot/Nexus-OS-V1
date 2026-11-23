@@ -1,4 +1,4 @@
-# NEXUS Pocket — flash checklist (ESP32-S3)
+# Tri-Cass Pocket — flash checklist (ESP32-S3)
 
 Short path for the USB-Serial offline companion. Full notes live in
 `nexus-esp32/README.md` on GitHub.

@@ -82,7 +82,7 @@ export const MARKET_PAGES: MarketPage[] = [
     items: [
       { id: "kanban", name: "Kanban lite", description: "Todo → Doing → Done cards.", emoji: "📋", accent: "#818cf8", kind: "miniapp", path: "apps/kanban/index.html" },
       { id: "csv", name: "CSV viewer", description: "Paste CSV into a table.", emoji: "📊", accent: "#4ade80", kind: "miniapp", path: "apps/csv/index.html" },
-      { id: "glossary", name: "Glossary", description: "Searchable NEXUS terms.", emoji: "📖", accent: "#c4b5fd", kind: "miniapp", path: "apps/glossary/index.html" },
+      { id: "glossary", name: "Glossary", description: "Searchable Tri-Cass terms.", emoji: "📖", accent: "#c4b5fd", kind: "miniapp", path: "apps/glossary/index.html" },
       { id: "meeting", name: "Meeting notes", description: "Agenda and action template.", emoji: "📝", accent: "#fb923c", kind: "miniapp", path: "apps/meeting/index.html" },
       { id: "resume", name: "Resume outline", description: "Starter resume markdown.", emoji: "🧾", accent: "#38bdf8", kind: "miniapp", path: "apps/resume/index.html" },
       { id: "mindmap", name: "Mind map list", description: "Root idea with branches.", emoji: "🧠", accent: "#f472b6", kind: "miniapp", path: "apps/mindmap/index.html" },

@@ -1,5 +1,5 @@
 /**
- * Desktop shell for NEXUS Companion (Windows · macOS).
+ * Desktop shell for Tri-Cass Companion (Windows · macOS).
  * Portable USB mode: settings / Vault / chats live under the kit Data/ folder.
  * Browse + desktop launcher helpers are inlined here so packaging cannot
  * omit a sibling require() and crash the main process.
@@ -31,7 +31,7 @@ const portableInfo = applyPortablePaths(app);
 
 const isDev = !app.isPackaged;
 const startUrl =
-  process.env.NEXUS_APP_URL ||
+  process.env.TRICASS_APP_URL || process.env.NEXUS_APP_URL ||
   (isDev ? "http://127.0.0.1:8081" : null);
 
 const iconPath = path.join(__dirname, "..", "assets", "brand", "icon.png");
@@ -255,7 +255,7 @@ function writeWinShortcut(linkPath, { target, cwd, description }) {
   return shell.writeShortcutLink(linkPath, {
     target,
     cwd,
-    description: description || "NEXUS Companion",
+    description: description || "Tri-Cass Companion",
     icon,
     iconIndex: 0,
     appUserModelId: "bot.grok.nexus.companion",
@@ -268,12 +268,12 @@ function addLaunchers() {
 
   try {
     if (process.platform === "win32") {
-      const desktop = path.join(app.getPath("desktop"), "NEXUS Companion.lnk");
+      const desktop = path.join(app.getPath("desktop"), "Tri-Cass Companion.lnk");
       if (
         writeWinShortcut(desktop, {
           target,
           cwd,
-          description: "NEXUS Companion — local AI Chat",
+          description: "Tri-Cass Companion — local AI Chat",
         })
       ) {
         created.push(desktop);
@@ -287,12 +287,12 @@ function addLaunchers() {
         "Programs",
       );
       ensureDir(programs);
-      const startMenu = path.join(programs, "NEXUS Companion.lnk");
+      const startMenu = path.join(programs, "Tri-Cass Companion.lnk");
       if (
         writeWinShortcut(startMenu, {
           target,
           cwd,
-          description: "NEXUS Companion",
+          description: "Tri-Cass Companion",
         })
       ) {
         created.push(startMenu);
@@ -309,7 +309,7 @@ function addLaunchers() {
 
     if (process.platform === "darwin") {
       const desktop = app.getPath("desktop");
-      const aliasPath = path.join(desktop, "NEXUS Companion");
+      const aliasPath = path.join(desktop, "Tri-Cass Companion");
       try {
         if (fileExists(aliasPath)) fs.rmSync(aliasPath, { recursive: true });
       } catch {
@@ -324,7 +324,7 @@ function addLaunchers() {
       }).unref();
       created.push(aliasPath);
 
-      const cmd = path.join(desktop, "NEXUS Companion.command");
+      const cmd = path.join(desktop, "Tri-Cass Companion.command");
       fs.writeFileSync(cmd, `#!/bin/bash\nopen ${JSON.stringify(target)}\n`, {
         mode: 0o755,
       });
@@ -336,14 +336,14 @@ function addLaunchers() {
     const icon = fileExists(iconPath) ? iconPath : target;
     const entry = `[Desktop Entry]
 Type=Application
-Name=NEXUS Companion
-Comment=Local AI Chat for NEXUS OS
+Name=Tri-Cass Companion
+Comment=Local AI Chat for Tri-Cass OS
 Exec=${JSON.stringify(target)}
 Icon=${icon}
 Terminal=false
 Categories=Utility;
 `;
-    const desktopFile = path.join(desktopDir, "nexus-companion.desktop");
+    const desktopFile = path.join(desktopDir, "tri-cass-companion.desktop");
     fs.writeFileSync(desktopFile, entry, { mode: 0o755 });
     created.push(desktopFile);
     const apps = path.join(
@@ -353,7 +353,7 @@ Categories=Utility;
       "applications",
     );
     ensureDir(apps);
-    const appFile = path.join(apps, "nexus-companion.desktop");
+    const appFile = path.join(apps, "tri-cass-companion.desktop");
     fs.writeFileSync(appFile, entry, { mode: 0o755 });
     created.push(appFile);
     return { ok: true, desktop: desktopFile, startMenu: appFile, created };
@@ -368,7 +368,7 @@ Categories=Utility;
 
 /* ─── App shell ─────────────────────────────────────────────────────── */
 
-app.setName("NEXUS Companion");
+app.setName("Tri-Cass Companion");
 if (process.platform === "win32") {
   app.setAppUserModelId("bot.grok.nexus.companion");
 }
@@ -475,12 +475,12 @@ ipcMain.handle("nexus:export-chat", async (_event, args) => {
   try {
     const text = String(args?.text || "");
     const filename = String(
-      args?.filename || `nexus-chat-${Date.now()}.md`,
+      args?.filename || `tri-cass-chat-${Date.now()}.md`,
     ).replace(/[^\w.\-]+/g, "_");
     if (!text) return { ok: false, error: "Empty chat." };
     const dir =
       portableInfo.chatsDir ||
-      path.join(app.getPath("documents"), "NEXUS-Chats");
+      path.join(app.getPath("documents"), "Tri-Cass-Chats");
     ensureDir(dir);
     const outPath = path.join(dir, filename);
     fs.writeFileSync(outPath, text, "utf8");
@@ -504,7 +504,7 @@ ipcMain.handle("nexus:save-image", async (_event, args) => {
   try {
     const base64 = String(args?.base64 || "");
     const filename = String(
-      args?.filename || `nexus-${Date.now()}.png`,
+      args?.filename || `tri-cass-${Date.now()}.png`,
     ).replace(/[^\w.\-]+/g, "_");
     if (!base64) return { ok: false, error: "Empty image." };
     const dir =
@@ -606,7 +606,7 @@ function createBrowseWindow(rawUrl, themeId = "spatial") {
     minWidth: 640,
     minHeight: 480,
     backgroundColor: themeBackground(themeId),
-    title: `NEXUS Browse · ${APP_VERSION}`,
+    title: `Tri-Cass Browse · ${APP_VERSION}`,
     frame: false,
     show: false,
     icon,
@@ -769,8 +769,8 @@ ipcMain.handle("nexus:app-version", async () => ({
 
 function windowTitle() {
   const base = portableInfo.portable
-    ? "NEXUS Companion — USB"
-    : "NEXUS Companion";
+    ? "Tri-Cass Companion — USB"
+    : "Tri-Cass Companion";
   return `${base} ${APP_VERSION}`;
 }
 
@@ -816,7 +816,7 @@ function createWindow() {
     win.loadFile(indexHtml).catch((err) => console.error(err));
   } else {
     win.loadURL(
-      "data:text/html,<body style='background:#040804;color:#39ff14;font-family:monospace;padding:2rem'>NEXUS Companion: missing dist-web. Run npm run build:web first.</body>",
+      "data:text/html,<body style='background:#040804;color:#39ff14;font-family:monospace;padding:2rem'>Tri-Cass Companion: missing dist-web. Run npm run build:web first.</body>",
     );
   }
 }
@@ -842,10 +842,10 @@ app.whenReady().then(async () => {
         buttons: ["Add to Desktop", "Not now"],
         defaultId: 0,
         cancelId: 1,
-        title: `NEXUS Companion ${APP_VERSION}`,
-        message: "Add NEXUS Companion to your Desktop?",
+        title: `Tri-Cass Companion ${APP_VERSION}`,
+        message: "Add Tri-Cass Companion to your Desktop?",
         detail:
-          "Creates a Desktop shortcut and Start Menu / Applications launcher with the NEXUS icon so you can open Companion like a normal app.",
+          "Creates a Desktop shortcut and Start Menu / Applications launcher with the Tri-Cass icon so you can open Companion like a normal app.",
       });
       if (response === 0) {
         addLaunchers();

@@ -7,7 +7,7 @@
 // Compact flash-resident corpus. Not a neural net — fits ADV with no PSRAM.
 // String literals live in flash .rodata on ESP32 — keep the table tiny.
 static const char *const k_phrases[] = {
-    "NEXUS Cardputer keeps chat offline on this tiny board.",
+    "Tri-Cass Cardputer keeps chat offline on this tiny board.",
     "No PSRAM here — TinyChat uses a flash phrase corpus, not llama weights.",
     "Boot the USB or Pi image for the full hub with SmolLM2 and Vault.",
     "Pocket ESP32 with PSRAM can run stories260K over Serial.",
@@ -26,7 +26,7 @@ static const char *const k_phrases[] = {
     "TinyChat replies are stitched from local lines — honest and light.",
     "When heap is low, close Chat and open Status to check free RAM.",
     "microSD is preferred for notes; SPIFFS is the fallback.",
-    "Welcome to NEXUS — offline AI for sticks, Pi, and pocket boards.",
+    "Welcome to Tri-Cass — offline AI for sticks, Pi, and pocket boards.",
 };
 
 static const size_t k_n = sizeof(k_phrases) / sizeof(k_phrases[0]);
@@ -59,7 +59,7 @@ static int score_phrase(const char *phrase, const char *prompt) {
   int score = 0;
   static const char *keys[] = {"boot",   "flash", "vault", "pocket", "pi",
                                "usb",    "note",  "sd",    "battery", "ram",
-                               "psram",  "chat",  "model", "nexus",  "menu",
+                               "psram",  "chat",  "model", "tri-cass",  "menu",
                                "hello",  "help",  "status"};
   for (size_t i = 0; i < sizeof(keys) / sizeof(keys[0]); i++) {
     if (has_word(prompt, keys[i]) && has_word(phrase, keys[i])) score += 3;

@@ -58,7 +58,7 @@ const BASE_SCREENS: {
   component: ComponentType;
   title: string;
 }[] = [
-  { name: "Home", component: HomeScreen, title: "NEXUS" },
+  { name: "Home", component: HomeScreen, title: "Tri-Cass" },
   { name: "Chat", component: ChatScreen, title: "Chat" },
   { name: "Vault", component: VaultScreen, title: "Knowledge Vault" },
   { name: "Packs", component: PacksScreen, title: "Knowledge Packs" },
@@ -97,7 +97,7 @@ function HeaderBrand() {
           terminal ? monoStyle({ letterSpacing: 2 }) : null,
         ]}
       >
-        NEXUS
+        Tri-Cass
       </Text>
     </View>
   );
@@ -151,7 +151,7 @@ function SideRail({
             terminal ? monoStyle() : null,
           ]}
         >
-          NEXUS
+          Tri-Cass
         </Text>
         <Text
           style={[

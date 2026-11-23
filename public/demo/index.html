@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>nexus interactive demo</title>
-  <meta name="description" content="Interactive tutorial of the NEXUS OS terminal-style hub menu — try Chat, Vault, Files and more without downloading." />
+  <title>Tri-Cass interactive demo</title>
+  <meta name="description" content="Interactive tutorial of the Tri-Cass OS terminal-style hub menu — try Chat, Vault, Files and more without downloading." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oxanium:wght@500;700&display=swap" rel="stylesheet" />
@@ -534,7 +534,7 @@
 <body>
   <div class="crt">
     <header class="topbar">
-      <h1>nexus interactive demo</h1>
+      <h1>Tri-Cass interactive demo</h1>
       <div class="meta">
         <span>offline tutorial · not the real OS</span>
         · <a href="/">back to site</a>
@@ -544,7 +544,7 @@
     <div class="stage" id="stage">
       <!-- HUB -->
       <section class="view active" id="view-hub" data-view="hub" aria-label="Hub menu">
-        <p class="hub-title">NEXUS OS · main menu</p>
+        <p class="hub-title">Tri-Cass OS · main menu</p>
         <ul class="hub-list" id="hub-list" role="listbox" aria-label="Apps"></ul>
       </section>
 
@@ -651,7 +651,7 @@
   <div class="overlay" id="tip-overlay" role="dialog" aria-modal="true" aria-labelledby="tip-title">
     <div class="tip-card">
       <h2 id="tip-title">Quick tour</h2>
-      <p>This is a short interactive demo of the NEXUS OS hub — the full-screen menu you see after booting a stick or Pi card.</p>
+      <p>This is a short interactive demo of the Tri-Cass OS hub — the full-screen menu you see after booting a stick or Pi card.</p>
       <ul>
         <li>Move with <strong>arrow keys</strong> or tap a row</li>
         <li><strong>Enter</strong> opens an app · <strong>Esc</strong> returns to the hub</li>
@@ -681,10 +681,11 @@
         { name: "models/", body: "smollm2-demo.gguf  (placeholder)\nREADME.txt" },
         { name: "vault/", body: "starter notes for Knowledge Vault" },
         { name: "notes/", body: "scratch pad · offline drafts" },
+        { name: "tri-cass-notes.txt", body: "Quick scratch notes for Tri-Cass OS (demo)." },
       ];
 
       const NOTES = [
-        { title: "NEXUS quick guide", text: "Boot from USB or microSD, land on the hub, pick Chat." },
+        { title: "Tri-Cass quick guide", text: "Boot from USB or microSD, land on the hub, pick Chat." },
         { title: "Flash & boot", text: "Unpack .img.xz, flash with Etcher, disable Secure Boot if needed." },
         { title: "Chat tips", text: "Keep prompts short on low RAM. Add GGUF models under models/." },
         { title: "Pi / cyberdeck", text: "Pi 4 is the primary image target. Great for portable kits." },
@@ -769,7 +770,7 @@
       function dismissTip() {
         tipOpen = false;
         overlay.hidden = true;
-        localStorage.setItem("nexus-demo-tip", "1");
+        localStorage.setItem("tri-cass-demo-tip", "1");
         goHub();
       }
 
@@ -788,7 +789,7 @@
       }
 
       addChat("sys", "Demo session · replies are scripted.", "sys");
-      addChat("nexus>", "Hello. Ask anything — I’ll show a sample offline reply.", "bot");
+      addChat("tri-cass>", "Hello. Ask anything — I’ll show a sample offline reply.", "bot");
 
       chatForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -798,7 +799,7 @@
         chatInput.value = "";
         const reply = REPLIES[replyI % REPLIES.length];
         replyI++;
-        setTimeout(() => addChat("nexus>", reply, "bot"), 280);
+        setTimeout(() => addChat("tri-cass>", reply, "bot"), 280);
       });
 
       // Files
@@ -975,7 +976,7 @@
       document.head.appendChild(style);
 
       renderHub();
-      if (localStorage.getItem("nexus-demo-tip") === "1") {
+      if (localStorage.getItem("tri-cass-demo-tip") === "1") {
         tipOpen = false;
         overlay.hidden = true;
       }

@@ -1,4 +1,4 @@
-# NEXUS Companion — Android APK (sideload)
+# Tri-Cass Companion — Android APK (sideload)
 
 Secondary Android app — **not** the bootable USB/Pi OS, Cardputer firmware, or
 a Play Store listing (yet). Source: [`nexus-app/`](../../nexus-app/).
@@ -12,7 +12,7 @@ a Play Store listing (yet). Source: [`nexus-app/`](../../nexus-app/).
    from the [companion Release](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/companion-v0.12.2).
 2. On the phone: open the file → allow **Install unknown apps** for your
    browser/Files app if Android asks.
-3. Open NEXUS Companion → wait for the matrix boot splash → use Chat / Vault /
+3. Open Tri-Cass Companion → wait for the matrix boot splash → use Chat / Vault /
    Packs / Files offline. For local AI Chat, run Ollama on a PC on the same
    Wi‑Fi and set that host in Chat.
 
@@ -40,7 +40,7 @@ CI builds the APK with local Gradle (no Expo cloud token required):
 cd nexus-app
 npm install
 npm run android:apk
-# → release/NEXUS-Companion-Android-<version>.apk
+# → release/Tri-Cass-Companion-Android-<version>.apk
 ```
 
 Optional Expo cloud path (needs `EXPO_TOKEN` / `eas login`):

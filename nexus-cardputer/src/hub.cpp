@@ -94,7 +94,7 @@ static void draw_vault(void) {
     ui_draw_header(head);
     ui_wrap_print(4, 18, NEXUS_SCREEN_W - 8, vault_root_hint(), COL_DIM);
     ui_wrap_print(4, 48, NEXUS_SCREEN_W - 8,
-                  "Put .txt/.md in /nexus-vault on microSD. "
+                  "Put .txt/.md in /tri-cass-vault on microSD. "
                   "Firmware works without a card.",
                   COL_FG);
     ui_draw_footer("` back", "optional SD");
@@ -171,7 +171,7 @@ static void draw_about(void) {
   ui_wrap_print(
       4, 18, NEXUS_SCREEN_W - 8,
       "Cardputer ADV firmware. No PSRAM. "
-      "TinyChat + optional SD Vault (/nexus-vault). "
+      "TinyChat + optional SD Vault (/tri-cass-vault). "
       "Full hub: USB/Pi images. Pocket needs PSRAM.",
       COL_FG);
   ui_draw_footer("` back", NEXUS_CARDPUTER_VERSION);

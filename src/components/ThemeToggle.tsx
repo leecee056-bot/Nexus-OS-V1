@@ -8,7 +8,7 @@ export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("matrix");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("nexus-theme");
+    const stored = window.localStorage.getItem("tri-cass-theme");
     const next: Theme = stored === "basic" ? "basic" : "matrix";
     setTheme(next);
     document.documentElement.setAttribute("data-theme", next);
@@ -18,7 +18,7 @@ export function ThemeToggle() {
     const next: Theme = theme === "matrix" ? "basic" : "matrix";
     setTheme(next);
     document.documentElement.setAttribute("data-theme", next);
-    window.localStorage.setItem("nexus-theme", next);
+    window.localStorage.setItem("tri-cass-theme", next);
   }
 
   return (

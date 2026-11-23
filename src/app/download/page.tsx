@@ -33,7 +33,7 @@ export default function DownloadPage() {
   return (
     <section className="section">
       <div className="shell">
-        <h2>Download NEXUS OS</h2>
+        <h2>Download Tri-Cass OS</h2>
         <p className="lede">{BUILD_NOTE}</p>
 
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
@@ -147,7 +147,7 @@ export default function DownloadPage() {
         ))}
 
         <h3 className="subhead" id="pocket" style={{ marginTop: "2rem" }}>
-          NEXUS Pocket (ESP32-S3)
+          Tri-Cass Pocket (ESP32-S3)
         </h3>
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
           Pocket is a <strong>USB-Serial</strong> offline tiny-ML companion — not
@@ -184,7 +184,7 @@ export default function DownloadPage() {
         ))}
 
         <h3 className="subhead" id="cardputer" style={{ marginTop: "2rem" }}>
-          NEXUS Cardputer ADV
+          Tri-Cass Cardputer ADV
         </h3>
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
           Dedicated firmware for the <strong>M5Stack Cardputer ADV</strong>{" "}
@@ -192,7 +192,7 @@ export default function DownloadPage() {
           keyboard). It cannot run USB/Pi images or Pocket’s stories260K model —
           Chat is TinyChat (flash corpus). Optional{" "}
           <strong>Knowledge Vault</strong> on microSD (
-          <code className="mono">/nexus-vault</code>) — no card required.
+          <code className="mono">/tri-cass-vault</code>) — no card required.
         </div>
         {CARDPUTER_ARTIFACTS.map((a) => (
           <div className="panel" key={a.arch}>
@@ -228,21 +228,21 @@ export default function DownloadPage() {
             Companion apps (Windows · Mac · Android) — v{COMPANION_VERSION}
           </h3>
           <p>
-            <strong>NEXUS Companion</strong> is a normal app with real{" "}
+            <strong>Tri-Cass Companion</strong> is a normal app with real{" "}
             <strong>local AI Chat</strong>: pick a lightweight model (Qwen,
             TinyLlama, and more), download it once via{" "}
             <a href="https://ollama.com/download">Ollama</a>, then chat offline.
             Current release builds (v{COMPANION_VERSION}) include{" "}
             <strong>Spatial / Open</strong> theme, desktop <strong>Browse</strong>{" "}
             window, one-click <strong>Add-ons marketplace</strong>,{" "}
-            <strong>Desktop / Start Menu launcher</strong> with NEXUS icon,
+            <strong>Desktop / Start Menu launcher</strong> with Tri-Cass icon,
             offline-first Chat (website optional), a{" "}
             <strong>USB portable kit</strong>, rabbit <strong>grafting</strong>{" "}
             wait animation, desktop <strong>Image Lab</strong> + low-memory{" "}
             <strong>Games</strong> (Chess first), Terminal CRT / Desk layout,
             Agent mode, and{" "}
             <strong>Basic / Matrix / Lumen / Terminal / Spatial</strong> themes.
-            Vault, Packs, Plugins, Files, and the NEXUS icon on phone + tablet
+            Vault, Packs, Plugins, Files, and the Tri-Cass icon on phone + tablet
             Android (Games / Image Lab / Browse stay desktop / web).
           </p>
           <p style={{ marginTop: "0.75rem" }}>
@@ -303,8 +303,8 @@ export default function DownloadPage() {
           <h3>Companion USB kit — portable desktop (v{COMPANION_VERSION})</h3>
           <p>
             Unzip onto a USB stick or external drive, open{" "}
-            <strong>START-HERE</strong> (NEXUS logo), then{" "}
-            <code className="mono">Start-NEXUS</code> — a few clicks, no full
+            <strong>START-HERE</strong> (Tri-Cass logo), then{" "}
+            <code className="mono">Start-Tri-Cass</code> — a few clicks, no full
             install. Settings, Vault, Knowledge/, chats, and Files stay on the
             stick so you can unplug and move PCs. Same Companion features as the
             desktop apps; heavier than the bootable OS images. Host PC still

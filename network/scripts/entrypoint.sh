@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-DOMAIN="${NEXUS_XMPP_DOMAIN:-nexus.network}"
+DOMAIN="${NEXUS_XMPP_DOMAIN:-tri-cass.network}"
 CERT_DIR=/etc/prosody/certs
 KEY="$CERT_DIR/${DOMAIN}.key"
 CRT="$CERT_DIR/${DOMAIN}.crt"

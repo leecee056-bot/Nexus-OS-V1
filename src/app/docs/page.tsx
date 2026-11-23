@@ -17,7 +17,7 @@ export default function DocsPage() {
       <div className="shell">
         <h2>Docs</h2>
         <p className="lede">
-          Start with Setup if you are putting NEXUS OS on a stick, microSD, or
+          Start with Setup if you are putting Tri-Cass OS on a stick, microSD, or
           ESP32 Pocket for the first time. Everything else is extra detail.
         </p>
 
@@ -26,7 +26,7 @@ export default function DocsPage() {
           <ul className="docs-list">
             <li>
               <Link href="/about">
-                About NEXUS OS
+                About Tri-Cass OS
                 <small>
                   What it is, use cases (including cyberdecks), minimum
                   requirements, jargon explained
@@ -55,7 +55,7 @@ export default function DocsPage() {
               <Link href="/download">
                 Download
                 <small>
-                  PC USB, Raspberry Pi microSD, and NEXUS Pocket (ESP32-S3)
+                  PC USB, Raspberry Pi microSD, and Tri-Cass Pocket (ESP32-S3)
                 </small>
               </Link>
             </li>
@@ -85,7 +85,7 @@ export default function DocsPage() {
             </li>
             <li>
               <Link href="/faq#pocket">
-                FAQ — NEXUS Pocket
+                FAQ — Tri-Cass Pocket
                 <small>What Pocket is vs the full USB/Pi hub</small>
               </Link>
             </li>
@@ -121,7 +121,7 @@ export default function DocsPage() {
             <li>
               <a href="/guides/knowledge-packs.md">
                 Knowledge packs short guide
-                <small>Paths for PC/Pi Vault and Cardputer /nexus-vault</small>
+                <small>Paths for PC/Pi Vault and Cardputer /tri-cass-vault</small>
               </a>
             </li>
             <li>
@@ -153,7 +153,7 @@ export default function DocsPage() {
           <ul className="docs-list">
             <li>
               <Link href="/network">
-                NEXUS Network
+                Tri-Cass Network
                 <small>
                   Reserve a future username — chat rooms not live yet
                 </small>
@@ -183,7 +183,7 @@ export default function DocsPage() {
             </li>
             <li>
               <a href={POCKET_REPO}>
-                NEXUS Pocket — ESP32-S3 (v0.1.0)
+                Tri-Cass Pocket — ESP32-S3 (v0.1.0)
                 <small>Firmware source in nexus-esp32/ (PlatformIO)</small>
               </a>
             </li>
@@ -195,7 +195,7 @@ export default function DocsPage() {
             </li>
             <li>
               <a href={CARDPUTER_REPO}>
-                NEXUS Cardputer ADV — v0.2.0
+                Tri-Cass Cardputer ADV — v0.2.0
                 <small>Firmware source in nexus-cardputer/ (PlatformIO)</small>
               </a>
             </li>

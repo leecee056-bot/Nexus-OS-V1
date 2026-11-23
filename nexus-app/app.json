@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "NEXUS Companion",
-    "slug": "nexus-companion",
+    "name": "Tri-Cass Companion",
+    "slug": "tri-cass-companion",
     "version": "0.12.4",
     "orientation": "default",
     "icon": "./assets/brand/icon.png",
     "userInterfaceStyle": "dark",
-    "scheme": "nexus-companion",
+    "scheme": "tri-cass-companion",
     "experiments": {
       "baseUrl": "./"
     },
@@ -19,8 +19,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "bot.grok.nexus.companion",
       "infoPlist": {
-        "CFBundleDisplayName": "NEXUS Companion",
-        "NSLocalNetworkUsageDescription": "NEXUS Companion can reach a local Ollama server on your network for offline AI chat.",
+        "CFBundleDisplayName": "Tri-Cass Companion",
+        "NSLocalNetworkUsageDescription": "Tri-Cass Companion can reach a local Ollama server on your network for offline AI chat.",
         "NSAppTransportSecurity": {
           "NSAllowsLocalNetworking": true
         }
@@ -40,8 +40,8 @@
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro",
-      "name": "NEXUS Companion",
-      "shortName": "NEXUS",
+      "name": "Tri-Cass Companion",
+      "shortName": "Tri-Cass",
       "themeColor": "#39ff14",
       "backgroundColor": "#040804"
     },

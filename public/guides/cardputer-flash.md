@@ -1,4 +1,4 @@
-# NEXUS Cardputer ADV — flash checklist
+# Tri-Cass Cardputer ADV — flash checklist
 
 Dedicated firmware for the **M5Stack Cardputer ADV** (ESP32-S3FN8, 8 MB flash,
 **no PSRAM**, 240×135 screen + keyboard). Full notes:
@@ -7,7 +7,7 @@ Dedicated firmware for the **M5Stack Cardputer ADV** (ESP32-S3FN8, 8 MB flash,
 ## Important
 
 - This is **not** a USB/Pi disk image.
-- This is **not** NEXUS Pocket (`nexus-esp32/`) — Pocket needs **PSRAM** for
+- This is **not** Tri-Cass Pocket (`nexus-esp32/`) — Pocket needs **PSRAM** for
   stories260K. Cardputer ADV uses **TinyChat** (flash phrase corpus).
 - **microSD Knowledge Vault is optional** — no card required to run the hub.
 
@@ -32,14 +32,14 @@ On the device: `;` / `'` move, Enter opens, `` ` `` returns to the hub.
 
 ```
 microSD root/
-  nexus-vault/
+  tri-cass-vault/
     00-readme.txt
     guide.txt
     glossary.txt
     how-to-boot.txt
 ```
 
-Copy `sd-example/nexus-vault/` to the card, insert it, then Hub → **Vault**.
+Copy `sd-example/tri-cass-vault/` to the card, insert it, then Hub → **Vault**.
 Enter opens a file; type a word + Enter to search. Without a card, Vault shows
 a short hint and everything else still works.
 

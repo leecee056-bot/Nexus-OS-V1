@@ -89,11 +89,11 @@ export function FilesScreen() {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>NEXUS site</title>
+  <title>Tri-Cass site</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>NEXUS</h1>
+  <h1>Tri-Cass</h1>
   <p>Starter site — ask Agent in Chat to edit these files.</p>
 </body>
 </html>`,

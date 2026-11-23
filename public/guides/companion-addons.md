@@ -19,7 +19,7 @@ Companion → **Add-ons** (Plugins). Tabs:
 
 - **Mini apps** — a complete HTML page is written into **Files / apps/…**. Open
   it from Files to use it offline (live preview on desktop/web).
-- **Link items** — opens the vendor’s download page in NEXUS Browse (desktop)
+- **Link items** — opens the vendor’s download page in Tri-Cass Browse (desktop)
   or your system browser.
 
 Thumbnails, names, and short descriptions show on each card so you can pick
@@ -27,5 +27,5 @@ quickly. Tap **Download** once — done.
 
 ## Notes
 
-Marketplace pages ship with Companion; they do not require a NEXUS cloud
+Marketplace pages ship with Companion; they do not require a Tri-Cass cloud
 account. Link downloads still need the network for the vendor site.

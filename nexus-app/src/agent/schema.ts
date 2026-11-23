@@ -10,7 +10,7 @@ export type AgentToolName =
   | "read_file"
   | "write_file"
   | "ensure_folder"
-  | "nexus_status";
+  | "tricass_status";
 
 export type AgentToolCall = {
   tool: AgentToolName;
@@ -25,7 +25,7 @@ export type AgentStep = {
   ok?: boolean;
 };
 
-export const AGENT_SYSTEM = `You are NEXUS Agent on the user's personal companion.
+export const AGENT_SYSTEM = `You are Tri-Cass Agent on the user's personal companion.
 Tool results (if any) are already attached from their Vault, packs, or Files.
 Use them when present. For greetings and small talk, reply warmly — do not invent tool activity.
 If you created or updated files (including a website/), name the paths clearly and invite them to open Files.

@@ -8,11 +8,11 @@ const SITE_URL = "https://nexus-os.apps.grok.bot";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "NEXUS OS — Offline AI for PCs, Pi & cyberdecks",
-    template: "%s · NEXUS OS",
+    default: "Tri-Cass OS — Offline AI for PCs, Pi & cyberdecks",
+    template: "%s · Tri-Cass OS",
   },
   description:
-    "NEXUS OS: offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks, and low-spec machines. Download, flash with Etcher, boot — local Chat, notes, and tools with no cloud account.",
+    "Tri-Cass OS: offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks, and low-spec machines. Download, flash with Etcher, boot — local Chat, notes, and tools with no cloud account.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -25,25 +25,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: "NEXUS OS",
-    title: "NEXUS OS — Offline AI for PCs, Pi & cyberdecks",
+    siteName: "Tri-Cass OS",
+    title: "Tri-Cass OS — Offline AI for PCs, Pi & cyberdecks",
     description:
       "Offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks, and low-spec machines.",
     images: [
       {
-        url: "/brand/og-nexus-os.jpg",
+        url: "/brand/og-tri-cass-os.jpg",
         width: 1200,
         height: 630,
-        alt: "NEXUS OS rabbit wizard logo",
+        alt: "Tri-Cass OS rabbit wizard logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "NEXUS OS — Offline AI for PCs, Pi & cyberdecks",
+    title: "Tri-Cass OS — Offline AI for PCs, Pi & cyberdecks",
     description:
       "Offline AI on a USB stick or Raspberry Pi — for old PCs, cyberdecks, and low-spec machines.",
-    images: ["/brand/og-nexus-os.jpg"],
+    images: ["/brand/og-tri-cass-os.jpg"],
   },
 };
 

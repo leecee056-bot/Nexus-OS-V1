@@ -148,13 +148,13 @@ jobs:
       - uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: nexus-app/release/NEXUS-Companion-USB-*.zip
+          files: nexus-app/release/Tri-Cass-Companion-USB-*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
           name: nexus-companion-usb-kit
-          path: nexus-app/release/NEXUS-Companion-USB-*.zip
+          path: nexus-app/release/Tri-Cass-Companion-USB-*.zip
 
   android-apk:
     runs-on: ubuntu-latest
@@ -200,10 +200,10 @@ jobs:
         with:
           # On manual dispatch, attach to the current Companion release tag.
           tag_name: ${{ github.event_name == 'workflow_dispatch' && 'companion-v0.12.4' || github.ref_name }}
-          files: nexus-app/release/NEXUS-Companion-Android-*.apk
+          files: nexus-app/release/Tri-Cass-Companion-Android-*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
           name: nexus-companion-android
-          path: nexus-app/release/NEXUS-Companion-Android-*.apk
+          path: nexus-app/release/Tri-Cass-Companion-Android-*.apk

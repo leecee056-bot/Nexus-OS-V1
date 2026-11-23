@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
   const pErr = validatePassword(password);
   if (pErr) return NextResponse.json({ error: pErr }, { status: 400 });
 
-  const displayJid = `${username}@nexus.network`;
+  const displayJid = `${username}@tri-cass.network`;
   const passwordHash = await hashPassword(password);
 
   try {

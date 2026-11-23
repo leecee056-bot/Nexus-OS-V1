@@ -1,4 +1,4 @@
-# NEXUS Companion — Android
+# Tri-Cass Companion — Android
 
 Canonical app docs: [`../nexus-app/README.md`](../nexus-app/README.md)  
 APK sideload: [`../public/guides/android-apk.md`](../public/guides/android-apk.md)

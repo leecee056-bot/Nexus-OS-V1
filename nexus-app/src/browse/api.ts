@@ -1,5 +1,5 @@
 /**
- * Desktop Browse integration — themed NEXUS window or installed browser.
+ * Desktop Browse integration — themed Tri-Cass window or installed browser.
  * No-op outside Electron.
  */
 

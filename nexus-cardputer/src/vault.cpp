@@ -76,14 +76,14 @@ bool vault_refresh(void) {
 
   // Single-file fallback
   if (SD.exists(NEXUS_VAULT_SINGLE)) {
-    strncpy(g_files[0].name, "nexus-vault.txt", VAULT_NAME_LEN - 1);
+    strncpy(g_files[0].name, "tri-cass-vault.txt", VAULT_NAME_LEN - 1);
     g_count = 1;
     g_ok = true;
     strncpy(g_hint, NEXUS_VAULT_SINGLE, sizeof(g_hint) - 1);
     return true;
   }
 
-  strncpy(g_hint, "no /nexus-vault on SD", sizeof(g_hint) - 1);
+  strncpy(g_hint, "no /tri-cass-vault on SD", sizeof(g_hint) - 1);
   return false;
 }
 

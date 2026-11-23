@@ -13,7 +13,7 @@ BASE_URL="${NEXUS_MODEL_BASE_URL:-https://huggingface.co/karpathy/tinyllamas/res
 MODEL_URL="${BASE_URL}/stories260K/stories260K.bin"
 TOK_URL="${BASE_URL}/stories260K/tok512.bin"
 
-echo "==> NEXUS Pocket model fetch"
+echo "==> Tri-Cass Pocket model fetch"
 echo "    dest: $DATA"
 
 fetch() {

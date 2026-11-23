@@ -1,6 +1,6 @@
 # Companion “Check for updates”
 
-Lightweight, optional way to see if something newer exists — without NEXUS
+Lightweight, optional way to see if something newer exists — without Tri-Cass
 hosting the large files.
 
 ## What it does

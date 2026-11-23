@@ -11,7 +11,7 @@ import {
 import { GlassPanel } from "./GlassPanel";
 import { spacing, useTheme } from "../theme";
 
-/** Shown on desktop when running from a NEXUS USB kit. */
+/** Shown on desktop when running from a Tri-Cass USB kit. */
 export function PortableUsbPanel() {
   const { colors } = useTheme();
   const [info, setInfo] = useState<PortableInfo | null>(null);

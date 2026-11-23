@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DEFAULT_IMAGE_MODEL_ID } from "./models";
 
-const KEY_MODEL = "nexus.image.modelId";
+const KEY_MODEL = "tricass.image.modelId";
 
 export async function loadSelectedImageModelId(): Promise<string> {
   try {

@@ -16,7 +16,7 @@ const SECTIONS: Section[] = [
   },
   {
     title: "Desk layout",
-    body: "On desktop, pick Layout → Desk for a multi-window NEXUS OS home (menu, chat peek, monitor, files, agent). Classic keeps the familiar single-chat app feel.",
+    body: "On desktop, pick Layout → Desk for a multi-window Tri-Cass OS home (menu, chat peek, monitor, files, agent). Classic keeps the familiar single-chat app feel.",
   },
   {
     title: "Themes",
@@ -24,7 +24,7 @@ const SECTIONS: Section[] = [
   },
   {
     title: "Browse (desktop)",
-    body: "Windows / Mac can open links in a NEXUS Browse window styled like your theme. Companion detects Chrome, Edge, Firefox, Safari, Brave, and more so you can also hand off to an installed browser. We do not rebuild a browser — we provide the window chrome and integration.",
+    body: "Windows / Mac can open links in a Tri-Cass Browse window styled like your theme. Companion detects Chrome, Edge, Firefox, Safari, Brave, and more so you can also hand off to an installed browser. We do not rebuild a browser — we provide the window chrome and integration.",
   },
   {
     title: "Files & websites",
@@ -32,7 +32,7 @@ const SECTIONS: Section[] = [
   },
   {
     title: "Offline vs website",
-    body: "Companion does not need a NEXUS cloud account. Chat, Agent, Vault, Files, Games, and themes run on this machine with local Ollama.\n\nThe website link is only for downloads / releases. “Check for updates” and “Downloads” buttons are optional — skip them and keep working offline.\n\nFirst model pull uses Ollama’s library once; after that, AI stays local.",
+    body: "Companion does not need a Tri-Cass cloud account. Chat, Agent, Vault, Files, Games, and themes run on this machine with local Ollama.\n\nThe website link is only for downloads / releases. “Check for updates” and “Downloads” buttons are optional — skip them and keep working offline.\n\nFirst model pull uses Ollama’s library once; after that, AI stays local.",
   },
   {
     title: "FAQ",

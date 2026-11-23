@@ -72,7 +72,7 @@ export function HomeScreen() {
               },
             ]}
           >
-            NEXUS OS
+            Tri-Cass OS
           </Text>
           <Text style={[styles.title, { color: colors.purple }]}>
             Companion

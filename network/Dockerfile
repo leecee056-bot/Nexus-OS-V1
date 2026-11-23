@@ -1,4 +1,4 @@
-# NEXUS Network lab / VPS image — Prosody XMPP (off-USB).
+# Tri-Cass Network lab / VPS image — Prosody XMPP (off-USB).
 FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive

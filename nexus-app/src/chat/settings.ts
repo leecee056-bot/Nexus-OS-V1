@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DEFAULT_MODEL_ID } from "./models";
 
-const KEY_MODEL = "nexus.chat.modelId";
-const KEY_HOST = "nexus.chat.ollamaHost";
+const KEY_MODEL = "tricass.chat.modelId";
+const KEY_HOST = "tricass.chat.ollamaHost";
 
 /** Default Ollama base URL (desktop / same device). */
 export const DEFAULT_OLLAMA_HOST = "http://127.0.0.1:11434";

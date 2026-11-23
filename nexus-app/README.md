@@ -1,6 +1,6 @@
-# NEXUS Companion (Windows · Mac · Android · iOS)
+# Tri-Cass Companion (Windows · Mac · Android · iOS)
 
-Normal desktop / mobile app for the NEXUS OS / Tri-Cass family — Chat with
+Normal desktop / mobile app for the Tri-Cass OS / Tri-Cass family — Chat with
 **real local models**, Knowledge Vault, Packs, and Files. Matrix boot splash and
 rabbit-wizard branding throughout.
 
@@ -13,21 +13,21 @@ rabbit-wizard branding throughout.
 ## Features (v0.12)
 
 - **Spatial / Open theme** — optional floating liquid-glass canvas (desktop)
-- **Browse (desktop)** — themed NEXUS window + detect installed browsers
+- **Browse (desktop)** — themed Tri-Cass window + detect installed browsers
 - **Add-ons marketplace** — pages of one-click mini apps (clock, calc, coding…)
-- **Offline-first** — no NEXUS cloud account; website links are optional downloads only
-- **Desk layout (desktop)** — multi-window NEXUS OS home (or Classic chat chrome)
+- **Offline-first** — no Tri-Cass cloud account; website links are optional downloads only
+- **Desk layout (desktop)** — multi-window Tri-Cass OS home (or Classic chat chrome)
 - **Games (desktop / USB)** — Chess first, plus Snake, Pong, Breakout, Tetris, 2048
 - **USB portable kit** — unzip to a stick; Vault, chats, Knowledge travel with you
 - **Image Lab (desktop)** — optional local image models, Get-model + prompt
 - **Wait state** — small rabbit dig + rotating fun facts (toggle facts off)
 - **Optional website links** — tap only for downloads / docs; app never phones home
-- **Terminal theme** — CRT multi-panel “NEXUS OS” home dashboard with the real logo
+- **Terminal theme** — CRT multi-panel “Tri-Cass OS” home dashboard with the real logo
 - **Agent** — one tap; Vault / Files / website scaffolds when you ask (not on “hi”)
 - **Local AI Chat** — pick a lightweight model via [Ollama](https://ollama.com)
 - **Add-ons library** — toggle which tools the agent may call
 - **Premium UI** — Lumen glass, phosphor replies, status orb, Basic/Matrix/Lumen/Terminal
-- **Desktop apps** — Windows `.exe` / Mac `.dmg` with NEXUS logo icon
+- **Desktop apps** — Windows `.exe` / Mac `.dmg` with Tri-Cass logo icon
 - **Vault / Packs / Files** — on-device notes and document import
 - **Phone + tablet** — bottom tabs / side rail
 
@@ -36,7 +36,7 @@ Agent guide: [`../public/guides/companion-agent.md`](../public/guides/companion-
 ## Quick start — Chat with a local model
 
 1. Install [Ollama](https://ollama.com/download) (Windows / Mac / Linux).
-2. Open **NEXUS Companion** → **Chat**.
+2. Open **Tri-Cass Companion** → **Chat**.
 3. Tap **Model** → choose a recommended model → **Get**.
 4. Wait for the download once, then start chatting. After that it works offline.
 

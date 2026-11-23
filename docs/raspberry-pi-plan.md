@@ -1,4 +1,4 @@
-# NEXUS OS — Raspberry Pi images (plan)
+# Tri-Cass OS — Raspberry Pi images (plan)
 
 **Date:** 2026-11-19  
 **Status:** Plan + scaffold — **not shipped yet.** Do not claim Pi downloads until QEMU/hardware smoke passes and a GitHub Release asset exists.  
@@ -17,7 +17,7 @@ The current `build-usb-image.sh` only accepts `x86_64|i686`. Pi needs a new scri
 
 ## Goals (v1)
 
-1. **Primary:** `nexus-os-rpi-aarch64.img` (or `portable-ai-os-aarch64.img`) for **Pi 4 and Pi 5** (64-bit OS).
+1. **Primary:** `tri-cass-os-rpi-aarch64.img` (or `portable-ai-os-aarch64.img`) for **Pi 4 and Pi 5** (64-bit OS).
 2. Same product experience: hub TUI, SmolLM2 rescue model, `AI_DATA` persistence, Network stub, offline-first.
 3. Flash with Etcher / Raspberry Pi Imager; document HDMI + USB keyboard.
 4. Publish xz on GitHub Release (same 2 GiB asset limit pattern as PC).
@@ -66,12 +66,12 @@ Partition 3  ext4   LABEL=AI_DATA  ~1 GB     — config, extra models, vault (sa
 1. **Do not** reuse MBR+extlinux from the PC builder — Pi firmware will not boot it.
 2. Cross-build on x86_64 cloud VM with `qemu-user-static` + `binfmt` (same pattern as i386 debootstrap).
 3. llama: extend `build-llama.sh` with `aarch64` toolchain or build inside chroot.
-4. Keep branding paths `/opt/portable-ai-os` + `/opt/nexus-os` symlink.
+4. Keep branding paths `/opt/portable-ai-os` + `/opt/tri-cass-os` symlink.
 5. Website: until RPi-E, copy must say **“Raspberry Pi images — building next”**, not downloadable.
 
 ## Scaffold locations
 
-- Plan: `docs/nexus-os-raspberry-pi-plan.md` (this file)
+- Plan: `docs/raspberry-pi-plan.md` (this file)
 - Script: `portable-ai-os/scripts/build-rpi-image.sh`
 - Flash notes: `portable-ai-os/docs/raspberry-pi.md`
 

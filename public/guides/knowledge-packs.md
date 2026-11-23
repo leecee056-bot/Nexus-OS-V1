@@ -1,6 +1,6 @@
 # Optional Knowledge Packs (offline)
 
-NEXUS OS works without these. Use them only if you have spare space on a USB
+Tri-Cass OS works without these. Use them only if you have spare space on a USB
 stick or microSD (32 GB+ is plenty for lots of text) and want more than the
 built-in Vault starter notes.
 
@@ -35,8 +35,8 @@ Your own short notes and cheatsheets in `.txt` / `.md` are often the most useful
 
 **Cardputer ADV**
 
-- FAT microSD, preferred: `/nexus-vault/*.txt` or `*.md` at the card root.
-- Also accepted: `/vault/` or a single `/nexus-vault.txt`.
+- FAT microSD, preferred: `/tri-cass-vault/*.txt` or `*.md` at the card root.
+- Also accepted: `/vault/` or a single `/tri-cass-vault.txt`.
 - Keep files small; no card required for the rest of the hub.
 - Example: `nexus-cardputer/sd-example/`
 
@@ -44,7 +44,7 @@ Your own short notes and cheatsheets in `.txt` / `.md` are often the most useful
 USB / SD knowledge side
 ├── vault/              ← PC/Pi notes
 │   └── guide.txt
-└── nexus-vault/        ← Cardputer preferred
+└── tri-cass-vault/        ← Cardputer preferred
     └── cheatsheet.txt
 ```
 

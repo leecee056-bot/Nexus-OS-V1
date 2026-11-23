@@ -1,19 +1,19 @@
-NEXUS Companion — USB / portable kit
+Tri-Cass Companion — USB / portable kit
 ====================================
 
 Carry your personal offline AI setup on a USB stick, memory card, or external
-drive. Heavier than the bootable NEXUS OS images, but the same Companion features
+drive. Heavier than the bootable Tri-Cass OS images, but the same Companion features
 (Chat, Agent, Vault, Packs, Image Lab, themes) with data that travels with you.
 
 Quick start (about three clicks)
 --------------------------------
 1. Download the USB kit .zip from https://nexus-os.apps.grok.bot/download#companion-usb
 2. Unzip onto a USB stick (keep the folder layout intact).
-3. Windows: double-click  Windows\Start-NEXUS.bat
-   Mac:     double-click  Mac\Start-NEXUS.command  (or right-click → Open)
+3. Windows: double-click  Windows\Start-Tri-Cass.bat
+   Mac:     double-click  Mac\Start-Tri-Cass.command  (or right-click → Open)
 
 First run may ask Windows SmartScreen / Mac Gatekeeper to allow the app —
-choose Run anyway / Open. The NEXUS logo is the app icon.
+choose Run anyway / Open. The Tri-Cass logo is the app icon.
 
 What stays on this drive
 ------------------------
@@ -31,7 +31,7 @@ OLLAMA_MODELS to a folder on this USB if you want weights on the stick too
 
 Unplug safely
 -------------
-Quit Companion, then eject the drive. Plug into another PC and Start-NEXUS again —
+Quit Companion, then eject the drive. Plug into another PC and Start-Tri-Cass again —
 your Vault and chats come with you.
 
 More help

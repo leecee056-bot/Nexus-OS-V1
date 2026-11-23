@@ -1,16 +1,16 @@
-# NEXUS Network — Prosody lab / VPS bring-up
+# Tri-Cass Network — Prosody lab / VPS bring-up
 # Usage: cd network && cp .env.example .env && docker compose up -d --build
 services:
   prosody:
     build: .
-    container_name: nexus-prosody
+    container_name: tricass-prosody
     restart: unless-stopped
     ports:
       - "5222:5222"   # client connections
       - "5269:5269"   # server federation (optional)
       - "5280:5280"   # HTTP (BOSH/upload later)
     environment:
-      NEXUS_XMPP_DOMAIN: ${NEXUS_XMPP_DOMAIN:-nexus.network}
+      NEXUS_XMPP_DOMAIN: ${NEXUS_XMPP_DOMAIN:-tri-cass.network}
       NEXUS_ADMIN_PASSWORD: ${NEXUS_ADMIN_PASSWORD:-}
       NEXUS_ALICE_PASSWORD: ${NEXUS_ALICE_PASSWORD:-}
       NEXUS_BOB_PASSWORD: ${NEXUS_BOB_PASSWORD:-}

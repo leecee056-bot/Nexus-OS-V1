@@ -19,7 +19,7 @@ except ImportError:
     sys.exit(2)
 
 
-DOMAIN = os.environ.get("NEXUS_XMPP_DOMAIN", "nexus.network")
+DOMAIN = os.environ.get("NEXUS_XMPP_DOMAIN", "tri-cass.network")
 HOST = os.environ.get("NEXUS_XMPP_HOST", "127.0.0.1")
 PORT = int(os.environ.get("NEXUS_XMPP_PORT", "5222"))
 ALICE_PASS = os.environ.get("NEXUS_ALICE_PASSWORD", "")

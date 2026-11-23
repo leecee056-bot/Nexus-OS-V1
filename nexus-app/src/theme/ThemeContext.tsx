@@ -15,8 +15,8 @@ import {
   type ThemeId,
 } from "./palettes";
 
-const KEY_THEME = "nexus.companion.theme";
-const KEY_SCAN = "nexus.companion.scanlines";
+const KEY_THEME = "tricass.companion.theme";
+const KEY_SCAN = "tricass.companion.scanlines";
 
 type ThemeContextValue = {
   themeId: ThemeId;

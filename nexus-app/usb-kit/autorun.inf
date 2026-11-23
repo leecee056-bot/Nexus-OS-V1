@@ -1,5 +1,5 @@
 [AutoRun]
-label=NEXUS Companion
+label=Tri-Cass Companion
 icon=Assets\icon.ico
-action=Open NEXUS Companion USB kit
-shellexecute=Windows\Start-NEXUS.bat
+action=Open Tri-Cass Companion USB kit
+shellexecute=Windows\Start-Tri-Cass.bat

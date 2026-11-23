@@ -1,6 +1,6 @@
 # Companion Image Lab (Windows · Mac)
 
-Optional **local image generation** in the desktop NEXUS Companion apps.
+Optional **local image generation** in the desktop Tri-Cass Companion apps.
 Phone / tablet builds do not include this tab yet — use Windows, Mac, or the
 web companion at [/companion/](/companion/).
 

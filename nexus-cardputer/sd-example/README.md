@@ -1,17 +1,17 @@
-# Example microSD layout for NEXUS Cardputer ADV
+# Example microSD layout for Tri-Cass Cardputer ADV
 
-Copy the `nexus-vault/` folder to the **root** of a FAT-formatted microSD card
-(so the device sees `/nexus-vault/...`). Optional: also use `/nexus-notes.txt`
+Copy the `tri-cass-vault/` folder to the **root** of a FAT-formatted microSD card
+(so the device sees `/tri-cass-vault/...`). Optional: also use `/tri-cass-notes.txt`
 for the scratch Notes log (created automatically when you save a note).
 
 ```
 microSD (root)
-├── nexus-vault/           ← Knowledge Vault (optional)
+├── tri-cass-vault/           ← Knowledge Vault (optional)
 │   ├── 00-readme.txt
 │   ├── guide.txt
 │   ├── glossary.txt
 │   └── how-to-boot.txt
-└── nexus-notes.txt        ← created by Notes app (optional)
+└── tri-cass-notes.txt        ← created by Notes app (optional)
 ```
 
 ## Rules
@@ -19,7 +19,7 @@ microSD (root)
 - Plain `.txt` or `.md` only (keep files small — the screen is 240×135).
 - At most ~12 files are listed in the hub (first found).
 - No card / empty folder: firmware still runs; Vault shows a short hint.
-- Alternate paths also work: `/vault/*.txt` or a single `/nexus-vault.txt`.
+- Alternate paths also work: `/vault/*.txt` or a single `/tri-cass-vault.txt`.
 
 ## On the device
 
@@ -28,7 +28,7 @@ Type a word then **Enter** to search (line-by-line, low RAM).
 
 ## Larger packs
 
-Add more `.txt` / `.md` into `nexus-vault/` the same way. Free public sources
+Add more `.txt` / `.md` into `tri-cass-vault/` the same way. Free public sources
 (Gutenberg plain text, Kiwix Wikipedia dumps — extract text for this device)
 are listed on the site: **Optional Knowledge Packs**
 (`/knowledge-packs` or `public/guides/knowledge-packs.md`). Keep individual

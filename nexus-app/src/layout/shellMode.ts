@@ -1,10 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-/** Classic LLM chat chrome vs multi-window NEXUS OS desk. */
+/** Classic LLM chat chrome vs multi-window Tri-Cass OS desk. */
 export type ShellMode = "classic" | "desk";
 
-const KEY = "nexus.companion.shellMode";
-const FACTS_KEY = "nexus.companion.funFacts";
+const KEY = "tricass.companion.shellMode";
+const FACTS_KEY = "tricass.companion.funFacts";
 
 export async function loadShellMode(): Promise<ShellMode> {
   try {

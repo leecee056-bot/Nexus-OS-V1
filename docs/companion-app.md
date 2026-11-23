@@ -1,4 +1,4 @@
-# NEXUS Companion (Windows + iOS)
+# Tri-Cass Companion (Windows + iOS)
 
 Canonical instructions: [`../nexus-app/README.md`](../nexus-app/README.md)  
 Short site guide: [`../public/guides/companion-app.md`](../public/guides/companion-app.md)
