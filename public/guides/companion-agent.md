@@ -1,18 +1,20 @@
 # Tri-Cass Companion Agent
 
 Agent mode turns Chat into a personal helper that can use the knowledge and
-tools **you** added — Vault notes, knowledge packs, and the Add-ons / Plugin
-library — instead of chatting in isolation.
+tools **you** added — Vault notes, knowledge packs, coding packs, and the
+Add-ons / Plugin library — instead of chatting in isolation.
 
 ## Quick start
 
 1. Download a local model in **Chat** (Ollama). Small models (~1.5B and under)
-   work best with **file tools + Vault/packs**, not as a solo “know everything”
+   work best with **coding packs + file tools**, not as a solo “know everything”
    coder.
-2. Open **Add-ons** and leave the tools you want enabled (Vault, Packs, Files…).
+2. Open **Add-ons** and leave the tools you want enabled (Vault, Packs, Coding
+   Packs, Files…).
 3. In **Chat**, select **Agent** (default).
 4. Ask things like:
    - “Search my vault for glossary”
+   - “Look up fetch API in my coding packs”
    - “List files in website”
    - “Create a simple website”
    - “Write website/about.html with a short bio”
@@ -43,6 +45,7 @@ rejected. Common text/code extensions are allowed (`.txt` `.md` `.html` `.css`
 |--------|------|------------|
 | Vault Search | `search_vault` | Search Knowledge Vault notes |
 | Knowledge Packs | `search_packs` | Prefer pack-imported notes |
+| Coding Packs | `search_coding_packs` | Search `pack-coding-*` imports (DevDocs / SO excerpts) |
 | Files Browse | `list_files` | List workspace / folders |
 | Files Read | `read_file` | Open text files |
 | Files Write | `write_file` | Create/update text & code files |
@@ -54,17 +57,18 @@ rejected. Common text/code extensions are allowed (`.txt` `.md` `.html` `.css`
 
 Disable any plugin in **Add-ons** and Agent will not call that tool.
 
-## Small-model coding (optional)
+## Small-model coding (~1.5B and smaller)
 
-With a small local model, aim for:
+Realistic workflow:
 
-- Short scripts, edits, file trees, and starters
-- Looking things up in Vault / packs you imported
-- Multi-step asks (“create folder X, then write Y.py”)
+1. **Packs lookup** — Import DevDocs / Stack Overflow excerpts via Packs →
+   **Import as coding pack** (see [/knowledge-packs#coding](/knowledge-packs#coding)).
+2. **File tools** — list / read / write / rename inside the sandbox.
+3. **Short edits** — scripts, file trees, starters, small HTML/CSS/JS pages.
 
-Do not expect large greenfield apps from a 1.5B (or smaller) model alone.
-Coding knowledge packs (DevDocs / Stack Overflow via Kiwix) are planned as
-optional USB downloads — see the Knowledge Packs page.
+Do **not** expect large greenfield apps from a 1.5B (or smaller) model alone.
+Ask for one file or one function at a time; paste errors back into Agent with
+packs enabled.
 
 ## Why it feels personal
 

@@ -64,7 +64,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "knowledge-packs",
     question: "What are Optional Knowledge Packs?",
     answer:
-      "Free public offline knowledge you can copy onto a spare USB stick or microSD (32 GB+ is plenty for lots of text). Examples: Kiwix Wikipedia/Wiktionary ZIM archives and Project Gutenberg plain-text books. They are completely optional — Tri-Cass works without them. Prefer .txt/.md for Vault and Cardputer; open large .zim files with Kiwix or extract text first. See the Knowledge Packs page for links and copy paths.",
+      "Free public offline knowledge you can copy onto a spare USB stick or microSD (32 GB+ is plenty for lots of text). Examples: Kiwix Wikipedia/Wiktionary ZIM archives, Project Gutenberg plain-text books, and coding packs (DevDocs / Stack Overflow via Kiwix — extract .txt/.md; we do not host multi-GB dumps). They are completely optional — Tri-Cass works without them. Prefer .txt/.md for Vault, Cardputer, and Companion Agent (Packs → Import as coding pack). Open large .zim files with Kiwix or extract text first. See Knowledge Packs → Coding packs.",
   },
   {
     id: "companion",

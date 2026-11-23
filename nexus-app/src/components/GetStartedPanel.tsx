@@ -12,7 +12,15 @@ const SECTIONS: Section[] = [
   },
   {
     title: "Chat vs Agent",
-    body: "Chat talks straight to your local model.\nAgent can search your Vault, use Add-ons, and write real files (including a website/ folder) when you ask — not when you just say hi.",
+    body: "Chat talks straight to your local model.\nAgent can search your Vault, coding packs, use Add-ons, and write real files (including a website/ folder) when you ask — not when you just say hi.",
+  },
+  {
+    title: "Small models (~1.5B)",
+    body: "Keep expectations realistic: scripts, starters, and short edits — not large apps.\nBest loop: Import coding packs (DevDocs / Stack Overflow excerpts) → ask Agent to look them up → use Files tools for one change at a time.\nLeave Coding Packs + Files on in Add-ons.",
+  },
+  {
+    title: "Coding packs",
+    body: "Optional. We don’t host multi-GB ZIMs — download DevDocs / Stack Exchange via Kiwix, copy useful .txt/.md to Knowledge/coding/ (USB kit) or anywhere, then Packs → Import as coding pack.\nAgent searches those with search_coding_packs. Site: knowledge-packs → Coding packs.",
   },
   {
     title: "Desk layout",

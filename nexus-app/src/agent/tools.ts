@@ -47,11 +47,15 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
     /\b(vault|notes?|knowledge|remember|what did i|lookup|look up|search (my |the )?(vault|notes|knowledge))\b/.test(
       q,
     );
-  const wantsPacks =
+  const wantsCodingPacks =
     !isChitchat &&
-    /\b(packs?|wiki|wikipedia|gutenberg|offline (knowledge|pack)|devdocs|stack\s*overflow)\b/.test(
+    /\b(coding pack|devdocs|stack\s*overflow|stack exchange|api docs|documentation|look up (how|docs|syntax)|reference (for|on))\b/.test(
       q,
     );
+  const wantsPacks =
+    !isChitchat &&
+    !wantsCodingPacks &&
+    /\b(packs?|wiki|wikipedia|gutenberg|offline (knowledge|pack))\b/.test(q);
   const wantsFiles =
     !isChitchat &&
     /\b(file|folder|website|html|css|project|create|write|save|list files|in files|make (a |me )?(site|page|website)|rename|delete|remove|mkdir|organise|organize)\b/.test(
@@ -64,6 +68,14 @@ export function planTools(userMessage: string, allowed: string[]): AgentToolCall
     calls.push({
       tool: "search_vault",
       args: { query: keywords(userMessage).join(" ") || userMessage.slice(0, 80) },
+    });
+  }
+  if (wantsCodingPacks && allow.has("search_coding_packs")) {
+    calls.push({
+      tool: "search_coding_packs",
+      args: {
+        query: keywords(userMessage).join(" ") || userMessage.slice(0, 80),
+      },
     });
   }
   if (wantsPacks && allow.has("search_packs")) {
@@ -254,6 +266,38 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
         ok: true,
         text:
           "Pack hits:\n" +
+          hits
+            .map(
+              (n) =>
+                `• ${n.title}\n${n.body.slice(0, 400)}${n.body.length > 400 ? "…" : ""}`,
+            )
+            .join("\n\n"),
+      };
+    }
+    case "search_coding_packs": {
+      const notes = await loadNotes();
+      const coding = notes.filter((n) => n.id.startsWith("pack-coding-"));
+      const pool =
+        coding.length > 0
+          ? coding
+          : notes.filter((n) => n.id.startsWith("pack-"));
+      const hits = searchNotes(pool, call.args.query || "").slice(0, 6);
+      if (hits.length === 0) {
+        return {
+          tool: call.tool,
+          ok: true,
+          text:
+            "Coding packs: no matches. Import .txt/.md via Packs → Import as coding pack " +
+            "(or copy excerpts from DevDocs / Stack Overflow ZIMs — we don’t host dumps).",
+        };
+      }
+      return {
+        tool: call.tool,
+        ok: true,
+        text:
+          (coding.length > 0
+            ? "Coding pack hits:\n"
+            : "Pack hits (no coding-tagged imports yet — using general packs):\n") +
           hits
             .map(
               (n) =>

@@ -6,8 +6,8 @@ This kit runs without a Tri-Cass cloud account.
 What stays local
 ----------------
 - Chat (Ollama on the host PC, or the tiny phrase fallback)
-- Agent tools (Vault, Files, website scaffold)
-- Vault notes in Data/ and Knowledge/
+- Agent tools (Vault, coding packs, Files, website scaffold)
+- Vault notes in Data/ and Knowledge/ (coding excerpts → Knowledge/coding/)
 - Themes, Desk/Classic layout, Games, Image Lab
 
 What the website is for

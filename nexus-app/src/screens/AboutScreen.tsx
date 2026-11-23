@@ -15,6 +15,8 @@ import { OfflineGuidesPanel } from "../components/OfflineGuidesPanel";
 import { PortableUsbPanel } from "../components/PortableUsbPanel";
 import { ThemePicker } from "../components/ThemePicker";
 import {
+  AGENT_GUIDE_URL,
+  CODING_PACKS_URL,
   COMPANION_RELEASES_URL,
   IMAGE_GUIDE_URL,
   OS_RELEASES_URL,
@@ -70,8 +72,20 @@ export function AboutScreen() {
 
       <GlowPanel title="Local models + Agent">
         Chat talks to Ollama on this machine. Flip Agent on when you want Vault
-        search, Add-ons, or real files written (ask it to make a website).
-        Desktop also includes Image Lab and a low-memory Games tab.
+        search, coding packs, Add-ons, or real files written (ask it to make a
+        website). Desktop also includes Image Lab and a low-memory Games tab.
+      </GlowPanel>
+
+      <GlowPanel title="Small models (~1.5B)" accent="purple">
+        Tiny local models are best at short scripts, starters, and edits — not
+        large apps. Prefer: coding packs lookup → file tools → one change at a
+        time. Import DevDocs / Stack Overflow excerpts via Packs → Import as
+        coding pack.
+        <CheckUpdatesButton url={AGENT_GUIDE_URL} label="Agent guide (optional)" />
+        <CheckUpdatesButton
+          url={CODING_PACKS_URL}
+          label="Coding packs how-to (optional)"
+        />
       </GlowPanel>
 
       <GlowPanel title="Optional website links" accent="purple">
@@ -99,7 +113,7 @@ export function AboutScreen() {
       </GlowPanel>
 
       <GlowPanel title="Version">
-        0.12.4 · Spatial · Browse · Add-ons · Desktop launcher · Offline-first ·
+        0.12.5 · Spatial · Browse · Add-ons · Coding packs · Offline-first ·
         Desk · Agent{"\n"}
         Running on {Platform.OS}
       </GlowPanel>
