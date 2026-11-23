@@ -150,10 +150,21 @@ class AgentController:
                 return path.read_text(encoding="utf-8", errors="replace")[:4000]
             if tool == "vault":
                 v = Vault(self.data_dir)
+                # First Agents vault call: index starter raw notes if DB empty
+                try:
+                    n_docs = v._conn.execute("SELECT COUNT(*) FROM docs").fetchone()[0]
+                except Exception:
+                    n_docs = 0
+                if n_docs == 0:
+                    v.rebuild()
                 hits = v.search(arg or "")
+                if not hits and n_docs == 0:
+                    # rebuilt but still empty — try once more after raw seed
+                    v.rebuild()
+                    hits = v.search(arg or "")
                 v.close()
                 if not hits:
-                    return "(no vault hits)"
+                    return "(no vault hits — add .md/.txt under knowledge/raw, or Vault → rebuild)"
                 return "\n".join(f"{h['title']}: {h.get('snip')}" for h in hits)
             if tool == "note":
                 notes = self.data_dir / "notes"
