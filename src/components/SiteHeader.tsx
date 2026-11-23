@@ -12,6 +12,7 @@ const LINKS = [
   { href: "/demo/", label: "Demo" },
   { href: "/download", label: "Download" },
   { href: "/setup", label: "Setup" },
+  { href: "/compat", label: "Compat" },
   { href: "/docs", label: "Docs" },
   { href: "/faq", label: "FAQ" },
   { href: "/network", label: "Network" },

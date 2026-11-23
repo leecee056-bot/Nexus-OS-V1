@@ -32,6 +32,7 @@ export default function SetupPage() {
           <a href="#knowledge-packs">Knowledge packs</a>
           <a href="#companion">Companion app</a>
           <a href="#troubleshoot">Troubleshooting</a>
+          <Link href="/compat">Hardware compat</Link>
           <Link href="/download#cardputer">Cardputer download</Link>
         </nav>
 

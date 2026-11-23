@@ -1003,6 +1003,38 @@ pre.panel {
   margin-top: 0.25rem;
 }
 
+.compat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.compat-table th,
+.compat-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--border, var(--accent-soft));
+}
+
+.compat-table th {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.compat-table td:nth-child(3) {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .compat-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* Hamburger earlier so tablet widths are not a cramped link strip */
 @media (max-width: 900px) {
   .nav-toolbar {

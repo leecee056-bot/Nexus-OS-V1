@@ -1,40 +1,41 @@
 # Source offer (GPL components in Tri-Cass OS images)
 
 Tri-Cass product code in this repository (website, Companion app, Pocket /
-Cardputer firmware) is licensed under the **MIT License** — see [`LICENSE`](LICENSE).
+Cardputer firmware, and the `portable-ai-os/` hub + build scripts) is licensed
+under the **MIT License** — see [`LICENSE`](LICENSE) and
+[`portable-ai-os/LICENSE`](portable-ai-os/LICENSE).
 
-The **bootable USB / Pi disk images** distributed on GitHub Releases include
-third-party GPL components (notably the Linux kernel and GPL userland). Those
-binaries are **not** built from this website repo alone.
+The **bootable USB / Pi disk images** on GitHub Releases also include
+third-party **GPL** components (notably the Linux kernel and GPL userland).
 
-## Corresponding source
+## Corresponding source (standing offer)
 
-We intend to publish, with each image release:
+For each published image release we provide or will provide:
 
-1. The **image build scripts** and package list used to produce that release.
-2. An **SBOM** / package inventory for the rootfs.
-3. A written **GPL source offer** covering kernel and GPL userland (or links to
-   the exact Debian/Ubuntu source packages used for that build).
+1. The **image build scripts** and pins in [`portable-ai-os/`](portable-ai-os/)
+   (`scripts/`, `versions.lock`, `portable-ai-os/SBOM.md`).
+2. An **SBOM** baseline for that class of image (`portable-ai-os/SBOM.md`).
+3. Links or packages for the **Debian / Alpine** source of GPL packages installed
+   in that build, plus the **llama.cpp** commit recorded in
+   `portable-ai-os/build/llama/COMMIT` / `versions.lock`.
 
-Until that packaging lands in a public git tree (tracker **HAP-63**), treat
-this file as the standing note: corresponding source for GPL parts of a given
-release will be provided on request for at least three years after that
-release, and will be published alongside future builds.
+This file is a written offer: corresponding source for GPL parts of a given
+Tri-Cass OS image release will be provided on request for **at least three years**
+after that release, and is intended to ship alongside future builds in this repo.
 
-Contact via the project GitHub:
-https://github.com/leecee056-bot/Nexus-OS-V1/issues
+Contact: https://github.com/leecee056-bot/Nexus-OS-V1/issues
 
-## What is already public here
+## What is public in this repo
 
 | Tree | Licence | Notes |
 |------|---------|--------|
 | Website (`src/`, `public/`) | MIT | This repo |
 | Companion (`nexus-app/`) | MIT | This repo |
 | Pocket / Cardputer firmware | MIT | This repo |
-| USB / Pi image build scripts | Pending publish | Tracked as HAP-63 |
+| Image build + hub (`portable-ai-os/`) | MIT (+ GPL in shipped images) | Scripts, TUI, SBOM, artifact checksums — not the raw `.img` blobs |
 
 ## Boot honesty (v1 images)
 
 Current v1 images are **unsigned** and primarily exercised on **legacy / BIOS
 (CSM)** style USB boot. **UEFI + Secure Boot dual-signed** boot is planned
-(HAP-64). Do not treat “turn Secure Boot off” as the long-term product path.
+(HAP-64). See [/compat](/compat) for the honest hardware matrix.

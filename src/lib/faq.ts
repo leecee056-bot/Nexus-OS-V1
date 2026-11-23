@@ -88,7 +88,13 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "secure-boot",
     question: "Why won’t my PC boot from the stick?",
     answer:
-      "v1 images are unsigned and work best with legacy / BIOS (CSM) USB boot. Try the USB boot menu (often F12, Esc, or F10) and the matching 32-bit or 64-bit image. Pure UEFI machines without CSM may not boot yet — signed UEFI support is planned. Turning Secure Boot off is only a last-resort workaround when legacy USB boot is still available. See Setup. (Pocket uses a Serial monitor, not PC BIOS boot.)",
+      "v1 images are unsigned and work best with legacy / BIOS (CSM) USB boot. Try the USB boot menu (often F12, Esc, or F10) and the matching 32-bit or 64-bit image. Pure UEFI machines without CSM may not boot yet — signed UEFI support is planned. Turning Secure Boot off is only a last-resort workaround when legacy USB boot is still available. See Setup and the Hardware compatibility page. (Pocket uses a Serial monitor, not PC BIOS boot.)",
+  },
+  {
+    id: "compat",
+    question: "What hardware does Tri-Cass OS actually support?",
+    answer:
+      "See the Hardware compatibility page for an honest matrix: BIOS/legacy USB PCs and Pi 4 are the v1 sweet spot; UEFI-only Secure Boot machines, Apple Silicon USB boot, and very old SSE-limited CPUs are limited or planned. Companion apps cover modern desktops/phones with local Ollama without flashing.",
   },
   {
     id: "name",

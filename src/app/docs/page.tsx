@@ -163,13 +163,32 @@ export default function DocsPage() {
         </div>
 
         <div className="docs-group">
-          <h3>Trust &amp; source</h3>
+          <h3>Trust &amp; hardware</h3>
           <ul className="docs-list">
+            <li>
+              <Link href="/compat">
+                Hardware compatibility
+                <small>
+                  Honest v1 matrix — BIOS vs UEFI, Pi, Pocket, planned work
+                </small>
+              </Link>
+            </li>
             <li>
               <a href="/guides/sources.md">
                 Source / GPL note
                 <small>
-                  MIT product code vs GPL image components; boot honesty
+                  MIT product code vs GPL image components; SBOM pointers
+                </small>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/leecee056-bot/Nexus-OS-V1/tree/main/portable-ai-os"
+                rel="noopener noreferrer"
+              >
+                Image build tree
+                <small>
+                  portable-ai-os/ scripts, hub, SBOM (not the .img blobs)
                 </small>
               </a>
             </li>

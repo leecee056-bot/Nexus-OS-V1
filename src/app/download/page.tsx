@@ -43,7 +43,8 @@ export default function DownloadPage() {
           <strong>USB stick</strong> for PC, <strong>microSD</strong> for Pi).{" "}
           <strong>Pocket / Cardputer:</strong> clone firmware and flash with
           PlatformIO — see Setup. Full steps:{" "}
-          <Link href="/setup">Setup guide</Link>.
+          <Link href="/setup">Setup guide</Link>. Will it boot on your PC?{" "}
+          <Link href="/compat">Hardware compatibility</Link> (honest v1 matrix).
         </div>
 
         <h3 className="subhead">1. Choose your machine</h3>

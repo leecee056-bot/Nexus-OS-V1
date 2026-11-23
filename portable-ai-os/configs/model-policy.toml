@@ -1,0 +1,21 @@
+# Override auto model selection (Phase A: used by probe + TUI)
+
+# Pin a catalog id, or leave empty for auto
+pin_model = ""
+
+# Force CPU (Vulkan off in this prototype)
+force_cpu = true
+
+# Context window override (0 = use catalog/tier default)
+ctx = 0
+
+# Threads: 0 = max(1, nproc - 1)
+threads = 0
+
+# llama-server bind (loopback only)
+host = "127.0.0.1"
+port = 8080
+
+# Memory budget hints (MB)
+os_reserve_mb = 350
+ui_reserve_mb = 96
