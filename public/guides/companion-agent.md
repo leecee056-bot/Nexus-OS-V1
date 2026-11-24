@@ -83,6 +83,16 @@ Ask Agent:
 - “restore last checkpoint” / “undo”
 - “save checkpoint”
 
+## Post-write checks + stuck detection
+
+After each successful `write_file` / `edit_file`, Agent runs a quick smoke check
+(JSON parse, HTML/JS/Python bracket sanity; on desktop, `py_compile` /
+`node --check` when the file lives under `projects/<name>/`). Failures are fed
+back into the tool loop.
+
+If the **same error** repeats **three times** in one turn, Agent restores the
+last checkpoint and stops — asking you to change approach rather than thrashing.
+
 ## Plan mode + project rules
 
 Cline-slim flow for multi-file builds:

@@ -94,6 +94,14 @@ def create_checkpoint(
     return f"Checkpoint {cid} · {project} ({n} files) — {meta['label']}"
 
 
+def latest_checkpoint_id(data_dir: Path, project: str = "") -> str | None:
+    items = _load_index(data_dir)
+    if project:
+        project = project.strip()
+        items = [i for i in items if i.get("project") == project]
+    return items[0]["id"] if items else None
+
+
 def list_checkpoints(data_dir: Path, project: str = "") -> str:
     items = _load_index(data_dir)
     if project:

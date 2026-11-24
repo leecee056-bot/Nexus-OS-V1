@@ -9,6 +9,12 @@ import { chatCompletion } from "../chat/ollama";
 import type { FileChange } from "../files/workspace";
 import type { AgentStep, AgentToolCall, AgentToolName } from "./schema";
 import type { AgentMode } from "./planRules";
+import {
+  createStuckTracker,
+  isStuck,
+  recordError,
+  rollbackLatest,
+} from "./stuck";
 import { runTool, type ToolResult } from "./tools";
 
 export const GRAMMAR_TOOLS = [
@@ -249,6 +255,7 @@ export async function runGrammarLoop(opts: {
   let mutateFailed = false;
   let usedGrammar = false;
   let finishMessage = "";
+  const stuck = createStuckTracker();
 
   push(
     step(
@@ -391,13 +398,34 @@ export async function runGrammarLoop(opts: {
       ),
     );
 
+    if (!allOk) {
+      const failText = results
+        .filter((r) => !r.ok)
+        .map((r) => r.text)
+        .join("\n");
+      const streak = recordError(stuck, failText);
+      if (isStuck(streak)) {
+        mutateFailed = true;
+        const rb = await rollbackLatest();
+        push(step("Stuck", `Same error ×${streak} — rollback. ${rb.slice(0, 100)}`, {
+          ok: true,
+        }));
+        finishMessage =
+          `Stuck on the same error ${streak} times. Rolled back the last checkpoint and stopped. ` +
+          `Try a different approach or a smaller change.\n\nLast error:\n${failText.slice(0, 800)}\n\n${rb}`;
+        break;
+      }
+    }
+
     transcript.push({
       role: "assistant",
       content: JSON.stringify({ tool: call.tool, args: call.args }),
     });
     transcript.push({
       role: "user",
-      content: `[tool result]\n${obs.slice(0, 3500)}\n\nNext: one JSON tool call, or finish.`,
+      content: allOk
+        ? `[tool result]\n${obs.slice(0, 3500)}\n\nNext: one JSON tool call, or finish.`
+        : `[tool result]\n${obs.slice(0, 3500)}\n\nCheck failed — fix differently (do not repeat the same broken edit). Next: one JSON tool call, or finish.`,
     });
   }
 

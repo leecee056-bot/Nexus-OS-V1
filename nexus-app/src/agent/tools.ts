@@ -27,6 +27,7 @@ import {
   isRulesPath,
   type AgentMode,
 } from "./planRules";
+import { postWriteVerify } from "./postWrite";
 
 export type ToolResult = {
   tool: AgentToolName;
@@ -452,10 +453,19 @@ export async function runTool(
       }
       try {
         const { doc, change } = await writeTextFile(path, content);
+        const check = await postWriteVerify({ path, content });
+        if (!check.ok) {
+          return {
+            tool: call.tool,
+            ok: false,
+            text: `Wrote ${doc.name} but post-write check failed: ${check.detail}`,
+            change,
+          };
+        }
         return {
           tool: call.tool,
           ok: true,
-          text: `Wrote ${doc.name} (${doc.size ?? 0} bytes) into the workspace.`,
+          text: `Wrote ${doc.name} (${doc.size ?? 0} bytes). Check: ${check.detail}`,
           change,
         };
       } catch (e) {
@@ -492,10 +502,19 @@ export async function runTool(
       const next = res.text.replace(old, neu);
       try {
         const { doc, change } = await writeTextFile(path, next);
+        const check = await postWriteVerify({ path, content: next });
+        if (!check.ok) {
+          return {
+            tool: call.tool,
+            ok: false,
+            text: `Edited ${doc.name} but post-write check failed: ${check.detail}`,
+            change,
+          };
+        }
         return {
           tool: call.tool,
           ok: true,
-          text: `Edited ${doc.name} (replaced ${old.length}→${neu.length} chars).`,
+          text: `Edited ${doc.name} (replaced ${old.length}→${neu.length} chars). Check: ${check.detail}`,
           change,
         };
       } catch (e) {
