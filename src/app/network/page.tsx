@@ -99,7 +99,7 @@ export default function NetworkPage() {
         <figure className="shot">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/tri-cass-os-mockup-network.png?v=20261124"
+            src="/images/tri-cass-os-mockup-network.png?v=20261124b"
             alt="Tri-Cass Network design mockup"
           />
           <figcaption>

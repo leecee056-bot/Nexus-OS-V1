@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { BrandWordmark } from "@/components/BrandWordmark";
 import { FAQ_ITEMS, FAQ_TEASER_IDS } from "@/lib/faq";
@@ -13,24 +12,27 @@ export default function HomePage() {
       <section className="hero">
         <div className="shell hero-inner">
           <p className="brand-hero">
-            <Image
+            {/* Plain <img>: hosted /_next/image serves Content-Disposition:attachment and breaks display */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               className="brand-hero-mark"
               src="/brand/tri-cass-rabbit-wizard.png"
               alt="Tri-Cass rabbit wizard logo"
               width={72}
               height={140}
-              priority
             />
             <BrandWordmark>Tri-Cass OS</BrandWordmark>
           </p>
           <h1>
-            Offline AI on a USB stick, Raspberry Pi, or ESP32 Pocket — for old
-            PCs, cyberdecks, and tiny boards.
+            Offline AI for PCs, Pi, cyberdecks, Pocket boards — plus a living
+            Desk and Companion apps.
           </h1>
           <p>
-            Download a PC or Pi image and boot the on‑screen hub, or flash Tri-Cass
-            Pocket on an ESP32-S3 for USB-Serial chat. No cloud account and no
-            install onto your hard drive.
+            Flash a USB or microSD and boot the on‑screen hub. Or run{" "}
+            <strong>Tri-Cass Desk</strong> on Windows / Linux / Pi, use the{" "}
+            <strong>Companion</strong> on phone or desktop, flash{" "}
+            <strong>Pocket</strong> / <strong>Cardputer</strong> for tiny boards.
+            Same project family — more surfaces, still local-first.
           </p>
           <div className="cta-row">
             <Link className="btn" href="/download">
@@ -53,22 +55,78 @@ export default function HomePage() {
 
       <section className="section">
         <div className="shell">
+          <h2>The Tri-Cass family</h2>
+          <p className="lede">
+            We keep adding surfaces — nothing below replaces the bootable hub.
+            Pick what fits the hardware in front of you.
+          </p>
+          <div className="req-grid">
+            <div className="panel">
+              <h3>USB / Pi hub</h3>
+              <p>
+                Bootable offline OS images (v1.0.3) — Chat, Knowledge Vault,
+                tools, Cline-parity Pocket Agent. PC i686 / x86_64 and Pi 4/5
+                aarch64.
+              </p>
+              <p>
+                <Link href="/download#pc">PC USB</Link>
+                {" · "}
+                <Link href="/download#pi">Raspberry Pi</Link>
+              </p>
+            </div>
+            <div className="panel">
+              <h3>Tri-Cass Desk</h3>
+              <p>
+                Living desktop companion — frosted glass windows, Earthbound
+                atmosphere from <em>machine</em> telemetry, local Ollama chat,
+                Notes, and Agents (inspect / plan / build).
+              </p>
+              <p>
+                <Link href="/download#desk">Desk downloads</Link>
+                {" · "}
+                <a href="/demo/#desk">Tour Desk shots</a>
+              </p>
+            </div>
+            <div className="panel">
+              <h3>Companion</h3>
+              <p>
+                Windows / Mac / Android / web app — Chat, Vault, Packs, Agent
+                mode with local models through Ollama. Sideload APK on Android.
+              </p>
+              <p>
+                <Link href="/download#companion">Companion downloads</Link>
+              </p>
+            </div>
+            <div className="panel">
+              <h3>Pocket &amp; Cardputer</h3>
+              <p>
+                ESP32-S3 Pocket (PSRAM + TinyStories over Serial) and Cardputer
+                ADV hub (no PSRAM; TinyChat + optional microSD vault).
+              </p>
+              <p>
+                <Link href="/download#pocket">Pocket</Link>
+                {" · "}
+                <Link href="/download#cardputer">Cardputer ADV</Link>
+              </p>
+            </div>
+          </div>
+
           <h2>Quick start</h2>
           <ol className="quick-steps">
             <li>
               <strong>1. Download</strong>
-              Pick a PC USB image, the Raspberry Pi microSD image, or Pocket
-              (ESP32-S3 firmware).
+              Pick a PC USB image, the Raspberry Pi microSD image, Pocket /
+              Cardputer firmware, Companion, or Desk.
             </li>
             <li>
-              <strong>2. Flash</strong>
-              PC/Pi: unpack, then write with Etcher. Pocket: PlatformIO upload +
-              SPIFFS model.
+              <strong>2. Flash or install</strong>
+              PC/Pi: unpack, then write with Etcher. Pocket/Cardputer: PlatformIO.
+              Companion / Desk: run the installer or AppImage / APK.
             </li>
             <li>
-              <strong>3. Boot / connect</strong>
-              Start from USB or power a Pi 4 — or open a Serial monitor for
-              Pocket.
+              <strong>3. Boot / launch</strong>
+              Start from USB or power a Pi — or open Serial / the desktop app.
+              Optional Ollama on the same machine for larger models.
             </li>
           </ol>
           <nav className="jump-chips" aria-label="Jump to a build on Download">
@@ -76,7 +134,9 @@ export default function HomePage() {
             <Link href="/download#pi">Raspberry Pi</Link>
             <Link href="/download#pocket">Pocket ESP32</Link>
             <Link href="/download#cardputer">Cardputer ADV</Link>
-            <Link href="/setup#cardputer">Cardputer setup</Link>
+            <Link href="/download#companion">Companion</Link>
+            <Link href="/download#desk">Tri-Cass Desk</Link>
+            <a href="/demo/">Visual tour</a>
           </nav>
           <div className="cta-row" style={{ marginBottom: "2rem" }}>
             <Link className="btn" href="/download">
@@ -89,18 +149,39 @@ export default function HomePage() {
 
           <h2>See it on a computer</h2>
           <p className="lede">
-            After you boot, this is the kind of menu you get — keyboard-friendly,
-            full screen, works offline. Or browse the{" "}
-            <a href="/demo/">visual tour</a> — real screenshots of the hub, Desk,
-            chat, agents, and more.
+            After you boot the hub, this is the kind of menu you get —
+            keyboard-friendly, full screen, offline. Desk adds a living glass
+            desktop on top. Browse the{" "}
+            <a href="/demo/">visual tour</a> for twelve real build screenshots.
           </p>
           <figure className="shot">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/tri-cass-os-hub-screen.jpg?v=20261124"
+              src="/images/tri-cass-os-hub-screen.jpg?v=20261124b"
               alt="Tri-Cass OS running: hub menu on a computer monitor"
             />
             <figcaption>Tri-Cass OS hub menu on a PC screen.</figcaption>
+          </figure>
+          <figure className="shot">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/demo/shots/02-living-desktop.jpg"
+              alt="Tri-Cass Desk living desktop with glass windows"
+            />
+            <figcaption>
+              Tri-Cass Desk — living world + frosted apps (Ollama chat, mood,
+              atmosphere from local telemetry).
+            </figcaption>
+          </figure>
+          <figure className="shot">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/demo/shots/05-agents.jpg"
+              alt="Tri-Cass Desk Agents inspect plan build"
+            />
+            <figcaption>
+              Desk Agents — inspect / plan / build (Cline-slim local loop).
+            </figcaption>
           </figure>
 
           <h3 className="subhead">What you can use it for</h3>
@@ -109,7 +190,15 @@ export default function HomePage() {
               <strong>Private AI chat without the internet</strong>
               <span>
                 Draft text, ask questions, or explore ideas on a spare machine —
-                the answers stay on that device.
+                the answers stay on that device (hub, Desk, Companion, or Pocket).
+              </span>
+            </li>
+            <li>
+              <strong>Living desktop + agents</strong>
+              <span>
+                Tri-Cass Desk brings Earthbound atmosphere, glass chrome, Notes,
+                and a sandboxed agent loop — optional Ollama on the same PC or
+                Pi.
               </span>
             </li>
             <li>
@@ -117,8 +206,7 @@ export default function HomePage() {
               <span>
                 The Raspberry Pi image is a natural fit for DIY cyberdecks,
                 portable terminals, and small field kits — offline AI in a
-                compact case you can carry. Add Pocket as a tiny Serial board in
-                the same kit.
+                compact case. Add Pocket as a tiny Serial board in the same kit.
               </span>
             </li>
             <li>
@@ -129,14 +217,15 @@ export default function HomePage() {
               <span>
                 Flash Tri-Cass Pocket on an ESP32-S3 with PSRAM for offline
                 TinyStories chat and tools over USB Serial — no full Linux image
-                required.
+                required. Cardputer ADV covers the no-PSRAM keyboard board.
               </span>
             </li>
             <li>
               <strong>Give an old PC a second life</strong>
               <span>
                 Many XP-era and early 64-bit boxes can boot the stick. Great for
-                a workshop, classroom spare, or home “AI terminal.”
+                a workshop, classroom spare, or home “AI terminal.” Desk also
+                ships a Windows ia32 build for low-spec PCs.
               </span>
             </li>
             <li>
@@ -174,14 +263,15 @@ export default function HomePage() {
               <p>
                 Intel/AMD that can boot from USB. Choose <strong>32-bit (i686)</strong>{" "}
                 for older XP-era machines or <strong>64-bit (x86_64)</strong> for
-                typical modern PCs.
+                typical modern PCs. Desk: Windows x64 / ia32 setup or portable.
               </p>
             </div>
             <div className="panel">
               <h3>Raspberry Pi</h3>
               <p>
                 <strong>Pi 4 or Pi 5</strong> (2 GB+ RAM; same aarch64 image).
-                Flash to a microSD card (8 GB+). Ideal for cyberdeck builds.
+                Flash to a microSD card (8 GB+). Desk also ships a linux-arm64
+                AppImage for Pi.
               </p>
             </div>
             <div className="panel">
@@ -202,7 +292,8 @@ export default function HomePage() {
               <h3>Memory (PC / Pi)</h3>
               <p>
                 About 1–2 GB RAM free for the small bundled model; more helps if
-                you add bigger models later.
+                you add bigger models later. Desk benefits from a local Ollama
+                install for chat/agents.
               </p>
             </div>
           </div>
@@ -229,7 +320,8 @@ export default function HomePage() {
           <p className="lede" style={{ marginBottom: "1rem" }}>
             New here? Read <Link href="/about">About</Link> for plain-English
             explanations — then <Link href="/download">Download</Link> and follow{" "}
-            <Link href="/setup">Setup</Link>.
+            <Link href="/setup">Setup</Link>, or scroll the{" "}
+            <a href="/demo/">visual tour</a> first.
           </p>
 
           <div className="cta-row">
@@ -239,6 +331,9 @@ export default function HomePage() {
             <Link className="btn btn-ghost" href="/about">
               About &amp; glossary
             </Link>
+            <a className="btn btn-quiet" href="/demo/">
+              Visual tour
+            </a>
           </div>
         </div>
       </section>
