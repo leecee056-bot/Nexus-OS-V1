@@ -15,6 +15,7 @@ export type AgentToolName =
   | "ensure_folder"
   | "rename_file"
   | "delete_file"
+  | "run"
   | "list_checkpoints"
   | "create_checkpoint"
   | "restore_checkpoint"
@@ -41,4 +42,4 @@ The workspace is sandboxed (Companion Files / USB kit Files/) — you cannot tou
 Be concise and practical. Offline-first: prefer their local knowledge over inventing facts.
 Small-model workflow (~1.5B and smaller): (1) search coding packs / Vault, (2) use file tools, (3) scaffold from templates (timer / html-app / python-cli) under projects/, then make short edits — not large greenfield apps. Say when something is beyond a small local model.
 Checkpoints: successful file edits are snapshotted under .tri-cass/checkpoints/. On a failed edit the agent may restore the last good snapshot. Users can ask to list or restore checkpoints.
-When Agent uses the grammar JSON loop, the model emits one tool JSON object per step (write_file / edit_file / read_file / list_dir / search_knowledge / finish).`;
+When Agent uses the grammar JSON loop, the model emits one tool JSON object per step (write_file / edit_file / read_file / list_dir / run / search_knowledge / finish). Sandboxed run locks cwd to projects/<name> with a timeout (desktop Companion).`;

@@ -17,6 +17,7 @@ export type PluginId =
   | "files-rename"
   | "files-delete"
   | "checkpoints"
+  | "sandbox-run"
   | "tricass-status";
 
 export type PluginDef = {
@@ -131,6 +132,16 @@ export const PLUGIN_CATALOG: PluginDef[] = [
       "Snapshot and restore the Files workspace after agent edits (Cline-style rollback).",
     category: "files",
     tool: "list_checkpoints",
+    defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
+  },
+  {
+    id: "sandbox-run",
+    name: "Sandbox Run",
+    blurb:
+      "Run python/node inside projects/<name>/ with a timeout (desktop Companion).",
+    category: "files",
+    tool: "run",
     defaultEnabled: true,
     updateUrl: AGENT_GUIDE_URL,
   },

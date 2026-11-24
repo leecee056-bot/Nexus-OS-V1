@@ -66,6 +66,7 @@ rejected. Common text/code extensions are allowed (`.txt` `.md` `.html` `.css`
 | Files Delete | `delete_file` | Delete inside the sandbox only |
 | Tri-Cass Status | `tricass_status` | Plugins + workspace root |
 | Checkpoints | `list_checkpoints` / `create_checkpoint` / `restore_checkpoint` | Snapshot / roll back Files workspace |
+| Sandbox Run | `run` | Run python/node in `projects/<name>/` (desktop; timed) |
 
 Disable any plugin in **Add-ons** and Agent will not call that tool.
 
@@ -87,16 +88,20 @@ Ask Agent:
 With a local model ready, Agent prefers a **one-tool-at-a-time** JSON loop
 (Ollama `format=json`). Each model reply is a single object:
 
-`{"tool":"write_file|edit_file|read_file|list_dir|search_knowledge|finish","args":{…}}`
+`{"tool":"write_file|edit_file|read_file|list_dir|run|search_knowledge|finish","args":{…}}`
 
 - `edit_file` replaces the first occurrence of `old` with `new` in a path
 - `list_dir` lists a workspace folder (same sandbox as `list_files`)
+- `run` executes an allowlisted command (`python` / `python3` / `node`) with
+  **cwd locked** to `projects/<project>/` and a **timeout** (default 20s).
+  Desktop Companion only; mobile/web report that spawn is unavailable.
+  Stdout/stderr are fed back into the next tool step.
 - `search_knowledge` hits Vault and coding packs
 - `finish` ends the loop with the user-facing message
 
 If the first reply is not valid tool JSON, Agent falls back to the older
-heuristic planner. On the USB/Pi hub TUI: `loop <goal>` (needs llama-server).
-Sandboxed `run` is not enabled yet (later task).
+heuristic planner. On the USB/Pi hub TUI: `loop <goal>` (needs llama-server)
+or `run <project> | python main.py`.
 
 ## Small-model coding (~1.5B and smaller)
 

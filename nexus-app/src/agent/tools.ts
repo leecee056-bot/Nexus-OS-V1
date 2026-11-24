@@ -21,6 +21,7 @@ import {
   restoreCheckpoint,
 } from "./checkpoints";
 import { guessScaffold, scaffoldFiles } from "./scaffolds";
+import { runSandboxed } from "./sandboxRun";
 
 export type ToolResult = {
   tool: AgentToolName;
@@ -285,6 +286,19 @@ p{line-height:1.55;color:#9ad4a4}
     calls.push({
       tool: "create_checkpoint",
       args: { label: "manual" },
+    });
+  }
+
+  const runMatch = userMessage.match(
+    /\brun\s+(?:(?:in|project)\s+)?([a-z0-9_-]+)\s*[:|]?\s*((?:python3?|py|node)\b[\s\S]+)/i,
+  );
+  if (runMatch && allow.has("run")) {
+    calls.push({
+      tool: "run",
+      args: {
+        project: runMatch[1],
+        command: runMatch[2].trim(),
+      },
     });
   }
 
@@ -583,6 +597,27 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
         tool: call.tool,
         ok: true,
         text: `Tri-Cass Agent status\nPlugins/tools: ${tools.join(", ") || "(none)"}\nVault notes: ${notes.length}\nFiles entries: ${lines.length}\nCheckpoints: ${cps.length}${root}`,
+      };
+    }
+    case "run": {
+      let project = call.args.project || "";
+      if (!project) {
+        const pathHint = (call.args.path || "").replace(/^\/+/, "");
+        if (pathHint.includes("/") && !pathHint.includes("..")) {
+          const first = pathHint.split("/")[0];
+          project =
+            first === "projects" ? pathHint.split("/")[1] || "" : first;
+        }
+      }
+      const result = await runSandboxed({
+        project,
+        command: call.args.command || call.args.cmd || "",
+        timeout: call.args.timeout || call.args.timeout_sec,
+      });
+      return {
+        tool: call.tool,
+        ok: result.ok,
+        text: result.text,
       };
     }
     default:

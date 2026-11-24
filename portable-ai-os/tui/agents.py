@@ -25,6 +25,7 @@ from grammar_loop import run_grammar_loop
 from llm import present_models, server_alive
 from monitor import snapshot
 from pxg import generate_and_save
+from sandbox_run import sandbox_run
 from vault import Vault
 
 
@@ -85,6 +86,7 @@ TOOLS = [
     ("checkpoints", "List snapshots — checkpoints [project]"),
     ("restore", "Roll back a project — restore <checkpoint-id>"),
     ("loop", "Grammar JSON tool loop — loop <goal> (one tool/step)"),
+    ("run", "Sandbox run in a project — run <project> | <command>"),
 ]
 
 
@@ -101,6 +103,7 @@ class AgentController:
             "Pocket Agent: scaffold / make / write under /data/projects/",
             "Checkpoints: auto after scaffold/write; restore <id> to roll back.",
             "Grammar loop: loop <goal> — one JSON tool/step (needs llama-server).",
+            "Sandbox run: run <project> | python main.py  (timeout, cwd locked).",
         ]
         self.input = ""
         self.pending_confirm: tuple[str, str] | None = None  # (tool, arg)
@@ -254,6 +257,11 @@ class AgentController:
                 return restore_checkpoint(self.data_dir, arg)
             if tool == "loop":
                 return run_grammar_loop(self.data_dir, self.base, arg)
+            if tool == "run":
+                if "|" not in arg:
+                    return "Usage: run <project> | <command>  e.g. run demo | python main.py"
+                proj, cmd = arg.split("|", 1)
+                return sandbox_run(self.data_dir, proj.strip(), cmd.strip())
             return f"Unknown tool '{tool}'. Try: " + ", ".join(t[0] for t in TOOLS)
         except Exception as e:
             return f"Error: {e}"

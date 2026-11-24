@@ -1,6 +1,6 @@
 /**
  * Grammar / JSON one-tool-at-a-time loop (HAP-103).
- * Spec tools: write_file, edit_file, read_file, list_dir, search_knowledge, finish.
+ * Spec tools: write_file, edit_file, read_file, list_dir, run, search_knowledge, finish.
  * Ollama: format=json + short prompt; parse/validate; execute one step; repeat.
  */
 
@@ -15,6 +15,7 @@ export const GRAMMAR_TOOLS = [
   "edit_file",
   "read_file",
   "list_dir",
+  "run",
   "search_knowledge",
   "finish",
 ] as const;
@@ -35,9 +36,10 @@ Tools (one per reply):
 - edit_file: args path, old, new — replace first occurrence of old with new
 - read_file: args path
 - list_dir: args path (folder prefix; "" = root)
+- run: args project, command — sandboxed; cwd=projects/<project>; python/node only; optional timeout
 - search_knowledge: args query — Vault + coding packs
 - finish: args message — done; message is the user-facing answer
-Use relative paths only. Prefer short edits. Call finish when the goal is met or you need the user.`;
+Use relative paths only. Prefer short edits. After writes, run to check. Call finish when done.`;
 
 const TOOL_SET = new Set<string>(GRAMMAR_TOOLS);
 
@@ -117,6 +119,7 @@ export function grammarAllowed(
       allowed.has("search_packs")
     );
   }
+  if (tool === "run") return allowed.has("run");
   return false;
 }
 
@@ -174,6 +177,18 @@ function toPluginCalls(
       }
       return out;
     }
+    case "run":
+      return [
+        {
+          tool: "run",
+          args: {
+            project: call.args.project || "",
+            command: call.args.command || call.args.cmd || "",
+            path: call.args.path || "",
+            timeout: call.args.timeout || call.args.timeout_sec || "",
+          },
+        },
+      ];
     case "finish":
       return [];
     default:
@@ -312,10 +327,17 @@ export async function runGrammarLoop(opts: {
     }
 
     const pathHint =
-      call.args.path || call.args.query || call.args.prefix || call.tool;
+      call.args.path ||
+      call.args.command ||
+      call.args.query ||
+      call.args.prefix ||
+      call.tool;
     push(
       step(`Using ${call.tool}`, String(pathHint).slice(0, 80), {
-        tool: call.tool === "list_dir" ? "list_files" : (call.tool as AgentToolName),
+        tool:
+          call.tool === "list_dir"
+            ? "list_files"
+            : (call.tool as AgentToolName),
       }),
     );
 

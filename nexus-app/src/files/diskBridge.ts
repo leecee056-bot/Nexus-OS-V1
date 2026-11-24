@@ -34,6 +34,17 @@ export type WorkspaceDiskApi = {
     portable?: boolean;
     error?: string;
   }>;
+  run?: (args: {
+    project: string;
+    command: string;
+    timeoutSec?: number;
+  }) => Promise<{
+    ok: boolean;
+    output?: string;
+    exitCode?: number;
+    timedOut?: boolean;
+    error?: string;
+  }>;
 };
 
 function getApi(): WorkspaceDiskApi | undefined {
@@ -93,4 +104,14 @@ export async function diskRemove(path: string) {
   const api = getApi();
   if (!api?.remove) return null;
   return api.remove({ path });
+}
+
+export async function diskRun(args: {
+  project: string;
+  command: string;
+  timeoutSec?: number;
+}) {
+  const api = getApi();
+  if (!api?.run) return null;
+  return api.run(args);
 }
