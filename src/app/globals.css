@@ -813,10 +813,12 @@ pre.panel {
 }
 
 .shot img {
-  max-height: min(28rem, 70vh);
+  max-height: min(36rem, 78vh);
   width: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   object-position: center top;
+  background: #000;
 }
 
 .footer-bottom {

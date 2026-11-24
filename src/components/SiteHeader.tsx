@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -31,13 +30,14 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="shell nav">
         <Link href="/" className="brand">
-          <Image
+          {/* Plain <img>: hosted /_next/image uses Content-Disposition:attachment */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             className="brand-mark"
             src="/brand/logo-mark.png"
             alt=""
             width={40}
             height={40}
-            priority
           />
           <span>Tri Cass OS</span>
         </Link>

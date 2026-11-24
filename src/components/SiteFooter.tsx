@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 const PRODUCT = [
@@ -36,7 +35,8 @@ export function SiteFooter() {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link href="/" className="footer-brand-link">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 className="footer-mark"
                 src="/brand/logo-mark.png"
                 alt=""
@@ -46,8 +46,8 @@ export function SiteFooter() {
               <span>Tri Cass OS</span>
             </Link>
             <p>
-              Offline AI on a USB stick, Raspberry Pi, or ESP32 Pocket — for old
-              PCs, cyberdecks, and tiny boards.
+              Offline AI hub, Tri-Cass Desk, Companion apps, Pocket &amp;
+              Cardputer — local-first for PCs, Pi, cyberdecks, and tiny boards.
             </p>
           </div>
 
