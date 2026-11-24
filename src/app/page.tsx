@@ -16,7 +16,7 @@ export default function HomePage() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="brand-hero-mark"
-              src="/brand/tri-cass-rabbit-wizard.png"
+              src="/brand/tri-cass-rabbit-wizard.png?v=20261124c"
               alt="Tri-Cass rabbit wizard logo"
               width={72}
               height={140}
@@ -24,15 +24,17 @@ export default function HomePage() {
             <BrandWordmark>Tri-Cass OS</BrandWordmark>
           </p>
           <h1>
-            Offline AI for PCs, Pi, cyberdecks, Pocket boards — plus a living
-            Desk and Companion apps.
+            Offline AI that chats and codes — on USB, Pi, Desk, Companion, and
+            tiny boards.
           </h1>
           <p>
-            Flash a USB or microSD and boot the on‑screen hub. Or run{" "}
-            <strong>Tri-Cass Desk</strong> on Windows / Linux / Pi, use the{" "}
-            <strong>Companion</strong> on phone or desktop, flash{" "}
-            <strong>Pocket</strong> / <strong>Cardputer</strong> for tiny boards.
-            Same project family — more surfaces, still local-first.
+            Private chat and a coding agent that stay on your machine. Flash a
+            USB or microSD for the hub, or run <strong>Tri-Cass Desk</strong>{" "}
+            (Windows / Linux / Pi / Android) with living glass windows, Ollama
+            chat, and Agents that inspect / plan / build. Add{" "}
+            <strong>Companion</strong>, <strong>Pocket</strong>, or{" "}
+            <strong>Cardputer</strong> — we keep adding surfaces, not replacing
+            them.
           </p>
           <div className="cta-row">
             <Link className="btn" href="/download">
@@ -77,9 +79,10 @@ export default function HomePage() {
             <div className="panel">
               <h3>Tri-Cass Desk</h3>
               <p>
-                Living desktop companion — frosted glass windows, Earthbound
-                atmosphere from <em>machine</em> telemetry, local Ollama chat,
-                Notes, and Agents (inspect / plan / build).
+                Living desktop — frosted glass, Earthbound atmosphere from{" "}
+                <em>machine</em> telemetry, local Ollama chat, Monaco editor,
+                Notes, and Agents that can read a project and help write code
+                (inspect / plan / build). Win / Linux / Pi / Android.
               </p>
               <p>
                 <Link href="/download#desk">Desk downloads</Link>
@@ -147,40 +150,90 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <h2>See it on a computer</h2>
+          <h2>Offline AI: chat + coding on your machine</h2>
           <p className="lede">
-            After you boot the hub, this is the kind of menu you get —
-            keyboard-friendly, full screen, offline. Desk adds a living glass
-            desktop on top. Browse the{" "}
-            <a href="/demo/">visual tour</a> for twelve real build screenshots.
+            Tri-Cass is built so the model never has to leave the box. Chat for
+            writing and Q&amp;A; Agents for reading files, planning changes, and
+            helping you build — with Ollama (Desk / Companion) or the bundled
+            hub / Pocket models. Nothing here replaces the USB/Pi hub; Desk and
+            Companion are extra ways in.
+          </p>
+          <div className="req-grid" style={{ marginBottom: "1.75rem" }}>
+            <div className="panel">
+              <h3>Chat</h3>
+              <p>
+                Local conversation in Desk, Companion, or the hub — draft text,
+                ask questions, use Knowledge Vault notes as context. Pick a model
+                in Ollama (or use the small model on the stick / Pocket).
+              </p>
+            </div>
+            <div className="panel">
+              <h3>Coding Agents</h3>
+              <p>
+                Desk Agents run an inspect → plan → build loop (Cline-slim): look
+                at a project, propose steps, and help write or edit code in the
+                Monaco workspace — sandboxed, still on your PC or Pi.
+              </p>
+            </div>
+            <div className="panel">
+              <h3>Hub Pocket Agent</h3>
+              <p>
+                On the USB / Pi image, Pocket Agent scaffolds small projects
+                (timer / HTML / CLI / Flask) under{" "}
+                <code className="mono">/data/projects/</code> — offline helpers
+                with a fixed allow-list, not open access to the whole disk.
+              </p>
+            </div>
+          </div>
+
+          <h2>See the new Desk</h2>
+          <p className="lede">
+            Screenshots from the current Tri-Cass Desk build — living world,
+            chat, and coding agents. The hub menu is still there when you boot
+            USB/Pi. Full scroll:{" "}
+            <a href="/demo/">visual tour</a>.
           </p>
           <figure className="shot">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/tri-cass-os-hub-screen.jpg?v=20261124b"
-              alt="Tri-Cass OS running: hub menu on a computer monitor"
-            />
-            <figcaption>Tri-Cass OS hub menu on a PC screen.</figcaption>
-          </figure>
-          <figure className="shot">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/demo/shots/02-living-desktop.jpg"
+              src="/images/desk/living.jpg?v=20261124c"
               alt="Tri-Cass Desk living desktop with glass windows"
             />
             <figcaption>
-              Tri-Cass Desk — living world + frosted apps (Ollama chat, mood,
-              atmosphere from local telemetry).
+              Tri-Cass Desk — living world + frosted apps (mood and atmosphere
+              from local telemetry).
             </figcaption>
           </figure>
           <figure className="shot">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/demo/shots/05-agents.jpg"
-              alt="Tri-Cass Desk Agents inspect plan build"
+              src="/images/desk/chat.jpg?v=20261124c"
+              alt="Tri-Cass Desk local Ollama chat"
             />
             <figcaption>
-              Desk Agents — inspect / plan / build (Cline-slim local loop).
+              Desk Chat — local Ollama models, private conversation on the
+              machine.
+            </figcaption>
+          </figure>
+          <figure className="shot">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/desk/agents.jpg?v=20261124c"
+              alt="Tri-Cass Desk Agents inspect plan build coding loop"
+            />
+            <figcaption>
+              Desk Agents — inspect / plan / build for local coding help.
+            </figcaption>
+          </figure>
+          <figure className="shot">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/tri-cass-os-hub-screen.jpg?v=20261124c"
+              alt="Tri-Cass OS hub menu on a computer monitor"
+            />
+            <figcaption>
+              USB / Pi hub menu — still the offline boot path; Desk sits
+              alongside it.
             </figcaption>
           </figure>
 
@@ -189,16 +242,23 @@ export default function HomePage() {
             <li>
               <strong>Private AI chat without the internet</strong>
               <span>
-                Draft text, ask questions, or explore ideas on a spare machine —
-                the answers stay on that device (hub, Desk, Companion, or Pocket).
+                Draft text, ask questions, or explore ideas — answers stay on
+                that device (hub, Desk, Companion, or Pocket).
               </span>
             </li>
             <li>
-              <strong>Living desktop + agents</strong>
+              <strong>Offline coding help</strong>
+              <span>
+                Desk Agents (inspect / plan / build) and hub Pocket Agent
+                scaffolds — local models via Ollama or the stick, with a
+                sandboxed tool allow-list.
+              </span>
+            </li>
+            <li>
+              <strong>Living desktop</strong>
               <span>
                 Tri-Cass Desk brings Earthbound atmosphere, glass chrome, Notes,
-                and a sandboxed agent loop — optional Ollama on the same PC or
-                Pi.
+                Monaco, and chat — optional Ollama on the same PC or Pi.
               </span>
             </li>
             <li>

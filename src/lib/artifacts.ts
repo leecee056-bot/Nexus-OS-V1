@@ -107,7 +107,7 @@ export const CARDPUTER_ARTIFACTS = [
 ] as const;
 
 export const BUILD_NOTE =
-  "Choose a build: PC USB or Raspberry Pi microSD (release v1.0.3 — Tri-Cass branding + Cline-parity Pocket Agent + Knowledge Vault starter pack), Tri-Cass Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), Tri-Cass Desk, or the Companion USB portable kit. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Pi 4 and Pi 5 share the same aarch64 image. Full walkthrough on the Setup page.";
+  "Choose a build: PC USB or Raspberry Pi microSD (release v1.0.3 — Tri-Cass hub + Pocket Agent + Knowledge Vault), Tri-Cass Desk v0.4.0 (Windows x64/ia32, Linux x64, Pi arm64, Android APK — offline Ollama chat + coding Agents), Companion apps (Windows / Mac / Android / web), Tri-Cass Pocket / Cardputer ADV, or the Companion USB kit. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
 
 /**
  * Companion app — Chat/Vault/Packs with local AI (not the bootable OS).
@@ -156,16 +156,103 @@ export const COMPANION_ANDROID_NOTES =
  * Tri-Cass Desk — living desktop companion (separate repo).
  * Bump URLs only after the matching Tri-Cass-Desk release assets exist.
  */
-export const DESK_VERSION = "0.3.2";
+export const DESK_VERSION = "0.4.0";
 
 export const DESK_RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/tag/v0.3.2";
+  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/tag/v0.4.0";
 
 export const DESK_RELEASES_LATEST =
   "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/latest";
 
+const DESK_DL =
+  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/download/v0.4.0";
+
 /** Windows x64 NSIS setup (desktop + Start Menu). */
-export const DESK_WINDOWS_SETUP_URL =
-  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/download/v0.3.2/Tri-Cass-Desk-0.3.2-win-x64.exe";
+export const DESK_WINDOWS_SETUP_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-win-x64.exe`;
+
+/** Windows x64 portable (no installer). */
+export const DESK_WINDOWS_PORTABLE_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-win-x64-portable.exe`;
+
+/** Windows ia32 NSIS — low-spec / older PCs. */
+export const DESK_WINDOWS_IA32_SETUP_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-win-ia32.exe`;
+
+/** Windows ia32 portable. */
+export const DESK_WINDOWS_IA32_PORTABLE_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-win-ia32-portable.exe`;
+
+/** Generic Windows portable alias (same family as x64 portable). */
+export const DESK_WINDOWS_PORTABLE_ALIAS_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-win-portable.exe`;
+
+/** Linux x64 AppImage. */
+export const DESK_LINUX_X64_APPIMAGE_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-linux-x64.AppImage`;
+
+/** Linux x64 .deb. */
+export const DESK_LINUX_X64_DEB_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-linux-x64.deb`;
+
+/** Linux arm64 AppImage (Pi 4/5 and aarch64 Linux). */
+export const DESK_LINUX_ARM64_APPIMAGE_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-linux-arm64.AppImage`;
+
+/** Android / Android TV sideload APK (Capacitor chat + vault). */
+export const DESK_ANDROID_APK_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-android.apk`;
 
 export const DESK_REPO_URL = "https://github.com/leecee056-bot/Tri-Cass-Desk";
+
+/** Multi-format Desk downloads for the Download page. */
+export const DESK_ARTIFACTS = [
+  {
+    id: "win-x64",
+    label: "Windows 64-bit setup",
+    filename: "Tri-Cass-Desk-0.4.0-win-x64.exe",
+    url: DESK_WINDOWS_SETUP_URL,
+    guidance: "NSIS installer — Desktop + Start Menu. Needs Ollama for chat/agents.",
+  },
+  {
+    id: "win-x64-portable",
+    label: "Windows 64-bit portable",
+    filename: "Tri-Cass-Desk-0.4.0-win-x64-portable.exe",
+    url: DESK_WINDOWS_PORTABLE_URL,
+    guidance: "No install — run from a folder or USB stick.",
+  },
+  {
+    id: "win-ia32",
+    label: "Windows 32-bit setup (low-spec)",
+    filename: "Tri-Cass-Desk-0.4.0-win-ia32.exe",
+    url: DESK_WINDOWS_IA32_SETUP_URL,
+    guidance: "For older / low-RAM Windows PCs that need ia32.",
+  },
+  {
+    id: "win-ia32-portable",
+    label: "Windows 32-bit portable",
+    filename: "Tri-Cass-Desk-0.4.0-win-ia32-portable.exe",
+    url: DESK_WINDOWS_IA32_PORTABLE_URL,
+    guidance: "Portable ia32 build for low-spec machines.",
+  },
+  {
+    id: "linux-x64",
+    label: "Linux x64 AppImage",
+    filename: "Tri-Cass-Desk-0.4.0-linux-x64.AppImage",
+    url: DESK_LINUX_X64_APPIMAGE_URL,
+    guidance: "chmod +x then run. Pair with Ollama on the same machine.",
+  },
+  {
+    id: "linux-x64-deb",
+    label: "Linux x64 .deb",
+    filename: "Tri-Cass-Desk-0.4.0-linux-x64.deb",
+    url: DESK_LINUX_X64_DEB_URL,
+    guidance: "Debian/Ubuntu package install.",
+  },
+  {
+    id: "linux-arm64",
+    label: "Linux arm64 / Raspberry Pi AppImage",
+    filename: "Tri-Cass-Desk-0.4.0-linux-arm64.AppImage",
+    url: DESK_LINUX_ARM64_APPIMAGE_URL,
+    guidance: "Pi 4/5 and other aarch64 Linux — living Desk on Pi.",
+  },
+  {
+    id: "android",
+    label: "Android / Android TV APK",
+    filename: "Tri-Cass-Desk-0.4.0-android.apk",
+    url: DESK_ANDROID_APK_URL,
+    guidance:
+      "Capacitor sideload — chat + vault on phone or leanback TV. Enable unknown sources.",
+  },
+] as const;
