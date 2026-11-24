@@ -40,7 +40,7 @@ export default function HomePage() {
               Setup guide
             </Link>
             <a className="btn btn-quiet" href="/demo/">
-              Try the hub demo
+              Visual tour
             </a>
           </div>
           <p className="hero-note">
@@ -90,9 +90,9 @@ export default function HomePage() {
           <h2>See it on a computer</h2>
           <p className="lede">
             After you boot, this is the kind of menu you get — keyboard-friendly,
-            full screen, works offline. Or{" "}
-            <a href="/demo/">try the interactive hub demo</a> in your browser
-            first (arrows + Enter, Esc to go back).
+            full screen, works offline. Or browse the{" "}
+            <a href="/demo/">visual tour</a> — real screenshots of the hub, Desk,
+            chat, agents, and more.
           </p>
           <figure className="shot">
             {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -3,984 +3,291 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Tri-Cass interactive demo</title>
-  <meta name="description" content="Interactive tutorial of the Tri-Cass OS terminal-style hub menu — try Chat, Vault, Files and more without downloading." />
+  <title>Tri-Cass OS — Visual tour</title>
+  <meta
+    name="description"
+    content="Screenshot tour of Tri-Cass OS: USB/Pi hub, Tri-Cass Desk living desktop, chat, agents, notes, and Network — from real build captures."
+  />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oxanium:wght@500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #040804;
-      --bg-panel: #071007;
+      --bg-elev: #0a120a;
       --fg: #b6ffb6;
-      --fg-dim: #4e8a4e;
+      --fg-dim: #5f9a5f;
       --accent: #39ff14;
       --accent-soft: rgba(57, 255, 20, 0.16);
-      --glow: 0 0 14px rgba(57, 255, 20, 0.45);
-      --font: "Share Tech Mono", "IBM Plex Mono", ui-monospace, monospace;
+      --line: rgba(57, 255, 20, 0.22);
+      --font: "Share Tech Mono", ui-monospace, monospace;
       --display: "Oxanium", var(--font);
       --safe-b: env(safe-area-inset-bottom, 0px);
       --safe-t: env(safe-area-inset-top, 0px);
     }
-
     * { box-sizing: border-box; }
-
-    html, body {
+    html { scroll-behavior: smooth; }
+    body {
       margin: 0;
-      height: 100%;
-      background: var(--bg);
+      min-height: 100%;
       color: var(--fg);
       font-family: var(--font);
       font-size: 16px;
-      line-height: 1.45;
-      overflow: hidden;
+      line-height: 1.55;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 255, 20, 0.05) 1px, transparent 1px),
+        radial-gradient(ellipse at 20% 0%, rgba(57, 255, 20, 0.12), transparent 55%),
+        var(--bg);
+      background-size: 100% 3px, 48px 48px, auto, auto;
+      background-attachment: fixed;
     }
-
-    body {
-      background-image:
-        linear-gradient(rgba(0, 0, 0, 0.22) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(57, 255, 20, 0.045) 1px, transparent 1px),
-        radial-gradient(ellipse at 50% 0%, rgba(57, 255, 20, 0.1), transparent 55%);
-      background-size: 100% 3px, 42px 42px, auto;
-    }
-
-    button, input {
-      font: inherit;
-      color: inherit;
-    }
-
-    .crt {
-      position: relative;
-      height: 100dvh;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: calc(0.75rem + var(--safe-t)) 0.75rem calc(0.55rem + var(--safe-b));
-      max-width: 52rem;
-      margin: 0 auto;
-    }
-
-    .crt::after {
-      content: "";
-      pointer-events: none;
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        transparent 50%,
-        rgba(0, 0, 0, 0.08) 50%
-      );
-      background-size: 100% 3px;
-      opacity: 0.55;
-      z-index: 5;
-    }
-
-    .topbar {
+    a { color: var(--accent); }
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 20;
       display: flex;
       flex-wrap: wrap;
-      align-items: baseline;
+      gap: 0.65rem 1rem;
+      align-items: center;
       justify-content: space-between;
-      gap: 0.35rem 1rem;
-      border-bottom: 1px solid var(--accent-soft);
-      padding-bottom: 0.55rem;
-      margin-bottom: 0.75rem;
-      flex-shrink: 0;
+      padding: calc(0.65rem + var(--safe-t)) 1rem 0.65rem;
+      border-bottom: 1px solid var(--line);
+      background: rgba(4, 8, 4, 0.92);
+      backdrop-filter: blur(8px);
     }
-
-    .topbar h1 {
-      margin: 0;
+    .brand {
       font-family: var(--display);
-      font-size: clamp(1.05rem, 3.5vw, 1.35rem);
-      letter-spacing: 0.08em;
+      font-weight: 700;
+      letter-spacing: 0.04em;
       color: var(--accent);
-      text-shadow: var(--glow);
-      text-transform: lowercase;
-    }
-
-    .topbar .meta {
-      color: var(--fg-dim);
-      font-size: 0.8rem;
-    }
-
-    .topbar a {
-      color: var(--fg-dim);
       text-decoration: none;
     }
-
-    .topbar a:hover {
-      color: var(--accent);
-      text-shadow: var(--glow);
-    }
-
-    .stage {
-      flex: 1;
-      min-height: 0;
+    .nav {
       display: flex;
-      flex-direction: column;
-      border: 1px solid var(--accent-soft);
-      background: color-mix(in srgb, var(--bg-panel) 92%, transparent);
-      box-shadow: inset 0 0 40px rgba(57, 255, 20, 0.04);
-      position: relative;
-      z-index: 1;
+      flex-wrap: wrap;
+      gap: 0.55rem 0.9rem;
+      font-size: 0.9rem;
     }
-
-    .view {
-      display: none;
-      flex: 1;
-      min-height: 0;
-      flex-direction: column;
-      padding: 0.85rem 0.9rem 0.65rem;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
+    .nav a { text-decoration: none; color: var(--fg); }
+    .nav a:hover { color: var(--accent); }
+    .shell {
+      max-width: 68rem;
+      margin: 0 auto;
+      padding: 1.5rem 1rem calc(2.5rem + var(--safe-b));
     }
-
-    .view.active { display: flex; }
-
-    .hub-title {
-      margin: 0 0 0.85rem;
+    h1 {
       font-family: var(--display);
+      font-size: clamp(1.55rem, 4vw, 2.15rem);
+      margin: 0 0 0.45rem;
       color: var(--accent);
-      text-shadow: var(--glow);
-      letter-spacing: 0.06em;
-      font-size: 1.05rem;
     }
-
-    .hub-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 0.2rem;
+    .lede {
+      color: var(--fg-dim);
+      max-width: 42rem;
+      margin: 0 0 1.35rem;
     }
-
-    .hub-item {
+    .toc {
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      width: 100%;
-      text-align: left;
-      background: transparent;
-      border: 1px solid transparent;
-      padding: 0.7rem 0.65rem;
-      min-height: 48px;
-      cursor: pointer;
-      color: var(--fg);
-      border-radius: 1px;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0 0 1.75rem;
     }
-
-    .hub-item:hover,
-    .hub-item:focus-visible {
-      outline: none;
-      border-color: var(--accent-soft);
+    .toc a {
+      text-decoration: none;
+      border: 1px solid var(--line);
+      padding: 0.35rem 0.65rem;
+      border-radius: 2px;
+      color: var(--fg);
+      font-size: 0.82rem;
       background: var(--accent-soft);
     }
-
-    .hub-item.is-active {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--accent);
-      text-shadow: var(--glow);
-      box-shadow: var(--glow);
+    .toc a:hover { border-color: var(--accent); color: var(--accent); }
+    .shot {
+      margin: 0 0 2.25rem;
+      scroll-margin-top: 4.5rem;
     }
-
-    .hub-item .idx {
-      color: var(--fg-dim);
-      width: 1.6rem;
-      flex-shrink: 0;
-    }
-
-    .hub-item.is-active .idx { color: var(--accent); }
-
-    .hub-item .label { flex: 1; }
-
-    .hub-item .hint {
-      color: var(--fg-dim);
-      font-size: 0.78rem;
-      display: none;
-    }
-
-    @media (min-width: 560px) {
-      .hub-item .hint { display: inline; }
-    }
-
-    .panel-head {
+    .shot header {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-      flex-shrink: 0;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      align-items: baseline;
+      margin-bottom: 0.55rem;
     }
-
-    .panel-head h2 {
+    .shot .n {
+      font-family: var(--display);
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+    .shot h2 {
       margin: 0;
       font-family: var(--display);
-      font-size: 1.05rem;
-      color: var(--accent);
-      text-shadow: var(--glow);
-      letter-spacing: 0.04em;
+      font-size: 1.15rem;
+      font-weight: 700;
     }
-
-    .back-btn {
-      border: 1px solid var(--fg-dim);
-      background: transparent;
-      color: var(--fg);
-      padding: 0.4rem 0.7rem;
-      min-height: 40px;
-      cursor: pointer;
-    }
-
-    .back-btn:hover,
-    .back-btn:focus-visible {
-      border-color: var(--accent);
-      color: var(--accent);
-      outline: none;
-      text-shadow: var(--glow);
-    }
-
-    .blurb {
-      margin: 0 0 0.9rem;
+    .shot p {
+      margin: 0 0 0.65rem;
       color: var(--fg-dim);
+      font-size: 0.92rem;
       max-width: 40rem;
     }
-
-    .chat-log {
-      flex: 1;
-      min-height: 8rem;
-      overflow: auto;
-      border: 1px solid var(--accent-soft);
-      padding: 0.65rem 0.75rem;
-      margin-bottom: 0.65rem;
-      background: rgba(0, 0, 0, 0.25);
+    .frame {
+      border: 1px solid var(--line);
+      background: #000;
+      overflow: hidden;
     }
-
-    .chat-log .line { margin: 0 0 0.55rem; }
-    .chat-log .who { color: var(--accent); }
-    .chat-log .bot { color: var(--fg); }
-    .chat-log .sys { color: var(--fg-dim); font-size: 0.85rem; }
-
-    .chat-form {
-      display: flex;
-      gap: 0.45rem;
-      flex-shrink: 0;
-    }
-
-    .chat-form input {
-      flex: 1;
-      min-width: 0;
-      background: var(--bg);
-      border: 1px solid var(--fg-dim);
-      padding: 0.65rem 0.7rem;
-      color: var(--fg);
-    }
-
-    .chat-form input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: var(--glow);
-    }
-
-    .chat-form button,
-    .action-btn {
-      border: 1px solid var(--accent);
-      background: var(--accent-soft);
-      color: var(--accent);
-      padding: 0.55rem 0.85rem;
-      min-height: 44px;
-      cursor: pointer;
-      text-shadow: var(--glow);
-    }
-
-    .chat-form button:hover,
-    .action-btn:hover {
-      box-shadow: var(--glow);
-    }
-
-    .file-tree {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 0.25rem;
-    }
-
-    .file-tree button {
-      width: 100%;
-      text-align: left;
-      background: transparent;
-      border: 1px solid var(--accent-soft);
-      padding: 0.65rem 0.75rem;
-      min-height: 44px;
-      cursor: pointer;
-      color: var(--fg);
-    }
-
-    .file-tree button:hover,
-    .file-tree button.is-open {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .file-preview {
-      margin-top: 0.65rem;
-      border: 1px solid var(--accent-soft);
-      padding: 0.75rem;
-      color: var(--fg-dim);
-      min-height: 4.5rem;
-      white-space: pre-wrap;
-    }
-
-    .vault-search {
-      display: flex;
-      gap: 0.45rem;
-      margin-bottom: 0.65rem;
-    }
-
-    .vault-search input {
-      flex: 1;
-      background: var(--bg);
-      border: 1px solid var(--fg-dim);
-      padding: 0.65rem 0.7rem;
-      color: var(--fg);
-      min-height: 44px;
-    }
-
-    .vault-search input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: var(--glow);
-    }
-
-    .vault-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 0.4rem;
-    }
-
-    .vault-list li {
-      border: 1px solid var(--accent-soft);
-      padding: 0.65rem 0.75rem;
-    }
-
-    .vault-list strong {
+    .frame img {
       display: block;
-      color: var(--accent);
-      margin-bottom: 0.25rem;
+      width: 100%;
+      height: auto;
+      vertical-align: middle;
     }
-
-    .vault-list .snip { color: var(--fg-dim); font-size: 0.9rem; }
-    .vault-list .empty { color: var(--fg-dim); border-style: dashed; }
-
-    .agent-grid,
-    .game-grid,
-    .pixel-grid {
-      display: grid;
-      gap: 0.5rem;
-      grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
-    }
-
-    .agent-grid button,
-    .game-grid button,
-    .pixel-grid button {
-      border: 1px solid var(--accent-soft);
-      background: transparent;
-      color: var(--fg);
-      padding: 0.85rem 0.7rem;
-      min-height: 64px;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .agent-grid button:hover,
-    .game-grid button:hover,
-    .pixel-grid button.is-on,
-    .pixel-grid button:hover {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--accent);
-      text-shadow: var(--glow);
-    }
-
-    .status-line {
-      margin-top: 0.75rem;
-      color: var(--fg-dim);
-      font-size: 0.88rem;
-      min-height: 1.3em;
-    }
-
-    .settings-list {
-      display: grid;
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
       gap: 0.55rem;
-      max-width: 24rem;
+      margin-top: 1.5rem;
     }
-
-    .settings-list label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      border: 1px solid var(--accent-soft);
-      padding: 0.7rem 0.8rem;
-      min-height: 48px;
-      cursor: pointer;
-    }
-
-    .settings-list input {
-      accent-color: var(--accent);
-      width: 1.1rem;
-      height: 1.1rem;
-    }
-
-    .pixel-board {
-      margin-top: 0.75rem;
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 3px;
-      max-width: 16rem;
-    }
-
-    .pixel-board span {
-      aspect-ratio: 1;
-      border: 1px solid var(--accent-soft);
-      background: transparent;
-    }
-
-    .pixel-board span.on {
-      background: var(--accent);
-      box-shadow: var(--glow);
-    }
-
-    .statusbar {
-      flex-shrink: 0;
-      margin-top: 0.55rem;
-      border: 1px solid var(--accent-soft);
-      background: rgba(0, 0, 0, 0.35);
-      padding: 0.45rem 0.65rem;
-      font-size: clamp(0.72rem, 2.8vw, 0.85rem);
-      color: var(--fg-dim);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem 1rem;
-      z-index: 1;
-      position: relative;
-    }
-
-    .statusbar kbd {
-      font: inherit;
-      color: var(--accent);
-      border: 1px solid var(--accent-soft);
-      padding: 0.05rem 0.35rem;
-      text-shadow: var(--glow);
-    }
-
-    /* Tutorial overlay */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 40;
-      background: rgba(0, 0, 0, 0.72);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    .overlay[hidden] { display: none; }
-
-    .tip-card {
-      width: min(26rem, 100%);
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 0.55rem 0.95rem;
       border: 1px solid var(--accent);
-      background: var(--bg-panel);
-      box-shadow: var(--glow), 0 0 60px rgba(0, 0, 0, 0.6);
-      padding: 1.15rem 1.2rem 1.1rem;
-      position: relative;
-    }
-
-    .tip-card h2 {
-      margin: 0 0 0.65rem;
+      background: var(--accent);
+      color: #041004;
+      font-weight: 700;
       font-family: var(--display);
+      border-radius: 2px;
+    }
+    .btn-ghost {
+      background: transparent;
       color: var(--accent);
-      text-shadow: var(--glow);
-      font-size: 1.1rem;
-      letter-spacing: 0.05em;
     }
-
-    .tip-card p {
-      margin: 0 0 0.7rem;
-      color: var(--fg);
-    }
-
-    .tip-card ul {
-      margin: 0 0 1rem;
-      padding-left: 1.1rem;
+    footer.note {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
       color: var(--fg-dim);
-    }
-
-    .tip-card li { margin-bottom: 0.35rem; }
-
-    .tip-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .crt::after { opacity: 0.25; }
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
-  <div class="crt">
-    <header class="topbar">
-      <h1>Tri-Cass interactive demo</h1>
-      <div class="meta">
-        <span>offline tutorial · not the real OS</span>
-        · <a href="/">back to site</a>
-      </div>
-    </header>
+  <div class="top">
+    <a class="brand" href="/">Tri-Cass OS</a>
+    <nav class="nav" aria-label="Site">
+      <a href="/download">Download</a>
+      <a href="/setup">Setup</a>
+      <a href="/features">Features</a>
+      <a href="/network">Network</a>
+    </nav>
+  </div>
 
-    <div class="stage" id="stage">
-      <!-- HUB -->
-      <section class="view active" id="view-hub" data-view="hub" aria-label="Hub menu">
-        <p class="hub-title">Tri-Cass OS · main menu</p>
-        <ul class="hub-list" id="hub-list" role="listbox" aria-label="Apps"></ul>
-      </section>
+  <main class="shell">
+    <h1>Visual tour</h1>
+    <p class="lede">
+      Real screenshots from the Tri-Cass build — USB/Pi hub, Tri-Cass Desk living
+      desktop, local chat, agents, notes, and the Network mockup. A demo you can
+      scroll, without needing to install anything first.
+    </p>
 
-      <!-- CHAT -->
-      <section class="view" id="view-chat" data-view="chat" hidden>
-        <div class="panel-head">
-          <h2>Chat</h2>
-          <button type="button" class="back-btn" data-back>← Hub</button>
-        </div>
-        <p class="blurb">Local AI chat on the real stick. Here, canned replies show the feel — nothing leaves your browser.</p>
-        <div class="chat-log" id="chat-log" aria-live="polite"></div>
-        <form class="chat-form" id="chat-form">
-          <input id="chat-input" type="text" maxlength="200" placeholder="Type a message…" autocomplete="off" />
-          <button type="submit">Send</button>
-        </form>
-      </section>
+    <nav class="toc" aria-label="Jump to a shot">
+      <a href="#hub">Hub</a>
+      <a href="#desk">Desk</a>
+      <a href="#world">World</a>
+      <a href="#chat">Chat</a>
+      <a href="#agents">Agents</a>
+      <a href="#notes">Notes</a>
+      <a href="#glass">Glass</a>
+      <a href="#dock">Dock</a>
+      <a href="#chat-max">Chat max</a>
+      <a href="#network">Network</a>
+      <a href="#companion">Companion</a>
+      <a href="#atmosphere">Atmosphere</a>
+    </nav>
 
-      <!-- FILES -->
-      <section class="view" id="view-files" data-view="files" hidden>
-        <div class="panel-head">
-          <h2>Files</h2>
-          <button type="button" class="back-btn" data-back>← Hub</button>
-        </div>
-        <p class="blurb">Browse folders on the stick. Tap a row to peek (demo contents).</p>
-        <ul class="file-tree" id="file-tree"></ul>
-        <div class="file-preview" id="file-preview">Select a folder…</div>
-      </section>
+    <article class="shot" id="hub">
+      <header><span class="n">01</span><h2>USB / Pi hub</h2></header>
+      <p>Boot from stick or microSD — keyboard-friendly green hub, fully offline.</p>
+      <div class="frame"><img src="shots/01-hub-crt.jpg" alt="Tri-Cass OS hub menu on a CRT monitor" width="1280" height="720" loading="eager" /></div>
+    </article>
 
-      <!-- VAULT -->
-      <section class="view" id="view-vault" data-view="vault" hidden>
-        <div class="panel-head">
-          <h2>Knowledge Vault</h2>
-          <button type="button" class="back-btn" data-back>← Hub</button>
-        </div>
-        <p class="blurb">Searchable notes on-device. Try typing “boot”, “chat”, or “pi”.</p>
-        <div class="vault-search">
-          <input id="vault-q" type="search" placeholder="Search notes…" />
-        </div>
-        <ul class="vault-list" id="vault-list"></ul>
-      </section>
+    <article class="shot" id="desk">
+      <header><span class="n">02</span><h2>Tri-Cass Desk — living desktop</h2></header>
+      <p>Frosted glass windows over an Earthbound scene. Mood, atmosphere, and system follow local machine telemetry — not outdoor weather APIs.</p>
+      <div class="frame"><img src="shots/02-living-desktop.jpg" alt="Tri-Cass Desk living desktop with glass windows" width="1280" height="800" loading="lazy" /></div>
+    </article>
 
-      <!-- AGENTS -->
-      <section class="view" id="view-agents" data-view="agents" hidden>
-        <div class="panel-head">
-          <h2>Agents</h2>
-          <button type="button" class="back-btn" data-back>← Hub</button>
-        </div>
-        <p class="blurb">Small helpers with a fixed allow-list — not open access to your whole PC.</p>
-        <div class="agent-grid" id="agent-grid"></div>
-        <p class="status-line" id="agent-status">Pick a tool to run a demo action.</p>
-      </section>
+    <article class="shot" id="world">
+      <header><span class="n">03</span><h2>Pan the living world</h2></header>
+      <p>Edge-pan around the landscape; sky and mood shift with CPU load and time of day.</p>
+      <div class="frame"><img src="shots/03-world-pan.jpg" alt="Tri-Cass Desk world pan to the right" width="1280" height="800" loading="lazy" /></div>
+    </article>
 
-      <!-- GAMES -->
-      <section class="view" id="view-games" data-view="games" hidden>
-        <div class="panel-head">
-          <h2>Games</h2>
-          <button type="button" class="back-btn" data-back>← Hub</button>
-        </div>
-        <p class="blurb">Tiny built-ins that unload when you leave. Demo scores only.</p>
-        <div class="game-grid" id="game-grid"></div>
-        <p class="status-line" id="game-status">Choose a game.</p>
-      </section>
+    <article class="shot" id="chat">
+      <header><span class="n">04</span><h2>Local AI chat</h2></header>
+      <p>Ollama on the same machine — chat / code / plan modes, knowledge inject, and settings.</p>
+      <div class="frame"><img src="shots/04-chat.jpg" alt="Tri-Cass Desk chat with modes and knowledge settings" width="1280" height="800" loading="lazy" /></div>
+    </article>
 
-      <!-- SETTINGS -->
-      <section class="view" id="view-settings" data-view="settings" hidden>
-        <div class="panel-head">
-          <h2>Settings</h2>
-          <button type="button" class="back-btn" data-back>← Hub</button>
-        </div>
-        <p class="blurb">On the real OS these persist on the stick. Here they only affect this demo session.</p>
-        <div class="settings-list">
-          <label><span>Matrix phosphor glow</span><input type="checkbox" id="set-glow" checked /></label>
-          <label><span>Scanline overlay</span><input type="checkbox" id="set-scan" checked /></label>
-          <label><span>Sound cues (silent stub)</span><input type="checkbox" id="set-sfx" /></label>
-        </div>
-        <p class="status-line" id="settings-status">Theme: Matrix (demo)</p>
-      </section>
+    <article class="shot" id="agents">
+      <header><span class="n">05</span><h2>Agents — inspect · plan · build</h2></header>
+      <p>Cline-slim local agents: inspect tools, write a plan, then sandboxed build steps.</p>
+      <div class="frame"><img src="shots/05-agents.jpg" alt="Tri-Cass Desk Agents window on build tab" width="1280" height="800" loading="lazy" /></div>
+    </article>
 
-      <!-- PIXEL ART -->
-      <section class="view" id="view-pixel" data-view="pixel" hidden>
-        <div class="panel-head">
-          <h2>Pixel Art</h2>
-          <button type="button" class="back-btn" data-back>← Hub</button>
-        </div>
-        <p class="blurb">Lightweight pixel toys — not a cloud image model. Paint a tiny 8×8 frame.</p>
-        <div class="pixel-grid">
-          <button type="button" id="pixel-clear">Clear</button>
-          <button type="button" id="pixel-fill">Fill</button>
-          <button type="button" id="pixel-invert">Invert</button>
-        </div>
-        <div class="pixel-board" id="pixel-board" aria-label="Pixel canvas"></div>
-      </section>
+    <article class="shot" id="notes">
+      <header><span class="n">06</span><h2>Notes</h2></header>
+      <p>Quick notes with tagging — stay on-device with the rest of Desk.</p>
+      <div class="frame"><img src="shots/06-notes.jpg" alt="Tri-Cass Desk notes window" width="1280" height="800" loading="lazy" /></div>
+    </article>
+
+    <article class="shot" id="glass">
+      <header><span class="n">07</span><h2>Glass chrome</h2></header>
+      <p>Full desktop after the frosted-glass chrome pass — browser, chat, companions.</p>
+      <div class="frame"><img src="shots/07-glass-desktop.jpg" alt="Tri-Cass Desk glass chrome full desktop" width="1280" height="800" loading="lazy" /></div>
+    </article>
+
+    <article class="shot" id="dock">
+      <header><span class="n">08</span><h2>Dock</h2></header>
+      <p>Apps, Files, Browser, Editor, Notes, Media, Chat, Settings, Bin.</p>
+      <div class="frame"><img src="shots/08-dock.jpg" alt="Tri-Cass Desk dock close-up" width="1232" height="242" loading="lazy" /></div>
+    </article>
+
+    <article class="shot" id="chat-max">
+      <header><span class="n">09</span><h2>Maximized chat</h2></header>
+      <p>Give the conversation the whole window when you need focus.</p>
+      <div class="frame"><img src="shots/09-chat-maximized.jpg" alt="Tri-Cass Desk maximized chat session" width="1280" height="800" loading="lazy" /></div>
+    </article>
+
+    <article class="shot" id="network">
+      <header><span class="n">10</span><h2>Tri-Cass Network</h2></header>
+      <p>Design mockup for optional online rooms later — USB/Pi still work fully offline without it.</p>
+      <div class="frame"><img src="shots/10-network.jpg" alt="Tri-Cass Network design mockup" width="1280" height="720" loading="lazy" /></div>
+    </article>
+
+    <article class="shot" id="companion">
+      <header><span class="n">11</span><h2>Companion</h2></header>
+      <p>Windows / Mac / Android / web companion — Chat, Vault, Packs with local models.</p>
+      <div class="frame"><img src="shots/11-companion.jpg" alt="Tri-Cass Companion terminal theme" width="1280" height="900" loading="lazy" /></div>
+    </article>
+
+    <article class="shot" id="atmosphere">
+      <header><span class="n">12</span><h2>Earthbound atmosphere</h2></header>
+      <p>Scene grade follows machine telemetry — the living world is the product, not a flat wallpaper.</p>
+      <div class="frame"><img src="shots/12-earthbound.jpg" alt="Tri-Cass Desk Earthbound celestial atmosphere" width="1280" height="800" loading="lazy" /></div>
+    </article>
+
+    <div class="cta">
+      <a class="btn" href="/download">Download builds</a>
+      <a class="btn btn-ghost" href="/setup">Setup guide</a>
+      <a class="btn btn-ghost" href="/">Back to home</a>
     </div>
 
-    <footer class="statusbar" aria-label="Controls">
-      <span><kbd>↑</kbd><kbd>↓</kbd> Nav</span>
-      <span><kbd>Enter</kbd> Select</span>
-      <span><kbd>Esc</kbd> Back</span>
-      <span>or tap a row</span>
-      <span id="focus-hint">Hub · item 1/7</span>
+    <footer class="note">
+      Captures from Tri-Cass Desk and OS hub builds (Nov 2026). Desk needs the desktop app + optional Ollama for live AI; the USB/Pi hub runs offline after flash.
     </footer>
-  </div>
-
-  <div class="overlay" id="tip-overlay" role="dialog" aria-modal="true" aria-labelledby="tip-title">
-    <div class="tip-card">
-      <h2 id="tip-title">Quick tour</h2>
-      <p>This is a short interactive demo of the Tri-Cass OS hub — the full-screen menu you see after booting a stick or Pi card.</p>
-      <ul>
-        <li>Move with <strong>arrow keys</strong> or tap a row</li>
-        <li><strong>Enter</strong> opens an app · <strong>Esc</strong> returns to the hub</li>
-        <li>Try Chat, Vault search, and Files — all fake data in your browser</li>
-      </ul>
-      <div class="tip-actions">
-        <button type="button" class="action-btn" id="tip-start">Start exploring</button>
-        <button type="button" class="back-btn" id="tip-dismiss">Dismiss</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    (function () {
-      const APPS = [
-        { id: "chat", label: "Chat", hint: "offline AI replies" },
-        { id: "files", label: "Files", hint: "browse the stick" },
-        { id: "vault", label: "Knowledge Vault", hint: "searchable notes" },
-        { id: "agents", label: "Agents", hint: "allow-listed tools" },
-        { id: "games", label: "Games", hint: "Snake · Mines" },
-        { id: "settings", label: "Settings", hint: "theme · model" },
-        { id: "pixel", label: "Pixel Art", hint: "tiny pixel lab" },
-      ];
-
-      const FILES = [
-        { name: "docs/", body: "guide.txt\nglossary.txt\nhow-to-flash.md" },
-        { name: "models/", body: "smollm2-demo.gguf  (placeholder)\nREADME.txt" },
-        { name: "vault/", body: "starter notes for Knowledge Vault" },
-        { name: "notes/", body: "scratch pad · offline drafts" },
-        { name: "tri-cass-notes.txt", body: "Quick scratch notes for Tri-Cass OS (demo)." },
-      ];
-
-      const NOTES = [
-        { title: "Tri-Cass quick guide", text: "Boot from USB or microSD, land on the hub, pick Chat." },
-        { title: "Flash & boot", text: "Unpack .img.xz, flash with Etcher, disable Secure Boot if needed." },
-        { title: "Chat tips", text: "Keep prompts short on low RAM. Add GGUF models under models/." },
-        { title: "Pi / cyberdeck", text: "Pi 4 is the primary image target. Great for portable kits." },
-        { title: "Glossary", text: "Hub = main menu. Vault = searchable notebook. Stick = USB media." },
-      ];
-
-      const AGENTS = [
-        { id: "calc", label: "Calculator", run: () => "19 × 23 = 437" },
-        { id: "sys", label: "System info", run: () => "RAM free ~1.2G · disk 8G stick · demo host" },
-        { id: "note", label: "Quick note", run: () => "Saved: “buy solder” → notes/ (demo)" },
-        { id: "vault", label: "Vault lookup", run: () => "Top hit: Flash & boot" },
-      ];
-
-      const GAMES = [
-        { id: "snake", label: "Snake", run: () => "Game over · score 12 (demo)" },
-        { id: "mines", label: "Minesweeper", run: () => "Cleared 3×3 practice board (demo)" },
-      ];
-
-      const REPLIES = [
-        "Sure — on the real stick this answer would come from the local model.",
-        "Offline tip: keep the USB plugged in and boot from it each time.",
-        "Knowledge Vault can feed Chat with your own .txt / .md notes.",
-        "Try the Vault search with the word “boot” while you’re exploring.",
-        "This demo stays in your browser. Download the image when you’re ready.",
-      ];
-
-      let hubIndex = 0;
-      let view = "hub";
-      let tipOpen = true;
-
-      const hubList = document.getElementById("hub-list");
-      const focusHint = document.getElementById("focus-hint");
-      const overlay = document.getElementById("tip-overlay");
-
-      function pad(n) {
-        return String(n).padStart(2, "0");
-      }
-
-      function renderHub() {
-        hubList.innerHTML = APPS.map((app, i) => {
-          const active = i === hubIndex ? " is-active" : "";
-          return (
-            '<li role="none">' +
-            '<button type="button" class="hub-item' + active + '" role="option" data-i="' + i + '" aria-selected="' + (i === hubIndex) + '">' +
-            '<span class="idx">' + pad(i + 1) + "</span>" +
-            '<span class="label">' + app.label + "</span>" +
-            '<span class="hint">' + app.hint + "</span>" +
-            "</button></li>"
-          );
-        }).join("");
-        focusHint.textContent = "Hub · item " + (hubIndex + 1) + "/" + APPS.length;
-      }
-
-      function showView(id) {
-        view = id;
-        document.querySelectorAll(".view").forEach((el) => {
-          const on = el.dataset.view === id;
-          el.classList.toggle("active", on);
-          el.hidden = !on;
-        });
-        if (id === "hub") {
-          focusHint.textContent = "Hub · item " + (hubIndex + 1) + "/" + APPS.length;
-          const active = hubList.querySelector(".hub-item.is-active");
-          if (active) active.focus({ preventScroll: true });
-        } else {
-          focusHint.textContent = APPS.find((a) => a.id === id).label + " · Esc = Hub";
-          const back = document.querySelector('#view-' + id + ' [data-back]');
-          if (back) back.focus({ preventScroll: true });
-        }
-      }
-
-      function openApp(i) {
-        hubIndex = i;
-        renderHub();
-        showView(APPS[i].id);
-      }
-
-      function goHub() {
-        showView("hub");
-      }
-
-      function dismissTip() {
-        tipOpen = false;
-        overlay.hidden = true;
-        localStorage.setItem("tri-cass-demo-tip", "1");
-        goHub();
-      }
-
-      // Chat
-      const chatLog = document.getElementById("chat-log");
-      const chatForm = document.getElementById("chat-form");
-      const chatInput = document.getElementById("chat-input");
-      let replyI = 0;
-
-      function addChat(who, text, cls) {
-        const p = document.createElement("p");
-        p.className = "line " + (cls || "");
-        p.innerHTML = '<span class="who">' + who + "</span> " + text;
-        chatLog.appendChild(p);
-        chatLog.scrollTop = chatLog.scrollHeight;
-      }
-
-      addChat("sys", "Demo session · replies are scripted.", "sys");
-      addChat("tri-cass>", "Hello. Ask anything — I’ll show a sample offline reply.", "bot");
-
-      chatForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const text = chatInput.value.trim();
-        if (!text) return;
-        addChat("you>", escapeHtml(text));
-        chatInput.value = "";
-        const reply = REPLIES[replyI % REPLIES.length];
-        replyI++;
-        setTimeout(() => addChat("tri-cass>", reply, "bot"), 280);
-      });
-
-      // Files
-      const fileTree = document.getElementById("file-tree");
-      const filePreview = document.getElementById("file-preview");
-      fileTree.innerHTML = FILES.map((f, i) =>
-        '<li><button type="button" data-f="' + i + '">' + f.name + "</button></li>"
-      ).join("");
-      fileTree.addEventListener("click", (e) => {
-        const btn = e.target.closest("button[data-f]");
-        if (!btn) return;
-        fileTree.querySelectorAll("button").forEach((b) => b.classList.remove("is-open"));
-        btn.classList.add("is-open");
-        filePreview.textContent = FILES[+btn.dataset.f].body;
-      });
-
-      // Vault
-      const vaultQ = document.getElementById("vault-q");
-      const vaultList = document.getElementById("vault-list");
-
-      function renderVault(q) {
-        const needle = (q || "").trim().toLowerCase();
-        const hits = NOTES.filter(
-          (n) => !needle || n.title.toLowerCase().includes(needle) || n.text.toLowerCase().includes(needle)
-        );
-        if (!hits.length) {
-          vaultList.innerHTML = '<li class="empty">No notes match. Try “boot” or “chat”.</li>';
-          return;
-        }
-        vaultList.innerHTML = hits
-          .map((n) => "<li><strong>" + n.title + '</strong><span class="snip">' + n.text + "</span></li>")
-          .join("");
-      }
-      renderVault("");
-      vaultQ.addEventListener("input", () => renderVault(vaultQ.value));
-
-      // Agents
-      const agentGrid = document.getElementById("agent-grid");
-      const agentStatus = document.getElementById("agent-status");
-      agentGrid.innerHTML = AGENTS.map(
-        (a) => '<button type="button" data-a="' + a.id + '">' + a.label + "</button>"
-      ).join("");
-      agentGrid.addEventListener("click", (e) => {
-        const btn = e.target.closest("button[data-a]");
-        if (!btn) return;
-        const a = AGENTS.find((x) => x.id === btn.dataset.a);
-        agentStatus.textContent = a.run();
-      });
-
-      // Games
-      const gameGrid = document.getElementById("game-grid");
-      const gameStatus = document.getElementById("game-status");
-      gameGrid.innerHTML = GAMES.map(
-        (g) => '<button type="button" data-g="' + g.id + '">' + g.label + "</button>"
-      ).join("");
-      gameGrid.addEventListener("click", (e) => {
-        const btn = e.target.closest("button[data-g]");
-        if (!btn) return;
-        const g = GAMES.find((x) => x.id === btn.dataset.g);
-        gameStatus.textContent = g.run();
-      });
-
-      // Settings
-      const setGlow = document.getElementById("set-glow");
-      const setScan = document.getElementById("set-scan");
-      const settingsStatus = document.getElementById("settings-status");
-      function applySettings() {
-        document.documentElement.style.setProperty(
-          "--glow",
-          setGlow.checked ? "0 0 14px rgba(57, 255, 20, 0.45)" : "none"
-        );
-        document.querySelector(".crt").classList.toggle("no-scan", !setScan.checked);
-        settingsStatus.textContent =
-          "Glow " + (setGlow.checked ? "on" : "off") +
-          " · scanlines " + (setScan.checked ? "on" : "off") +
-          " · sfx " + (document.getElementById("set-sfx").checked ? "armed" : "off");
-      }
-      setGlow.addEventListener("change", applySettings);
-      setScan.addEventListener("change", applySettings);
-      document.getElementById("set-sfx").addEventListener("change", applySettings);
-
-      // Pixel board
-      const board = document.getElementById("pixel-board");
-      const pixels = [];
-      for (let i = 0; i < 64; i++) {
-        const s = document.createElement("span");
-        s.tabIndex = 0;
-        s.addEventListener("click", () => {
-          s.classList.toggle("on");
-        });
-        s.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            s.classList.toggle("on");
-          }
-        });
-        board.appendChild(s);
-        pixels.push(s);
-      }
-      document.getElementById("pixel-clear").addEventListener("click", () => {
-        pixels.forEach((p) => p.classList.remove("on"));
-      });
-      document.getElementById("pixel-fill").addEventListener("click", () => {
-        pixels.forEach((p) => p.classList.add("on"));
-      });
-      document.getElementById("pixel-invert").addEventListener("click", () => {
-        pixels.forEach((p) => p.classList.toggle("on"));
-      });
-
-      // Hub interactions
-      hubList.addEventListener("click", (e) => {
-        const btn = e.target.closest(".hub-item");
-        if (!btn) return;
-        openApp(+btn.dataset.i);
-      });
-
-      document.querySelectorAll("[data-back]").forEach((btn) => {
-        btn.addEventListener("click", goHub);
-      });
-
-      document.addEventListener("keydown", (e) => {
-        if (tipOpen) {
-          if (e.key === "Enter" || e.key === "Escape") {
-            e.preventDefault();
-            dismissTip();
-          }
-          return;
-        }
-
-        if (e.key === "Escape") {
-          if (view !== "hub") {
-            e.preventDefault();
-            goHub();
-          }
-          return;
-        }
-
-        if (view !== "hub") return;
-        if (["INPUT", "TEXTAREA"].includes(document.activeElement && document.activeElement.tagName)) return;
-
-        if (e.key === "ArrowDown" || e.key === "j") {
-          e.preventDefault();
-          hubIndex = (hubIndex + 1) % APPS.length;
-          renderHub();
-        } else if (e.key === "ArrowUp" || e.key === "k") {
-          e.preventDefault();
-          hubIndex = (hubIndex - 1 + APPS.length) % APPS.length;
-          renderHub();
-        } else if (e.key === "Enter") {
-          e.preventDefault();
-          openApp(hubIndex);
-        } else if (e.key >= "1" && e.key <= "7") {
-          e.preventDefault();
-          openApp(+e.key - 1);
-        }
-      });
-
-      document.getElementById("tip-start").addEventListener("click", dismissTip);
-      document.getElementById("tip-dismiss").addEventListener("click", dismissTip);
-
-      function escapeHtml(s) {
-        return s.replace(/[&<>"']/g, (c) => ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;",
-        })[c]);
-      }
-
-      // scanline toggle via CSS class
-      const style = document.createElement("style");
-      style.textContent = ".crt.no-scan::after{opacity:0 !important}";
-      document.head.appendChild(style);
-
-      renderHub();
-      if (localStorage.getItem("tri-cass-demo-tip") === "1") {
-        tipOpen = false;
-        overlay.hidden = true;
-      }
-    })();
-  </script>
+  </main>
 </body>
 </html>

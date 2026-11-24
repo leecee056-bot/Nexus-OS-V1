@@ -135,7 +135,7 @@ export default function FeaturesPage() {
             Download
           </Link>
           <a className="btn btn-ghost" href="/demo/">
-            Try hub demo
+            Visual tour
           </a>
           <Link className="btn btn-ghost" href="/setup">
             Setup guide

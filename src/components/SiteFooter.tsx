@@ -4,7 +4,7 @@ import Link from "next/link";
 const PRODUCT = [
   { href: "/about", label: "About" },
   { href: "/features", label: "Features" },
-  { href: "/demo/", label: "Interactive demo" },
+  { href: "/demo/", label: "Visual tour" },
   { href: "/download", label: "Download" },
   { href: "/setup", label: "Setup" },
 ];

@@ -35,10 +35,10 @@ export default function DocsPage() {
             </li>
             <li>
               <a href="/demo/">
-                Interactive hub demo
+                Visual tour
                 <small>
-                  Browser tutorial of the terminal menu — Chat, Vault, Files,
-                  and more (no download)
+                  Real screenshots of the hub, Desk, chat, agents, notes, and
+                  Network — scrollable demo (no download)
                 </small>
               </a>
             </li>
