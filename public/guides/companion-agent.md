@@ -64,8 +64,22 @@ rejected. Common text/code extensions are allowed (`.txt` `.md` `.html` `.css`
 | Files Rename | `rename_file` | Rename/move inside the sandbox |
 | Files Delete | `delete_file` | Delete inside the sandbox only |
 | Tri-Cass Status | `tricass_status` | Plugins + workspace root |
+| Checkpoints | `list_checkpoints` / `create_checkpoint` / `restore_checkpoint` | Snapshot / roll back Files workspace |
 
 Disable any plugin in **Add-ons** and Agent will not call that tool.
+
+## Checkpoints (rollback)
+
+Before Agent file edits, Companion saves a **baseline** snapshot under
+`.tri-cass/checkpoints/`. After a successful edit turn it saves another. If a
+mutating tool fails mid-turn, Agent **auto-restores** the baseline (Cline-style
+safety for small local models).
+
+Ask Agent:
+
+- “list checkpoints”
+- “restore last checkpoint” / “undo”
+- “save checkpoint”
 
 ## Small-model coding (~1.5B and smaller)
 

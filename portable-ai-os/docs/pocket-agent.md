@@ -34,8 +34,22 @@ and Pi 5 (shared aarch64 image), and Companion Agent.
 3. Open `/data/projects/tea/` — real files on the stick / card.
 4. Companion: Agent on → same phrasing → Files → `projects/`.
 
+## Checkpoints (hub)
+
+After successful `scaffold` / `make` / `write` / `mkdir`, the hub saves a
+snapshot under `/data/projects/.tri-cass/checkpoints/`.
+
+| Tool | Use |
+|------|-----|
+| `checkpoint <project> [label]` | Manual snapshot |
+| `checkpoints [project]` | List ids |
+| `restore <checkpoint-id>` | Roll project back |
+
+Companion Agent mirrors this for the Files workspace (baseline before edits;
+auto-restore if a mutating tool fails).
+
 ## Honest limits
 
 Small models need templates + short steps + vault/coding packs. Not a cloud
 codegen replacement. Pi 4 will feel slow; Pi 5 8 GB is the comfortable Pi target.
-Full JSON-grammar tool loops + sandboxed `run()` remain follow-ups.
+Full JSON-grammar tool loops + sandboxed `run()` remain follow-ups (Queued).
