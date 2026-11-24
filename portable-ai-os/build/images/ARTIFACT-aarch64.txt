@@ -1,8 +1,12 @@
-artifact=/agent/portable-ai-os-images/portable-ai-os-aarch64.img
+artifact=portable-ai-os-aarch64.img
 arch=aarch64
 platform=raspberry-pi
 boards=pi4,pi5
 size_bytes=4294967296
-sha256=777419a193379d37f3d7f26c69af8410800dca1651a9f6237c2cba17139abc8b
-built=2026-11-19T18:52:49Z
-note=v1.0.1-pi Knowledge Vault starter pack payload refresh
+sha256=bfc6915a14fac8954f49597c29ea23b039e87cb8acdaf1a0c2cc8501f71786c2
+xz=portable-ai-os-aarch64.img.xz
+xz_size_bytes=843077616
+sha256xz=a1056f9714f2b45318d071d22b1a9c1ce4074e2de77f1d198abc1e10f2936828
+release=v1.0.2-pi
+built=2026-11-24T00:00:05Z
+note=Tri-Cass branding + Pocket Agent; same image for Pi 4 and Pi 5

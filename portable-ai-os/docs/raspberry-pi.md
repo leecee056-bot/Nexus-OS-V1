@@ -1,11 +1,11 @@
 # Tri-Cass OS on Raspberry Pi
 
-**Status:** **Available** — GitHub Release [`v1.0.0-pi`](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.0-pi).
+**Status:** **Available** — GitHub Release [`v1.0.2-pi`](https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.2-pi).
 
 ## Download
 
-- https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-pi/portable-ai-os-aarch64.img.xz  
-- Checksums: https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.0-pi/SHA256SUMS  
+- https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.2-pi/portable-ai-os-aarch64.img.xz  
+- Checksums: https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.2-pi/SHA256SUMS  
 
 ```bash
 xz -d portable-ai-os-aarch64.img.xz
@@ -47,7 +47,7 @@ builds take longer; set N_CTX / thread knobs lower if Chat feels stuck.
 
 | | PC USB | Pi |
 |--|--------|-----|
-| Download | `v1.0.0-usb` | `v1.0.0-pi` |
+| Download | `v1.0.2-usb` | `v1.0.2-pi` |
 | Boot | BIOS/USB | Pi firmware on the card |
 | Pocket Agent | Hub → Agents | Same |
 

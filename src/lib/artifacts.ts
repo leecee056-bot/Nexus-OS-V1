@@ -1,14 +1,14 @@
 const USB_RELEASE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.1-usb";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.2-usb";
 
 const PI_RELEASE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.1-pi";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.2-pi";
 
 export const RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.1-usb";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.2-usb";
 
 export const PI_RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.1-pi";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.2-pi";
 
 export const RELEASE_SHA256SUMS = `${USB_RELEASE}/SHA256SUMS`;
 export const PI_RELEASE_SHA256SUMS = `${PI_RELEASE}/SHA256SUMS`;
@@ -21,14 +21,14 @@ export const ARTIFACTS = [
     filename: "portable-ai-os-x86_64.img",
     downloadName: "portable-ai-os-x86_64.img.xz",
     downloadUrl: `${USB_RELEASE}/portable-ai-os-x86_64.img.xz`,
-    sizeBytes: 479475712,
-    sizeLabel: "~457 MB download → about 3 GB after unpacking",
+    sizeBytes: 516880360,
+    sizeLabel: "~493 MB download → about 3 GB after unpacking",
     sha256xz:
-      "3a12751be42dcc31d8118424de2cddd00bf2c4f4e65293e4cdf152f219e77814",
+      "ebb971eac54ca492b2d0460f28aa4ab77d346f84de57d7473ed63d291d7117c5",
     sha256:
-      "a397f4cf303c35d9add60651dc562823662f5bd9d03b3c0ad1380e5dddfd06c5",
+      "94338b010768bc5ba729dc2f3fed567a77871de7bcf4e37789a6d2a3e987ac29",
     guidance:
-      "For most modern and mid-2000s+ PCs that already run 64-bit Windows or Linux. Includes the Knowledge Vault starter pack.",
+      "For most modern and mid-2000s+ PCs that already run 64-bit Windows or Linux. Tri-Cass hub + Pocket Agent scaffolds + Knowledge Vault starter pack.",
   },
   {
     arch: "i686",
@@ -36,32 +36,32 @@ export const ARTIFACTS = [
     filename: "portable-ai-os-i686.img",
     downloadName: "portable-ai-os-i686.img.xz",
     downloadUrl: `${USB_RELEASE}/portable-ai-os-i686.img.xz`,
-    sizeBytes: 735022940,
-    sizeLabel: "~701 MB download → about 3 GB after unpacking",
+    sizeBytes: 584556812,
+    sizeLabel: "~558 MB download → about 3 GB after unpacking",
     sha256xz:
-      "8c4db63a35dd718968f8890503f82e83e7aec325e57af79404dd478de1a7b2d8",
+      "f4ff4ab255f6d40c76c53ab480dd9406454158cad26cc89fb5388f85066e3f90",
     sha256:
-      "fb2b39abeb025a1040178dd1eb327206538df2c31ba1cc2a05089bb7ba661e43",
+      "243c850128c7b868dd872373da4648c1ca9e34f4afaaecf2e74c1921385b5001",
     guidance:
-      "Prefer this for XP-era or true 32-bit machines. If the PC is very old and you are unsure, start here. Includes the Knowledge Vault starter pack.",
+      "Prefer this for XP-era or true 32-bit machines. If the PC is very old and you are unsure, start here. Tri-Cass hub + Pocket Agent scaffolds + Knowledge Vault starter pack.",
   },
 ] as const;
 
 export const PI_ARTIFACTS = [
   {
     arch: "aarch64",
-    label: "Raspberry Pi 4 (64-bit) — primary",
+    label: "Raspberry Pi 4 / Pi 5 (64-bit) — same image",
     filename: "portable-ai-os-aarch64.img",
     downloadName: "portable-ai-os-aarch64.img.xz",
     downloadUrl: `${PI_RELEASE}/portable-ai-os-aarch64.img.xz`,
-    sizeBytes: 923217144,
-    sizeLabel: "~880 MB download → about 4 GB after unpacking",
+    sizeBytes: 843077616,
+    sizeLabel: "~804 MB download → about 4 GB after unpacking",
     sha256xz:
-      "199967b3e95cb5f274a2842996121d7c59de7d758e427777519371417a52b839",
+      "a1056f9714f2b45318d071d22b1a9c1ce4074e2de77f1d198abc1e10f2936828",
     sha256:
-      "777419a193379d37f3d7f26c69af8410800dca1651a9f6237c2cba17139abc8b",
+      "bfc6915a14fac8954f49597c29ea23b039e87cb8acdaf1a0c2cc8501f71786c2",
     guidance:
-      "Flash this to a microSD card for Raspberry Pi 4 (2 GB+ RAM; 4 GB+ preferred) — a good base for cyberdecks and portable Pi kits. Same file may work on Pi 5, but Pi 5 is best-effort; some boards may need a software update later if they will not boot. Includes the Knowledge Vault starter pack.",
+      "Flash this to a microSD card for Raspberry Pi 4 or Pi 5 (2 GB+ RAM; 4 GB+ preferred). One aarch64 image covers both boards. Tri-Cass hub + Pocket Agent scaffolds + Knowledge Vault starter pack.",
   },
 ] as const;
 
@@ -107,7 +107,7 @@ export const CARDPUTER_ARTIFACTS = [
 ] as const;
 
 export const BUILD_NOTE =
-  "Choose a build: PC USB or Raspberry Pi microSD (release v1.0.1 — Knowledge Vault starter pack), Tri-Cass Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), or the Companion USB portable kit. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Flashed v1.0.1 images match that release — newer Tri-Cass branding and Pocket Agent scaffolds are in source and land on sticks/cards after the next image bake (Queued). Full walkthrough on the Setup page.";
+  "Choose a build: PC USB or Raspberry Pi microSD (release v1.0.2 — Tri-Cass branding + Pocket Agent scaffolds + Knowledge Vault starter pack), Tri-Cass Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), or the Companion USB portable kit. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Pi 4 and Pi 5 share the same aarch64 image. Full walkthrough on the Setup page.";
 
 /**
  * Companion app — Chat/Vault/Packs with local AI (not the bootable OS).

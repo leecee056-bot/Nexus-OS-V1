@@ -42,7 +42,7 @@ export default function AboutPage() {
             <span>
               Aimed at older Intel/AMD PCs (including many XP-era 32-bit boxes),
               newer PCs, <strong>Raspberry Pi 4</strong> (cyberdecks and portable
-              kits; Pi 5 best-effort), and <strong>ESP32-S3 Pocket</strong> for a
+              kits; Pi 4/Pi 5 same image), and <strong>ESP32-S3 Pocket</strong> for a
               Serial companion board.
             </span>
           </li>
@@ -230,7 +230,7 @@ export default function AboutPage() {
             <strong>Raspberry Pi / cyberdeck</strong>
             <span>
               <strong>Pi 4 primary</strong> (2 GB+ RAM; 4 GB+ preferred). Same
-              image may work on Pi 5 (best-effort). microSD 8 GB+ recommended.
+              image covers Pi 5 too. microSD 8 GB+ recommended.
               Older Pi / 32-bit boards not in this release.
             </span>
           </li>

@@ -60,7 +60,8 @@ export default function CompatPage() {
               <span>
                 Very old 64-bit towers may hit a <strong>SSE4.2-oriented</strong>{" "}
                 llama.cpp build; i686 image is for true 32-bit / XP-era boxes.
-                Pi 5 is best-effort on the current image.
+                Pi 4/Pi 5 share one aarch64 image (v1.0.2+); Pi 4 is the
+                well-tested sweet spot.
               </span>
             </li>
           </ul>
