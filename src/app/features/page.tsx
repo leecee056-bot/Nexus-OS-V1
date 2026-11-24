@@ -17,7 +17,7 @@ export default function FeaturesPage() {
         <figure className="shot">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/tri-cass-os-hub-screen.jpg"
+            src="/images/tri-cass-os-hub-screen.jpg?v=20261124"
             alt="Tri-Cass OS hub menu on a computer screen"
           />
           <figcaption>Main menu after booting from USB or Pi microSD.</figcaption>
@@ -135,7 +135,7 @@ export default function FeaturesPage() {
             Download
           </Link>
           <a className="btn btn-ghost" href="/demo/">
-            Try hub demo
+            Visual tour
           </a>
           <Link className="btn btn-ghost" href="/setup">
             Setup guide
