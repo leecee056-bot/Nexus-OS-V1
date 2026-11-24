@@ -16,6 +16,7 @@ export type PluginId =
   | "files-folder"
   | "files-rename"
   | "files-delete"
+  | "checkpoints"
   | "tricass-status";
 
 export type PluginDef = {
@@ -120,6 +121,16 @@ export const PLUGIN_CATALOG: PluginDef[] = [
     blurb: "Delete files or folders inside the workspace only (never outside).",
     category: "files",
     tool: "delete_file",
+    defaultEnabled: true,
+    updateUrl: AGENT_GUIDE_URL,
+  },
+  {
+    id: "checkpoints",
+    name: "Checkpoints",
+    blurb:
+      "Snapshot and restore the Files workspace after agent edits (Cline-style rollback).",
+    category: "files",
+    tool: "list_checkpoints",
     defaultEnabled: true,
     updateUrl: AGENT_GUIDE_URL,
   },

@@ -2,6 +2,12 @@ import { chatCompletion, type ChatMessage } from "../chat/ollama";
 import { companionReply } from "../chat/tinychat";
 import type { FileChange } from "../files/workspace";
 import { enabledTools, loadPluginState } from "../plugins/store";
+import {
+  createCheckpoint,
+  MUTATING_TOOLS,
+  restoreCheckpoint,
+  listCheckpoints,
+} from "./checkpoints";
 import { AGENT_SYSTEM, type AgentStep } from "./schema";
 import { formatChangeSummary, planTools, runTool } from "./tools";
 
@@ -53,6 +59,19 @@ export async function runAgentTurn(opts: {
 
   const toolTexts: string[] = [];
   const changes: FileChange[] = [];
+  let baselineId: string | undefined;
+  let mutatedOk = false;
+  let mutateFailed = false;
+  const willMutate = plan.some((c) => MUTATING_TOOLS.has(c.tool));
+  if (willMutate) {
+    try {
+      const baseline = await createCheckpoint("before agent edits");
+      baselineId = baseline.id;
+      push(step("Checkpoint", `baseline ${baseline.id}`, { ok: true }));
+    } catch {
+      /* non-fatal */
+    }
+  }
   for (const call of plan) {
     push(
       step(`Using ${call.tool}`, summarizeArgs(call.args), {
@@ -60,6 +79,22 @@ export async function runAgentTurn(opts: {
       }),
     );
     const result = await runTool(call);
+    const mutating = MUTATING_TOOLS.has(call.tool);
+    if (result.ok && mutating) mutatedOk = true;
+    if (!result.ok && mutating) {
+      mutateFailed = true;
+      try {
+        const items = await listCheckpoints();
+        const target = baselineId || items[0]?.id;
+        if (target) {
+          const msg = await restoreCheckpoint(target);
+          push(step("Rollback", msg.slice(0, 160), { ok: true }));
+          toolTexts.push(`Auto-rollback: ${msg}`);
+        }
+      } catch {
+        /* non-fatal */
+      }
+    }
     push(
       step(
         result.ok ? `Done · ${call.tool}` : `Failed · ${call.tool}`,
@@ -69,6 +104,18 @@ export async function runAgentTurn(opts: {
     );
     toolTexts.push(result.text);
     if (result.change) changes.push(result.change);
+  }
+  if (mutatedOk && !mutateFailed) {
+    try {
+      const meta = await createCheckpoint("after agent edits");
+      push(
+        step("Checkpoint", `${meta.id} · ${meta.fileCount} files`, {
+          ok: true,
+        }),
+      );
+    } catch {
+      /* non-fatal */
+    }
   }
 
   const changeSummary = formatChangeSummary(changes);

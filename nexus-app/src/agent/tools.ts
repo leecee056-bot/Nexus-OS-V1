@@ -14,6 +14,12 @@ import {
 import { diskInfo } from "../files/diskBridge";
 import { loadPluginState, enabledTools } from "../plugins/store";
 import type { AgentToolCall, AgentToolName } from "./schema";
+import {
+  createCheckpoint,
+  formatCheckpointList,
+  listCheckpoints,
+  restoreCheckpoint,
+} from "./checkpoints";
 import { guessScaffold, scaffoldFiles } from "./scaffolds";
 
 export type ToolResult = {
@@ -243,6 +249,45 @@ p{line-height:1.55;color:#9ad4a4}
     calls.push({ tool: "tricass_status", args: {} });
   }
 
+  const wantsListCp =
+    !isChitchat &&
+    /\b(list checkpoints|show checkpoints|checkpoints)\b/.test(q);
+  if (wantsListCp && allow.has("list_checkpoints")) {
+    calls.push({ tool: "list_checkpoints", args: {} });
+  }
+
+  const restoreMatch = userMessage.match(
+    /\b(?:restore|rollback|roll back|undo)\s+(?:to\s+)?(?:checkpoint\s+)?([a-z0-9-]+)/i,
+  );
+  if (
+    restoreMatch &&
+    allow.has("restore_checkpoint") &&
+    !/undo last/i.test(q)
+  ) {
+    calls.push({
+      tool: "restore_checkpoint",
+      args: { id: restoreMatch[1] },
+    });
+  } else if (
+    !isChitchat &&
+    /\b(undo( last)?( change| edit| step)?|roll ?back|restore last checkpoint)\b/.test(
+      q,
+    ) &&
+    allow.has("restore_checkpoint")
+  ) {
+    calls.push({ tool: "restore_checkpoint", args: { id: "latest" } });
+  }
+
+  const wantsManualCp =
+    !isChitchat &&
+    /\b(save checkpoint|create checkpoint|checkpoint (this|now))\b/.test(q);
+  if (wantsManualCp && allow.has("create_checkpoint")) {
+    calls.push({
+      tool: "create_checkpoint",
+      args: { label: "manual" },
+    });
+  }
+
   return calls;
 }
 
@@ -434,11 +479,61 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
         };
       }
     }
+    case "list_checkpoints": {
+      const items = await listCheckpoints();
+      return {
+        tool: call.tool,
+        ok: true,
+        text: "Checkpoints:\n" + formatCheckpointList(items),
+      };
+    }
+    case "create_checkpoint": {
+      try {
+        const meta = await createCheckpoint(call.args.label || "manual");
+        return {
+          tool: call.tool,
+          ok: true,
+          text: `Checkpoint ${meta.id} saved (${meta.fileCount} files) — ${meta.label}`,
+        };
+      } catch (e) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: e instanceof Error ? e.message : "checkpoint failed",
+        };
+      }
+    }
+    case "restore_checkpoint": {
+      try {
+        let id = call.args.id || "";
+        if (!id || id === "latest") {
+          const items = await listCheckpoints();
+          if (items.length === 0) {
+            return {
+              tool: call.tool,
+              ok: false,
+              text: "No checkpoints to restore.",
+            };
+          }
+          id = items[0].id;
+        }
+        const text = await restoreCheckpoint(id);
+        const ok = !text.startsWith("Unknown");
+        return { tool: call.tool, ok, text };
+      } catch (e) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: e instanceof Error ? e.message : "restore failed",
+        };
+      }
+    }
     case "tricass_status": {
       const state = await loadPluginState();
       const tools = enabledTools(state);
       const lines = await listWorkspace("");
       const notes = await loadNotes();
+      const cps = await listCheckpoints();
       const info = await diskInfo();
       const root =
         info && "root" in info && info.root
@@ -447,7 +542,7 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
       return {
         tool: call.tool,
         ok: true,
-        text: `Tri-Cass Agent status\nPlugins/tools: ${tools.join(", ") || "(none)"}\nVault notes: ${notes.length}\nFiles entries: ${lines.length}${root}`,
+        text: `Tri-Cass Agent status\nPlugins/tools: ${tools.join(", ") || "(none)"}\nVault notes: ${notes.length}\nFiles entries: ${lines.length}\nCheckpoints: ${cps.length}${root}`,
       };
     }
     default:

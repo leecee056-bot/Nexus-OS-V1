@@ -40,5 +40,18 @@ export async function setPluginEnabled(
 }
 
 export function enabledTools(state: PluginState): string[] {
-  return PLUGIN_CATALOG.filter((p) => state[p.id]).map((p) => p.tool);
+  const tools: string[] = [];
+  for (const p of PLUGIN_CATALOG) {
+    if (!state[p.id]) continue;
+    if (p.id === "checkpoints") {
+      tools.push(
+        "list_checkpoints",
+        "create_checkpoint",
+        "restore_checkpoint",
+      );
+    } else {
+      tools.push(p.tool);
+    }
+  }
+  return tools;
 }

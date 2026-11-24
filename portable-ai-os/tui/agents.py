@@ -14,6 +14,12 @@ from builder import (
     scaffold,
     write_project_file,
 )
+from checkpoints import (
+    create_checkpoint,
+    list_checkpoints,
+    maybe_checkpoint_after,
+    restore_checkpoint,
+)
 from files import FileBrowser
 from llm import present_models, server_alive
 from monitor import snapshot
@@ -74,6 +80,9 @@ TOOLS = [
     ("mkdir", "Make folder under projects — mkdir <rel/path>"),
     ("write", "Write file under projects — write <rel/path> | <content>"),
     ("make", "Guess template from words — make <timer app called foo>"),
+    ("checkpoint", "Snapshot a project — checkpoint <name> [label]"),
+    ("checkpoints", "List snapshots — checkpoints [project]"),
+    ("restore", "Roll back a project — restore <checkpoint-id>"),
 ]
 
 
@@ -88,6 +97,7 @@ class AgentController:
         self.log: list[str] = [
             "Agent ready. Allowlisted tools only — no shell.",
             "Pocket Agent: scaffold / make / write under /data/projects/",
+            "Checkpoints: auto after scaffold/write; restore <id> to roll back.",
         ]
         self.input = ""
         self.pending_confirm: tuple[str, str] | None = None  # (tool, arg)
@@ -189,27 +199,56 @@ class AgentController:
                 bits = arg.split(None, 1)
                 if len(bits) < 2:
                     return "Usage: scaffold <template> <name>"
-                return scaffold(self.root, self.data_dir, bits[0], bits[1])
+                msg = scaffold(self.root, self.data_dir, bits[0], bits[1])
+                return maybe_checkpoint_after(
+                    self.data_dir, bits[1], f"scaffold {bits[0]}", msg
+                )
             if tool == "projects":
                 root = projects_root(self.data_dir)
-                kids = sorted(p.name for p in root.iterdir() if not p.name.startswith("."))
+                kids = sorted(
+                    p.name
+                    for p in root.iterdir()
+                    if not p.name.startswith(".") and p.name != ".tri-cass"
+                )
                 return "\n".join(kids) or "(empty — try: scaffold html-app demo)"
             if tool == "mkdir":
                 if not arg:
                     return "Usage: mkdir <rel/path under projects>"
-                return mkdir_project_path(self.data_dir, arg)
+                msg = mkdir_project_path(self.data_dir, arg)
+                proj = arg.strip().split("/")[0]
+                return maybe_checkpoint_after(
+                    self.data_dir, proj, f"mkdir {arg.strip()}", msg
+                )
             if tool == "write":
                 if "|" not in arg:
                     return "Usage: write <rel/path> | <content>"
                 path_part, content = arg.split("|", 1)
-                return write_project_file(self.data_dir, path_part.strip(), content)
+                rel = path_part.strip()
+                msg = write_project_file(self.data_dir, rel, content)
+                proj = rel.split("/")[0]
+                return maybe_checkpoint_after(
+                    self.data_dir, proj, f"write {rel}", msg
+                )
             if tool == "make":
                 guessed = guess_scaffold(arg or "")
                 if not guessed:
                     avail = ", ".join(list_templates(self.root)) or "html-app, timer-app, …"
                     return f"Could not guess template. Try: scaffold <tpl> <name>\nTemplates: {avail}"
                 tpl, name = guessed
-                return scaffold(self.root, self.data_dir, tpl, name)
+                msg = scaffold(self.root, self.data_dir, tpl, name)
+                return maybe_checkpoint_after(
+                    self.data_dir, name, f"make {tpl}", msg
+                )
+            if tool == "checkpoint":
+                bits = arg.split(None, 1)
+                if not bits or not bits[0]:
+                    return "Usage: checkpoint <project> [label]"
+                label = bits[1] if len(bits) > 1 else "manual"
+                return create_checkpoint(self.data_dir, bits[0], label)
+            if tool == "checkpoints":
+                return list_checkpoints(self.data_dir, arg.strip())
+            if tool == "restore":
+                return restore_checkpoint(self.data_dir, arg)
             return f"Unknown tool '{tool}'. Try: " + ", ".join(t[0] for t in TOOLS)
         except Exception as e:
             return f"Error: {e}"
