@@ -151,3 +151,21 @@ export const COMPANION_WEB_URL = "/companion/";
 
 export const COMPANION_ANDROID_NOTES =
   "https://nexus-os.apps.grok.bot/guides/android-apk.md";
+
+/**
+ * Tri-Cass Desk — living desktop companion (separate repo).
+ * Bump URLs only after the matching Tri-Cass-Desk release assets exist.
+ */
+export const DESK_VERSION = "0.3.0";
+
+export const DESK_RELEASE_PAGE =
+  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/tag/v0.3.0";
+
+export const DESK_RELEASES_LATEST =
+  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/latest";
+
+/** Windows x64 NSIS setup (desktop + Start Menu). */
+export const DESK_WINDOWS_SETUP_URL =
+  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/download/v0.3.0/Tri-Cass-Desk-0.3.0-win-x64.exe";
+
+export const DESK_REPO_URL = "https://github.com/leecee056-bot/Tri-Cass-Desk";
