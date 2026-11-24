@@ -8,6 +8,7 @@ import {
   restoreCheckpoint,
   listCheckpoints,
 } from "./checkpoints";
+import { runGrammarLoop } from "./grammar";
 import { AGENT_SYSTEM, type AgentStep } from "./schema";
 import { formatChangeSummary, planTools, runTool } from "./tools";
 
@@ -31,7 +32,8 @@ function step(
 }
 
 /**
- * Agent turn: plan tools → run with status → answer with local model (+ context).
+ * Agent turn: prefer grammar JSON one-tool loop when a model is ready;
+ * fall back to heuristic planTools for offline / invalid JSON.
  */
 export async function runAgentTurn(opts: {
   host: string;
@@ -41,20 +43,114 @@ export async function runAgentTurn(opts: {
   modelReady: boolean;
   onStep?: (s: AgentStep, all: AgentStep[]) => void;
 }): Promise<AgentRunResult> {
-  const steps: AgentStep[] = [];
+  const pluginState = await loadPluginState();
+  const allowed = enabledTools(pluginState);
+
+  if (opts.modelReady) {
+    const willLikelyMutate =
+      allowed.includes("write_file") ||
+      allowed.includes("create_file") ||
+      allowed.includes("edit_file");
+    let baselineId: string | undefined;
+    const preSteps: AgentStep[] = [];
+    const pushPre = (s: AgentStep) => {
+      preSteps.push(s);
+      opts.onStep?.(s, [...preSteps]);
+    };
+    if (willLikelyMutate) {
+      try {
+        const baseline = await createCheckpoint("before agent edits");
+        baselineId = baseline.id;
+        pushPre(step("Checkpoint", `baseline ${baselineId}`, { ok: true }));
+      } catch {
+        /* non-fatal */
+      }
+    }
+
+    const grammar = await runGrammarLoop({
+      host: opts.host,
+      model: opts.model,
+      userMessage: opts.userMessage,
+      history: opts.history,
+      allowed,
+      onStep: (s, all) => opts.onStep?.(s, [...preSteps, ...all]),
+    });
+
+    if (grammar.usedGrammar) {
+      const steps = [...preSteps, ...grammar.steps];
+      const push = (s: AgentStep) => {
+        steps.push(s);
+        opts.onStep?.(s, [...steps]);
+      };
+      if (grammar.mutateFailed) {
+        try {
+          const items = await listCheckpoints();
+          const target = baselineId || items[0]?.id;
+          if (target) {
+            const msg = await restoreCheckpoint(target);
+            push(step("Rollback", msg.slice(0, 160), { ok: true }));
+          }
+        } catch {
+          /* non-fatal */
+        }
+      } else if (grammar.mutatedOk) {
+        try {
+          const meta = await createCheckpoint("after agent edits");
+          push(
+            step("Checkpoint", `${meta.id} · ${meta.fileCount} files`, {
+              ok: true,
+            }),
+          );
+        } catch {
+          /* non-fatal */
+        }
+      }
+      const changeSummary = formatChangeSummary(grammar.changes);
+      const withChanges = (body: string) =>
+        changeSummary ? `${body}\n\n${changeSummary}` : body;
+      push(step("Done", changeSummary || undefined));
+      return {
+        text: withChanges(grammar.text),
+        steps,
+        changes: grammar.changes,
+      };
+    }
+    // Invalid first JSON → heuristic path below (keep grammar steps as prefix).
+    return runHeuristicTurn(opts, allowed, [...preSteps, ...grammar.steps]);
+  }
+
+  return runHeuristicTurn(opts, allowed, []);
+}
+
+async function runHeuristicTurn(
+  opts: {
+    host: string;
+    model: string;
+    userMessage: string;
+    history: ChatMessage[];
+    modelReady: boolean;
+    onStep?: (s: AgentStep, all: AgentStep[]) => void;
+  },
+  allowed: string[],
+  priorSteps: AgentStep[],
+): Promise<AgentRunResult> {
+  const steps: AgentStep[] = [...priorSteps];
   const push = (s: AgentStep) => {
     steps.push(s);
     opts.onStep?.(s, [...steps]);
   };
 
-  const pluginState = await loadPluginState();
-  const allowed = enabledTools(pluginState);
   const plan = planTools(opts.userMessage, allowed);
 
   if (plan.length === 0) {
     push(step("Ready", "Just chatting — no tools needed."));
   } else {
-    push(step("Planning", `Running ${plan.length} tool${plan.length === 1 ? "" : "s"}…`));
+    push(
+      step(
+        "Planning",
+        `Running ${plan.length} tool${plan.length === 1 ? "" : "s"}…`,
+      ),
+    );
   }
 
   const toolTexts: string[] = [];
@@ -67,7 +163,6 @@ export async function runAgentTurn(opts: {
     try {
       const baseline = await createCheckpoint("before agent edits");
       baselineId = baseline.id;
-      push(step("Checkpoint", `baseline ${baseline.id}`, { ok: true }));
     } catch {
       /* non-fatal */
     }

@@ -230,9 +230,15 @@ export async function chatCompletion(
   host: string,
   model: string,
   messages: ChatMessage[],
-  opts?: { numCtx?: number; numPredict?: number; temperature?: number },
+  opts?: {
+    numCtx?: number;
+    numPredict?: number;
+    temperature?: number;
+    /** Ollama JSON mode — used by Pocket Agent grammar loop. */
+    format?: "json" | Record<string, unknown>;
+  },
 ): Promise<{ ok: true; text: string } | { ok: false; error: string }> {
-  const res = await request(host, "POST", "/api/chat", {
+  const body: Record<string, unknown> = {
     model,
     messages,
     stream: false,
@@ -241,7 +247,9 @@ export async function chatCompletion(
       num_predict: opts?.numPredict ?? DEFAULT_NUM_PREDICT,
       num_ctx: opts?.numCtx ?? DEFAULT_NUM_CTX,
     },
-  });
+  };
+  if (opts?.format != null) body.format = opts.format;
+  const res = await request(host, "POST", "/api/chat", body);
 
   if (!res.ok) {
     return {

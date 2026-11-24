@@ -161,6 +161,7 @@ export function formatCheckpointList(items: CheckpointMeta[]): string {
 export const MUTATING_TOOLS = new Set([
   "write_file",
   "create_file",
+  "edit_file",
   "ensure_folder",
   "rename_file",
   "delete_file",
