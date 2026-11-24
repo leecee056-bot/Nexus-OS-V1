@@ -9,7 +9,7 @@ and Pi 5 (shared aarch64 image), and Companion Agent.
 | Piece | Where |
 |-------|--------|
 | Local llama.cpp + GGUF ladder | `scripts/start-infer.sh`, `select-model.sh` |
-| Knowledge Vault + coding pack links | Vault / Companion Packs |
+| Knowledge Vault + coding pack v1 | Vault FTS + `knowledge/coding-pack-v1/`; Companion `pack-coding-v1-*` |
 | Companion Agent file tools | `nexus-app` Agent mode (create/edit/rename files, website scaffold) |
 | OS TUI allowlisted tools | Hub → Agents (calc, vault, fileread, note…) |
 
