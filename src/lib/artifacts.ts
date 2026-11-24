@@ -1,14 +1,14 @@
 const USB_RELEASE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.2-usb";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.3-usb";
 
 const PI_RELEASE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.2-pi";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.3-pi";
 
 export const RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.2-usb";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.3-usb";
 
 export const PI_RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.2-pi";
+  "https://github.com/leecee056-bot/Nexus-OS-V1/releases/tag/v1.0.3-pi";
 
 export const RELEASE_SHA256SUMS = `${USB_RELEASE}/SHA256SUMS`;
 export const PI_RELEASE_SHA256SUMS = `${PI_RELEASE}/SHA256SUMS`;
@@ -21,14 +21,14 @@ export const ARTIFACTS = [
     filename: "portable-ai-os-x86_64.img",
     downloadName: "portable-ai-os-x86_64.img.xz",
     downloadUrl: `${USB_RELEASE}/portable-ai-os-x86_64.img.xz`,
-    sizeBytes: 516880360,
-    sizeLabel: "~493 MB download → about 3 GB after unpacking",
+    sizeBytes: 529474684,
+    sizeLabel: "~505 MB download → about 3 GB after unpacking",
     sha256xz:
-      "ebb971eac54ca492b2d0460f28aa4ab77d346f84de57d7473ed63d291d7117c5",
+      "db82246baabb26fc4506c5a452d0c67bb9826bd2918669ea31c78d5710cba370",
     sha256:
-      "94338b010768bc5ba729dc2f3fed567a77871de7bcf4e37789a6d2a3e987ac29",
+      "96cd6d21fa42e0c8dea9332ca03be25ab40ddeefe1043eeb255940f6b01549e2",
     guidance:
-      "For most modern and mid-2000s+ PCs that already run 64-bit Windows or Linux. Tri-Cass hub + Pocket Agent scaffolds + Knowledge Vault starter pack.",
+      "For most modern and mid-2000s+ PCs that already run 64-bit Windows or Linux. Tri-Cass hub + Cline-parity Pocket Agent + Knowledge Vault starter pack.",
   },
   {
     arch: "i686",
@@ -36,14 +36,14 @@ export const ARTIFACTS = [
     filename: "portable-ai-os-i686.img",
     downloadName: "portable-ai-os-i686.img.xz",
     downloadUrl: `${USB_RELEASE}/portable-ai-os-i686.img.xz`,
-    sizeBytes: 584556812,
-    sizeLabel: "~558 MB download → about 3 GB after unpacking",
+    sizeBytes: 619145528,
+    sizeLabel: "~591 MB download → about 3 GB after unpacking",
     sha256xz:
-      "f4ff4ab255f6d40c76c53ab480dd9406454158cad26cc89fb5388f85066e3f90",
+      "895e8877129758ca1f16fd5a7726b69ec09f7e77343ee9306296687beb088e34",
     sha256:
-      "243c850128c7b868dd872373da4648c1ca9e34f4afaaecf2e74c1921385b5001",
+      "736eec0ea350f6274a775698cd3217ca704411b32dddabf75cf9b84f78e1eb38",
     guidance:
-      "Prefer this for XP-era or true 32-bit machines. If the PC is very old and you are unsure, start here. Tri-Cass hub + Pocket Agent scaffolds + Knowledge Vault starter pack.",
+      "Prefer this for XP-era or true 32-bit machines. If the PC is very old and you are unsure, start here. Tri-Cass hub + Cline-parity Pocket Agent + Knowledge Vault starter pack.",
   },
 ] as const;
 
@@ -54,14 +54,14 @@ export const PI_ARTIFACTS = [
     filename: "portable-ai-os-aarch64.img",
     downloadName: "portable-ai-os-aarch64.img.xz",
     downloadUrl: `${PI_RELEASE}/portable-ai-os-aarch64.img.xz`,
-    sizeBytes: 843077616,
-    sizeLabel: "~804 MB download → about 4 GB after unpacking",
+    sizeBytes: 892211324,
+    sizeLabel: "~851 MB download → about 4 GB after unpacking",
     sha256xz:
-      "a1056f9714f2b45318d071d22b1a9c1ce4074e2de77f1d198abc1e10f2936828",
+      "ea3d349957a4127bd1dbda06c1d862bb2b7de9ba8bb77475d3c5bad319e8bfd5",
     sha256:
-      "bfc6915a14fac8954f49597c29ea23b039e87cb8acdaf1a0c2cc8501f71786c2",
+      "931856c0d3e952954272c6de241546f6ebd9f04fd4f7f7b448e214111c4febd4",
     guidance:
-      "Flash this to a microSD card for Raspberry Pi 4 or Pi 5 (2 GB+ RAM; 4 GB+ preferred). One aarch64 image covers both boards. Tri-Cass hub + Pocket Agent scaffolds + Knowledge Vault starter pack.",
+      "Flash this to a microSD card for Raspberry Pi 4 or Pi 5 (2 GB+ RAM; 4 GB+ preferred). One aarch64 image covers both boards. Tri-Cass hub + Cline-parity Pocket Agent + Knowledge Vault starter pack.",
   },
 ] as const;
 
@@ -107,7 +107,7 @@ export const CARDPUTER_ARTIFACTS = [
 ] as const;
 
 export const BUILD_NOTE =
-  "Choose a build: PC USB or Raspberry Pi microSD (release v1.0.2 — Tri-Cass branding + Pocket Agent scaffolds + Knowledge Vault starter pack), Tri-Cass Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), or the Companion USB portable kit. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Pi 4 and Pi 5 share the same aarch64 image. Full walkthrough on the Setup page.";
+  "Choose a build: PC USB or Raspberry Pi microSD (release v1.0.3 — Tri-Cass branding + Cline-parity Pocket Agent + Knowledge Vault starter pack), Tri-Cass Pocket for ESP32-S3 with PSRAM, Cardputer ADV firmware, Companion apps (Windows / Mac / Android / web), Tri-Cass Desk, or the Companion USB portable kit. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Pi 4 and Pi 5 share the same aarch64 image. Full walkthrough on the Setup page.";
 
 /**
  * Companion app — Chat/Vault/Packs with local AI (not the bootable OS).
@@ -156,16 +156,16 @@ export const COMPANION_ANDROID_NOTES =
  * Tri-Cass Desk — living desktop companion (separate repo).
  * Bump URLs only after the matching Tri-Cass-Desk release assets exist.
  */
-export const DESK_VERSION = "0.3.0";
+export const DESK_VERSION = "0.3.2";
 
 export const DESK_RELEASE_PAGE =
-  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/tag/v0.3.0";
+  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/tag/v0.3.2";
 
 export const DESK_RELEASES_LATEST =
   "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/latest";
 
 /** Windows x64 NSIS setup (desktop + Start Menu). */
 export const DESK_WINDOWS_SETUP_URL =
-  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/download/v0.3.0/Tri-Cass-Desk-0.3.0-win-x64.exe";
+  "https://github.com/leecee056-bot/Tri-Cass-Desk/releases/download/v0.3.2/Tri-Cass-Desk-0.3.2-win-x64.exe";
 
 export const DESK_REPO_URL = "https://github.com/leecee056-bot/Tri-Cass-Desk";
