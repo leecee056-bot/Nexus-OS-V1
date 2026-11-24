@@ -107,10 +107,10 @@ export default function DownloadPage() {
           Raspberry Pi / cyberdeck (microSD)
         </h3>
         <div className="alert" style={{ marginBottom: "1.5rem" }}>
-          <strong>Pi 4 is the primary target</strong> — including DIY cyberdecks
-          and portable Pi kits. The same image may boot on Pi 5, but that is
-          best-effort for now (some boards may need a software update later). Use
-          a <strong>microSD card</strong>, not a USB stick.
+          <strong>One aarch64 image for Pi 4 and Pi 5</strong> — including DIY
+          cyberdecks and portable Pi kits. Pi 4 (2 GB+) is the well-tested sweet
+          spot; Pi 5 uses the same file. Use a <strong>microSD card</strong>, not
+          a USB stick.
         </div>
         {PI_ARTIFACTS.map((a) => (
           <div className="panel" key={a.arch}>

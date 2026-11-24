@@ -22,7 +22,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: "pc-vs-pi",
     question: "Should I download PC, Raspberry Pi, or Pocket?",
     answer:
-      "Use a PC USB image for Intel/AMD desktop or laptop machines (32-bit for older XP-era boxes, 64-bit for typical modern PCs). Use the Raspberry Pi image for Pi 4 (primary) or Pi 5 (best-effort) — including cyberdeck and portable builds — flashed to a microSD card. Use Tri-Cass Pocket when you have an ESP32-S3 with PSRAM and want a pocket USB-Serial companion instead of a full Linux hub.",
+      "Use a PC USB image for Intel/AMD desktop or laptop machines (32-bit for older XP-era boxes, 64-bit for typical modern PCs). Use the Raspberry Pi aarch64 image for Pi 4 or Pi 5 (same file) — including cyberdeck and portable builds — flashed to a microSD card. Use Tri-Cass Pocket when you have an ESP32-S3 with PSRAM and want a pocket USB-Serial companion instead of a full Linux hub.",
   },
   {
     id: "pocket",

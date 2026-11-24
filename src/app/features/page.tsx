@@ -28,8 +28,8 @@ export default function FeaturesPage() {
             <strong>Boots on low-spec PCs, Pi 4, and cyberdeck builds</strong>
             <span>
               32-bit and 64-bit Intel/AMD USB images, plus a 64-bit Raspberry Pi
-              microSD image (Pi 4 primary; Pi 5 best-effort). Aimed at spare PCs,
-              portable Pi kits, and DIY cyberdecks.
+              microSD image (Pi 4 and Pi 5 share the same aarch64 file). Aimed at
+              spare PCs, portable Pi kits, and DIY cyberdecks.
             </span>
           </li>
           <li>
@@ -98,10 +98,11 @@ export default function FeaturesPage() {
             <span>
               Small helpers with a fixed allow-list (calculator, vault, files,
               notes, system info, models, pixel art) — not open access to
-              everything on the PC. Source also includes{" "}
-              <strong>Pocket Agent</strong> scaffolds (timer / notes / file
-              workspace helpers) for Companion and the hub Agents menu; those
-              land on flashed v1.0.1 sticks/cards after the next image bake.
+              everything on the PC. Hub{" "}
+              <strong>Pocket Agent</strong> scaffolds (timer / HTML / CLI /
+              Flask templates via <code className="mono">scaffold</code> /{" "}
+              <code className="mono">make</code>) ship on v1.0.2 USB and Pi
+              images under <code className="mono">/data/projects/</code>.
             </span>
           </li>
           <li>

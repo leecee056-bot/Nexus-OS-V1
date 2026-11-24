@@ -178,9 +178,8 @@ export default function HomePage() {
             <div className="panel">
               <h3>Raspberry Pi</h3>
               <p>
-                <strong>Pi 4 primary</strong> (2 GB+ RAM). Same image may work on
-                Pi 5 (best-effort). Flash to a microSD card (8 GB+). Ideal for
-                cyberdeck builds.
+                <strong>Pi 4 or Pi 5</strong> (2 GB+ RAM; same aarch64 image).
+                Flash to a microSD card (8 GB+). Ideal for cyberdeck builds.
               </p>
             </div>
             <div className="panel">

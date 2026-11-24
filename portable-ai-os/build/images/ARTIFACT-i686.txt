@@ -1,6 +1,10 @@
-artifact=/agent/portable-ai-os-images/portable-ai-os-i686.img
+artifact=portable-ai-os-i686.img
 arch=i686
 size_bytes=3221225472
-sha256=fb2b39abeb025a1040178dd1eb327206538df2c31ba1cc2a05089bb7ba661e43
-built=2026-11-19T18:52:49Z
-note=v1.0.1-usb Knowledge Vault starter pack payload refresh
+sha256=243c850128c7b868dd872373da4648c1ca9e34f4afaaecf2e74c1921385b5001
+xz=portable-ai-os-i686.img.xz
+xz_size_bytes=584556812
+sha256xz=f4ff4ab255f6d40c76c53ab480dd9406454158cad26cc89fb5388f85066e3f90
+release=v1.0.2-usb
+built=2026-11-23T23:34:00Z
+note=Tri-Cass branding + Pocket Agent scaffolds

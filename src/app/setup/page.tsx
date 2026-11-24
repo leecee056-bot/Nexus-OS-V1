@@ -61,7 +61,7 @@ export default function SetupPage() {
                 <strong>aarch64 — Raspberry Pi / cyberdeck microSD</strong>
                 <span>
                   <strong>Pi 4 primary</strong> (also great for DIY cyberdecks).
-                  Same file may work on Pi 5 (best-effort). Flash to a microSD
+                  Same aarch64 file for Pi 4 and Pi 5. Flash to a microSD
                   card, not a USB stick.
                 </span>
               </li>
@@ -137,11 +137,11 @@ export default function SetupPage() {
               A checksum is a fingerprint of the file. Matching it means your
               download was not cut off or corrupted. Grab SHA256SUMS from the
               same Release (
-              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.1-usb/SHA256SUMS">
+              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.2-usb/SHA256SUMS">
                 PC
               </a>
               {" · "}
-              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.1-pi/SHA256SUMS">
+              <a href="https://github.com/leecee056-bot/Nexus-OS-V1/releases/download/v1.0.2-pi/SHA256SUMS">
                 Pi
               </a>
               ), then compare.
@@ -233,8 +233,8 @@ sync`}
             <p>
               <strong>Raspberry Pi / cyberdeck:</strong> insert the microSD,
               connect power (and display/keyboard). You should reach the same hub
-              menu after a short load. Prefer <strong>Pi 4</strong>; Pi 5 is
-              best-effort for this release.
+              menu after a short load. Same image for <strong>Pi 4</strong> and{" "}
+              <strong>Pi 5</strong> (Pi 4 is the well-tested sweet spot).
             </p>
             <p style={{ marginTop: "0.75rem" }}>
               <strong>PC:</strong> put the stick in, then restart. You usually
@@ -540,9 +540,12 @@ pio run -e cardputer-adv -t upload`}
             <li>
               <strong>Pi 5 will not boot</strong>
               <span>
-                This release targets Pi 4 first (including most cyberdeck builds).
-                Pi 5 may need a software update later — try Pi 4 if you have one,
-                or wait for an updated image.
+                v1.0.2 uses one aarch64 image for Pi 4 and Pi 5 (
+                <code className="mono">[pi5]</code> in{" "}
+                <code className="mono">config.txt</code>). Check power supply,
+                HDMI/keyboard, and that you flashed the latest{" "}
+                <code className="mono">v1.0.2-pi</code> card. Pi 4 remains the
+                easiest first board if something still fails.
               </span>
             </li>
             <li>

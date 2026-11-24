@@ -10,7 +10,7 @@
 
 ## Raspberry Pi (microSD)
 
-1. Download the **aarch64** Pi image (Pi 4 primary; Pi 5 best-effort).
+1. Download the **aarch64** Pi image (same file for Pi 4 and Pi 5 — release v1.0.2-pi).
 2. Unpack, then flash to a microSD card (8 GB+ recommended) with Etcher.
 3. Insert the card and power the Pi.
 4. Same hub menu as the PC build.
