@@ -45,7 +45,9 @@ function rateLimitMemory(
 
 /**
  * Prefer Postgres-backed counters when DATABASE_URL is set so limits hold
- * across instances. Falls back to in-process Map for local sample DB only.
+ * across instances. Local/dev without DATABASE_URL uses an in-process Map.
+ * When DATABASE_URL is set but the DB call fails, fail closed (deny) instead
+ * of silently falling back to per-instance memory (HAP-105).
  */
 export async function rateLimit(
   key: string,
@@ -96,9 +98,12 @@ export async function rateLimit(
     return { ok: true, retryAfterSec: 0 };
   } catch (err) {
     console.error(
-      "rate-limit db fallback",
+      "rate-limit db fail-closed",
       err instanceof Error ? err.message : err,
     );
-    return rateLimitMemory(key, limit, windowMs);
+    return {
+      ok: false,
+      retryAfterSec: Math.max(1, Math.ceil(windowMs / 1000)),
+    };
   }
 }
