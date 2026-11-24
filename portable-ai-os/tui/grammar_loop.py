@@ -14,6 +14,7 @@ from pathlib import Path
 from builder import projects_root, write_project_file
 from checkpoints import maybe_checkpoint_after
 from llm import completion_with_grammar, server_alive
+from plan_rules import PLAN_REL, RULES_NAME, build_mode_context, save_plan
 from sandbox_run import sandbox_run
 from vault import Vault
 
@@ -53,6 +54,15 @@ SYSTEM = (
     "run cwd is locked to that project; only python/python3/node. "
     "Call finish when done."
 )
+
+
+def _is_plan_or_rules_path(rel: str) -> bool:
+    rel = (rel or "").strip().lstrip("/")
+    if rel.endswith(str(PLAN_REL).replace("\\", "/")) or rel.endswith(".tri-cass/plan.md"):
+        return True
+    if rel.endswith(RULES_NAME) or rel == RULES_NAME:
+        return True
+    return False
 
 
 def extract_json_object(text: str) -> str | None:
@@ -186,11 +196,13 @@ def _search_knowledge(data_dir: Path, query: str) -> str:
     return "\n".join(f"{h['title']}: {h.get('snip')}" for h in hits)
 
 
-def execute_tool(data_dir: Path, call: dict) -> str:
+def execute_tool(data_dir: Path, call: dict, *, mode: str = "act") -> str:
     tool = call["tool"]
     args = call.get("args") or {}
     if tool == "finish":
         return args.get("message") or args.get("text") or "Done."
+    if mode == "plan" and tool in ("edit_file", "run"):
+        return "Blocked in PLAN mode — write projects/<name>/.tri-cass/plan.md then finish; user types: accept"
     if tool == "list_dir":
         return _list_dir(data_dir, args.get("path") or args.get("prefix") or "")
     if tool == "read_file":
@@ -198,6 +210,18 @@ def execute_tool(data_dir: Path, call: dict) -> str:
     if tool == "write_file":
         rel = args.get("path") or ""
         content = args.get("content") or ""
+        if mode == "plan" and not _is_plan_or_rules_path(rel):
+            # Allow write via save_plan when path is the plan file under a project
+            bits = rel.strip().lstrip("/").split("/")
+            if len(bits) >= 2 and bits[0] and "/".join(bits[1:]) in (
+                str(PLAN_REL).replace("\\", "/"),
+                ".tri-cass/plan.md",
+            ):
+                return save_plan(data_dir, bits[0], content)
+            return (
+                "PLAN mode: only write <project>/.tri-cass/plan.md "
+                f"(got {rel!r})"
+            )
         msg = write_project_file(data_dir, rel, content)
         proj = rel.strip().lstrip("/").split("/")[0]
         if proj and not msg.lower().startswith("path") and "too large" not in msg.lower():
@@ -241,6 +265,8 @@ def run_grammar_loop(
     *,
     max_steps: int = MAX_STEPS,
     use_grammar: bool = True,
+    mode: str = "act",
+    project: str = "",
 ) -> str:
     """Run the constrained tool loop; returns a user-facing summary."""
     if not server_alive(base):
@@ -249,8 +275,17 @@ def run_grammar_loop(
     if not goal:
         return "Usage: loop <goal>  — e.g. loop list projects and finish"
 
+    extra = ""
+    if project:
+        extra = "\n\n" + build_mode_context(data_dir, project, mode)
+    elif mode == "plan":
+        extra = (
+            "\n\n[Mode: PLAN] Write a short checklist under "
+            "<project>/.tri-cass/plan.md then finish."
+        )
+
     messages = [
-        {"role": "system", "content": SYSTEM},
+        {"role": "system", "content": SYSTEM + extra},
         {"role": "user", "content": goal},
     ]
     log: list[str] = []
@@ -286,11 +321,11 @@ def run_grammar_loop(
 
         tool = call["tool"]
         if tool == "finish":
-            finish_msg = execute_tool(data_dir, call)
+            finish_msg = execute_tool(data_dir, call, mode=mode)
             log.append(f"finish: {finish_msg[:120]}")
             break
 
-        obs = execute_tool(data_dir, call)
+        obs = execute_tool(data_dir, call, mode=mode)
         hint = (
             call["args"].get("path")
             or call["args"].get("command")

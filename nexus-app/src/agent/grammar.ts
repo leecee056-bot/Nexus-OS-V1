@@ -8,6 +8,7 @@ import type { ChatMessage } from "../chat/ollama";
 import { chatCompletion } from "../chat/ollama";
 import type { FileChange } from "../files/workspace";
 import type { AgentStep, AgentToolCall, AgentToolName } from "./schema";
+import type { AgentMode } from "./planRules";
 import { runTool, type ToolResult } from "./tools";
 
 export const GRAMMAR_TOOLS = [
@@ -231,6 +232,8 @@ export async function runGrammarLoop(opts: {
   userMessage: string;
   history: ChatMessage[];
   allowed: string[];
+  mode?: AgentMode;
+  modeContext?: string;
   onStep?: (s: AgentStep, all: AgentStep[]) => void;
 }): Promise<GrammarLoopResult> {
   const steps: AgentStep[] = [];
@@ -238,6 +241,7 @@ export async function runGrammarLoop(opts: {
     steps.push(s);
     opts.onStep?.(s, [...steps]);
   };
+  const mode = opts.mode ?? "act";
   const allow = new Set(opts.allowed);
   const changes: FileChange[] = [];
   const toolTexts: string[] = [];
@@ -246,10 +250,19 @@ export async function runGrammarLoop(opts: {
   let usedGrammar = false;
   let finishMessage = "";
 
-  push(step("Grammar", "One JSON tool per step…"));
+  push(
+    step(
+      "Grammar",
+      mode === "plan" ? "PLAN mode — checklist only…" : "One JSON tool per step…",
+    ),
+  );
+
+  const system = opts.modeContext
+    ? `${GRAMMAR_SYSTEM}\n\n${opts.modeContext}`
+    : GRAMMAR_SYSTEM;
 
   const transcript: ChatMessage[] = [
-    { role: "system", content: GRAMMAR_SYSTEM },
+    { role: "system", content: system },
     ...opts.history.slice(-12),
     { role: "user", content: opts.userMessage },
   ];
@@ -344,7 +357,7 @@ export async function runGrammarLoop(opts: {
     const pluginCalls = toPluginCalls(call, allow);
     const results: ToolResult[] = [];
     for (const pc of pluginCalls) {
-      const result = await runTool(pc);
+      const result = await runTool(pc, { mode });
       results.push(result);
       if (result.change) changes.push(result.change);
       const mutating =
