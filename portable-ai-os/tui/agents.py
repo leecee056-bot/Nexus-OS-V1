@@ -21,6 +21,7 @@ from checkpoints import (
     restore_checkpoint,
 )
 from files import FileBrowser
+from grammar_loop import run_grammar_loop
 from llm import present_models, server_alive
 from monitor import snapshot
 from pxg import generate_and_save
@@ -83,6 +84,7 @@ TOOLS = [
     ("checkpoint", "Snapshot a project — checkpoint <name> [label]"),
     ("checkpoints", "List snapshots — checkpoints [project]"),
     ("restore", "Roll back a project — restore <checkpoint-id>"),
+    ("loop", "Grammar JSON tool loop — loop <goal> (one tool/step)"),
 ]
 
 
@@ -98,6 +100,7 @@ class AgentController:
             "Agent ready. Allowlisted tools only — no shell.",
             "Pocket Agent: scaffold / make / write under /data/projects/",
             "Checkpoints: auto after scaffold/write; restore <id> to roll back.",
+            "Grammar loop: loop <goal> — one JSON tool/step (needs llama-server).",
         ]
         self.input = ""
         self.pending_confirm: tuple[str, str] | None = None  # (tool, arg)
@@ -249,6 +252,8 @@ class AgentController:
                 return list_checkpoints(self.data_dir, arg.strip())
             if tool == "restore":
                 return restore_checkpoint(self.data_dir, arg)
+            if tool == "loop":
+                return run_grammar_loop(self.data_dir, self.base, arg)
             return f"Unknown tool '{tool}'. Try: " + ", ".join(t[0] for t in TOOLS)
         except Exception as e:
             return f"Error: {e}"

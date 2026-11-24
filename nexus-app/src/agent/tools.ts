@@ -411,6 +411,46 @@ export async function runTool(call: AgentToolCall): Promise<ToolResult> {
         };
       }
     }
+    case "edit_file": {
+      const path = call.args.path || "";
+      const old = call.args.old ?? "";
+      const neu = call.args.new ?? "";
+      if (!path) {
+        return { tool: call.tool, ok: false, text: "edit_file needs a path" };
+      }
+      if (!old) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: "edit_file needs non-empty old text to find",
+        };
+      }
+      const res = await readTextFile(path);
+      if (!res.ok) return { tool: call.tool, ok: false, text: res.error };
+      if (!res.text.includes(old)) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: `edit_file: old text not found in ${path}`,
+        };
+      }
+      const next = res.text.replace(old, neu);
+      try {
+        const { doc, change } = await writeTextFile(path, next);
+        return {
+          tool: call.tool,
+          ok: true,
+          text: `Edited ${doc.name} (replaced ${old.length}→${neu.length} chars).`,
+          change,
+        };
+      } catch (e) {
+        return {
+          tool: call.tool,
+          ok: false,
+          text: e instanceof Error ? e.message : "edit failed",
+        };
+      }
+    }
     case "ensure_folder": {
       const path = call.args.path || "";
       if (!path) {

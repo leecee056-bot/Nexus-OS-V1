@@ -86,6 +86,54 @@ def chat_completion(base: str, messages: list[dict], temperature: float = 0.7, m
         return resp.get("content") or resp.get("completion") or str(resp)
 
 
+def completion_with_grammar(
+    base: str,
+    messages: list[dict],
+    grammar: str | None = None,
+    temperature: float = 0.2,
+    max_tokens: int = 768,
+) -> str:
+    """Chat completion; when grammar is set, prefer llama.cpp /completion + GBNF."""
+    prompt = ""
+    for m in messages:
+        prompt += f"{m['role']}: {m['content']}\n"
+    prompt += "assistant:"
+
+    if grammar:
+        try:
+            payload = {
+                "prompt": prompt,
+                "n_predict": max_tokens,
+                "temperature": temperature,
+                "stream": False,
+                "grammar": grammar,
+            }
+            resp = http_json(f"{base}/completion", payload, timeout=180.0)
+            text = resp.get("content") or resp.get("completion") or ""
+            if text:
+                return text
+        except Exception:
+            pass
+        # OpenAI-compatible servers sometimes accept grammar on chat
+        try:
+            resp = http_json(
+                f"{base}/v1/chat/completions",
+                {
+                    "messages": messages,
+                    "temperature": temperature,
+                    "stream": False,
+                    "max_tokens": max_tokens,
+                    "grammar": grammar,
+                },
+                timeout=180.0,
+            )
+            return resp["choices"][0]["message"]["content"]
+        except Exception:
+            pass
+
+    return chat_completion(base, messages, temperature=temperature, max_tokens=max_tokens)
+
+
 def restart_server(model_path: str, ctx: int, root: Path, threads: int = 0) -> None:
     stop = root / "scripts" / "stop-infer.sh"
     start = root / "scripts" / "start-infer.sh"

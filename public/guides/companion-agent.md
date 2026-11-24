@@ -59,6 +59,7 @@ rejected. Common text/code extensions are allowed (`.txt` `.md` `.html` `.css`
 | Files Browse | `list_files` | List workspace / folders |
 | Files Read | `read_file` | Open text files |
 | Files Write | `write_file` | Create/update text & code files |
+| Files Write | `edit_file` | Diff-style replace (`old`→`new`) via grammar loop |
 | Files Create | `create_file` | Same sandbox create alias |
 | Folders | `ensure_folder` | Create folders (e.g. `website/`) |
 | Files Rename | `rename_file` | Rename/move inside the sandbox |
@@ -80,6 +81,22 @@ Ask Agent:
 - “list checkpoints”
 - “restore last checkpoint” / “undo”
 - “save checkpoint”
+
+## Grammar JSON tool loop
+
+With a local model ready, Agent prefers a **one-tool-at-a-time** JSON loop
+(Ollama `format=json`). Each model reply is a single object:
+
+`{"tool":"write_file|edit_file|read_file|list_dir|search_knowledge|finish","args":{…}}`
+
+- `edit_file` replaces the first occurrence of `old` with `new` in a path
+- `list_dir` lists a workspace folder (same sandbox as `list_files`)
+- `search_knowledge` hits Vault and coding packs
+- `finish` ends the loop with the user-facing message
+
+If the first reply is not valid tool JSON, Agent falls back to the older
+heuristic planner. On the USB/Pi hub TUI: `loop <goal>` (needs llama-server).
+Sandboxed `run` is not enabled yet (later task).
 
 ## Small-model coding (~1.5B and smaller)
 
