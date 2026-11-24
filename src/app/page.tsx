@@ -124,6 +124,8 @@ export default function HomePage() {
             <li>
               <strong>ESP32 Pocket</strong> and a{" "}
               <Link href="/download#companion">Windows / Mac / Android companion</Link>
+              {" · "}
+              <Link href="/download#desk">Tri-Cass Desk</Link>
               <span>
                 Flash Tri-Cass Pocket on an ESP32-S3 with PSRAM for offline
                 TinyStories chat and tools over USB Serial — no full Linux image

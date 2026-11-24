@@ -17,6 +17,11 @@ import {
   COMPANION_WEB_URL,
   COMPANION_WINDOWS_PORTABLE_URL,
   COMPANION_WINDOWS_URL,
+  DESK_RELEASE_PAGE,
+  DESK_RELEASES_LATEST,
+  DESK_REPO_URL,
+  DESK_VERSION,
+  DESK_WINDOWS_SETUP_URL,
   PI_ARTIFACTS,
   PI_RELEASE_PAGE,
   PI_RELEASE_SHA256SUMS,
@@ -61,6 +66,7 @@ export default function DownloadPage() {
           <a href="#cardputer">Cardputer ADV</a>
           <a href="#knowledge-packs">Knowledge packs</a>
           <a href="#companion">Companion app</a>
+          <a href="#desk">Tri-Cass Desk</a>
           <a href="#companion-usb">Companion USB kit</a>
         </nav>
 
@@ -292,6 +298,40 @@ export default function DownloadPage() {
             </a>
             <a className="btn btn-quiet" href="/guides/companion-agent.md">
               Agent + Add-ons
+            </a>
+          </div>
+        </div>
+
+        <div className="panel" id="desk" style={{ marginTop: "1.5rem" }}>
+          <h3>Tri-Cass Desk — living desktop companion (v{DESK_VERSION})</h3>
+          <p>
+            <strong>Tri-Cass Desk</strong> is a separate Windows desktop app
+            with a frosted glass workspace, Monaco editor, local Ollama chat,
+            Agents (inspect / plan / Cline-slim build), Knowledge Vault, and a
+            living world driven by machine telemetry — not outdoor weather APIs.
+            Download the setup, install, then launch{" "}
+            <strong>Tri-Cass OS · Desk</strong>. Needs{" "}
+            <a href="https://ollama.com/download">Ollama</a> on the same PC for
+            AI features.
+          </p>
+          <p style={{ marginTop: "0.75rem" }}>
+            Current public installer:{" "}
+            <code className="mono">Tri-Cass-Desk-{DESK_VERSION}-win-x64.exe</code>
+            . Source and newer tags live in the{" "}
+            <a href={DESK_REPO_URL}>Tri-Cass-Desk</a> repo.
+          </p>
+          <div className="cta-row" style={{ marginTop: "0.85rem" }}>
+            <a className="btn" href={DESK_WINDOWS_SETUP_URL}>
+              Download Desk Windows setup (.exe)
+            </a>
+            <a className="btn btn-ghost" href={DESK_RELEASE_PAGE}>
+              Desk v{DESK_VERSION} release
+            </a>
+            <a className="btn btn-quiet" href={DESK_RELEASES_LATEST}>
+              Latest Desk releases
+            </a>
+            <a className="btn btn-quiet" href={DESK_REPO_URL}>
+              Desk source on GitHub
             </a>
           </div>
         </div>
