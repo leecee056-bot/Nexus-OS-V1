@@ -22,6 +22,11 @@ import {
 } from "./checkpoints";
 import { guessScaffold, scaffoldFiles } from "./scaffolds";
 import { runSandboxed } from "./sandboxRun";
+import {
+  isPlanPath,
+  isRulesPath,
+  type AgentMode,
+} from "./planRules";
 
 export type ToolResult = {
   tool: AgentToolName;
@@ -305,7 +310,43 @@ p{line-height:1.55;color:#9ad4a4}
   return calls;
 }
 
-export async function runTool(call: AgentToolCall): Promise<ToolResult> {
+export async function runTool(
+  call: AgentToolCall,
+  opts?: { mode?: AgentMode },
+): Promise<ToolResult> {
+  const mode = opts?.mode ?? "act";
+  if (mode === "plan") {
+    const mutating = new Set([
+      "edit_file",
+      "rename_file",
+      "delete_file",
+      "run",
+      "restore_checkpoint",
+      "create_checkpoint",
+    ]);
+    if (mutating.has(call.tool)) {
+      return {
+        tool: call.tool,
+        ok: false,
+        text: `Blocked in PLAN mode — only explore + write ${".tri-cass/plan.md"} (or .tri-cass-rules). Say "accept plan" to build.`,
+      };
+    }
+    if (
+      (call.tool === "write_file" ||
+        call.tool === "create_file" ||
+        call.tool === "ensure_folder") &&
+      call.args.path &&
+      !isPlanPath(call.args.path) &&
+      !isRulesPath(call.args.path) &&
+      call.args.path.replace(/\\/g, "/").replace(/^\/+/, "") !== ".tri-cass"
+    ) {
+      return {
+        tool: call.tool,
+        ok: false,
+        text: `PLAN mode: writes only to .tri-cass/plan.md (or .tri-cass-rules). Path "${call.args.path}" blocked.`,
+      };
+    }
+  }
   switch (call.tool) {
     case "search_vault": {
       const notes = await loadNotes();

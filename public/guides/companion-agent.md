@@ -83,6 +83,25 @@ Ask Agent:
 - “restore last checkpoint” / “undo”
 - “save checkpoint”
 
+## Plan mode + project rules
+
+Cline-slim flow for multi-file builds:
+
+1. **PLAN** — Agent explores and writes a short checklist to
+   `.tri-cass/plan.md`. Other writes / edits / `run` are blocked.
+2. You say **accept plan** (or “go ahead”).
+3. **ACT** — Agent executes with the checklist re-injected each turn.
+
+Build-style asks (“make me a timer app…”) auto-enter PLAN when no checklist
+exists yet. Say **plan mode** / **act mode** anytime.
+
+**Project rules** live in `.tri-cass-rules` at the workspace root (and optional
+`projects/<name>/.tri-cass-rules`). Companion seeds a short default on first
+Agent turn. Rules are loaded into every Agent / grammar turn.
+
+Hub TUI: `plan <project> | <goal>` → `accept <project>` → `act <project> | <goal>`;
+`rules <project> [init]`.
+
 ## Grammar JSON tool loop
 
 With a local model ready, Agent prefers a **one-tool-at-a-time** JSON loop

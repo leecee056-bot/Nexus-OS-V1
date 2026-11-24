@@ -24,6 +24,13 @@ from files import FileBrowser
 from grammar_loop import run_grammar_loop
 from llm import present_models, server_alive
 from monitor import snapshot
+from plan_rules import (
+    ensure_rules,
+    load_mode,
+    load_plan,
+    load_rules,
+    save_mode,
+)
 from pxg import generate_and_save
 from sandbox_run import sandbox_run
 from vault import Vault
@@ -87,6 +94,10 @@ TOOLS = [
     ("restore", "Roll back a project — restore <checkpoint-id>"),
     ("loop", "Grammar JSON tool loop — loop <goal> (one tool/step)"),
     ("run", "Sandbox run in a project — run <project> | <command>"),
+    ("plan", "PLAN mode loop — plan <project> | <goal>"),
+    ("accept", "Accept plan → ACT — accept <project>"),
+    ("act", "ACT mode loop — act <project> | <goal>"),
+    ("rules", "Show/init .tri-cass-rules — rules <project> [init]"),
 ]
 
 
@@ -104,6 +115,7 @@ class AgentController:
             "Checkpoints: auto after scaffold/write; restore <id> to roll back.",
             "Grammar loop: loop <goal> — one JSON tool/step (needs llama-server).",
             "Sandbox run: run <project> | python main.py  (timeout, cwd locked).",
+            "Plan/rules: plan <proj> | <goal> → accept <proj> → act <proj> | <goal>.",
         ]
         self.input = ""
         self.pending_confirm: tuple[str, str] | None = None  # (tool, arg)
@@ -262,6 +274,57 @@ class AgentController:
                     return "Usage: run <project> | <command>  e.g. run demo | python main.py"
                 proj, cmd = arg.split("|", 1)
                 return sandbox_run(self.data_dir, proj.strip(), cmd.strip())
+            if tool == "plan":
+                if "|" not in arg:
+                    return "Usage: plan <project> | <goal>"
+                proj, goal = arg.split("|", 1)
+                proj = proj.strip()
+                save_mode(self.data_dir, "plan")
+                ensure_rules(self.data_dir, proj)
+                return run_grammar_loop(
+                    self.data_dir,
+                    self.base,
+                    goal.strip(),
+                    mode="plan",
+                    project=proj,
+                )
+            if tool == "accept":
+                proj = arg.strip() or ""
+                if not proj:
+                    return "Usage: accept <project>"
+                save_mode(self.data_dir, "act")
+                plan = load_plan(self.data_dir, proj)
+                if not plan:
+                    return f"No plan at projects/{proj}/.tri-cass/plan.md — run: plan {proj} | <goal>"
+                return f"Plan accepted for '{proj}' (ACT mode).\nNext: act {proj} | <goal>\n\n{plan[:1200]}"
+            if tool == "act":
+                if "|" not in arg:
+                    return "Usage: act <project> | <goal>"
+                proj, goal = arg.split("|", 1)
+                proj = proj.strip()
+                save_mode(self.data_dir, "act")
+                return run_grammar_loop(
+                    self.data_dir,
+                    self.base,
+                    goal.strip(),
+                    mode="act",
+                    project=proj,
+                )
+            if tool == "rules":
+                bits = arg.split()
+                if not bits:
+                    return "Usage: rules <project> [init]"
+                proj = bits[0]
+                if len(bits) > 1 and bits[1].lower() == "init":
+                    return ensure_rules(self.data_dir, proj)
+                text = load_rules(self.data_dir, proj)
+                mode = load_mode(self.data_dir)
+                if not text:
+                    return (
+                        f"(no rules — try: rules {proj} init)\n"
+                        f"Agent mode: {mode}"
+                    )
+                return f"Mode: {mode}\n\n{text}"
             return f"Unknown tool '{tool}'. Try: " + ", ".join(t[0] for t in TOOLS)
         except Exception as e:
             return f"Error: {e}"

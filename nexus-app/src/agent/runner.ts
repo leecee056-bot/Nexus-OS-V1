@@ -9,6 +9,18 @@ import {
   listCheckpoints,
 } from "./checkpoints";
 import { runGrammarLoop } from "./grammar";
+import {
+  buildModeContext,
+  ensureDefaultRules,
+  filterAllowedForMode,
+  loadAgentMode,
+  loadPlanText,
+  loadRulesText,
+  parseModeIntent,
+  saveAgentMode,
+  wantsBuildPlan,
+  type AgentMode,
+} from "./planRules";
 import { AGENT_SYSTEM, type AgentStep } from "./schema";
 import { formatChangeSummary, planTools, runTool } from "./tools";
 
@@ -31,9 +43,43 @@ function step(
   };
 }
 
+async function resolveMode(
+  userMessage: string,
+  push: (s: AgentStep) => void,
+): Promise<AgentMode> {
+  let mode = await loadAgentMode();
+  const intent = parseModeIntent(userMessage);
+  if (intent === "accept") {
+    mode = "act";
+    await saveAgentMode("act");
+    push(step("Mode", "Plan accepted → ACT", { ok: true }));
+  } else if (intent === "plan") {
+    mode = "plan";
+    await saveAgentMode("plan");
+    push(step("Mode", "PLAN — write .tri-cass/plan.md, no code edits", { ok: true }));
+  } else if (intent === "act") {
+    mode = "act";
+    await saveAgentMode("act");
+    push(step("Mode", "ACT", { ok: true }));
+  } else if (mode === "act" && wantsBuildPlan(userMessage)) {
+    const plan = await loadPlanText();
+    if (!plan) {
+      mode = "plan";
+      await saveAgentMode("plan");
+      push(
+        step("Mode", "PLAN first (no checklist yet) — say accept plan when ready", {
+          ok: true,
+        }),
+      );
+    }
+  }
+  return mode;
+}
+
 /**
  * Agent turn: prefer grammar JSON one-tool loop when a model is ready;
  * fall back to heuristic planTools for offline / invalid JSON.
+ * Plan mode blocks mutations until the user accepts the plan.
  */
 export async function runAgentTurn(opts: {
   host: string;
@@ -44,19 +90,33 @@ export async function runAgentTurn(opts: {
   onStep?: (s: AgentStep, all: AgentStep[]) => void;
 }): Promise<AgentRunResult> {
   const pluginState = await loadPluginState();
-  const allowed = enabledTools(pluginState);
+  const allAllowed = enabledTools(pluginState);
+
+  const preSteps: AgentStep[] = [];
+  const pushPre = (s: AgentStep) => {
+    preSteps.push(s);
+    opts.onStep?.(s, [...preSteps]);
+  };
+
+  try {
+    await ensureDefaultRules();
+  } catch {
+    /* non-fatal */
+  }
+
+  const mode = await resolveMode(opts.userMessage, pushPre);
+  const allowed = filterAllowedForMode(mode, allAllowed);
+  const rules = await loadRulesText();
+  const plan = await loadPlanText();
+  const modeContext = buildModeContext({ mode, rules, plan });
 
   if (opts.modelReady) {
     const willLikelyMutate =
-      allowed.includes("write_file") ||
-      allowed.includes("create_file") ||
-      allowed.includes("edit_file");
+      mode === "act" &&
+      (allowed.includes("write_file") ||
+        allowed.includes("create_file") ||
+        allowed.includes("edit_file"));
     let baselineId: string | undefined;
-    const preSteps: AgentStep[] = [];
-    const pushPre = (s: AgentStep) => {
-      preSteps.push(s);
-      opts.onStep?.(s, [...preSteps]);
-    };
     if (willLikelyMutate) {
       try {
         const baseline = await createCheckpoint("before agent edits");
@@ -73,6 +133,8 @@ export async function runAgentTurn(opts: {
       userMessage: opts.userMessage,
       history: opts.history,
       allowed,
+      mode,
+      modeContext,
       onStep: (s, all) => opts.onStep?.(s, [...preSteps, ...all]),
     });
 
@@ -115,11 +177,16 @@ export async function runAgentTurn(opts: {
         changes: grammar.changes,
       };
     }
-    // Invalid first JSON → heuristic path below (keep grammar steps as prefix).
-    return runHeuristicTurn(opts, allowed, [...preSteps, ...grammar.steps]);
+    return runHeuristicTurn(
+      opts,
+      allowed,
+      [...preSteps, ...grammar.steps],
+      mode,
+      modeContext,
+    );
   }
 
-  return runHeuristicTurn(opts, allowed, []);
+  return runHeuristicTurn(opts, allowed, preSteps, mode, modeContext);
 }
 
 async function runHeuristicTurn(
@@ -133,6 +200,8 @@ async function runHeuristicTurn(
   },
   allowed: string[],
   priorSteps: AgentStep[],
+  mode: AgentMode,
+  modeContext: string,
 ): Promise<AgentRunResult> {
   const steps: AgentStep[] = [...priorSteps];
   const push = (s: AgentStep) => {
@@ -140,10 +209,25 @@ async function runHeuristicTurn(
     opts.onStep?.(s, [...steps]);
   };
 
-  const plan = planTools(opts.userMessage, allowed);
+  let plan = planTools(opts.userMessage, allowed);
+  if (mode === "plan") {
+    // Heuristic writes only if clearly targeting the plan file
+    plan = plan.filter((c) => {
+      if (c.tool === "write_file" || c.tool === "create_file") {
+        return (c.args.path || "").includes(".tri-cass/plan");
+      }
+      return ![
+        "edit_file",
+        "rename_file",
+        "delete_file",
+        "run",
+        "ensure_folder",
+      ].includes(c.tool);
+    });
+  }
 
   if (plan.length === 0) {
-    push(step("Ready", "Just chatting — no tools needed."));
+    push(step("Ready", mode === "plan" ? "Planning…" : "Just chatting — no tools needed."));
   } else {
     push(
       step(
@@ -158,7 +242,8 @@ async function runHeuristicTurn(
   let baselineId: string | undefined;
   let mutatedOk = false;
   let mutateFailed = false;
-  const willMutate = plan.some((c) => MUTATING_TOOLS.has(c.tool));
+  const willMutate =
+    mode === "act" && plan.some((c) => MUTATING_TOOLS.has(c.tool));
   if (willMutate) {
     try {
       const baseline = await createCheckpoint("before agent edits");
@@ -173,7 +258,7 @@ async function runHeuristicTurn(
         tool: call.tool,
       }),
     );
-    const result = await runTool(call);
+    const result = await runTool(call, { mode });
     const mutating = MUTATING_TOOLS.has(call.tool);
     if (result.ok && mutating) mutatedOk = true;
     if (!result.ok && mutating) {
@@ -236,7 +321,7 @@ async function runHeuristicTurn(
   }
 
   const messages: ChatMessage[] = [
-    { role: "system", content: AGENT_SYSTEM },
+    { role: "system", content: `${AGENT_SYSTEM}\n\n${modeContext}` },
     ...opts.history.slice(-40),
     {
       role: "user",
@@ -257,7 +342,7 @@ async function runHeuristicTurn(
 }
 
 function summarizeArgs(args: Record<string, string>): string | undefined {
-  const path = args.path || args.prefix || args.query;
+  const path = args.path || args.prefix || args.query || args.command;
   if (path) return path.slice(0, 80);
   const keys = Object.keys(args);
   if (keys.length === 0) return undefined;
