@@ -12,9 +12,14 @@ import re
 from pathlib import Path
 
 from builder import projects_root, write_project_file
-from checkpoints import maybe_checkpoint_after
+from checkpoints import (
+    latest_checkpoint_id,
+    maybe_checkpoint_after,
+    restore_checkpoint,
+)
 from llm import completion_with_grammar, server_alive
 from plan_rules import PLAN_REL, RULES_NAME, build_mode_context, save_plan
+from post_write import StuckTracker, post_write_verify
 from sandbox_run import sandbox_run
 from vault import Vault
 
@@ -223,10 +228,17 @@ def execute_tool(data_dir: Path, call: dict, *, mode: str = "act") -> str:
                 f"(got {rel!r})"
             )
         msg = write_project_file(data_dir, rel, content)
+        if msg.lower().startswith("path") or "too large" in msg.lower():
+            return msg
+        ok, detail = post_write_verify(data_dir, rel, content)
+        if not ok:
+            return f"ERROR post-write: {detail}\n(after {msg})"
         proj = rel.strip().lstrip("/").split("/")[0]
-        if proj and not msg.lower().startswith("path") and "too large" not in msg.lower():
-            return maybe_checkpoint_after(data_dir, proj, f"write {rel}", msg)
-        return msg
+        if proj:
+            return maybe_checkpoint_after(
+                data_dir, proj, f"write {rel}", f"{msg}\nCheck: {detail}"
+            )
+        return f"{msg}\nCheck: {detail}"
     if tool == "edit_file":
         rel = args.get("path") or ""
         msg = _edit_file(
@@ -235,10 +247,17 @@ def execute_tool(data_dir: Path, call: dict, *, mode: str = "act") -> str:
             args.get("old") or args.get("old_str") or "",
             args.get("new") or args.get("new_str") or "",
         )
+        if not msg.startswith("Edited"):
+            return msg
+        ok, detail = post_write_verify(data_dir, rel, None)
+        if not ok:
+            return f"ERROR post-write: {detail}\n(after {msg})"
         proj = rel.strip().lstrip("/").split("/")[0]
-        if proj and msg.startswith("Edited"):
-            return maybe_checkpoint_after(data_dir, proj, f"edit {rel}", msg)
-        return msg
+        if proj:
+            return maybe_checkpoint_after(
+                data_dir, proj, f"edit {rel}", f"{msg}\nCheck: {detail}"
+            )
+        return f"{msg}\nCheck: {detail}"
     if tool == "search_knowledge":
         return _search_knowledge(data_dir, args.get("query") or "")
     if tool == "run":
@@ -290,6 +309,7 @@ def run_grammar_loop(
     ]
     log: list[str] = []
     finish_msg = ""
+    stuck = StuckTracker()
 
     for i in range(max_steps):
         try:
@@ -333,13 +353,44 @@ def run_grammar_loop(
             or ""
         )
         log.append(f"{tool} {hint}: {obs.splitlines()[0][:100]}")
+        failed = (
+            obs.startswith("ERROR")
+            or obs.startswith("Blocked")
+            or obs.startswith("old text not found")
+            or obs.startswith("Bad path")
+            or obs.startswith("TIMEOUT")
+            or (obs.startswith("exit ") and not obs.startswith("exit 0"))
+        )
+        if failed:
+            streak = stuck.record(obs)
+            if streak >= 3:
+                rb = ""
+                proj = project or call["args"].get("project") or ""
+                if not proj:
+                    path_hint = (call["args"].get("path") or "").strip().lstrip("/")
+                    if path_hint:
+                        proj = path_hint.split("/", 1)[0]
+                if proj:
+                    cid = latest_checkpoint_id(data_dir, proj)
+                    if cid:
+                        rb = restore_checkpoint(data_dir, cid)
+                finish_msg = (
+                    f"Stuck on the same error ×{streak}. Rolled back and stopped.\n"
+                    f"{obs[:800]}\n{rb}"
+                )
+                log.append(f"stuck×{streak}: rollback")
+                break
         messages.append(
             {"role": "assistant", "content": json.dumps({"tool": tool, "args": call["args"]})}
         )
         messages.append(
             {
                 "role": "user",
-                "content": f"[tool result]\n{obs[:3500]}\n\nNext: one JSON tool call, or finish.",
+                "content": (
+                    f"[tool result]\n{obs[:3500]}\n\nNext: one JSON tool call, or finish."
+                    if not failed
+                    else f"[tool result]\n{obs[:3500]}\n\nCheck failed — try a different fix. Next: one JSON tool call, or finish."
+                ),
             }
         )
     else:
