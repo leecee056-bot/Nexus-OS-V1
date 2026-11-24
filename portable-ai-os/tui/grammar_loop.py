@@ -3,8 +3,7 @@
 One tool per model step, constrained via llama.cpp GBNF when available,
 with JSON extract + allow-list validation as fallback.
 
-Tools: write_file, edit_file, read_file, list_dir, search_knowledge, finish.
-(run is reserved for HAP-104 — not enabled here.)
+Tools: write_file, edit_file, read_file, list_dir, run, search_knowledge, finish.
 """
 from __future__ import annotations
 
@@ -15,6 +14,7 @@ from pathlib import Path
 from builder import projects_root, write_project_file
 from checkpoints import maybe_checkpoint_after
 from llm import completion_with_grammar, server_alive
+from sandbox_run import sandbox_run
 from vault import Vault
 
 GRAMMAR_TOOLS = (
@@ -22,6 +22,7 @@ GRAMMAR_TOOLS = (
     "edit_file",
     "read_file",
     "list_dir",
+    "run",
     "search_knowledge",
     "finish",
 )
@@ -31,7 +32,7 @@ MAX_STEPS = 8
 # Constrains tool name; args object is free-form JSON strings.
 TOOL_GBNF = r"""
 root ::= "{" ws "\"tool\"" ws ":" ws tool ws "," ws "\"args\"" ws ":" ws object ws "}"
-tool ::= "\"write_file\"" | "\"edit_file\"" | "\"read_file\"" | "\"list_dir\"" | "\"search_knowledge\"" | "\"finish\""
+tool ::= "\"write_file\"" | "\"edit_file\"" | "\"read_file\"" | "\"list_dir\"" | "\"run\"" | "\"search_knowledge\"" | "\"finish\""
 object ::= "{" ws (pair (ws "," ws pair)*)? ws "}"
 pair ::= string ws ":" ws value
 value ::= string | number | "true" | "false" | "null" | object | array
@@ -46,8 +47,10 @@ SYSTEM = (
     "Reply with ONE JSON object only — no markdown.\n"
     'Shape: {"tool":"<name>","args":{...}}\n'
     "Tools: write_file (path,content), edit_file (path,old,new), "
-    "read_file (path), list_dir (path), search_knowledge (query), "
+    "read_file (path), list_dir (path), "
+    "run (project,command[,timeout]), search_knowledge (query), "
     "finish (message). Paths are relative under /data/projects/. "
+    "run cwd is locked to that project; only python/python3/node. "
     "Call finish when done."
 )
 
@@ -214,6 +217,20 @@ def execute_tool(data_dir: Path, call: dict) -> str:
         return msg
     if tool == "search_knowledge":
         return _search_knowledge(data_dir, args.get("query") or "")
+    if tool == "run":
+        project = args.get("project") or ""
+        # Infer project from path like demo/main.py when project omitted
+        if not project:
+            path_hint = (args.get("path") or "").strip().lstrip("/")
+            if path_hint and "/" in path_hint and ".." not in path_hint:
+                project = path_hint.split("/", 1)[0]
+        cmd = args.get("command") or args.get("cmd") or ""
+        return sandbox_run(
+            data_dir,
+            project,
+            cmd,
+            args.get("timeout") or args.get("timeout_sec"),
+        )
     return f"Unknown tool {tool}"
 
 
@@ -274,7 +291,12 @@ def run_grammar_loop(
             break
 
         obs = execute_tool(data_dir, call)
-        hint = call["args"].get("path") or call["args"].get("query") or ""
+        hint = (
+            call["args"].get("path")
+            or call["args"].get("command")
+            or call["args"].get("query")
+            or ""
+        )
         log.append(f"{tool} {hint}: {obs.splitlines()[0][:100]}")
         messages.append(
             {"role": "assistant", "content": json.dumps({"tool": tool, "args": call["args"]})}

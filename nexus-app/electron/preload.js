@@ -25,6 +25,7 @@ contextBridge.exposeInMainWorld("nexus", {
     mkdir: (args) => ipcRenderer.invoke("nexus:workspace-mkdir", args),
     rename: (args) => ipcRenderer.invoke("nexus:workspace-rename", args),
     remove: (args) => ipcRenderer.invoke("nexus:workspace-remove", args),
+    run: (args) => ipcRenderer.invoke("nexus:workspace-run", args),
   },
   platform: process.platform,
 });

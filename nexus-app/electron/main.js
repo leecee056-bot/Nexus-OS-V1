@@ -591,6 +591,202 @@ ipcMain.handle("nexus:workspace-remove", async (_event, args) => {
   }
 });
 
+const RUN_ALLOWED = new Set(["python", "python3", "py", "node"]);
+const RUN_MAX_OUTPUT = 8000;
+
+function splitRunCommand(command) {
+  const s = String(command || "").trim();
+  if (!s || s.length > 500 || /[\n\r]/.test(s)) return null;
+  const out = [];
+  let cur = "";
+  let quote = null;
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (quote) {
+      if (c === "\\" && quote === '"' && i + 1 < s.length) {
+        cur += s[++i];
+        continue;
+      }
+      if (c === quote) {
+        quote = null;
+        continue;
+      }
+      cur += c;
+      continue;
+    }
+    if (c === '"' || c === "'") {
+      quote = c;
+      continue;
+    }
+    if (/\s/.test(c)) {
+      if (cur) {
+        out.push(cur);
+        cur = "";
+      }
+      continue;
+    }
+    cur += c;
+  }
+  if (quote) return null;
+  if (cur) out.push(cur);
+  return out.length ? out : null;
+}
+
+function findOnPath(bin) {
+  const pathEnv = process.env.PATH || process.env.Path || "";
+  const sep = process.platform === "win32" ? ";" : ":";
+  const exts =
+    process.platform === "win32"
+      ? (process.env.PATHEXT || ".EXE;.CMD;.BAT").split(";").filter(Boolean)
+      : [""];
+  for (const dir of pathEnv.split(sep)) {
+    if (!dir) continue;
+    for (const ext of exts) {
+      const candidate = path.join(dir, bin + ext);
+      try {
+        if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+          return candidate;
+        }
+      } catch {
+        /* skip */
+      }
+    }
+  }
+  return null;
+}
+
+/** Sandboxed run: cwd locked to Workspace/projects/<project>. */
+ipcMain.handle("nexus:workspace-run", async (_event, args) => {
+  try {
+    const project = String(args?.project || "")
+      .replace(/\\/g, "/")
+      .replace(/^\/+|\/+$/g, "");
+    if (!project || project.includes("..") || project.includes("/")) {
+      return { ok: false, error: "Invalid project name." };
+    }
+    const { full: cwd } = resolveWorkspacePath(`projects/${project}`);
+    if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
+      return {
+        ok: false,
+        error: `No project '${project}' under projects/ — scaffold one first.`,
+      };
+    }
+    const argv = splitRunCommand(args?.command);
+    if (!argv) {
+      return { ok: false, error: "Invalid command." };
+    }
+    const binName = path.basename(argv[0]).toLowerCase().replace(/\.exe$/i, "");
+    if (!RUN_ALLOWED.has(binName)) {
+      return {
+        ok: false,
+        error: `binary '${binName}' not allowed — use python/python3/py/node`,
+      };
+    }
+    const resolved = findOnPath(argv[0]) || findOnPath(binName);
+    if (!resolved) {
+      return { ok: false, error: `'${binName}' not found on PATH` };
+    }
+    argv[0] = resolved;
+
+    const rootWithSep = cwd.endsWith(path.sep) ? cwd : cwd + path.sep;
+    for (let i = 1; i < argv.length; i++) {
+      const arg = argv[i];
+      if (!arg || arg.startsWith("-")) continue;
+      if (path.isAbsolute(arg) || arg.includes("..") || /[/\\]/.test(arg)) {
+        const full = path.isAbsolute(arg)
+          ? path.resolve(arg)
+          : path.resolve(cwd, arg);
+        if (full !== cwd && !full.startsWith(rootWithSep)) {
+          return { ok: false, error: `path escapes project: ${arg}` };
+        }
+      }
+    }
+
+    let timeoutSec = Number(args?.timeoutSec);
+    if (!Number.isFinite(timeoutSec) || timeoutSec <= 0) timeoutSec = 20;
+    timeoutSec = Math.min(60, Math.max(1, Math.floor(timeoutSec)));
+
+    const env = {
+      PATH: process.env.PATH || process.env.Path || "",
+      HOME: process.env.HOME || process.env.USERPROFILE || cwd,
+      LANG: process.env.LANG || "C.UTF-8",
+      PYTHONUNBUFFERED: "1",
+      PYTHONDONTWRITEBYTECODE: "1",
+    };
+    for (const k of ["SYSTEMROOT", "SYSTEMDRIVE", "PATHEXT", "TEMP", "TMP", "USERPROFILE"]) {
+      if (process.env[k]) env[k] = process.env[k];
+    }
+
+    const result = await new Promise((resolve) => {
+      let stdout = "";
+      let stderr = "";
+      let settled = false;
+      const child = spawn(argv[0], argv.slice(1), {
+        cwd,
+        env,
+        windowsHide: true,
+        shell: false,
+      });
+      const timer = setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        try {
+          child.kill("SIGKILL");
+        } catch {
+          /* ignore */
+        }
+        const output = (stdout + (stderr ? `\n--- stderr ---\n${stderr}` : "")).slice(
+          -RUN_MAX_OUTPUT,
+        );
+        resolve({ ok: true, timedOut: true, exitCode: -1, output });
+      }, timeoutSec * 1000);
+      child.stdout.on("data", (buf) => {
+        stdout += String(buf);
+        if (stdout.length > RUN_MAX_OUTPUT * 2) {
+          stdout = stdout.slice(-RUN_MAX_OUTPUT);
+        }
+      });
+      child.stderr.on("data", (buf) => {
+        stderr += String(buf);
+        if (stderr.length > RUN_MAX_OUTPUT * 2) {
+          stderr = stderr.slice(-RUN_MAX_OUTPUT);
+        }
+      });
+      child.on("error", (e) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        resolve({ ok: false, error: e.message || "spawn failed" });
+      });
+      child.on("close", (code) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        let output = stdout;
+        if (stderr) output += (output ? "\n" : "") + "--- stderr ---\n" + stderr;
+        if (output.length > RUN_MAX_OUTPUT) {
+          output =
+            output.slice(0, RUN_MAX_OUTPUT / 2) +
+            "\n…truncated…\n" +
+            output.slice(-RUN_MAX_OUTPUT / 2);
+        }
+        resolve({
+          ok: true,
+          timedOut: false,
+          exitCode: code == null ? 1 : code,
+          output,
+        });
+      });
+    });
+    return result;
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "run failed",
+    };
+  }
+});
+
 ipcMain.handle("nexus:list-knowledge", async () => {
   const dir = portableInfo.knowledgeDir;
   if (!dir || !fs.existsSync(dir)) return { ok: true, entries: [] };
