@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { mergeCodingPackV1 } from "../packs/codingPackV1";
 
 const KEY = "tricass.companion.vault.v1";
 
@@ -58,16 +59,22 @@ const STARTER: VaultNote[] = [
 
 export async function loadNotes(): Promise<VaultNote[]> {
   const raw = await AsyncStorage.getItem(KEY);
+  let notes: VaultNote[];
   if (!raw) {
-    await AsyncStorage.setItem(KEY, JSON.stringify(STARTER));
-    return STARTER;
+    notes = [...STARTER];
+  } else {
+    try {
+      const parsed = JSON.parse(raw) as VaultNote[];
+      notes = Array.isArray(parsed) ? parsed : [...STARTER];
+    } catch {
+      notes = [...STARTER];
+    }
   }
-  try {
-    const parsed = JSON.parse(raw) as VaultNote[];
-    return Array.isArray(parsed) ? parsed : STARTER;
-  } catch {
-    return STARTER;
+  const { notes: merged, added } = mergeCodingPackV1(notes);
+  if (added > 0 || !raw) {
+    await AsyncStorage.setItem(KEY, JSON.stringify(merged));
   }
+  return merged;
 }
 
 export async function saveNotes(notes: VaultNote[]): Promise<void> {

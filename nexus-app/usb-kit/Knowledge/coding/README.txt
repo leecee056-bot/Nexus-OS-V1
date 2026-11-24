@@ -1,21 +1,19 @@
 Tri-Cass Companion — Coding packs (optional)
 ============================================
 
+Shipped curated pack v1
+-----------------------
+See coding/v1/*.md — short Python / HTML / Flask / common-fixes snippets.
+Companion Vault auto-seeds the same content as pack-coding-v1-* notes
+(search_coding_packs / Agent search_knowledge). No import required for v1.
+
+Larger libraries (optional)
+---------------------------
 Drop plain .txt / .md excerpts here (DevDocs, Stack Overflow threads, API
 cheatsheets). We do not ship multi-GB ZIM dumps in this kit.
 
-Suggested flow
---------------
 1. Download a small DevDocs or Stack Exchange ZIM via Kiwix
-   https://library.kiwix.org/?q=devdocs
-   https://download.kiwix.org/zim/stack_exchange/
-2. Browse in Kiwix; export or copy useful pages to .txt / .md in this folder.
-3. Open Companion → Packs → Import as coding pack.
-4. Agent Add-on “Coding Packs” searches those notes (search_coding_packs).
+2. Browse in Kiwix; copy useful pages to .txt / .md here
+3. Companion → Packs → Import as coding pack
 
-Small models (~1.5B)
---------------------
-Prefer packs lookup → file tools → short scripts / starters.
-Do not expect a tiny model to build a large app alone.
-
-Guide: https://nexus-os.apps.grok.bot/knowledge-packs#coding
+Small models (~1.5B): packs lookup → file tools → short scripts / starters.

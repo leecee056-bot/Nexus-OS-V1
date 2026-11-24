@@ -18,6 +18,8 @@ the product site.
 
 - Site anchor: `/knowledge-packs#coding`
 - Companion: Packs → **Import as coding pack** → Vault ids `pack-coding-*`
+- **Coding pack v1** (curated, ships with Companion + OS knowledge tree):
+  `pack-coding-v1-*` / `knowledge/coding-pack-v1/*.md` — auto-seeded; no ZIM required
 - Agent tool: `search_coding_packs` (Add-ons → Coding Packs)
 - USB kit suggestion: `Knowledge/coding/*.txt|*.md`
 

@@ -110,19 +110,38 @@ class Vault:
         self._conn.commit()
         return rel
 
+    def _index_tree(self, root: Path) -> int:
+        n = 0
+        if not root.is_dir():
+            return 0
+        for p in root.rglob("*"):
+            if not p.is_file():
+                continue
+            if p.name.startswith("."):
+                continue
+            try:
+                self.index_path(p)
+                n += 1
+            except Exception:
+                pass
+        return n
+
     def rebuild(self) -> int:
         cur = self._conn.cursor()
         cur.execute("DELETE FROM docs_fts")
         cur.execute("DELETE FROM docs")
         self._conn.commit()
         n = 0
-        for p in self.raw.rglob("*"):
-            if p.is_file():
-                try:
-                    self.index_path(p)
-                    n += 1
-                except Exception:
-                    pass
+        n += self._index_tree(self.raw)
+        # Curated coding pack v1 — prefer AI_DATA copy, else bundled under OS tree
+        pack = self.root / "coding-pack-v1"
+        if pack.is_dir():
+            n += self._index_tree(pack)
+        else:
+            bundled = (
+                Path(__file__).resolve().parents[1] / "knowledge" / "coding-pack-v1"
+            )
+            n += self._index_tree(bundled)
         return n
 
     def search(self, query: str, limit: int = 8) -> list[dict]:

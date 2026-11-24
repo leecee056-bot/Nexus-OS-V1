@@ -136,8 +136,10 @@ or `run <project> | python main.py`.
 
 Realistic workflow:
 
-1. **Packs lookup** — Import DevDocs / Stack Overflow excerpts via Packs →
-   **Import as coding pack** (see [/knowledge-packs#coding](/knowledge-packs#coding)).
+1. **Packs lookup** — Companion seeds **coding pack v1** (`pack-coding-v1-*`:
+   Python CLI/HTTP/JSON, HTML/JS, Flask mini, common fixes). Ask Agent to
+   search coding packs. Optional: import more via Packs → **Import as coding
+   pack** (see [/knowledge-packs#coding](/knowledge-packs#coding)).
 2. **File tools** — list / read / write / rename inside the sandbox.
 3. **Short edits** — scripts, file trees, starters, small HTML/CSS/JS pages.
 
