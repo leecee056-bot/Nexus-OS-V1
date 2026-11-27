@@ -17,11 +17,11 @@ import {
   COMPANION_WEB_URL,
   COMPANION_WINDOWS_PORTABLE_URL,
   COMPANION_WINDOWS_URL,
+  DESK_ARTIFACTS,
   DESK_RELEASE_PAGE,
   DESK_RELEASES_LATEST,
   DESK_REPO_URL,
   DESK_VERSION,
-  DESK_WINDOWS_SETUP_URL,
   PI_ARTIFACTS,
   PI_RELEASE_PAGE,
   PI_RELEASE_SHA256SUMS,
@@ -303,27 +303,42 @@ export default function DownloadPage() {
         </div>
 
         <div className="panel" id="desk" style={{ marginTop: "1.5rem" }}>
-          <h3>Tri-Cass Desk — living desktop companion (v{DESK_VERSION})</h3>
+          <h3>Tri-Cass Desk — living desktop + offline AI (v{DESK_VERSION})</h3>
           <p>
-            <strong>Tri-Cass Desk</strong> is a separate Windows desktop app
-            with a frosted glass workspace, Monaco editor, local Ollama chat,
-            Agents (inspect / plan / Cline-slim build), Knowledge Vault, and a
-            living world driven by machine telemetry — not outdoor weather APIs.
-            Download the setup, install, then launch{" "}
-            <strong>Tri-Cass OS · Desk</strong>. Needs{" "}
-            <a href="https://ollama.com/download">Ollama</a> on the same PC for
-            AI features.
+            <strong>Tri-Cass Desk</strong> is the living desktop companion:
+            frosted glass windows, Monaco editor, local{" "}
+            <strong>Ollama chat</strong>, and{" "}
+            <strong>Agents that can inspect / plan / build code</strong>{" "}
+            (Cline-slim loop) — all on your machine. Knowledge Vault, Notes, and
+            an Earthbound world driven by <em>machine</em> telemetry (not outdoor
+            weather APIs). Install, launch <strong>Tri-Cass OS · Desk</strong>,
+            then point it at{" "}
+            <a href="https://ollama.com/download">Ollama</a> for chat and coding.
           </p>
           <p style={{ marginTop: "0.75rem" }}>
-            Current public installer:{" "}
-            <code className="mono">Tri-Cass-Desk-{DESK_VERSION}-win-x64.exe</code>
-            . Source and newer tags live in the{" "}
-            <a href={DESK_REPO_URL}>Tri-Cass-Desk</a> repo.
+            v{DESK_VERSION} ships for Windows (x64 + ia32 setup/portable), Linux
+            x64 (AppImage + .deb), Raspberry Pi / arm64 AppImage, and an Android
+            / Android TV sideload APK. Source:{" "}
+            <a href={DESK_REPO_URL}>Tri-Cass-Desk</a>.
           </p>
+          <div className="req-grid" style={{ marginTop: "1rem" }}>
+            {DESK_ARTIFACTS.map((a) => (
+              <div className="panel" key={a.id} style={{ margin: 0 }}>
+                <h3 style={{ fontSize: "1rem" }}>{a.label}</h3>
+                <p>
+                  <code className="mono">{a.filename}</code>
+                  <br />
+                  {a.guidance}
+                </p>
+                <div className="cta-row" style={{ marginTop: "0.65rem" }}>
+                  <a className="btn" href={a.url}>
+                    Download
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
-            <a className="btn" href={DESK_WINDOWS_SETUP_URL}>
-              Download Desk Windows setup (.exe)
-            </a>
             <a className="btn btn-ghost" href={DESK_RELEASE_PAGE}>
               Desk v{DESK_VERSION} release
             </a>
@@ -332,6 +347,9 @@ export default function DownloadPage() {
             </a>
             <a className="btn btn-quiet" href={DESK_REPO_URL}>
               Desk source on GitHub
+            </a>
+            <a className="btn btn-quiet" href="/demo/#desk">
+              Desk screenshots
             </a>
           </div>
         </div>

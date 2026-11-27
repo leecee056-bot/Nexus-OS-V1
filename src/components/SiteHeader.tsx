@@ -34,7 +34,7 @@ export function SiteHeader() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="brand-mark"
-            src="/brand/logo-mark.png"
+            src="/brand/logo-mark.png?v=20261124c"
             alt=""
             width={40}
             height={40}

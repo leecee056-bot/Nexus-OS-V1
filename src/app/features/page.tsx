@@ -9,21 +9,65 @@ export default function FeaturesPage() {
       <div className="shell">
         <h2>What&apos;s included</h2>
         <p className="lede">
-          Plain list of what works today on the USB / Pi hub and on Tri-Cass Pocket
-          (ESP32). For “what is a Vault?” and similar words, see{" "}
-          <Link href="/about">About</Link>.
+          Plain list of what works today across the Tri-Cass family — USB / Pi
+          hub, Tri-Cass Desk (chat + coding agents), Companion, Pocket, and
+          Cardputer. We add surfaces; we do not take the hub away. For glossary
+          words, see <Link href="/about">About</Link>.
         </p>
 
         <figure className="shot">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/tri-cass-os-hub-screen.jpg?v=20261124"
-            alt="Tri-Cass OS hub menu on a computer screen"
+            src="/images/desk/chat.jpg?v=20261124c"
+            alt="Tri-Cass Desk local chat with Ollama"
           />
-          <figcaption>Main menu after booting from USB or Pi microSD.</figcaption>
+          <figcaption>
+            Desk Chat — private offline conversation via local Ollama models.
+          </figcaption>
+        </figure>
+        <figure className="shot">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/desk/agents.jpg?v=20261124c"
+            alt="Tri-Cass Desk coding Agents"
+          />
+          <figcaption>
+            Desk Agents — inspect / plan / build coding loop on your machine.
+          </figcaption>
         </figure>
 
         <ul className="feature-list">
+          <li>
+            <strong>Offline AI chat</strong>
+            <span>
+              Talk to a model that stays on the device: Desk and Companion via{" "}
+              <a href="https://ollama.com/download">Ollama</a>, USB/Pi hub with
+              the bundled starter model, Pocket with TinyStories over Serial.
+              Draft, Q&amp;A, and vault-backed context without sending text to a
+              website.
+            </span>
+          </li>
+          <li>
+            <strong>Coding Agents (Desk + hub)</strong>
+            <span>
+              Tri-Cass Desk Agents run a Cline-slim inspect → plan → build loop
+              with Monaco in a frosted workspace — help read a project and write
+              code locally. On the USB/Pi hub,{" "}
+              <strong>Pocket Agent</strong> scaffolds (timer / HTML / CLI /
+              Flask) land under <code className="mono">/data/projects/</code>{" "}
+              with a fixed tool allow-list.
+            </span>
+          </li>
+          <li>
+            <strong>Tri-Cass Desk living desktop</strong>
+            <span>
+              Frosted glass windows, Earthbound atmosphere from{" "}
+              <em>machine</em> telemetry, Notes, Knowledge Vault, and chat —
+              Windows (x64 + ia32), Linux x64, Pi arm64 AppImage, and Android /
+              Android TV APK. See{" "}
+              <Link href="/download#desk">Download → Desk</Link>.
+            </span>
+          </li>
           <li>
             <strong>Boots on low-spec PCs, Pi 4, and cyberdeck builds</strong>
             <span>
@@ -62,11 +106,12 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
-            <strong>Local AI Chat</strong>
+            <strong>Hub local AI Chat</strong>
             <span>
               On PC/Pi: talk to an AI on the machine itself (SmolLM2 starter). On
               Pocket: Serial <code className="mono">chat</code> with TinyStories.
-              Both stay offline once flashed.
+              Desk / Companion add richer Ollama chat on top of the same
+              local-first idea.
             </span>
           </li>
           <li>
@@ -94,15 +139,15 @@ export default function FeaturesPage() {
             </span>
           </li>
           <li>
-            <strong>Agents &amp; tools</strong>
+            <strong>Hub agents &amp; tools</strong>
             <span>
               Small helpers with a fixed allow-list (calculator, vault, files,
               notes, system info, models, pixel art) — not open access to
-              everything on the PC. Hub{" "}
-              <strong>Pocket Agent</strong> scaffolds (timer / HTML / CLI /
-              Flask templates via <code className="mono">scaffold</code> /{" "}
-              <code className="mono">make</code>) ship on v1.0.2 USB and Pi
-              images under <code className="mono">/data/projects/</code>.
+              everything on the PC. Pocket Agent scaffolds via{" "}
+              <code className="mono">scaffold</code> /{" "}
+              <code className="mono">make</code> ship on current USB and Pi
+              images. For the full coding agent UI, use{" "}
+              <Link href="/download#desk">Tri-Cass Desk</Link>.
             </span>
           </li>
           <li>
