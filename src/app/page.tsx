@@ -24,15 +24,16 @@ export default function HomePage() {
             <BrandWordmark>Tri-Cass OS</BrandWordmark>
           </p>
           <h1>
-            Offline AI that chats and codes — on USB, Pi, Desk, Companion, and
-            tiny boards.
+            Offline AI that chats and codes — on USB, Pi, Tri Cass AI, Desk,
+            Companion, and tiny boards.
           </h1>
           <p>
             Private chat and a coding agent that stay on your machine. Flash a
-            USB or microSD for the hub, or run <strong>Tri-Cass Desk</strong>{" "}
-            (Windows / Linux / Pi / Android) with living glass windows, Ollama
-            chat, and Agents that inspect / plan / build. Add{" "}
-            <strong>Companion</strong>, <strong>Pocket</strong>, or{" "}
+            USB or microSD for the hub, download <strong>Tri Cass AI</strong>{" "}
+            to build websites and apps on disk with no coding, or run{" "}
+            <strong>Tri-Cass Desk</strong> (Windows / Linux / Pi / Android) with
+            living glass windows, Ollama chat, and Agents that inspect / plan /
+            build. Add <strong>Companion</strong>, <strong>Pocket</strong>, or{" "}
             <strong>Cardputer</strong> — we keep adding surfaces, not replacing
             them.
           </p>
@@ -74,6 +75,18 @@ export default function HomePage() {
                 <Link href="/download#pc">PC USB</Link>
                 {" · "}
                 <Link href="/download#pi">Raspberry Pi</Link>
+              </p>
+            </div>
+            <div className="panel">
+              <h3>Tri Cass AI</h3>
+              <p>
+                Standalone local coder — chat, pick a model, and create websites
+                or apps as real files on disk. Templates (~1000), knowledge base,
+                ASCII &amp; image tools, Android scaffolds, glass Appearance.
+                Windows x64 portable; needs Ollama (~8&nbsp;GB RAM PC).
+              </p>
+              <p>
+                <Link href="/tri-cass-ai">Tri Cass AI download</Link>
               </p>
             </div>
             <div className="panel">
@@ -119,12 +132,13 @@ export default function HomePage() {
             <li>
               <strong>1. Download</strong>
               Pick a PC USB image, the Raspberry Pi microSD image, Pocket /
-              Cardputer firmware, Companion, or Desk.
+              Cardputer firmware, Tri Cass AI, Companion, or Desk.
             </li>
             <li>
               <strong>2. Flash or install</strong>
               PC/Pi: unpack, then write with Etcher. Pocket/Cardputer: PlatformIO.
-              Companion / Desk: run the installer or AppImage / APK.
+              Tri Cass AI: unzip the Windows portable. Companion / Desk: run the
+              installer or AppImage / APK.
             </li>
             <li>
               <strong>3. Boot / launch</strong>
@@ -137,6 +151,7 @@ export default function HomePage() {
             <Link href="/download#pi">Raspberry Pi</Link>
             <Link href="/download#pocket">Pocket ESP32</Link>
             <Link href="/download#cardputer">Cardputer ADV</Link>
+            <Link href="/tri-cass-ai">Tri Cass AI</Link>
             <Link href="/download#companion">Companion</Link>
             <Link href="/download#desk">Tri-Cass Desk</Link>
             <a href="/demo/">Visual tour</a>

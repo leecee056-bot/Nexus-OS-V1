@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/features", label: "Features" },
   { href: "/demo/", label: "Tour" },
   { href: "/download", label: "Download" },
+  { href: "/tri-cass-ai", label: "Tri Cass AI" },
   { href: "/setup", label: "Setup" },
   { href: "/compat", label: "Compat" },
   { href: "/docs", label: "Docs" },

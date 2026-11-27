@@ -125,6 +125,15 @@ export default function DocsPage() {
               </a>
             </li>
             <li>
+              <Link href="/tri-cass-ai">
+                Tri Cass AI
+                <small>
+                  Standalone local coder — chat → websites/apps on disk; Windows
+                  x64 portable download
+                </small>
+              </Link>
+            </li>
+            <li>
               <Link href="/download#companion">
                 Windows · Mac · Android · web companion
                 <small>

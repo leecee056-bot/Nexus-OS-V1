@@ -107,7 +107,7 @@ export const CARDPUTER_ARTIFACTS = [
 ] as const;
 
 export const BUILD_NOTE =
-  "Choose a build: PC USB or Raspberry Pi microSD (release v1.0.3 — Tri-Cass hub + Pocket Agent + Knowledge Vault), Tri-Cass Desk v0.4.0 (Windows x64/ia32, Linux x64, Pi arm64, Android APK — offline Ollama chat + coding Agents), Companion apps (Windows / Mac / Android / web), Tri-Cass Pocket / Cardputer ADV, or the Companion USB kit. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
+  "Choose a build: PC USB or Raspberry Pi microSD (release v1.0.3 — Tri-Cass hub + Pocket Agent + Knowledge Vault), Tri Cass AI v0.1.1 (Windows x64 portable — local chat that builds websites/apps on disk), Tri-Cass Desk v0.4.0 (Windows x64/ia32, Linux x64, Pi arm64, Android APK — offline Ollama chat + coding Agents), Companion apps (Windows / Mac / Android / web), Tri-Cass Pocket / Cardputer ADV, or the Companion USB kit. Disk images unpack from .xz and flash with Etcher; Pocket/Cardputer use PlatformIO. Full walkthrough on the Setup page.";
 
 /**
  * Companion app — Chat/Vault/Packs with local AI (not the bootable OS).
@@ -195,6 +195,52 @@ export const DESK_LINUX_ARM64_APPIMAGE_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-lin
 export const DESK_ANDROID_APK_URL = `${DESK_DL}/Tri-Cass-Desk-0.4.0-android.apk`;
 
 export const DESK_REPO_URL = "https://github.com/leecee056-bot/Tri-Cass-Desk";
+
+/**
+ * Tri Cass AI — standalone local coder (separate from Desk).
+ * Bump URLs only after matching Tri-Cass-AI release assets exist.
+ */
+export const TRI_CASS_AI_VERSION = "0.1.1";
+
+export const TRI_CASS_AI_REPO_URL =
+  "https://github.com/leecee056-bot/Tri-Cass-AI";
+
+export const TRI_CASS_AI_RELEASE_PAGE =
+  "https://github.com/leecee056-bot/Tri-Cass-AI/releases/tag/v0.1.1";
+
+export const TRI_CASS_AI_RELEASES_LATEST =
+  "https://github.com/leecee056-bot/Tri-Cass-AI/releases/latest";
+
+const TRI_CASS_AI_DL =
+  "https://github.com/leecee056-bot/Tri-Cass-AI/releases/download/v0.1.1";
+
+/** Windows x64 portable zip — unzip and run Tri Cass AI.exe. */
+export const TRI_CASS_AI_WINDOWS_PORTABLE_URL = `${TRI_CASS_AI_DL}/Tri-Cass-AI-0.1.1-win-x64-portable.zip`;
+
+export const TRI_CASS_AI_WINDOWS_PORTABLE_FILENAME =
+  "Tri-Cass-AI-0.1.1-win-x64-portable.zip";
+
+/** Exact GitHub Release asset size for v0.1.1 win-x64 portable.zip */
+export const TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_BYTES = 136047576;
+
+export const TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_LABEL = "129.7 MB";
+
+export const TRI_CASS_AI_WINDOWS_PORTABLE_SHA256 =
+  "d3b5c29e94ca3798285889ce65b88de71c3fcf15250fb8cec0e435aa44f119cb";
+
+export const TRI_CASS_AI_ARTIFACTS = [
+  {
+    id: "win-x64-portable",
+    label: "Windows 64-bit portable",
+    filename: TRI_CASS_AI_WINDOWS_PORTABLE_FILENAME,
+    url: TRI_CASS_AI_WINDOWS_PORTABLE_URL,
+    sizeBytes: TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_BYTES,
+    sizeLabel: TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_LABEL,
+    sha256: TRI_CASS_AI_WINDOWS_PORTABLE_SHA256,
+    guidance:
+      "Unzip, then run Tri Cass AI.exe. Needs Ollama on the same PC for chat and coding.",
+  },
+] as const;
 
 /** Multi-format Desk downloads for the Download page. */
 export const DESK_ARTIFACTS = [

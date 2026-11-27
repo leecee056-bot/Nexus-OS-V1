@@ -10,9 +10,9 @@ export default function FeaturesPage() {
         <h2>What&apos;s included</h2>
         <p className="lede">
           Plain list of what works today across the Tri-Cass family — USB / Pi
-          hub, Tri-Cass Desk (chat + coding agents), Companion, Pocket, and
-          Cardputer. We add surfaces; we do not take the hub away. For glossary
-          words, see <Link href="/about">About</Link>.
+          hub, Tri Cass AI (local coder), Tri-Cass Desk (chat + coding agents),
+          Companion, Pocket, and Cardputer. We add surfaces; we do not take the
+          hub away. For glossary words, see <Link href="/about">About</Link>.
         </p>
 
         <figure className="shot">
@@ -38,13 +38,22 @@ export default function FeaturesPage() {
 
         <ul className="feature-list">
           <li>
+            <strong>Tri Cass AI (standalone local coder)</strong>
+            <span>
+              Chat → websites and apps as real files on disk. Model catalog,
+              knowledge base, ~1000 templates, ASCII &amp; image tools, Android
+              scaffolds, glass Appearance. Windows x64 portable.{" "}
+              <Link href="/tri-cass-ai">Download Tri Cass AI</Link>.
+            </span>
+          </li>
+          <li>
             <strong>Offline AI chat</strong>
             <span>
-              Talk to a model that stays on the device: Desk and Companion via{" "}
-              <a href="https://ollama.com/download">Ollama</a>, USB/Pi hub with
-              the bundled starter model, Pocket with TinyStories over Serial.
-              Draft, Q&amp;A, and vault-backed context without sending text to a
-              website.
+              Talk to a model that stays on the device: Tri Cass AI, Desk, and
+              Companion via <a href="https://ollama.com/download">Ollama</a>,
+              USB/Pi hub with the bundled starter model, Pocket with TinyStories
+              over Serial. Draft, Q&amp;A, and vault-backed context without
+              sending text to a website.
             </span>
           </li>
           <li>
