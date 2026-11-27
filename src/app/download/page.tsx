@@ -22,6 +22,10 @@ import {
   DESK_RELEASES_LATEST,
   DESK_REPO_URL,
   DESK_VERSION,
+  TRI_CASS_AI_RELEASE_PAGE,
+  TRI_CASS_AI_VERSION,
+  TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_LABEL,
+  TRI_CASS_AI_WINDOWS_PORTABLE_URL,
   PI_ARTIFACTS,
   PI_RELEASE_PAGE,
   PI_RELEASE_SHA256SUMS,
@@ -65,6 +69,7 @@ export default function DownloadPage() {
           <a href="#pocket">Pocket ESP32</a>
           <a href="#cardputer">Cardputer ADV</a>
           <a href="#knowledge-packs">Knowledge packs</a>
+          <a href="#tri-cass-ai">Tri Cass AI</a>
           <a href="#companion">Companion app</a>
           <a href="#desk">Tri-Cass Desk</a>
           <a href="#companion-usb">Companion USB kit</a>
@@ -230,6 +235,37 @@ export default function DownloadPage() {
             </div>
           </div>
         ))}
+
+        <div className="panel" id="tri-cass-ai" style={{ marginTop: "1.5rem" }}>
+          <h3>
+            Tri Cass AI — local coder that builds on disk (v{TRI_CASS_AI_VERSION})
+          </h3>
+          <p>
+            <strong>Tri Cass AI</strong> is a standalone Windows app: chat with
+            local models, then create websites and apps as real folders and files
+            on your PC — no coding required. Template library (~1000), knowledge
+            base, ASCII &amp; image tools, Android scaffolds, and glass
+            Appearance. Separate from Desk and the USB hub. Needs{" "}
+            <a href="https://ollama.com/download">Ollama</a> (~8&nbsp;GB RAM
+            household PC).
+          </p>
+          <p style={{ marginTop: "0.75rem" }}>
+            v{TRI_CASS_AI_VERSION} ships as a Windows x64 portable zip (
+            {TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_LABEL}). Unzip and run{" "}
+            <code className="mono">Tri Cass AI.exe</code>.
+          </p>
+          <div className="cta-row" style={{ marginTop: "0.85rem" }}>
+            <a className="btn" href={TRI_CASS_AI_WINDOWS_PORTABLE_URL}>
+              Download Windows portable ({TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_LABEL})
+            </a>
+            <Link className="btn btn-ghost" href="/tri-cass-ai">
+              Tri Cass AI product page
+            </Link>
+            <a className="btn btn-quiet" href={TRI_CASS_AI_RELEASE_PAGE}>
+              Release notes
+            </a>
+          </div>
+        </div>
 
         <div className="panel" id="companion" style={{ marginTop: "1.5rem" }}>
           <h3>

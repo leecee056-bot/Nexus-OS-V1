@@ -5,6 +5,7 @@ const PRODUCT = [
   { href: "/features", label: "Features" },
   { href: "/demo/", label: "Visual tour" },
   { href: "/download", label: "Download" },
+  { href: "/tri-cass-ai", label: "Tri Cass AI" },
   { href: "/setup", label: "Setup" },
 ];
 
@@ -12,6 +13,7 @@ const RESOURCES = [
   { href: "/docs", label: "Docs" },
   { href: "/compat", label: "Hardware compat" },
   { href: "/knowledge-packs", label: "Knowledge packs" },
+  { href: "/tri-cass-ai", label: "Tri Cass AI" },
   { href: "/download#companion", label: "Companion app" },
   { href: "/faq", label: "FAQ" },
   { href: "/network", label: "Network" },
@@ -46,8 +48,9 @@ export function SiteFooter() {
               <span>Tri Cass OS</span>
             </Link>
             <p>
-              Offline AI hub, Tri-Cass Desk, Companion apps, Pocket &amp;
-              Cardputer — local-first for PCs, Pi, cyberdecks, and tiny boards.
+              Offline AI hub, Tri Cass AI, Tri-Cass Desk, Companion apps, Pocket
+              &amp; Cardputer — local-first for PCs, Pi, cyberdecks, and tiny
+              boards.
             </p>
           </div>
 
