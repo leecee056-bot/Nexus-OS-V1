@@ -251,9 +251,9 @@ export default function DownloadPage() {
           </p>
           <p style={{ marginTop: "0.75rem" }}>
             v{TRI_CASS_AI_VERSION} ships as a Windows x64 portable zip (
-            {TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_LABEL}) — coding-parity build
-            with create-on-disk verify, Plan/Act, checkpoints, per-chat KB, and
-            run panel. Unzip and run{" "}
+            {TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_LABEL}) — New chat / rename /
+            save, coherent scaffolds, template pick, create-on-disk verify,
+            Plan/Act, checkpoints, KB, and run panel. Unzip and run{" "}
             <code className="mono">Tri Cass AI.exe</code>.
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>

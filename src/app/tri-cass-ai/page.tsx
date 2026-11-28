@@ -76,9 +76,9 @@ export default function TriCassAiPage() {
           USB hub. Windows x64 portable first. Needs{" "}
           <a href="https://ollama.com/download">Ollama</a> on the same machine
           (~8&nbsp;GB RAM household PC).{" "}
-          <strong>v{TRI_CASS_AI_VERSION}</strong> is a coding-parity build:
-          create-on-disk with verify, Plan/Act, apply_diff + checkpoints,
-          per-chat KB, and a run panel (install / start / stop).
+          <strong>v{TRI_CASS_AI_VERSION}</strong> adds New chat / rename / save,
+          coherent scaffolds, and template pick — plus create-on-disk verify,
+          Plan/Act, checkpoints, per-chat KB, and the run panel.
         </div>
 
         {TRI_CASS_AI_ARTIFACTS.map((a) => (
