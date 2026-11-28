@@ -75,7 +75,9 @@ export default function TriCassAiPage() {
           <strong>Standalone app</strong> — separate from Tri-Cass Desk and the
           USB hub. Windows x64 portable first. Needs{" "}
           <a href="https://ollama.com/download">Ollama</a> on the same machine
-          (~8&nbsp;GB RAM household PC).
+          (~8&nbsp;GB RAM household PC).{" "}
+          <strong>v{TRI_CASS_AI_VERSION}</strong> includes a real-file-write fix
+          so created websites and apps land correctly on disk.
         </div>
 
         {TRI_CASS_AI_ARTIFACTS.map((a) => (
