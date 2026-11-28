@@ -251,7 +251,8 @@ export default function DownloadPage() {
           </p>
           <p style={{ marginTop: "0.75rem" }}>
             v{TRI_CASS_AI_VERSION} ships as a Windows x64 portable zip (
-            {TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_LABEL}). Unzip and run{" "}
+            {TRI_CASS_AI_WINDOWS_PORTABLE_SIZE_LABEL}) and includes a
+            real-file-write fix for projects created on disk. Unzip and run{" "}
             <code className="mono">Tri Cass AI.exe</code>.
           </p>
           <div className="cta-row" style={{ marginTop: "0.85rem" }}>
